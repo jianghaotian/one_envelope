@@ -1,5 +1,5 @@
 const nodemailer = require("nodemailer");
-const {email} = require("../config");
+const {email} = require("../../config");
 
 // 定义邮件服务器
 var transporter = nodemailer.createTransport({

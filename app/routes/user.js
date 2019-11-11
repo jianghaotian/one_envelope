@@ -1,7 +1,7 @@
 var express = require('express');
 var router = express.Router();
 
-const sendEmail = require('../src/email');
+const sendEmail = require('../src/user/email');
 const sendMsg = require('../src/message');
 
 /**
