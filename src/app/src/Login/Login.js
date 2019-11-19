@@ -98,7 +98,7 @@ function Register(props){
 export default class Login extends Component {
     componentDidMount(){
         let pathname = window.location.pathname;
-        if(pathname == "/login" || pathname == "/register"){
+        if(pathname == "/login" || pathname == "/register" || pathname=="/"){
             $("#login").css("display","block");
         }else{
             $("#login").css("display","none");
