@@ -1,11 +1,14 @@
 var express = require('express');
 var router = express.Router();
 
+const runSql = require('../mysql');
+
+const getRandom = require('../src/user/verification');
 const sendEmail = require('../src/user/email');
 const sendMsg = require('../src/message');
 
 /**
- * 获取验证码
+ * 获取验证码  POST
  * 接收参数:
  *     account : 手机号/邮箱
  *     type    : 类型  (phone/email)
@@ -17,37 +20,39 @@ router.post('/verification', function (req, res, next) {
     let account = req.body.account;
     let type = req.body.type;
     let jsonData = {};
+    
+    var verification = getRandom(6);
+    var minute = '3';
 
-    if (type === 'phone') {
-        var verification = '123456';
-        var minute = '3';
-
-        sendMsg(account, verification, minute, (result) => {
-            jsonData = {
-                status: result.status,
-                message: result.message
+    runSql('insert into verification(vaccount, vtype, vcode) values (?,?,?)', [account, type, verification], (result) => {
+        if (result.status === 0) {
+            if (type === 'phone') {
+                sendMsg(account, verification, minute, (result) => {
+                    jsonData = {
+                        status: result.status,
+                        message: result.message
+                    }
+                    res.json(jsonData);
+                });
+            } else if (type === 'email') {
+                sendEmail(account, verification, minute, (result) => {
+                    jsonData = {
+                        status: result.status,
+                        message: result.message
+                    }
+                    res.json(jsonData);
+                });
+            } else {
+                jsonData = {
+                    status: 103,
+                    message: 'type error'
+                }
+                res.json(jsonData);
             }
-            res.json(jsonData);
-        });
-
-    } else if (type === 'email') {
-        var verification = '123456';
-        var minute = '3';
-
-        sendEmail(account, verification, minute, (result) => {
-            jsonData = {
-                status: result.status,
-                message: result.message
-            }
-            res.json(jsonData);
-        });
-    } else {
-        jsonData = {
-            status: 103,
-            message: 'type error'
+        } else {
+            res.json(result);
         }
-        res.json(jsonData);
-    }
+    })
 });
 
 /**

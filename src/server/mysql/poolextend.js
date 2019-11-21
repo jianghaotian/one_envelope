@@ -1,5 +1,4 @@
-// 连接池扩展封装
-
+// 连接池扩展
 var poolextend = function (target, source, flag) {
     for (var key in source) {
         if (source.hasOwnProperty(key)) {
