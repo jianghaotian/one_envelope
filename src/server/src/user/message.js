@@ -1,5 +1,5 @@
 const QcloudSms = require('qcloudsms_js');
-const {message} = require('../config');
+const {message} = require('../../config');
 
 // 实例化 QcloudSms
 var qcloudsms = QcloudSms(message.appid, message.appkey);
