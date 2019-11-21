@@ -5,7 +5,7 @@ const runSql = require('../mysql');
 
 const getRandom = require('../src/user/verification');
 const sendEmail = require('../src/user/email');
-const sendMsg = require('../src/message');
+const sendMsg = require('../src/user/message');
 
 /**
  * 获取验证码  POST
