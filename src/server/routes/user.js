@@ -7,6 +7,7 @@ const { getTimestamp_13 } = require('../src/timer');
 const getRandom = require('../src/user/verification');
 const sendEmail = require('../src/user/email');
 const sendMsg = require('../src/user/message');
+const { getToken, checkToken } = require('../src/token');
 
 var v_minute = 3; // 验证码有效时间
 
@@ -188,7 +189,7 @@ router.post('/login', function (req, res, next) {
     let { account, type, password } = req.body;
 
     if (type === 'phone' || type === 'email') {
-        runSql(`select upassword from user where u${type} = ?`, [account], (result) => {
+        runSql(`select uid,upassword from user where u${type} = ?`, [account], (result) => {
             if (result.status === 0) {
                 if (result.data.length === 0) {
                     let jsonData = {
@@ -198,9 +199,21 @@ router.post('/login', function (req, res, next) {
                     res.json(jsonData);
                 } else {
                     if (result.data[0].upassword === password) {
+                        let tokenContent = {
+                            uid: result.data[0].uid
+                        };
+                        let params = {
+                            expiresIn: 60 * 60 * 24 * 31  // 31天过期
+                        }
+
+                        let token = getToken(tokenContent, params);
+
                         let jsonData = {
                             status: 0,
-                            message: 'OK'
+                            message: 'OK',
+                            data: {
+                                token: token
+                            }
                         }
                         res.json(jsonData);
                     } else {
