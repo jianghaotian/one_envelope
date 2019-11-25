@@ -1,0 +1,88 @@
+/* 顶部 */
+#home-top{
+    width:100%;
+    height:150px;
+    background-color: tomato;
+    background: url("../imgs/Home/start.png");
+    background-size:cover ;
+    position: fixed;
+    z-index:1;
+}
+.home-year{
+    width:100%;
+    height:30px;
+    line-height:30px;
+    font-weight:bold;
+    font-size:20px;
+    /* background-color: skyblue; */
+}
+#home-main{
+    width:100%;
+
+}
+
+/* 内容区 */
+#home-mid{
+    top:150px;
+    position: relative;
+    width:90%;
+    margin:0 auto;
+    /* background-color: orange; */
+}
+.content{
+    color:black;
+    margin:0 auto;
+    height:150px;
+    width:100%;
+    /* border-bottom: 1px solid red; */
+}
+li{
+    list-style: none;
+}
+.c-time{
+    color:rgb(98, 69, 143);
+    height:100%;
+    width:12%;
+    float: left;
+    /* background-color:tomato; */
+    margin-right:2%;
+    border-right:0.5px solid grey;
+}
+.c-title{
+    color:rgb(44, 44, 44);
+    font-weight:bold;
+    text-align: left;
+    font-size:16px;
+    width:100%;
+    height:20%;
+    /* background-color:sandybrown; */
+}
+.c-content{
+    font-size:15px;
+    color:rgb(129, 129, 129);
+    height:80%;
+    float: right;
+    width:86%;
+    border-top:1px solid grey;
+    padding-top:10px;
+    /* background-color: red; */
+}
+.c-day{
+    font-weight: bold;
+}
+.c-month{
+    padding-left:10%;
+}
+.c-span{
+    padding-left:10px;
+}
+
+#home-pencil{
+    height:45px;
+    width:50px;
+    /* background-color: tomato; */
+    z-index:1;
+    right:3%;
+    bottom:10%;
+    position: fixed;
+}

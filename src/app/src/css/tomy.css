@@ -1,0 +1,75 @@
+/* Tomy */
+#tomy-top{
+    height:150px;
+    width:100%;
+    color:black;
+    background:url(../imgs/Home/start2.png) ;
+    background-size: cover;
+    position: fixed;
+    
+    /* z-index:1; */
+}
+
+
+/* 列表 */
+#toU{
+    position: relative;
+    top:150px;
+    /* background-color: rgb(252, 130, 86); */
+    width:100%;
+    height:300px;
+}
+#toU li{
+    margin-bottom:5px;
+    padding-top:3px;
+    border-bottom:1px solid rgb(255, 199, 207);
+}
+.toUli{
+    width:90%;
+    height:43px;
+    font-style:15px;
+    font-weight:bolder;
+    margin: 0 auto;
+    /* background-color: orchid; */
+}
+.letter-num{
+    float: right;
+}
+.letter-name{
+    padding-left:10px;
+}
+.tomy-Uimage{
+    float: left;
+}
+.tU{
+    height:33px;
+    width:80%;
+    /* background-color: blanchedalmond; */
+    float:left;
+}
+.tU span{
+    line-height:33px;
+}
+
+
+/* 底部 */
+.tomy-bottom{
+    position:fixed;
+    bottom:0;
+    background:white;
+    height:60px;
+    width:100%;
+    border-top:1px solid rgb(187, 186, 186);
+    /* background-color: orangered; */
+}
+.tomy-bottom button{
+    color:rgb(141, 141, 141);
+    width:50%;
+    font-size:18px;
+    font-weight:bolder;
+    border:none;
+    background:none;
+    height:60px;
+}
+
+/* 编辑页 */
