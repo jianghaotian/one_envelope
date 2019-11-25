@@ -1,5 +1,4 @@
 
-
 function getRandom (x) {
     let arr = []
     for (var i = 0; i < x; i++) {
@@ -7,3 +6,5 @@ function getRandom (x) {
     }
     return arr.join('');
 }
+
+module.exports = getRandom;
