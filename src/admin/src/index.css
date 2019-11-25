@@ -1,13 +1,27 @@
-body {
-  margin: 0;
-  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", "Roboto", "Oxygen",
-    "Ubuntu", "Cantarell", "Fira Sans", "Droid Sans", "Helvetica Neue",
-    sans-serif;
-  -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
+@import '~antd/dist/antd.css';
+
+*{  
+    padding: 0;
+    margin: 0;
+}
+body{
+  background: #e1e1e1;
+}
+.backcontent{
+  width: 1200px;
+  margin: 20px auto 0;
+}
+.left{
+  float: left;
+  background: #f7f7f7;;
+  margin-left: 10px;
+  width: 190px;
 }
 
-code {
-  font-family: source-code-pro, Menlo, Monaco, Consolas, "Courier New",
-    monospace;
+.right{
+  margin-left: 20px;
+  width: 900px;
+  float: left;
+  background: #fff;
+  /* height: 500px; */
 }
