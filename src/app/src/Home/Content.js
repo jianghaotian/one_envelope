@@ -1,7 +1,7 @@
 import React, { Component } from 'react'
 import '../css/WriteBox.css'
 
-export default class Write extends Component {
+export default class Content extends Component {
     constructor(){
         super();
     }
@@ -24,15 +24,17 @@ export default class Write extends Component {
 
                     {/* 标题 */}
                     <div className="hw-title">
-                        标题：
+                        今天想对自己说
                         <input type="text" name="hw-title" id="hw-inp-title" />
                     </div>
 
-                    <span style={{color:"black",fontSize:"17px"}}>内容：</span>
+                    <span style={{color:"black",fontSize:"17px"}}>
+                        内容：
+                    </span>
                     {/* 内容 */}
                     <div className="hw-content">
                         <textarea name="hw-content" id="hw-content" >
-
+                            往者不可谏，来者犹可追
                         </textarea>
                     </div>
                 </div>

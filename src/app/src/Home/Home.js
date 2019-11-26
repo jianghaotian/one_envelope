@@ -1,8 +1,25 @@
 import React, { Component } from 'react'
 import '../css/home.css'
+import $ from 'jquery'
 import {BrowserRouter as Router,Link,Switch,Route} from 'react-router-dom'
 
+let tag=true;
 export default class Home extends Component {
+    constructor(){
+        super();
+    }
+    delItem=()=>{
+        if(tag){
+            $("#home-del").css("display","block");
+            tag=false;
+        }else{
+            $("#home-del").css("display","none");
+            tag=true;
+        }
+    }
+    del=()=>{
+        window.confirm("确认删除此动态?");
+    }
     render() {
         let year = new Date().getFullYear();
         return (
@@ -14,7 +31,7 @@ export default class Home extends Component {
                             致自己 <span style={{fontWeight:"bolder",fontSize:"20px"}}>></span>
                         </Link>
                     </div>
-                    <div style={{float:"right",padding:"5px 10px"}}>
+                    <div style={{float:"right",padding:"5px 10px"}} onClick={this.delItem}>
                         <img src={require("../imgs/Home/选项.png")} />
                     </div>
                 </div>
@@ -35,13 +52,18 @@ export default class Home extends Component {
                                     <span className="c-month">11月</span>
                                 </div>
                                 <div className="c-title">
-                                    <p>今天想对自己说</p>
+                                    <span>今天想对自己说</span>
+                                    <span id="home-del" onClick={this.del}>
+                                        <img src={require("../imgs/Home/del.png")} />
+                                    </span>
                                 </div>
-                                <div className="c-content">
-                                    <div className="c-span">
-                                        往者不可谏，来者犹可追
+                                <Link to="/content">
+                                    <div className="c-content">
+                                        <div className="c-span">
+                                            往者不可谏，来者犹可追
+                                        </div>
                                     </div>
-                                </div>
+                                </Link>
                             </li>
                             <li className="content">
                                 <div className="c-time">
@@ -84,7 +106,9 @@ export default class Home extends Component {
                 </div>
                 {/* 新建 */}
                 <div id="home-pencil">
-                    <img src={require("../imgs/Home/pencil.png")} style={{height:"45px"}} />
+                    <Link to="/homeWrite">
+                        <img src={require("../imgs/Home/pencil.png")} style={{height:"45px"}} />
+                    </Link>
                 </div>
             </div>
         )

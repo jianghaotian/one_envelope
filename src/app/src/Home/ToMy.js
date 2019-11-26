@@ -1,10 +1,33 @@
 import React, { Component } from 'react'
 import '../css/tomy.css'
 import 'antd/dist/antd.css'
+import $ from 'jquery'
 import {Button} from 'antd'
 import {BrowserRouter as Router,Link,Switch,Route} from 'react-router-dom'
 
+let tag=true;
+
 export default class ToMy extends Component {
+    constructor(){
+        super();
+    }
+    Addressee=()=>{
+        this.props.history.push("/addressee");
+    }
+    move=()=>{
+        if(tag){
+            $(".tomy-del").css("display","block");
+            $("#del-btn").html("退出编辑");
+            tag=false;
+        }else{
+            $(".tomy-del").css("display","none");
+            $("#del-btn").html("编辑");
+            tag=true;
+        }
+    }
+    delUli=()=>{
+        window.confirm("确认删除？");
+    }
     render() {
         return (
             <div>
@@ -22,6 +45,11 @@ export default class ToMy extends Component {
                         <li className="toUli">
                             <img src={require("../imgs/Home/boy.png")} className="tomy-Uimage" />
                             <div className="tU">
+                                {/* 删除 */}
+                                <span className="tomy-del" onClick={this.delUli}>
+                                    <img src={require("../imgs/Home/delete.png")} />
+                                </span>
+                                    
                                 <span className="letter-name">
                                     致自己
                                 </span>
@@ -56,10 +84,10 @@ export default class ToMy extends Component {
                 </div>
                 {/* 底部 */}
                 <div className="tomy-bottom">
-                    <Button>
+                    <Button onClick={this.move} id="del-btn">
                         编辑
                     </Button>
-                    <Button>
+                    <Button onClick={this.Addressee} >
                         添加
                     </Button>
                 </div>

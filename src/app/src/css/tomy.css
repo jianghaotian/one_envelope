@@ -32,6 +32,11 @@
     margin: 0 auto;
     /* background-color: orchid; */
 }
+.tomy-del{
+    position: absolute;
+    right:5%;
+    display:none;
+}
 .letter-num{
     float: right;
 }
