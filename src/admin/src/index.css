@@ -1,0 +1,27 @@
+@import '~antd/dist/antd.css';
+
+*{  
+    padding: 0;
+    margin: 0;
+}
+body{
+  background: #e1e1e1;
+}
+.backcontent{
+  width: 1200px;
+  margin: 20px auto 0;
+}
+.left{
+  float: left;
+  background: #f7f7f7;;
+  margin-left: 10px;
+  width: 190px;
+}
+
+.right{
+  margin-left: 20px;
+  width: 900px;
+  float: left;
+  background: #fff;
+  /* height: 500px; */
+}

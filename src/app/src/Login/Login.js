@@ -133,10 +133,10 @@ export default class Login extends Component {
                         </div>
                         <div id="icon-login">
                             <span>
-                                <img src={require("../imgs/qq.png")} style={{float:'left'}}/>
+                                <img src={require("../imgs/Home/qq.png")} style={{float:'left'}}/>
                             </span>
                             <span>
-                                <img src={require("../imgs/weixin.png")} style={{float:'right'}}/>
+                                <img src={require("../imgs/Home/weixin.png")} style={{float:'right'}}/>
                             </span>
                         </div>
                 </div>

@@ -7,7 +7,6 @@ var pool = mysql.createPool(poolextend({}, mysqlconfig));  // 使用连接池，
 function runSql(sql, data, callback) {
     pool.getConnection(function (err, connection) {
         if (err) {
-            console.log(1);
             let jsonData = {
                 status: err.errno,
                 message: err.sqlMessage,
@@ -19,7 +18,6 @@ function runSql(sql, data, callback) {
         } else {
             connection.query(sql, data, function(err, result) {
                 if (err) {
-                    console.log(2);
                     let jsonData = {
                         status: err.errno,
                         message: err.sqlMessage,
@@ -43,14 +41,4 @@ function runSql(sql, data, callback) {
     });
 }
 
-
-// runSql('insert into verification(vaccount, vtype, vcode) values (?,?,?)', ['jht@qswq.com', 'email', '236547'], (result) => {
-//     console.log(result);
-// })
-
-// runSql('select * from verification', [], (result) => {
-//     console.log(result);
-// })
-
 module.exports = runSql;
-

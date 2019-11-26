@@ -1,0 +1,62 @@
+/* Header.css */
+.header{
+    height: 60px;
+    background:#fff;
+    margin-bottom: 20px;
+}
+.header header{
+    width: 1200px;
+    line-height: 60px;
+    margin: 0 auto;
+    position: relative;
+}
+.top-logo{
+    width: 60px;
+    height: 60px;
+    border-radius: 50%;
+    margin-left: 40px;
+    float: left;
+}
+.header .top-font{
+    color: red;
+    font-size: 18px;
+    margin-left: 100px;
+    float: left;
+}
+.top-avatar{
+    width: 40px;
+    height: 40px;
+    margin-top: 10px;
+    margin-left: 610px;
+}
+.top-admin{
+    font-size: 14px;
+    position: absolute;
+    top: 0;
+    right: 190px;
+}
+#top-exit{
+    position: absolute;
+    top: 0;
+    right: 115px;
+    text-decoration: none;
+}
+.header header a{
+    font-size: 14px;
+    color: red;
+    position: absolute;
+    top: 0;
+    right: 80px;
+    text-decoration: none;
+}
+/* BackMenu.css */
+
+.left-analy a{
+    display: block;
+    margin:20px 0 10px 50px;
+    color: rgb(79, 78, 78);
+    font-size: 13px;
+  }
+  .left-statistics{
+    border-bottom: 1px solid #e0e0e0;
+  }
