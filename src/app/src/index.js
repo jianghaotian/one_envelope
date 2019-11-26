@@ -19,16 +19,13 @@ ReactDOM.render(
         <TabBar />
         <Switch>
             <Route path="/home" component={Tabbar} />
-<<<<<<< HEAD
             <Route path="/recover" component={Recover} />
             <Route exact path="/setting" component={Setting}/>
             <Route exact path='/collection' component={Collection}/> 
-=======
             <Route path="/tomy" component={ToMy} />
             <Route path="/homeWrite" component={HomeWrite} />
             <Route path="/content" component={Content} />
             <Route path="/addressee" component={Addressee} />
->>>>>>> 5b5bee290c2faddf7ab171099f8c362ed82cbbb7
         </Switch>
     </Router>,
     document.getElementById("root")
