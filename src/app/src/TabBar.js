@@ -11,7 +11,7 @@ export default class Tabbar extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
-      selectedTab: 'home'
+      selectedTab: 'yellowTab'
     };
   }
   render() {
