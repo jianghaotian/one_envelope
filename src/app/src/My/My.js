@@ -1,12 +1,10 @@
 import React, { Component } from 'react'
 import '../css/Login.css'
-import {BrowserRouter as Router,NavLink,Link,Switch,Route,withRouter} from 'react-router-dom'
+import {BrowserRouter as Router,NavLink,Link,Switch} from 'react-router-dom'
 import '../css/My.css'
 
 export default class My extends Component {
-    constructor(){
-        super();
-    }
+    
     render() {
         return (
                 <div>
@@ -44,13 +42,14 @@ export default class My extends Component {
                                     paddingRight:"0.1em"
                                 }}></i>
                             </Link></li>
-                            <li>会员中心
+                            <li><Link to='/setting'>我的设置 *
                                 <i 
-                                className="iconfont icon-huiyuanzhongxin" 
+                                className="iconfont icon-shezhi-" 
                                 style={{
                                     fontSize:"1.8em"
-                                }}></i>
-                            </li>
+                                }}
+                                ></i>
+                            </Link></li>
                             <li><Link to='/recover'>回收站 *
                                 <i 
                                 className="iconfont icon-icon7" 
@@ -80,14 +79,14 @@ export default class My extends Component {
                                     paddingRight:"0.1em"
                                 }}></i>
                             </li>
-                            <li><Link to='/setting'>我的设置 *
+                            
+                            <li>会员中心
                                 <i 
-                                className="iconfont icon-shezhi-" 
+                                className="iconfont icon-huiyuanzhongxin" 
                                 style={{
                                     fontSize:"1.8em"
-                                }}
-                                ></i>
-                            </Link></li>
+                                }}></i>
+                            </li>
                         </ul>
                     </div>
                 </div>

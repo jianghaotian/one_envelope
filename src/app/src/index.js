@@ -16,16 +16,19 @@ import TabBar from "./TabBar"
 
 ReactDOM.render(
     <Router>
-        <TabBar />
         <Switch>
             <Route path="/home" component={Tabbar} />
-            <Route path="/recover" component={Recover} />
-            <Route exact path="/setting" component={Setting}/>
-            <Route exact path='/collection' component={Collection}/> 
             <Route path="/tomy" component={ToMy} />
             <Route path="/homeWrite" component={HomeWrite} />
             <Route path="/content" component={Content} />
             <Route path="/addressee" component={Addressee} />
+            {/* lxc */}
+            <Route path="/recover" component={Recover} />
+            <Route path="/setting" component={Setting}/>
+            <Route path='/collection' component={Collection}/>
+            <Route path="/letterbox" component={LetterBox} />
+            <Route path='/my' component={My} />
+            <Route path="/login" component={Login} />
         </Switch>
     </Router>,
     document.getElementById("root")

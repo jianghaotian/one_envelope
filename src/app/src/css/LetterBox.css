@@ -13,15 +13,39 @@ button{
     outline: none; 
     border: none;
     background-color: transparent;
+    background-color: whitesmoke;
 }
-.col-tab{
-    height: 3em;
-    line-height: 3em;
-
+/* -------列表页---------- */
+.lb-text{
+    height: 8em;
+    background-color: #fff;
+    position: relative;
     width: 100%;
-    font-size: 1.3em;
-    text-align: center;
-    color:white;
-    background-color: black;
+   
+}
+.lb-user{
+    position: absolute;
+    left:23%;
+    top:13%;
+    font-size:1.4em;
+}
+.lb-date{
+    top:16%;
+    position: absolute;
+    right:5%
+}
+.lb-title{
+    top: 45%;
+    left:23%;
+    font-size:1em;
+
+}
+.lb-content{
+    position: absolute;
+    left:23%;
+    top:65%;
+    width: 72%;
+    text-overflow:ellipsis; white-space:nowrap; overflow:hidden;
+    font-size:1em;
 
 }
