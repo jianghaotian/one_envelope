@@ -13,24 +13,22 @@ import Setting from './My/Setting'
 import Recover from './My/Recover'
 import LetterBox from './LetterBox/LetterBox'
 import TabBar from "./TabBar"
-import InviteWrite from './WriteTogether/InviteWrite'
-import WriteTogether from './WriteTogether/WriteTogether'
 
 ReactDOM.render(
     <Router>
-        <TabBar />
         <Switch>
             <Route path="/home" component={Tabbar} />
-            <Route path="/recover" component={Recover} />
-            <Route exact path="/setting" component={Setting}/>
-            <Route exact path='/collection' component={Collection}/> 
             <Route path="/tomy" component={ToMy} />
             <Route path="/homeWrite" component={HomeWrite} />
             <Route path="/content" component={Content} />
             <Route path="/addressee" component={Addressee} />
-
-            <Route exact path="/invitewrite" component={InviteWrite}/>
-            <Route exact path="/writeTogether" component={WriteTogether}/>
+            {/* lxc */}
+            <Route path="/recover" component={Recover} />
+            <Route path="/setting" component={Setting}/>
+            <Route path='/collection' component={Collection}/>
+            <Route path="/letterbox" component={LetterBox} />
+            <Route path='/my' component={My} />
+            <Route path="/login" component={Login} />
         </Switch>
     </Router>,
     document.getElementById("root")
