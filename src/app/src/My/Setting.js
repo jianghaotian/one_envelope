@@ -2,7 +2,7 @@ import React, { Component } from 'react'
 import {Icon,List,Switch } from 'antd-mobile'
 import '../css/My.css'
 import { createForm } from 'rc-form';
-import {BrowserRouter as Link} from 'react-router-dom'
+import {Link} from 'react-router-dom'
 
 class Setting extends Component {
     constructor(props) {
@@ -19,7 +19,7 @@ class Setting extends Component {
                 {/* 标题栏 */}
                 <div className="col-tab">
                     设置
-                    <Link to="/my" 
+                    <Link to="/home/my" 
                     style={{
                         float:"left",
                         height:"3em",

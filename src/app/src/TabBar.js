@@ -11,7 +11,7 @@ export default class Tabbar extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
-      selectedTab: 'yellowTab'
+      selectedTab: this.props.match.params.tab || 'home'
     };
   }
   render() {
@@ -91,10 +91,10 @@ export default class Tabbar extends React.Component {
             }
             title="我的"
             key="my"
-            selected={this.state.selectedTab === 'yellowTab'}
+            selected={this.state.selectedTab === 'my'}
             onPress={() => {
               this.setState({
-                selectedTab: 'yellowTab',
+                selectedTab: 'my',
               });
             }}
             data-seed="logId"

@@ -6,7 +6,7 @@ import ToMy from './Home/ToMy'
 import HomeWrite from './Home/HomeWrite'
 import Addressee from './Home/Addressee'
 import Content from './Home/Content'
-import {BrowserRouter as Router,Switch,Route} from 'react-router-dom'
+import {HashRouter as Router,Switch,Route} from 'react-router-dom'
 import My from './My/My'
 import Collection from './My/Collection'
 import Setting from './My/Setting'
@@ -17,6 +17,7 @@ import TabBar from "./TabBar"
 ReactDOM.render(
     <Router>
         <Switch>
+            <Route path="/home/:tab" component={Tabbar} />
             <Route path="/home" component={Tabbar} />
             <Route path="/tomy" component={ToMy} />
             <Route path="/homeWrite" component={HomeWrite} />

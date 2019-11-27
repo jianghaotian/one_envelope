@@ -1,6 +1,6 @@
 import React, { Component } from 'react'
 import '../css/My.css'
-import {BrowserRouter as Router,NavLink,Link,Switch} from 'react-router-dom'
+import {NavLink,Link,Switch} from 'react-router-dom'
 
 
 export default class Collection extends Component {
@@ -10,7 +10,7 @@ export default class Collection extends Component {
                 {/* tab */}
                 <div className="col-tab">
                     我的收藏
-                    <Link to="/my" 
+                    <Link to="/home/my" 
                     style={{
                         float:"left",
                         height:"3em",

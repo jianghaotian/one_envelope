@@ -1,6 +1,6 @@
 import React, { Component } from 'react'
 import '../css/My.css'
-import {BrowserRouter as Router,NavLink,Link,Switch} from 'react-router-dom'
+import {Link} from 'react-router-dom'
 
 export default class Recover extends Component {
     render() {
@@ -9,7 +9,7 @@ export default class Recover extends Component {
                 {/* tab */}
                 <div className="col-tab">
                     回收箱
-                    <Link to="/my" 
+                    <Link to="/home/my" 
                     style={{
                         float:"left",
                         height:"3em",
