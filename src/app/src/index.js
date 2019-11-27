@@ -13,6 +13,8 @@ import Setting from './My/Setting'
 import Recover from './My/Recover'
 import LetterBox from './LetterBox/LetterBox'
 import TabBar from "./TabBar"
+import InviteWrite from './WriteTogether/InviteWrite'
+import WriteTogether from './WriteTogether/WriteTogether'
 
 ReactDOM.render(
     <Router>
@@ -26,6 +28,9 @@ ReactDOM.render(
             <Route path="/homeWrite" component={HomeWrite} />
             <Route path="/content" component={Content} />
             <Route path="/addressee" component={Addressee} />
+
+            <Route exact path="/invitewrite" component={InviteWrite}/>
+            <Route exact path="/writeTogether" component={WriteTogether}/>
         </Switch>
     </Router>,
     document.getElementById("root")
