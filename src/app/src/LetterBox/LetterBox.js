@@ -36,7 +36,6 @@ export default class LetterBox extends Component {
                     {arr.map((item,index)=>{
                         return(
                             <li className='lb-text'>
-                                {item.img}
                                 <img src={require("../imgs/my-bg.jpg")} style={{
                                     borderRadius:'50%',
                                     height:'50%',
