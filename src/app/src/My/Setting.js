@@ -1,5 +1,5 @@
 import React, { Component } from 'react'
-import {Icon,List,Switch } from 'antd-mobile'
+import {Icon,List,Switch, WhiteSpace } from 'antd-mobile'
 import '../css/My.css'
 import { createForm } from 'rc-form';
 import {Link} from 'react-router-dom'
@@ -40,8 +40,10 @@ class Setting extends Component {
                         fontSize:"1.2em"    
                     }}></i>
                 </div>
+                
                 {/* 选项 */}
                 <List style={{marginTop:"1em"}}>
+                    <WhiteSpace size="xs" />
                     <List.Item
                     extra={<Switch
                         {...getFieldProps('Switch1', {
@@ -58,13 +60,24 @@ class Setting extends Component {
                         }}
                     />}
                     >消息通知</List.Item>
+                    <WhiteSpace size="xs" />
                     <List.Item>版本号
                         <Icon type="right" style={{float:"right",paddingTop:"0.3em"}} />
                         <span style={{float:"right",fontSize:'1em',color:"grey"}}>1.0.0</span>
                     </List.Item>
+                    <List.Item>修改密码
+                        <Icon type="right" style={{float:"right",paddingTop:"0.3em"}} />
+                        <span style={{float:"right",fontSize:'1em',color:"grey"}}>1.0.0</span>
+                    </List.Item>
+
                 </List>
+                
+                {/* 退出登录 */}
                 <div className="my-unlogin">
-                    <button><Link to="login">退出登录</Link></button>
+                    <button><Link to="login" style={{
+                        color:'white',
+                        fontSize:'1.1em'
+                    }}>退出登录</Link></button>
                 </div>  
             </div>
         )

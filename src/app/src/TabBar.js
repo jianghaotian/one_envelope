@@ -61,8 +61,6 @@ export default class Tabbar extends React.Component {
             <WriteTogether />
           </TabBar.Item>
 
-          
-
           <TabBar.Item
             icon={
               <i className="iconfont icon-xinxiang"></i>
@@ -72,10 +70,10 @@ export default class Tabbar extends React.Component {
             }
             title="信箱"
             key="letterBox"
-            selected={this.state.selectedTab === 'greenTab'}
+            selected={this.state.selectedTab === 'letterbox'}
             onPress={() => {
               this.setState({
-                selectedTab: 'greenTab',
+                selectedTab: 'letterbox',
               });
             }}
             data-seed="logId"

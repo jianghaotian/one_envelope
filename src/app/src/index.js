@@ -13,6 +13,7 @@ import Setting from './My/Setting'
 import Recover from './My/Recover'
 import LetterBox from './LetterBox/LetterBox'
 import TabBar from "./TabBar"
+import Letter from './LetterBox/Letter'
 
 ReactDOM.render(
     <Router>
@@ -30,6 +31,7 @@ ReactDOM.render(
             <Route path="/letterbox" component={LetterBox} />
             <Route path='/my' component={My} />
             <Route path="/login" component={Login} />
+            <Route path="/letter/:id" component={Letter} />
         </Switch>
     </Router>,
     document.getElementById("root")
