@@ -1,0 +1,41 @@
+* {
+    padding: 0;
+    margin: 0;
+}
+.member a{
+    text-decoration:none;
+}
+.member Link{
+    text-decoration:none;
+}
+.member ul,li{
+    list-style: none;
+    margin: 0;
+    padding: 0;
+}
+.member p{
+    display: inline;
+    margin: 0px;
+    padding: 0px;
+}
+.together-navback{
+    background-color:#fff;
+    color:#000;
+    height:80px;
+    border-bottom: 1px solid rgb(209, 203, 203);
+    padding-top: 20px;
+    position:relative;
+}
+.together-img{
+    width:20px;
+    position:absolute;
+    top:50%;
+    right:5%;
+}
+.member-return{
+    width:20px;
+    position: absolute;
+    top:50%;
+    left:5%;
+    color: rgb(90, 84, 84);
+}

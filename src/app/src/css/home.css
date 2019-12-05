@@ -1,0 +1,194 @@
+*{
+    padding: 0;
+    margin:0;
+}
+li{
+    list-style:none;
+}
+/* 背景图 */
+.home-back{
+    height:150px;
+    width:100%;
+    background-color: pink;
+    background: url(../imgs/Home/backImg3.png) 00px;
+    background-size:cover;
+    position:fixed;
+    z-index:1;
+}
+.home-toType{
+    color:white;
+    font-size:15px;
+    font-weight: bold;
+    height:30px;
+    width:100%;
+    /* background-color: blanchedalmond; */
+    line-height:30px;
+    margin-left:5px;
+}
+
+/* 内容部分 */
+.home-body{
+    height:100%;
+    position: relative;
+    top:150px;
+    width:100%;
+    /* background: rgb(177, 68, 68); */
+}
+.content{
+    padding:5px;
+    height:100%;
+    width:100%;
+    background-color:white;
+    border-bottom:8px solid rgb(228, 228, 228);
+    position: relative;
+}
+.c-top{
+    height:49px;
+    width:95%;
+    margin: 0 auto;
+    border-bottom:0.5px solid rgb(196, 194, 194);
+    /* background-color: rgb(255, 191, 180); */
+}
+.title{
+    float: left;
+    width:80%;
+    padding:5px;
+
+    /* background-color: thistle; */
+}
+.c-content{
+    height:100px;
+    padding:5px 16px 5px 16px;
+    width:100%;
+    color:grey;
+    /* background-color: palevioletred; */
+    overflow: hidden;
+    /* overflow:scroll; */
+}
+/* 下拉键 */
+.home-down{
+    width:30px;
+    margin-top:10px;
+    margin-right:10px;
+    height:20px;
+    float:right;
+}
+.DM-p{
+    width:80px;
+    height:20px;
+    line-height:20px;
+    margin-top:10px;
+    margin-left:10px;
+    background:none;
+    border:none;
+}
+.DM-img{
+    float: left;
+    margin-right:5px;
+}
+
+/* pencil */
+.pencil{
+    width:50px;
+    height:50px;
+    /* border-radius:45px; */
+    /* background-color: tomato; */
+    z-index:3;
+    position:absolute;
+    bottom:5px;
+    right:10px;
+    background: url("../imgs/Home/pencil.png");
+    background-size:cover;
+}
+
+/* 滑动部分 */
+.slider{
+    width:70%;
+    height:100%;
+    background-color: rgb(236, 236, 236);
+    /* background:url(../imgs/Home/slider2.jpg) 300px; */
+    background-size:cover;
+    z-index:2;
+    top:0;
+    left:-70%;
+    overflow: hidden;
+    position:absolute;
+}
+
+/* Slider顶部 */
+.slider-top{
+    height:30px;
+    width:100%;
+    background-color:rgb(199, 199, 199);
+}
+
+/* 用户信息 */
+.slider-user{
+    height:80px;
+    width:100%;
+    background-color:white;
+    padding-top:15px;
+}
+.slider-profile{
+    height:50px;
+    width:50px;
+    float: left;
+    border-radius:45px;
+    /* background-color: tomato; */
+    margin-left:5px;
+}
+.slider-userName{
+    float: left;
+    margin-left:10px;
+    margin-top:10px;
+    font-weight: bold;
+    font-size:16px;
+}
+
+
+/* 私密写列表 */
+.slider-toList{
+    height:73%;
+    width:100%;
+    margin-top:15px;
+    overflow: hidden;
+    /* background-color: tomato; */
+}
+.add_top{
+    height:40px;
+    color:black;
+    padding-left:3px;
+    line-height:40px;
+    font-size:16px;
+    font-weight: bold;
+    background-color:rgb(197, 197, 197);
+}
+/* 选项 */
+.addressee{
+    height:100%;
+    width:85%;
+    float: left;
+    /* background-color: tomato; */
+}
+.add-edit{
+    width:13%;
+    height:40px;
+    /* background-color: tomato; */
+    float:left
+}
+.addli{
+    height:45px;
+    width:100%;
+    border-bottom:0.5px solid rgb(190, 190, 190);
+}
+.addTo{
+    height:80%;
+    width:30px;
+    margin-right:12px;
+    /* margin-top:5px; */
+    float:right;
+    background:none;
+    border:none;
+    /* background-color:white; */
+}
+

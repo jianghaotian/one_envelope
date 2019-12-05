@@ -1,0 +1,47 @@
+
+export  var dataList = [
+    {
+        "to":"致自己",
+        "title":"今天想对自己说",
+        "publishYear":2019,
+        "publishMonth":"11",
+        "publishDay":"27",
+        "publishHour":"9",
+        "publishTime":"22",
+        "publish":"2019年11月27日9:22",
+        "content":"如果事与愿违，就相信上天一定另有安排；所有失去的，都会以另外一种方式归来。你要相信，只要努力，时间不会亏待你。"
+    },
+    {
+        "to":"致自己",
+        "title":"今天想对自己说",
+        "publishYear":2019,
+        "publishMonth":"11",
+        "publishDay":"20",
+        "publishHour":"12",
+        "publishTime":"22",
+        "publish":"2019年11月20日12:22",
+        "content":"往者不可谏，来者犹可追，“楚狂接舆歌而过孔子曰：“凤兮，凤兮！何德之衰？往者不可谏，来者犹可追。已而，已而！今之从政者殆而！” 孔子下，欲与之言。趋而辟之，不得与之言。"
+    },
+    {
+        "to":"致可爱的她",
+        "title":"给她的一封小情书",
+        "publishYear":2019,
+        "publishMonth":"11",
+        "publishDay":"19",
+        "publishHour":"11",
+        "publishTime":"22",
+        "publish":"2019年11月19日11:22",
+        "content":"你是银河慷慨赠我的糖"
+    },
+    {
+        "to":"致妈妈",
+        "title":"给亲爱的妈妈",
+        "publishYear":2019,
+        "publishMonth":"11",
+        "publishDay":"18",
+        "publishHour":"10",
+        "publishTime":"22",
+        "publish":"2019年11月18日10:22",
+        "content":"希望我的成长，超越你的苍老的速度"
+    }
+]
