@@ -28,6 +28,11 @@ import Addressee from './WriteTogether/Addressee'
 import inviteMember from './WriteTogether/inviteMember'
 
 
+import api from './request/api';
+import store from './redux/store';
+
+React.Component.prototype.$api = api;
+React.Component.prototype.$store = store;
 
 ReactDOM.render(
     <Router>
