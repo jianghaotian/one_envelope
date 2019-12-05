@@ -11,4 +11,440 @@ URL : https://yf.htapi.pub/v1
 | 1049 | 连接数据库失败 |
 | 1062 | SQL语句错误 |
 
+#### 1.获取验证码
+
+###### 请求url
+
+```
+URL : https://yf.htapi.pub/v1/users/verification
+```
+
+###### 请求方式
+
+```
+POST
+```
+
+###### 接收参数
+
+| 参数    | 说明                |
+| ------- | ------------------- |
+| account | 手机号/邮箱         |
+| type    | 类型  (phone/email) |
+
+######  返回参数:
+
+```
+{
+	status: 0,
+	message: "OK"
+}
+```
+
+#### 2.用户注册
+
+###### 请求url
+
+```
+URL : https://yf.htapi.pub/v1/users/register
+```
+
+###### 请求方式
+
+```
+POST
+```
+
+###### 接收参数
+
+| 参数         | 说明                | 类型   |
+| ------------ | ------------------- | ------ |
+| account      | 手机号/邮箱         | string |
+| type         | 类型  (phone/email) | string |
+| verification | 验证码              | string |
+| password     | 密码                | string |
+| name         | 昵称 (可选)         | string |
+
+######  返回参数:
+
+```
+{
+	status: 0,
+	message: "OK"
+}
+```
+
+#### 3.用户登录
+
+###### 请求url
+
+```
+URL : https://yf.htapi.pub/v1/users/login
+```
+
+###### 请求方式
+
+```
+POST
+```
+
+###### 接收参数
+
+| 参数     | 说明                | 类型   |
+| -------- | ------------------- | ------ |
+| account  | 手机号/邮箱         | string |
+| type     | 类型  (phone/email) | string |
+| password | 密码                | string |
+
+######  返回参数:
+
+```
+{
+	status: 0,
+	message: "OK"
+}
+```
+
+#### 4.获取所有私密信件
+
+###### 请求url
+
+```
+URL : https://yf.htapi.pub/v1/private/getletter
+```
+
+###### 请求方式
+
+```
+GET
+```
+
+###### 接收参数
+
+| 参数  | 说明     | 类型 |
+| ----- | -------- | ---- |
+| Uid   | 用户id   | int  |
+| toUid | 收信人id | int  |
+
+######  返回参数（示例）:
+
+```
+{
+  status: 0,
+  message: 'OK',
+  data: [
+    RowDataPacket {
+      Pid: 1,
+      Ptitle: '哈啊啊',
+      Pcontent: '哈哈',
+      Uid: 1,
+      toUid: 1,
+      toNick: '致自己',
+      isSend: 0,
+      Pday: 1574867047089
+    }
+  ]
+}
+```
+
+#### 5.展示信件内容
+
+###### 请求url
+
+```
+URL : https://yf.htapi.pub/v1/showletter/show
+```
+
+###### 请求方式
+
+```
+GET
+```
+
+###### 接收参数
+
+| 参数 | 说明   | 类型 |
+| ---- | ------ | ---- |
+| Uid  | 用户id | int  |
+| Pid  | 信件id | int  |
+
+###### 返回参数（示例）:
+
+```
+{
+  status: 0,
+  message: 'OK',
+  data: [
+    RowDataPacket {
+      Pid: 1,
+      Ptitle: '哈啊啊',
+      Pcontent: '哈哈',
+      Uid: 1,
+      toUid: 1,
+      toNick: '致自己',
+      isSend: 0,
+      Pday: 1574867047089
+    }
+  ]
+}
+```
+
+####  6.书写信件内容
+
+###### 请求url
+
+```
+URL : https://yf.htapi.pub/v1/private/writeletter
+```
+
+###### 请求方式
+
+```
+POST
+```
+
+###### 接收参数
+
+| 参数     | 说明       | 类型   |
+| -------- | ---------- | ------ |
+| Ptitle   | 信件标题   | string |
+| Pcontent | 信件内容   | string |
+| Uid      | 写信人id   | int    |
+| toUid    | 收信人id   | int    |
+| toNick   | 收信人称呼 | string |
+| Pday     | 创建时间   | 时间戳 |
+
+###### 返回参数（示例）:
+
+```
+{
+  status: 0,
+  message: 'OK',
+}
+```
+
+#### 7.获取一起写主题
+
+###### 请求url
+
+```
+URL : https://yf.htapi.pub/v1/together/theme/
+```
+
+###### 请求方式
+
+```
+GET
+```
+
+###### 接收参数
+
+| 参数 | 说明   | 类型 |
+| ---- | ------ | ---- |
+| Uid  | 用户id | int  |
+
+###### 返回参数（示例）:
+
+```
+{
+  status: 0,
+  message: 'OK',
+  data: [
+    RowDataPacket {
+      Tid: 1,
+      Tname: '哈啊啊',
+      Timage: '哈哈',
+      isPrivate: 1,
+      Uid: 1,
+      Tnumber:2,
+    }
+  ]
+}
+```
+
+#### 8.获取主题详情
+
+###### 请求url
+
+```
+URL : https://yf.htapi.pub/v1/together/theme/:tid/showtheme
+```
+
+###### 请求方式
+
+```
+GET
+```
+
+###### 接收参数
+
+| 参数 | 说明   | 类型 |
+| ---- | ------ | ---- |
+| Uid  | 用户id | int  |
+| Tid  | 主题id | int  |
+
+###### 返回参数（示例）:
+
+```
+{
+  status: 0,
+  message: 'OK',
+  data: [
+    RowDataPacket {
+      Lid: 1,
+      Tid: 1,
+      Tname: '哈啊啊',
+      Timage: '哈哈',
+      Ltitle:'啦啦',
+      Lcontent:'呦呦',
+      Tday：'2019/9/8'
+      Uid: 1,
+    }
+  ]
+}
+```
+
+####  8.获取成员（待修改）
+
+###### 请求url
+
+```
+URL : https://yf.htapi.pub/v1/together/theme/:tid/showtheme/member
+```
+
+###### 请求方式
+
+```
+GET
+```
+
+###### 接收参数
+
+| 参数 | 说明     | 类型 |
+| ---- | -------- | ---- |
+| Uid  | 创建者id | int  |
+| Tid  | 主题id   | int  |
+
+###### 返回参数（示例）:
+
+```
+{
+  status: 0,
+  message: 'OK',
+  
+}
+```
+
+#### 9.书写主题信件内容
+
+###### 请求url
+
+```
+URL : https://yf.htapi.pub/v1/together/theme/:tid/writeletter
+```
+
+###### 请求方式
+
+```
+POST
+```
+
+###### 接收参数
+
+| 参数     | 说明     | 类型   |
+| -------- | -------- | ------ |
+| Ltitle   | 信件标题 | string |
+| Lcontent | 信件内容 | string |
+| Uid      | 写信人id | int    |
+| Tday     | 创建日期 | string |
+| Tid      | 主题id   | int    |
+
+###### 返回参数（示例）:
+
+```
+{
+  status: 0,
+  message: 'OK',
+}
+```
+
+#### 10.获取信箱内容（待修改）
+
+###### 请求url
+
+```
+URL : https://yf.htapi.pub/v1/mailbox
+```
+
+###### 请求方式
+
+```
+GET
+```
+
+###### 接收参数
+
+| 参数 | 说明   | 类型 |
+| ---- | ------ | ---- |
+| Uid  | 用户id | int  |
+
+###### 返回参数（示例）:
+
+```
+{
+  status: 0,
+  message: 'OK',
+  data: [
+    RowDataPacket {
+      Pid: 1,
+      Ptitle: '哈啊啊',
+      Pcontent: '哈哈',
+      Uid: 1,
+      Uimage:'',
+      Uname:'妈妈',
+      toNick: '致自己',
+      isSend: 0,
+      Pday: 1574867047089
+    }
+  ]
+}
+```
+
+####  12.获取个人信息
+
+###### 请求url
+
+```
+URL : https://yf.htapi.pub/v1/mine
+```
+
+###### 请求方式
+
+```
+GET
+```
+
+###### 接收参数
+
+| 参数 | 说明   | 类型 |
+| ---- | ------ | ---- |
+| Uid  | 用户id | int  |
+
+###### 返回参数（示例）:
+
+```
+{
+  status: 0,
+  message: 'OK',
+  data: [
+    RowDataPacket {
+      Uimage:'',
+      Uname:'妈妈',
+	  Ufraction:12
+    }
+  ]
+}
+```
+
+####  12.获取个人信息
 
