@@ -34,7 +34,7 @@ export default class Touxiang extends Component {
                         result: true,
                         faceCheck: true
                     })
-                    this.props.history.push({pathname:'/wode/info/touxiang/crop',state:{src:reader.result}})
+                    this.props.history.push({pathname:'/cropimg',state:{src:reader.result}})
                  }; 
             } else {
                 console.log("文件过大");
@@ -46,7 +46,7 @@ export default class Touxiang extends Component {
     render() {
         return (
             <div>
-                <NavBar mode="dark" icon={<Icon type="left" onClick={()=>{this.props.history.push('/wode/info')}}/>} rightContent={<label for="addFile"><i style={{fontSize:'20px'}} className={'iconfont icon-sangedian1'}></i></label>} style={{background:'#617ca6',color:'#fff'}}>头 像</NavBar>
+                <NavBar mode="dark" icon={<Icon type="left" onClick={()=>{this.props.history.push('/home/my')}}/>} rightContent={<label for="addFile">。。。</label>} style={{background:'#617ca6',color:'#fff'}}>头 像</NavBar>
                 
                 <div style={{width:'100%',height:'100vh',background:'#000',position:'fixed'}}>
                     <img src={this.state.src} style={{width:'100%',height:'100vw',position:'fixed',

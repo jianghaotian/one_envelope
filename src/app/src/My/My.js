@@ -16,7 +16,7 @@ export default class My extends Component {
                     className="myifbg" />
                     {/* 头像 */}
                     <img 
-                    src={require("../imgs/my-login.jpg")} className="portrait" />
+                    src={require("../imgs/my-login.jpg")} className="portrait" onClick={() =>{this.props.history.push('/touxiang')}}/>
                     {/* 通知信息-图标 */}
                     <Link to='/mymessage'><i className="icon-xinxiang iconfont"
                     style={{

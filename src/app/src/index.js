@@ -27,6 +27,9 @@ import togeContent from './WriteTogether/togeContent'
 import Addressee from './WriteTogether/Addressee'
 import inviteMember from './WriteTogether/inviteMember'
 
+import Touxiang from './My/Touxiang'
+import Cropimg from './My/Cropimg'
+
 
 import api from './request/api';
 import store from './redux/store';
@@ -67,6 +70,11 @@ ReactDOM.render(
             <Route path="/togeContent" component={togeContent} />
             <Route path="/inviteMember" component={inviteMember} />
             <Route path="/addressee" component={Addressee} />
+
+            <Route path="/touxiang" component={Touxiang} />
+            <Route path="/cropimg" component={Cropimg} />
+
+
         </Switch>
     </Router>,
     document.getElementById("root")

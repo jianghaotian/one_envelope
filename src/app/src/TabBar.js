@@ -101,7 +101,7 @@ export default class Tabbar extends React.Component {
             }}
             data-seed="logId"
           >
-            <My />
+            <My history={this.props.history}/>
           </TabBar.Item>
         </TabBar>
       </div>

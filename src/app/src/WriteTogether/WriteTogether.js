@@ -32,6 +32,18 @@ export default class WriteTogether extends Component {
             ]       
         }
     }
+    componentDidMount(){
+        this.$api.theme().then(res => {
+            if (res.data.status === 0) {
+
+                // console.log(res);
+                this.setState({
+                    data:res.data.data
+                })
+            }
+          
+        }) 
+    }
     render() {
         return (
             <div style={{backgroundColor:"rgb(240, 233, 233)"}}>
@@ -46,8 +58,8 @@ export default class WriteTogether extends Component {
                     {this.state.data.map((val)=> (
                         <Link to="/invitewrite" style={{color:"white"}}>
                         <div key={val} id="together-block">                            
-                            <img src={val.img} alt="" className="together-bacimg"/>
-                            <div className="together-title">{val.title}</div> 
+                            <img src={require("../imgs//WriteTogether/toge2.jpg")} alt="" className="together-bacimg"/>
+                            <div className="together-title">{val.Tname}</div> 
                             <div className="together-member">
                                 <span>成员</span>
                                 <br/>

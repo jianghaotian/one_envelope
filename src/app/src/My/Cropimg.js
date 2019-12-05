@@ -15,13 +15,19 @@ export default class Cropimg extends React.Component {
         if (this.cropper.getCroppedCanvas() === 'null') {
             return false
         }
-        this.props.history.push({pathname:'/wode/info/touxiang',state:{src:this.cropper.getCroppedCanvas().toDataURL()}})
+        var img = this.cropper.getCroppedCanvas().toDataURL();
+
+        // this.$api.headimg({src:img}).then(res => {
+
+            this.props.history.push({pathname:'/touxiang',state:{src:img}})
+            
+        // })
     }
 
     render() {
         return (
             <div>
-                <NavBar mode="dark" icon={<Icon type="left" onClick={()=>{this.props.history.push('/wode/info')}}/>} style={{background:'#617ca6',color:'#fff'}}>头 像</NavBar>
+                <NavBar mode="dark" icon={<Icon type="left" onClick={()=>{this.props.history.push('/touxiang')}}/>} style={{background:'#617ca6',color:'#fff'}}>头 像</NavBar>
 
                 <div style={{width: '100%'}}>
                     <Cropper
