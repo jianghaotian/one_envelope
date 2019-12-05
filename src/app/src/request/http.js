@@ -8,7 +8,8 @@ axios.defaults.timeout = 10000;  // 响应时间
 axios.defaults.headers.post['Content-Type'] = 'application/x-www-form-urlencoded;charset=UTF-8';  // 配置请求头
 // axios.defaults.headers.common['token'] = store.getState().token.token;
 
-axios.defaults.baseURL = 'http://localhost:8000/v1';  //配置接口地址
+// axios.defaults.baseURL = 'http://localhost:8000/v1';  //配置接口地址
+axios.defaults.baseURL = 'http://10.7.84.61:8000/v1';  //配置接口地址
 // axios.defaults.baseURL = 'http://xyw.haotian.pub/v1';  //配置接口地址
 
 // POST传参序列化(添加请求拦截器)
