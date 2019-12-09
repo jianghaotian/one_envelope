@@ -18,7 +18,6 @@ let token = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1aWQiOjEsImlhdCI6MTU3NDkzND
  */
 router.get('/', function (req, res, next) {
     checkToken(token, (result) => {
-        console.log(result);
         let uid = result.data.uid;
         if (result.status !== 0) {
             res.json(result);

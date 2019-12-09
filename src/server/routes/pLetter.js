@@ -9,7 +9,6 @@ let token = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1aWQiOjEsImlhdCI6MTU3NDkzND
  * 获取所有私密写信件
  * GET
  * 接收参数:
- *      uid:用户id
  *      toUid：收件人id
  * 
  */
@@ -38,18 +37,18 @@ router.get('/getletter', function (req, res, next) {
  * 接收参数:
  *      title:信件标题
  *      content：信件内容
- *      uid:写信人id
  *      toUid:收件人id
  *      toNick:收信人称呼
  *      pday:创建日期
  * 
  */
 router.post('/writeletter', function (req, res, next) {
-    let { title, content,uid,toUid,toNick,pday } = req.body;
+    let { title, content,toUid,toNick,pday } = req.body;
     checkToken(token, (result) => {
         if(result.status != 0){
             res.json(result);
         }else{
+            let uid = result.data.uid;
             runSql(`insert into pletter(Ptitle, Pcontent, Uid,toUid,toNick,isSend,Pday,isCollection,isDelete) values (?,?,?,?,?,0,?,0,0)`, [title, content,uid,toUid,toNick,0,pday],(result1)=>{
                 res.json(result1);
             })
