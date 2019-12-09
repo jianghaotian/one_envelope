@@ -9,12 +9,11 @@ let token = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1aWQiOjEsImlhdCI6MTU3NDkzND
  * 获取个人信息
  * GET
  * 接收参数:
- *      title:信件标题
- *      content：信件内容
- *      uid:写信人id
- *      toUid:收件人id
- *      toNick:收信人称呼
- *      pday:创建日期
+ *      uid:用户id
+ * 返回参数：
+ *      uname：用户名称
+ *      uimage：用户头像
+ * 
  * 
  */
 router.get('/', function (req, res, next) {
@@ -24,7 +23,9 @@ router.get('/', function (req, res, next) {
         if (result.status !== 0) {
             res.json(result);
         } else {
-            runSql(`select * `)
+            runSql(`select * from users where uid =?`,[uid],(result1)=>{
+                res.json(result1);
+            })
         }
     });
    

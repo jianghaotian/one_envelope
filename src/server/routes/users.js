@@ -187,7 +187,6 @@ router.post('/register', function (req, res, next) {
  */
 router.post('/login', function (req, res, next) {
     let { account, type, password } = req.body;
-
     if (type === 'phone' || type === 'email') {
         runSql(`select uid,upassword from user where u${type} = ?`, [account], (result) => {
             if (result.status === 0) {
