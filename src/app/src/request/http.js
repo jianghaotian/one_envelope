@@ -37,8 +37,8 @@ axios.interceptors.response.use((res) =>{
 }, (error) => {
     console.log('网络异常');
 
-    Toast.hide();
-    Toast.offline('网络异常', 1, null, false);
+    // Toast.hide();
+    // Toast.offline('网络异常', 1, null, false);
 
     return Promise.reject(error);
 });

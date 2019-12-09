@@ -1,6 +1,9 @@
 import React, { Component } from 'react';
 import "../css/Login.css";
 import { Button,Modal } from 'antd-mobile';
+import {setTokenAll} from '../redux/actions';
+import { Toast } from 'antd-mobile';
+
 
 //手机,邮箱,密码正则表达式
 const regTel = /^1\d{10}$/;
@@ -42,6 +45,21 @@ export default class Login extends Component {
     }
     msg=()=>{
         this.props.history.push("/msgLogin");
+    }
+    submit = () => {
+        this.$api.login({account: '手机号/邮箱',type: '类型 (phone/email)',password: '密码'}).then(res => {
+            if (res.data.status === 0) {
+                
+                this.$store.dispatch(setTokenAll(res.data.data.token, res.data.data.uid));
+                this.props.history.push("/home");
+                
+            } else {
+                Toast.fail('登录失败', 1, null, false)
+
+
+            }
+
+        })
     }
     render() {
         return (

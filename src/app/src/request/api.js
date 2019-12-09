@@ -2,7 +2,9 @@ import { get, post } from './http';
 
 const api = {
 
-    theme:p=> get('together/theme',p),
+    login: p => post('user/login', p),
+
+    theme: p=> get('together/theme',p),
 
     headimg: p => post('image/head',p)
     // login: p => post('users/login', p),
@@ -20,7 +22,7 @@ const api = {
 
     // set_grade: p => post('info/setgrade', p)
 
-
+    
 }
 
 
@@ -31,3 +33,5 @@ export default api;
 //     // 获取数据成功后的其他操作
 //     …………
 // }) 
+
+// http://localhost:8000/v1/user/login
