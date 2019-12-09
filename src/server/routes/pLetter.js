@@ -56,5 +56,31 @@ router.post('/writeletter', function (req, res, next) {
     })
 });
 
+/**
+ * 展示收信人列表
+ *请求方式
+ *  GET
+ * 接受参数：
+ * 
+ * 返回参数：
+ *      Uimage：用户头像
+ *      Uname：用户名
+ *      toNick：收信人昵称
+ *      toUid：收信人id
+ */
+router.get('/getlist',function(req,res,next){
+    checkToken(token,(result)=>{
+        let uid = result.data.uid;
+        if(result.status != 0){
+            res.json(result);
+        }else{
+            runSql(`select user.uimage,user.uname,pletter.toNick from user,pletter where user.uid=? and(user.uid = pletter.uid)`,[uid],
+            (result1)=>{
+                console.log(result1);
+                res.json(result1);
+            })
+        }
+    })
 
+})
 module.exports = router;

@@ -11,6 +11,8 @@ URL : https://yf.htapi.pub/v1
 | 1049 | 连接数据库失败 |
 | 1062 | SQL语句错误 |
 
+# 登录注册
+
 #### 1.获取验证码
 
 ###### 请求url
@@ -105,6 +107,8 @@ POST
 }
 ```
 
+# 私密写
+
 #### 4.获取所有私密信件
 
 ###### 请求url
@@ -146,12 +150,12 @@ GET
 }
 ```
 
-#### 5.展示信件内容
+#### 5.展示收信人列表
 
 ###### 请求url
 
 ```
-URL : https://yf.htapi.pub/v1/showletter/show
+URL : https://yf.htapi.pub/v1/private/getlist
 ```
 
 ###### 请求方式
@@ -162,10 +166,6 @@ GET
 
 ###### 接收参数
 
-| 参数 | 说明   | 类型 |
-| ---- | ------ | ---- |
-| Pid  | 信件id | int  |
-
 ###### 返回参数（示例）:
 
 ```
@@ -174,14 +174,10 @@ GET
   message: 'OK',
   data: [
     RowDataPacket {
-      Pid: 1,
-      Ptitle: '哈啊啊',
-      Pcontent: '哈哈',
-      Uid: 1,
-      toUid: 1,
-      toNick: '致自己',
-      isSend: 0,
-      Pday: 1574867047089
+       Uimage：用户头像
+       Uname：用户名
+       toNick：收信人昵称
+       toUid：收信人id
     }
   ]
 }
@@ -219,6 +215,8 @@ POST
   message: 'OK',
 }
 ```
+
+# 一起写
 
 #### 7.获取一起写主题
 
@@ -358,6 +356,8 @@ POST
 }
 ```
 
+# 信箱
+
 #### 10.获取信箱内容（待修改）
 
 ###### 请求url
@@ -396,6 +396,8 @@ GET
 }
 ```
 
+# 我的
+
 ####  12.获取个人信息
 
 ###### 请求url
@@ -428,5 +430,50 @@ GET
 }
 ```
 
-####  12.获取个人信息
+#  公共
+
+#### 5.展示信件内容
+
+###### 请求url
+
+```
+URL : https://yf.htapi.pub/v1/showletter/show
+```
+
+###### 请求方式
+
+```
+GET
+```
+
+###### 接收参数
+
+| 参数 | 说明   | 类型 |
+| ---- | ------ | ---- |
+| Pid  | 信件id | int  |
+
+###### 返回参数（示例）:
+
+```
+{
+  status: 0,
+  message: 'OK',
+  data: [
+    RowDataPacket {
+      Pid: 1,
+      Ptitle: '哈啊啊',
+      Pcontent: '哈哈',
+      Uid: 1,
+      toUid: 1,
+      toNick: '致自己',
+      isSend: 0,
+      Pday: 1574867047089
+    }
+  ]
+}
+```
+
+#### 
+
+
 
