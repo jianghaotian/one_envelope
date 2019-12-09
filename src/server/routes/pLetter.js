@@ -50,7 +50,7 @@ router.post('/writeletter', function (req, res, next) {
         if(result.status != 0){
             res.json(result);
         }else{
-            runSql(`insert into pletter(Ptitle, Pcontent, Uid,toUid,toNick,isSend,Pday) values (?,?,?,?,?,?,?)`, [title, content,uid,toUid,toNick,0,pday],(result1)=>{
+            runSql(`insert into pletter(Ptitle, Pcontent, Uid,toUid,toNick,isSend,Pday,isCollection,isDelete) values (?,?,?,?,?,0,?,0,0)`, [title, content,uid,toUid,toNick,0,pday],(result1)=>{
                 res.json(result1);
             })
         }
