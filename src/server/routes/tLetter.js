@@ -96,7 +96,7 @@ router.post('/theme/:tid/writeletter', function (req, res, next) {
             res.json(result);
         }else{
             let uid = result.data.uid;
-            runSql(`insert into tletter(Ltitle, Lcontent, Uid,Lday,Tid,isDeletc) values (?,?,?,?,?,0)`, [title, content,uid,lday,tid],(result1)=>{
+            runSql(`insert into tletter(Ltitle, Lcontent, Uid,Lday,Tid,isDeletc) values (?,?,?,?,?,?)`, [title, content,uid,lday,tid,0],(result1)=>{
                 res.json(result1);
             })
         }
