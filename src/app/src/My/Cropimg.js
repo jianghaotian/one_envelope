@@ -17,6 +17,8 @@ export default class Cropimg extends React.Component {
         }
         var img = this.cropper.getCroppedCanvas().toDataURL();
 
+        // console.log(this.cropper.getCroppedCanvas());
+
         // this.$api.headimg({src:img}).then(res => {
 
             this.props.history.push({pathname:'/touxiang',state:{src:img}})
