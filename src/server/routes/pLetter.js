@@ -9,6 +9,7 @@ let token = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1aWQiOjEsImlhdCI6MTU3NDkzND
  * 获取所有私密写信件
  * GET
  * 接收参数:
+ *      uid:用户id
  *      toUid：收件人id
  * 
  */
@@ -34,10 +35,9 @@ router.get('/getletter', function (req, res, next) {
  * 接收参数:
  *   pid：信件id
  */
-router.get('/getletter/pdelete', function (req, res, next) {
-    //http://localhost:8000/v1/private/getletter/pdelete?pid=6
-    console.log(req.query);
-    let {pid} = req.query;
+router.post('/getletter/pdelete', function (req, res, next) {
+    //http://localhost:8000/v1/private/getletter/pdelete
+    let {pid} = req.body;
     console.log(pid);
     checkToken(token, (result) => {
         if (result.status !== 0) {
@@ -53,7 +53,7 @@ router.get('/getletter/pdelete', function (req, res, next) {
                             res.json(result2);
                     })
                 }
-            })
+            });
         }
     });
 });
@@ -75,12 +75,11 @@ router.post('/writeletter', function (req, res, next) {
         if(result.status != 0){
             res.json(result);
         }else{
-            let uid = result.data.uid;
-            runSql(`insert into pletter(Ptitle, Pcontent, Uid,toUid,toNick,isSend,Pday,isCollection,isDelete) values (?,?,?,?,?,0,?,0,0)`, [title, content,uid,toUid,toNick,0,pday],(result1)=>{
+            runSql(`insert into pletter(Ptitle, Pcontent, Uid,toUid,toNick,isSend,Pday,isCollection,isDelete) values (?,?,?,?,?,?,?,?,?)`, [title, content,uid,null,toNick,0,pday,0,0],(result1)=>{
                 res.json(result1);
-            })
+            });
         }
-    })
+    });
 });
 
 /**
@@ -101,13 +100,71 @@ router.get('/getlist',function(req,res,next){
         if(result.status != 0){
             res.json(result);
         }else{
-            runSql(`select user.uimage,user.uname,pletter.toNick,pletter.toUid from user,pletter where user.uid=? and(user.uid = pletter.uid)`,[uid],
+            runSql(`select distinct user.uimage,user.uname,pletter.toNick,pletter.toUid from user,pletter where user.uid=? and(user.uid = pletter.uid)`,[uid],
             (result1)=>{
                 console.log(result1);
                 res.json(result1);
+            });
+        }
+    });
+
+});
+/**
+ *更换收信人昵称
+ *请求方式
+ *  POST
+ * 接受参数：
+ *      toNick：收信人昵称 
+ *      toUid：收信人id
+ * 返回参数： 
+ */
+router.post('/changetoNick',function(req,res,next){
+    // https://yf.htapi.pub/v1/private/changetoNick
+    let {newtoNick,oldtoNick} = req.body; 
+    console.log(req.body);
+    checkToken(token,(result)=>{
+        if(result.status != 0){
+            res.json(result);
+        }else{
+            let uid = result.data.uid;
+            runSql(`update pletter set toNick=? where uid=? and toNick=?`,[newtoNick,uid,oldtoNick],
+            (result1)=>{
+                console.log(result1);
+                res.json(result1);
+            });
+        }
+    });
+});
+/**
+ * 添加收信人列表
+ * 请求方式：
+ *      POST
+ * 接受参数：
+ *      toNick：收信人昵称
+ *      pday:创建日期
+ * 返回参数：
+ *      
+ */
+router.post('/addlist',function(req,res,next){
+    let {toNick,pday} =  req.body;
+    checkToken(token,(result)=>{
+        if(result.status !=0) {
+            res.json(result);
+        }else{
+            let uid = result.data.uid;
+            runSql(`select toNick from pletter where toNick=? and uid=? `,[toNick,uid],(result1)=>{
+                var data = result1.data;
+                var arr = Object.getOwnPropertyNames(data);
+                if(arr.length == 1){
+                     runSql(`insert into pletter(Ptitle, Pcontent, Uid,toUid,toNick,isSend,Pday,isCollection,isDelete) values (?,?,?,?,?,?,?,?,?) `,
+                    ["快来给他写信吧","他的信箱还没有东西哦",uid,null,toNick,1,pday,0,0],(result2)=>{
+                        res.json(result2);
+                    })
+                }else {
+                    res.json("Already exists, please change nickname!")
+                }
             })
         }
     })
-
 })
 module.exports = router;
