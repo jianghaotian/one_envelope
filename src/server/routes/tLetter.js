@@ -43,9 +43,10 @@ router.get('/theme', function (req, res, next) {
  *      lcontent:信件内容
  *      lday:信件创建日期
  */
-router.get('/theme/:tid/showtheme',function(req,res,next){
+router.get('/theme/showtheme',function(req,res,next){
+    // http:localhost:8000/v1/together/theme/showtheme?tid=1
+    let {tid} = req.query;
     checkToken(token,(result)=>{
-        let {tid} = req.query;
         if(result.status != 0){
             res.json(result);
         }else{
@@ -63,17 +64,17 @@ router.get('/theme/:tid/showtheme',function(req,res,next){
  * 接受参数：
  *      tid:主题id
  * 返回参数：
- *      uid：成员id
- * http://localhost:3000/v1/together/theme/1/showtheme/member?uid=1&tid=2
+ *      uname：用户名
  */
-router.get("/theme/:id/showtheme/member",function(req,res,next){
+router.get("/theme/showtheme/member",function(req,res,next){
+    // http://localhost:3000/v1/together/theme/showtheme/member?tid=2
     let{tid} = req.query;
     checkToken(token,(result)=>{
         if(result.status != 0){
             res.json(result);
             }else{
                 let uid = result.data.uid;
-                runSql(`select tmember.uid from theme,tmember where theme.uid=? and theme.tid=? and (theme.tid=tmember.tid)`,[uid,tid],(result1) =>{
+                runSql(`select distinct user.uname from theme,tmember,user where theme.uid=? and theme.tid=? and (theme.tid=tmember.tid) and (theme.uid = user.uid)`,[uid,tid],(result1) =>{
                     res.json(result1);
                 } )
         }

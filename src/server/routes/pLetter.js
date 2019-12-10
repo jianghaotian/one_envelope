@@ -74,7 +74,7 @@ router.get('/getlist',function(req,res,next){
         if(result.status != 0){
             res.json(result);
         }else{
-            runSql(`select user.uimage,user.uname,pletter.toNick from user,pletter where user.uid=? and(user.uid = pletter.uid)`,[uid],
+            runSql(`select user.uimage,user.uname,pletter.toNick,pletter.toUid from user,pletter where user.uid=? and(user.uid = pletter.uid)`,[uid],
             (result1)=>{
                 console.log(result1);
                 res.json(result1);

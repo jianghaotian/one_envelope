@@ -293,7 +293,13 @@ GET
 ###### 请求url
 
 ```
-URL : https://yf.htapi.pub/v1/together/theme/:tid/showtheme
+URL : https://yf.htapi.pub/v1/together/theme/showtheme
+```
+
+###### **示例：**
+
+```
+http:localhost:8000/v1/together/theme/showtheme?tid=1
 ```
 
 ###### 请求方式
@@ -316,14 +322,14 @@ GET
   message: 'OK',
   data: [
     RowDataPacket {
-      Lid: 1,
-      Tid: 1,
-      Tname: '哈啊啊',
-      Timage: '哈哈',
-      Ltitle:'啦啦',
-      Lcontent:'呦呦',
-      Tday：'2019/9/8'
-      Uid: 1,
+      lid: 1,
+      tid: 1,
+      tname: '哈啊啊',
+      timage: '哈哈',
+      ltitle:'啦啦',
+      lcontent:'呦呦',
+      tday：'2019/9/8'
+      uid: 1,
     }
   ]
 }
@@ -334,7 +340,13 @@ GET
 ###### 请求url
 
 ```
-URL : https://yf.htapi.pub/v1/together/theme/:tid/showtheme/member
+URL : https://yf.htapi.pub/v1/together/theme/showtheme/member
+```
+
+###### 示例
+
+```
+http://localhost:3000/v1/together/theme/showtheme/member?tid=2
 ```
 
 ###### 请求方式
@@ -355,7 +367,11 @@ GET
 {
   status: 0,
   message: 'OK',
-  
+  data: [
+   	 {
+      uname:"anwenyue"
+    }
+  ]
 }
 ```
 
