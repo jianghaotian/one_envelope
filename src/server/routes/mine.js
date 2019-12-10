@@ -22,7 +22,7 @@ router.get('/', function (req, res, next) {
         if (result.status !== 0) {
             res.json(result);
         } else {
-            runSql(`select * from users where uid =?`,[uid],(result1)=>{
+            runSql(`select * from user where uid =?`,[uid],(result1)=>{
                 res.json(result1);
             })
         }
