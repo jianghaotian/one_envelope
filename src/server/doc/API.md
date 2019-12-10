@@ -227,7 +227,7 @@ URL : https://yf.htapi.pub/v1/private/getletter/pdelete
 ###### 示例
 
 ```
-https://yf.htapi.pub/v1/private/getletter/pdelete?pid=6
+
 ```
 
 ###### 请求方式
@@ -257,12 +257,6 @@ POST
 
 ```
 URL : https://yf.htapi.pub/v1/private/changetoNick
-```
-
-###### 示例
-
-```
- https://yf.htapi.pub/v1/private/changetoNick?toNick=妈妈&toUid=2
 ```
 
 ###### 请求方式
