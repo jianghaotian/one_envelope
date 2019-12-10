@@ -224,7 +224,7 @@ POST
 URL : https://yf.htapi.pub/v1/private/getletter/pdelete
 ```
 
-示例
+###### 示例
 
 ```
 https://yf.htapi.pub/v1/private/getletter/pdelete?pid=6
@@ -447,9 +447,58 @@ GET
 }
 ```
 
+#### 13.展示信箱具体内容
+
+###### 请求url
+
+```
+URL : https://yf.htapi.pub/v1/mailbox/showmail
+```
+
+###### 示例
+
+```
+https://yf.htapi.pub/v1/mailbox/showmail?pid=3
+```
+
+###### 请求方式
+
+```
+GET
+```
+
+###### 接收参数
+
+| 参数 | 说明   | 类型 |
+| ---- | ------ | ---- |
+| pid  | 信件id | int  |
+
+返回参数（示例）:
+
+```
+{
+  status: 0,
+  message: 'OK',
+  data: [
+    RowDataPacket {
+      Pid: 3,
+      Ptitle: 'uid4',
+      Pcontent: 'lulala',
+      Uid: 4,
+      toUid: 1,
+      toNick: '致安文悦',
+      isSend: 1,
+      Pday: 1569872354698,
+      isCollection: 0,
+      isDelete: 0
+    }
+  ]
+}
+```
+
 # 我的
 
-####  13.获取个人信息
+####  14.获取个人信息
 
 ###### 请求url
 
@@ -483,7 +532,7 @@ GET
 
 #  私密写和信箱公共
 
-#### 14.展示信件内容
+#### 15.展示信件内容
 
 ###### 请求url
 
