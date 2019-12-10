@@ -65,10 +65,15 @@ ReactDOM.render(
 
             {/* zym */}
             <Route exact path="/invitewrite" component={InviteWrite}/>
+            {/* <Route exact path="/invitewrite/:id" component={InviteWrite}/> */}
+
             <Route exact path="/writeTogether" component={WriteTogether}/>
+            <Route exact path="/writeTogether/:id" component={WriteTogether}/>
+
             <Route path="/togecreate" component={togeCreate} />
             <Route path="/togeContent" component={togeContent} />
             <Route path="/inviteMember" component={inviteMember} />
+            {/* <Route path="/inviteMember/:id" component={inviteMember} /> */}
             <Route path="/addressee" component={Addressee} />
 
             <Route path="/touxiang" component={Touxiang} />

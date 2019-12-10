@@ -3,9 +3,9 @@ import { get, post } from './http';
 const api = {
 
     login: p => post('user/login', p),
-
     theme: p=> get('together/theme',p),
-
+    themeContent: p=>get('together/theme/showtheme',p),
+    member: p=>get('together/theme/showtheme/member',p),
     headimg: p => post('image/head',p)
     // login: p => post('users/login', p),
     // login_veri: p => post('users/login/verification', p),
