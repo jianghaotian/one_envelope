@@ -25,6 +25,26 @@ router.get('/', function (req, res, next) {
         }
     });
 });
-
+/**
+ * 展示信箱具体内容
+ * GET
+ * 接收参数:
+ *      pid:信件id
+ */
+router.get('/showmail', function (req, res, next) {
+    let {pid} = req.query;
+    console.log(pid);
+    checkToken(token, (result) => {
+        if (result.status !== 0) {
+            res.json(result);
+        } else {
+            let uid = result.data.uid;
+            runSql(`select * from pletter where isSend = ? and touid=? and pid=?`, [1,uid,pid], (result1) => {
+                console.log(result1);
+                res.json(result1);
+            });
+        }
+    });
+});
 
 module.exports = router;

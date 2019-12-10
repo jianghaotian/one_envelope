@@ -13,23 +13,50 @@ let token = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1aWQiOjEsImlhdCI6MTU3NDkzND
  * 
  */
 router.get('/getletter', function (req, res, next) {
-    //http://localhost:3000/v1/private/getletter?uid=1&toUid=1
-    
-    let { uid, toUid } = req.query;
+    //http://localhost:3000/v1/private/getletter?toUid=1
+    let {toUid } = req.query;
     checkToken(token, (result) => {
         if (result.status !== 0) {
             res.json(result);
         } else {
             // console.log(result);
             let uid = result.data.uid;
-            runSql(`select * from pletter where uid=? and toUid=?`, [uid,toUid], (result) => {
-                console.log(result);
-                res.json(result);
+            runSql(`select * from pletter where uid=? and toUid=? and isDelete=?`, [uid,toUid,0], (result1) => {
+                console.log(result1);
+                res.json(result1);
             });
         }
     });
 });
-
+/**
+ * 删除私密写的信件
+ * POST
+ * 接收参数:
+ *   pid：信件id
+ */
+router.get('/getletter/pdelete', function (req, res, next) {
+    //http://localhost:8000/v1/private/getletter/pdelete?pid=6
+    console.log(req.query);
+    let {pid} = req.query;
+    console.log(pid);
+    checkToken(token, (result) => {
+        if (result.status !== 0) {
+            res.json(result);
+        } else {
+            // console.log(result);
+            let uid = result.data.uid;
+            runSql(`select isDelete from pletter where uid=? and pid=?`,[uid,pid],(result1) =>{
+                console.log(result1.data[0].isDelete);
+                if(result1.data[0].isDelete == 0){
+                    runSql(`update pletter set isDelete=? where uid=? and pid=? `, [1,uid,pid], (result2) => {
+                        console.log(result2);                        
+                            res.json(result2);
+                    })
+                }
+            })
+        }
+    });
+});
 
 /**
  * 书写信件内容
