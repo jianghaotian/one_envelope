@@ -251,6 +251,42 @@ POST
 }
 ```
 
+#### 8.更改收信人昵称
+
+###### 请求url
+
+```
+URL : https://yf.htapi.pub/v1/private/changetoNick
+```
+
+###### 示例
+
+```
+ https://yf.htapi.pub/v1/private/changetoNick?toNick=妈妈&toUid=2
+```
+
+###### 请求方式
+
+```
+POST
+```
+
+###### 接收参数
+
+| 参数   | 说明       | 类型   |
+| ------ | ---------- | ------ |
+| toUid  | 收信人id   | int    |
+| toNick | 收信人昵称 | string |
+
+###### 返回参数（示例）:
+
+```
+{
+  status: 0,
+  message: 'OK',
+}
+```
+
 # 一起写
 
 #### 8.获取一起写主题
