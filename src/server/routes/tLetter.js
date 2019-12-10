@@ -64,7 +64,7 @@ router.get('/theme/showtheme',function(req,res,next){
  * 接受参数：
  *      tid:主题id
  * 返回参数：
- *      uname：用户名
+ *      uname:用户名
  */
 router.get("/theme/showtheme/member",function(req,res,next){
     // http://localhost:3000/v1/together/theme/showtheme/member?tid=2
@@ -73,7 +73,7 @@ router.get("/theme/showtheme/member",function(req,res,next){
         if(result.status != 0){
             res.json(result);
             }else{
-                runSql(`select distinct user.uname from tmember,user where tmember.tid=?  and (tmember.uid = user.uid)`,[tid],(result1) =>{
+                runSql(`select distinct user.uname from tmember,user where tmember.tid=? and (tmember.uid = user.uid)`,[tid],(result1) =>{
                     res.json(result1);
                 } )
         }
@@ -96,11 +96,12 @@ router.post('/theme/:tid/writeletter', function (req, res, next) {
             res.json(result);
         }else{
             let uid = result.data.uid;
-            runSql(`insert into tletter(Ltitle, Lcontent, Uid,Lday,Tid,isDeletc) values (?,?,?,?,?,?)`, [title, content,uid,lday,tid,0],(result1)=>{
+            runSql(`insert into tletter(Ltitle, Lcontent, Uid,Lday,Tid,isDeletc) values (?,?,?,?,?,?)`,
+             [title, content,uid,lday,tid,0],(result1)=>{
                 res.json(result1);
             })
         }
     })
 });
-
+ 
 module.exports = router;

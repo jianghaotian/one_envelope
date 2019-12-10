@@ -224,12 +224,6 @@ POST
 URL : https://yf.htapi.pub/v1/private/getletter/pdelete
 ```
 
-###### 示例
-
-```
-
-```
-
 ###### 请求方式
 
 ```
@@ -286,7 +280,7 @@ POST
 ###### 请求url
 
 ```
-URL : https://yf.htapi.pub//v1/showletter/edit
+URL : https://yf.htapi.pub/v1/showletter/edit
 ```
 
 ###### 请求方式
@@ -313,7 +307,35 @@ POST
 }
 ```
 
+#### 9.添加收信人列表
 
+###### 请求url
+
+```
+URL : https://yf.htapi.pub/v1/private/addlist
+```
+
+###### 请求方式
+
+```
+POST
+```
+
+###### 接收参数
+
+| 参数   | 说明       | 类型   |
+| ------ | ---------- | ------ |
+| toNick | 收信人昵称 | int    |
+| pday   | 信件标题   | 时间戳 |
+
+###### 返回参数（示例）:
+
+```
+{
+  status: 0,
+  message: 'OK' 
+}
+```
 
 # 一起写
 
