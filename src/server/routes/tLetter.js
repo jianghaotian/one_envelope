@@ -73,8 +73,7 @@ router.get("/theme/showtheme/member",function(req,res,next){
         if(result.status != 0){
             res.json(result);
             }else{
-                let uid = result.data.uid;
-                runSql(`select distinct user.uname from theme,tmember,user where theme.uid=? and theme.tid=? and (theme.tid=tmember.tid) and (theme.uid = user.uid)`,[uid,tid],(result1) =>{
+                runSql(`select distinct user.uname from tmember,user where tmember.tid=?  and (tmember.uid = user.uid)`,[tid],(result1) =>{
                     res.json(result1);
                 } )
         }
