@@ -177,7 +177,6 @@ GET
        Uimage：用户头像
        Uname：用户名
        toNick：收信人昵称
-       toUid：收信人id
     }
   ]
 }
