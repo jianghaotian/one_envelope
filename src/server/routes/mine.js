@@ -6,15 +6,11 @@ const { getToken, checkToken } = require('../src/token');
 
 let token = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1aWQiOjEsImlhdCI6MTU3NDkzNDk1NCwiZXhwIjoxNTc3NjEzMzU0fQ.PQu7Dzp4MsurerTMR-wYSITeWKxGoo_aH_002CeEzqg';
 /**
- * 获取个人信息
+ * 获取个人信息+写信数
  * GET
  * 接收参数:
- *      uid:用户id
+ *      
  * 返回参数：
- *      uname：用户名称
- *      uimage：用户头像
- * 
- * 
  */
 router.get('/', function (req, res, next) {
     checkToken(token, (result) => {
@@ -22,14 +18,124 @@ router.get('/', function (req, res, next) {
         if (result.status !== 0) {
             res.json(result);
         } else {
-            runSql(`select * from user where uid =?`,[uid],(result1)=>{
+            runSql(`select user.*,count(pletter.Pid) as pidnum from user,pletter where user.uid =? and user.uid=pletter.uid`,
+            [uid],(result1)=>{
                 res.json(result1);
-            })
+                }
+            )
         }
     });
-   
 });
-
+/**
+ * 获取个人信息中分享数
+ * GET
+ * 接收参数:
+ * 返回参数：
+ */
+router.get('/sharenum', function (req, res, next) {
+    checkToken(token, (result) => {
+        let uid = result.data.uid;
+        if (result.status !== 0) {
+            res.json(result);
+        } else {
+            runSql(`select count(pletter.isSend) as sharenum from user,pletter where user.uid =? and user.uid=pletter.uid and isSend=1`,
+            [uid],(result1)=>{
+                res.json(result1);
+                }
+            )
+        }
+    });
+});
+/**
+ * 获取回收站信件
+ * GET
+ * 接收参数:
+ *     
+ * 返回参数：
+ *      status: 0,
+ *      message: 'OK',
+ */
+router.get('/recyclebin', function (req, res, next) {
+    checkToken(token, (result) => {
+        if (result.status !== 0) {
+            res.json(result);
+        } else {
+            let uid = result.data.uid;
+            runSql(`select * from pletter where isSend = ? and isDelete=? and touid=?`, [1,1,uid], (result1) => {
+                console.log(result1);
+                res.json(result1);
+            });
+        }
+    });
+});
+/**
+ * 彻底删除回收站信件
+ * POST
+ * 接收参数:
+ *     pid：信件id
+ * 返回参数：
+ *      status: 0,
+ *      message: 'OK',
+ */
+router.post('/recyclebin/deletebin', function (req, res, next) {
+    let {pid} = req.body;
+    checkToken(token, (result) => {
+        if (result.status !== 0) {
+            res.json(result);
+        } else {
+            let uid = result.data.uid;
+            runSql(`delete from pletter where isSend = ? and isDelete=? and touid=? and pid=?`, [1,1,uid,pid], (result1) => {
+                console.log(result1);
+                res.json(result1);
+            });
+        }
+    });
+});
+/**
+ * 获取收藏信件
+ * GET
+ * 接收参数:
+ *     
+ * 返回参数：
+ *      status: 0,
+ *      message: 'OK',
+ */
+router.get('/favorite', function (req, res, next) {
+    checkToken(token, (result) => {
+        if (result.status !== 0) {
+            res.json(result);
+        } else {
+            let uid = result.data.uid;
+            runSql(`select * from pletter where isSend = ? and isCollection=? and touid=?`, [1,1,uid], (result1) => {
+                console.log(result1);
+                res.json(result1);
+            });
+        }
+    });
+});
+/**
+ * 取消信件收藏
+ * GET
+ * 接收参数:
+ *     pid:信件id
+ * 返回参数：
+ *      status: 0,
+ *      message: 'OK',
+ */
+router.post('/recall', function (req, res, next) {
+    let {pid} = req.body;
+    checkToken(token, (result) => {
+        if (result.status !== 0) {
+            res.json(result);
+        } else {
+            let uid = result.data.uid;
+            runSql(`update pletter set isCollection=? where isSend=? and isCollection=? and touid=? and pid=?`,[0,1,,1,uid,pid],(result1) => {
+                console.log(result1);
+                res.json(result1);
+            });
+        }
+    });
+});
 /**
  * 修改昵称
  * 请求方式：
@@ -38,7 +144,6 @@ router.get('/', function (req, res, next) {
  *      uname：用户名
  * 返回参数：
  * 
- * url:http://localhost:3000/v1/mine/changename
  */
 router.post('/changename', function (req, res, next) {
     let {uname}=req.body;
@@ -53,7 +158,6 @@ router.post('/changename', function (req, res, next) {
         }
     });
 });
-
 /**
  * 修改密码
  * 请求方式：
@@ -86,4 +190,26 @@ router.post('/changepwd',function(req,res,next){
         }
     })
 })
+/**
+ * 获取通知
+ * GET
+ * 接收参数:
+ *     
+ * 返回参数：
+ *      status: 0,
+ *      message: 'OK',
+ */
+router.get('/notice', function (req, res, next) {
+    checkToken(token, (result) => {
+        if (result.status !== 0) {
+            res.json(result);
+        } else {
+            // let uid = result.data.uid;
+            runSql(`select * from notice`,[], (result1) => {
+                console.log(result1);
+                res.json(result1);
+            });
+        }
+    });
+});
 module.exports = router;

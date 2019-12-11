@@ -10,7 +10,6 @@ let token = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1aWQiOjEsImlhdCI6MTU3NDkzND
  * 获取信箱内容
  * GET
  * 接收参数:
- *      Uid:用户id
  */
 router.get('/', function (req, res, next) {
     checkToken(token, (result) => {
@@ -18,7 +17,7 @@ router.get('/', function (req, res, next) {
             res.json(result);
         } else {
             let uid = result.data.uid;
-            runSql(`select * from pletter where isSend = 1 and touid=?`, [uid], (result1) => {
+            runSql(`select * from pletter where isSend = ? and touid=?`, [1,uid], (result1) => {
                 console.log(result1);
                 res.json(result1);
             });
@@ -46,5 +45,25 @@ router.get('/showmail', function (req, res, next) {
         }
     });
 });
-
+/**
+ * 点击收藏标识收藏信件
+ * GET
+ * 接收参数:
+ *      pid:信件id
+ */
+router.get('/collect', function (req, res, next) {
+    let {pid} = req.query;
+    console.log(pid);
+    checkToken(token, (result) => {
+        if (result.status !== 0) {
+            res.json(result);
+        } else {
+            let uid = result.data.uid;
+            runSql(`update pletter set isCollection=? where isSend = ? and touid=? and pid=?`, [1,1,uid,pid], (result1) => {
+                console.log(result1);
+                res.json(result1);
+            });
+        }
+    });
+});
 module.exports = router;
