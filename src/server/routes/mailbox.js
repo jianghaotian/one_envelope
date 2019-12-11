@@ -66,4 +66,27 @@ router.get('/collect', function (req, res, next) {
         }
     });
 });
+/**
+ * 彻底删除信箱信件
+ * POST
+ * 接收参数:
+ *     pid：信件id
+ * 返回参数：
+ *      status: 0,
+ *      message: 'OK',
+ */
+router.post('/deletemail', function (req, res, next) {
+    let {pid} = req.body;
+    checkToken(token, (result) => {
+        if (result.status !== 0) {
+            res.json(result);
+        } else {
+            let uid = result.data.uid;
+            runSql(`delete from pletter where isSend = ? and touid=? and pid=?`,[1,uid,pid], (result1) => {
+                console.log(result1);
+                res.json(result1);
+            });
+        }
+    });
+});
 module.exports = router;

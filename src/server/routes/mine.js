@@ -55,13 +55,35 @@ router.get('/sharenum', function (req, res, next) {
  *      status: 0,
  *      message: 'OK',
  */
-router.get('/recyclebin', function (req, res, next) {
+// router.get('/recyclebin', function (req, res, next) {
+//     checkToken(token, (result) => {
+//         if (result.status !== 0) {
+//             res.json(result);
+//         } else {
+//             let uid = result.data.uid;
+//             runSql(`select * from pletter where isSend = ? and isDelete=? and touid=?`, [1,1,uid], (result1) => {
+//                 console.log(result1);
+//                 res.json(result1);
+//             });
+//         }
+//     }); 
+// });
+/**
+ * 获取回收站信件(来自私密写)
+ * GET
+ * 接收参数:
+ *     
+ * 返回参数：
+ *      status: 0,
+ *      message: 'OK',
+ */
+router.get('/recyclepletter', function (req, res, next) {
     checkToken(token, (result) => {
         if (result.status !== 0) {
             res.json(result);
         } else {
             let uid = result.data.uid;
-            runSql(`select * from pletter where isSend = ? and isDelete=? and touid=?`, [1,1,uid], (result1) => {
+            runSql(`select * from pletter where isDelete=? and uid=?`, [1,uid], (result1) => {
                 console.log(result1);
                 res.json(result1);
             });
@@ -84,7 +106,31 @@ router.post('/recyclebin/deletebin', function (req, res, next) {
             res.json(result);
         } else {
             let uid = result.data.uid;
-            runSql(`delete from pletter where isSend = ? and isDelete=? and touid=? and pid=?`, [1,1,uid,pid], (result1) => {
+            runSql(`delete from pletter where isDelete=? and uid=? and pid=?`, [1,uid,pid], (result1) => {
+                console.log(result1);
+                res.json(result1);
+            });
+        }
+    });
+});
+/**
+ * 从回收站中恢复信件
+ * POST
+ * 接收参数:
+ *     pid：信件id
+ * 返回参数：
+ *      status: 0,
+ *      message: 'OK',
+ */
+router.post('/recyclebin/restore', function (req, res, next) {
+    let {pid} = req.body;
+    console.log(pid);
+    checkToken(token, (result) => {
+        if (result.status !== 0) {
+            res.json(result);
+        } else {
+            let uid = result.data.uid;
+            runSql(`update pletter set isDelete=? where isDelete=? and uid=? and pid=?`, [0,1,uid,pid], (result1) => {
                 console.log(result1);
                 res.json(result1);
             });
@@ -122,18 +168,18 @@ router.get('/favorite', function (req, res, next) {
  *      status: 0,
  *      message: 'OK',
  */
-router.post('/recall', function (req, res, next) {
+router.post('/delcollect', function (req, res, next) {
     let {pid} = req.body;
     checkToken(token, (result) => {
         if (result.status !== 0) {
             res.json(result);
         } else {
             let uid = result.data.uid;
-            runSql(`update pletter set isCollection=? where isSend=? and isCollection=? and touid=? and pid=?`,[0,1,,1,uid,pid],(result1) => {
+            runSql(`update pletter set isCollection=? where isSend=? and isCollection=? and touid=? and pid=?`,[0,1,1,uid,pid],(result1) => {
                 console.log(result1);
                 res.json(result1);
             });
-        }
+        } 
     });
 });
 /**
