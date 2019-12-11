@@ -10,19 +10,19 @@ let token = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1aWQiOjEsImlhdCI6MTU3NDkzND
  * GET
  * 接收参数:
  *      uid:用户id
- *      toUid：收件人id
+ *      toNick：收件人昵称
  * 
  */
 router.get('/getletter', function (req, res, next) {
     //http://localhost:3000/v1/private/getletter?toUid=1
-    let {toUid } = req.query;
+    let {toNick } = req.query;
     checkToken(token, (result) => {
         if (result.status !== 0) {
             res.json(result);
         } else {
             // console.log(result);
             let uid = result.data.uid;
-            runSql(`select * from pletter where uid=? and toUid=? and isDelete=?`, [uid,toUid,0], (result1) => {
+            runSql(`select * from pletter where uid=? and toNick=? and isDelete=?`, [uid,toNick,0], (result1) => {
                 console.log(result1);
                 res.json(result1);
             });
@@ -70,18 +70,21 @@ router.post('/getletter/pdelete', function (req, res, next) {
  * 
  */
 router.post('/writeletter', function (req, res, next) {
-    let { title, content,toUid,toNick,pday } = req.body;
+    let { Ptitle, Pcontent,toUid,toNick,Pday } = req.body;
+    console.log(req.body);
+
     checkToken(token, (result) => {
         if(result.status != 0){
             res.json(result);
         }else{
-            runSql(`insert into pletter(Ptitle, Pcontent, Uid,toUid,toNick,isSend,Pday,isCollection,isDelete) values (?,?,?,?,?,?,?,?,?)`, [title, content,uid,null,toNick,0,pday,0,0],(result1)=>{
+            let uid = result.data.uid;
+            runSql(`insert into pletter(Ptitle, Pcontent, Uid,toUid,toNick,isSend,Pday,isCollection,isDelete) values (?,?,?,?,?,?,?,?,?)`, [Ptitle, Pcontent,uid,null,toNick,0,Pday,0,0],(result1)=>{
+                console.log(result1);
                 res.json(result1);
             });
         }
     });
 });
-
 /**
  * 展示收信人列表
  *请求方式
