@@ -1,4 +1,4 @@
-# API文档
+API文档
 
 URL : https://yf.htapi.pub/v1
 
@@ -706,6 +706,36 @@ GET
   status: 0,
   message: 'OK',
 }
+
+```
+
+#### 15.删除信箱信件 
+
+###### 请求url
+
+```
+URL : https://yf.htapi.pub/v1/mailbox/deletemail
+```
+
+###### 请求方式
+
+```
+POST
+```
+
+###### 接收参数
+
+| 参数 | 说明   | 类型 |
+| ---- | ------ | ---- |
+| pid  | 信件id | int  |
+
+###### 返回参数（示例）:
+
+```
+{
+	status: 0,
+	message: 'OK'
+}
 ```
 
 # 我的
@@ -772,12 +802,12 @@ GET
 }
 ```
 
-#### 16.获取回收站信件
+#### 16.获取回收站信件(来自私密写)
 
 ###### 请求url
 
 ```
-URL : https://yf.htapi.pub/v1/mine/recyclebin
+URL : https://yf.htapi.pub/v1/mine/recyclepletter
 ```
 
 ###### 请求方式
@@ -914,7 +944,7 @@ POST
 ###### 请求url
 
 ```
-URL : https://yf.htapi.pub/v1/mine/changename
+URL : https://yf.htapi.pub/v1/mine/changepwd
 ```
 
 ###### 请求方式
