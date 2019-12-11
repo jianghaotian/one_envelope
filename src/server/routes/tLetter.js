@@ -19,14 +19,13 @@ router.get('/theme', function (req, res, next) {
             res.json(result);
         } else {
             let uid = result.data.uid;
-            runSql(`select distinct theme.* from theme,tmember where theme.uid=? and (theme.tid=tmember.tid) `,[uid],(result1) => {
+            runSql(`select distinct theme.* from theme where theme.uid=?`,[uid],(result1) => {
                 res.json(result1);
             })
         }
     });
    
 });
-
 
 
 /**
@@ -40,6 +39,7 @@ router.get('/theme', function (req, res, next) {
  *      tname：主题名称
  *      timage：主题图片
  *      tday：创建日期
+ *      lid:信件id
  *      ltitle：信件标题
  *      lcontent:信件内容
  *      lday:信件创建日期
@@ -52,10 +52,33 @@ router.get('/theme/showtheme',function(req,res,next){
             res.json(result);
         }else{
             let uid = result.data.uid;
-            runSql(`select theme.tname,theme.timage,theme.tday,tletter.ltitle,tletter.lcontent,tletter.tid,tletter.lday from theme,tletter where theme.uid=? and theme.tid=? and (theme.tid=tletter.tid)`,
+            runSql(`select theme.tname,theme.timage,theme.tday,tletter.ltitle,tletter.lcontent,tletter.tid,tletter.lday,tid.lid from theme,tletter where theme.uid=? and theme.tid=? and (theme.tid=tletter.tid)`,
                     [uid,tid],(result1) => {
                         res.json(result1);
                     })
+        }
+    })
+})
+/**
+ * 展示主题详情头部
+ * 请求方式：
+ *      GET
+ * 接受参数：
+ *      tid：主题id
+ * 返回参数：
+ *      
+ */
+router.get('/theme/showtitle',function(req,res,next){
+    let{tid} = req.query;
+    console.log(tid)
+    checkToken(token,(result)=>{
+        if(result.status !=0){
+            console.log('ji')
+            res.json(result);
+        }else{
+            runSql(`select theme.*  from theme where theme.tid=?  `,[tid],(result1)=>{
+                res.json(result1);
+            })
         }
     })
 })
@@ -92,6 +115,7 @@ router.get("/theme/showtheme/member",function(req,res,next){
  *     Tid:主题id
  */
 router.post('/theme/writeletter', function (req, res, next) {
+    // http://localhost:3000/v1/together/theme/writeletter
     let { title, content,lday,tid} = req.body;
     checkToken(token, (result) => {
         if(result.status != 0){
@@ -105,7 +129,8 @@ router.post('/theme/writeletter', function (req, res, next) {
         }
     })
 });
- /**
+ 
+/**
  * 删除一起写信件
  * 请求方式：
  *      POST
@@ -121,7 +146,9 @@ router.post("/theme/delletter",function(req,res,next){
             res.json(result);
         }else{
             runSql(`delete from tletter where lid=?`,[lid],(result1)=>{
-                res.json(result1);
+                // runSql(`select * from tletter where lid=?`,[lid],(result2)=>{
+                //     res.json(result2);
+                // })
             })
 
         }
