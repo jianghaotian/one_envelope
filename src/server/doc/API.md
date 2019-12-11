@@ -466,7 +466,7 @@ GET
 ###### 请求url
 
 ```
-URL : https://yf.htapi.pub/v1/together/theme/:tid/writeletter
+URL : https://yf.htapi.pub/v1/together/theme/writeletter
 ```
 
 ###### 请求方式
@@ -492,6 +492,67 @@ POST
   message: 'OK',
 }
 ```
+
+#### 12.删除一起写信件
+
+###### 请求url
+
+```
+URL : https://yf.htapi.pub/v1/together/theme/delletter
+```
+
+###### 请求方式
+
+```
+POST
+```
+
+###### 接收参数
+
+| 参数 | 说明   | 类型 |
+| ---- | ------ | ---- |
+| lid  | 信件id | int  |
+
+###### 返回参数（示例）:
+
+```
+{
+  status: 0,
+  message: 'OK',
+}
+```
+
+###### 请求url
+
+```
+URL : https://yf.htapi.pub/v1/together/theme/addtheme
+```
+
+###### 请求方式
+
+```
+POST
+```
+
+###### 接收参数
+
+| 参数      | 说明     | 类型       |
+| --------- | -------- | ---------- |
+| tname     | 主题名称 | string     |
+| timage    | 主题图片 |            |
+| tday      | 创建日期 | 时间戳     |
+| isPrivate | 是否公开 | tinyint(2) |
+
+###### 返回参数（示例）:
+
+```
+{
+  status: 0,
+  message: 'OK',
+}
+```
+
+
 
 # 信箱
 
@@ -584,7 +645,7 @@ GET
 
 # 我的
 
-####  14.获取个人信息
+####  14.获取个人信息+写信数
 
 ###### 请求url
 
@@ -615,6 +676,119 @@ GET
   ]
 }
 ```
+
+#### 15.获取个人信息中的分享数
+
+###### 请求url
+
+```
+URL : https://yf.htapi.pub/v1/mine/sharenum
+```
+
+###### 请求方式
+
+```
+GET
+```
+
+###### 接收参数
+
+###### 返回参数（示例）:
+
+```
+{
+  status: 0,
+  message: 'OK',
+  data: [
+    RowDataPacket {
+     sharenum：2
+    }
+  ]
+}
+```
+
+#### 16.获取回收站信件
+
+###### 请求url
+
+```
+URL : https://yf.htapi.pub/v1/mine/recyclebin
+```
+
+###### 请求方式
+
+```
+GET
+```
+
+###### 接收参数
+
+###### 返回参数（示例）:
+
+```
+{
+  status: 0,
+  message: 'OK',
+}
+```
+
+#### 17.彻底删除回收站信件
+
+###### 请求url
+
+```
+URL : https://yf.htapi.pub/v1/mine/recyclebin/deletebin
+```
+
+###### 请求方式
+
+```
+POST
+```
+
+###### 接收参数
+
+| 参数 | 说明   | 类型 |
+| ---- | ------ | ---- |
+| pid  | 信件id | int  |
+
+###### 返回参数（示例）:
+
+```
+{
+  status: 0,
+  message: 'OK',
+}
+```
+
+#### 18.获取收藏信件
+
+###### 请求url
+
+```
+URL : https://yf.htapi.pub/v1/mine/favorite
+```
+
+###### 请求方式
+
+```
+GET
+```
+
+###### 接收参数
+
+###### 返回参数（示例）:
+
+```
+{
+  status: 0,
+  message: 'OK',
+}
+```
+
+
+
+# 
 
 #  私密写和信箱公共
 
