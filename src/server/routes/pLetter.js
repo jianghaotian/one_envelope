@@ -95,7 +95,6 @@ router.post('/writeletter', function (req, res, next) {
  *      Uimage：用户头像
  *      Uname：用户名
  *      toNick：收信人昵称
- *      toUid：收信人id
  */
 router.get('/getlist',function(req,res,next){
     checkToken(token,(result)=>{
@@ -103,7 +102,7 @@ router.get('/getlist',function(req,res,next){
         if(result.status != 0){
             res.json(result);
         }else{
-            runSql(`select distinct user.uimage,user.uname,pletter.toNick,pletter.toUid from user,pletter where user.uid=? and(user.uid = pletter.uid)`,[uid],
+            runSql(`select distinct user.uimage,user.uname,pletter.toNick from user,pletter where user.uid=? and(user.uid = pletter.uid)`,[uid],
             (result1)=>{
                 console.log(result1);
                 res.json(result1);
@@ -166,6 +165,29 @@ router.post('/addlist',function(req,res,next){
                 }else {
                     res.json("Already exists, please change nickname!")
                 }
+            })
+        }
+    })
+})
+
+/**
+ * 删除收件人昵称
+ * 请求方式：
+ *      POST
+ * 接收参数：
+ *      toNick：用户昵称
+ * 返回参数：
+ *      
+ */
+router.post('/dellist',function(req,res,next){
+    let {toNick} = req.body;
+    checkToken(token,(result)=>{
+        if(result.status !=0){
+            res.json(result);
+        }else{
+            let uid= result.data.uid
+            runSql(`delete from pletter where uid=? and toNick=?`,[uid,toNick],(result1)=>{
+                res.json(result1);
             })
         }
     })
