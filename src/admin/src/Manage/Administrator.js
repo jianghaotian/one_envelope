@@ -1,7 +1,8 @@
 import React, { Component } from 'react'
 import '../css/analy.css'
-import { Table, Input, Button, Icon,Avatar,Popconfirm } from 'antd';
+import { Table, Input, Button, Icon,Avatar,Popconfirm,Form } from 'antd';
 import Highlighter from 'react-highlight-words';
+import {Link} from 'react-router-dom'
 
 const { Search } = Input;
 export default class UserManage extends Component {
@@ -11,30 +12,24 @@ export default class UserManage extends Component {
         data: [
             {
                 key: '1',
-                Uimage: <Avatar src="https://zos.alipayobjects.com/rmsportal/ODTLcjxAfvqbxHnVXCYX.png" />,
-                Uname: 'yifeng',
-                Uid:1,
-                Uphone:'15231148825',
-                share:1,
-                Uday:'2019-11-27'
+                Aname: 'yifeng',
+                Aid:1,
+                Aphone:'15231148825',
+                Aday:'2019-11-27'
             },
             {
                 key: '2',
-                Uimage:  <Avatar src="https://zos.alipayobjects.com/rmsportal/ODTLcjxAfvqbxHnVXCYX.png" />,
-                Uname: "haha",
-                Uid:2,
-                Uphone:'17631695087',
-                share:1,
-                Uday:'2019-11-27'
+                Aname: "haha",
+                Aid:2,
+                Aphone:'17631695087',
+                Aday:'2019-11-27'
             },
             {
                 key: '3',
-                Uimage:  <Avatar src="https://zos.alipayobjects.com/rmsportal/ODTLcjxAfvqbxHnVXCYX.png" />,
-                Uname: 'lala',
-                Uid:3,
-                Uphone:'17631695087',
-                share:1,
-                Uday:'2019-11-27'
+                Aname: 'lala',
+                Aid:3,
+                Aphone:'17631695087',
+                Aday:'2019-11-27'
             }
         ]
     };
@@ -104,38 +99,26 @@ export default class UserManage extends Component {
     render() {
         const columns = [
             {
-                title: '用户头像',
-                key: 'Uimage',
-                dataIndex: 'Uimage'
-            },
-            {
                 title: '昵称',
-                dataIndex: 'Uname',
-                key: 'Uname',
-                ...this.getColumnSearchProps('Uname'),
+                dataIndex: 'Aname',
+                key: 'Aname',
             },
             {
-                title: '用户id',
-                dataIndex: 'Uid',
-                key: 'Uid',
-                ...this.getColumnSearchProps('Uid'),
+                title: '管理员id',
+                dataIndex: 'Aid',
+                key: 'Aid',
             },
             {
                 title: '手机号',
-                dataIndex: 'Uphone',
-                key: 'Uphone',
-                ...this.getColumnSearchProps('Uphone'),
-            },
-            {
-                title: '分享链接数',
-                dataIndex: 'share',
-                key: 'share',
+                dataIndex: 'Aphone',
+                key: 'Aphone',
+                ...this.getColumnSearchProps('Aphone'),
             },
             {
                 title: '注册时间',
-                dataIndex: 'Uday',
-                key: 'Uday',
-                ...this.getColumnSearchProps('Uday'),
+                dataIndex: 'Aday',
+                key: 'Aday',
+                ...this.getColumnSearchProps('Aday'),
             },
             {
                 title: '操作',
@@ -155,16 +138,12 @@ export default class UserManage extends Component {
         return (
             <div>
                 <div className='bmuser'>
-                    <span className='bmanage_user'>用户管理</span>
-                    <span className='buser_sum'>总用户数：</span>
+                    <span className='bmanage_user'>管理员管理</span>
+                    <Button style={{float:'right',marginRight:20}}><Link to='/backhome/add'>添加</Link></Button>
                 </div>
-                <div style={{background:'rgb(238, 238, 238)',height:10}}></div>
-                <div className='if_search'>
-                    <span className='if_search_child'>按条件搜索</span>
-                    <i className='iconfont iconzhuyi'style={{float:'right',margin:'15px 50px 0'}}></i>
-                </div>
+                <div style={{border:'1px solid rgb(238, 238, 238)'}}></div>
                 <div className='buser_list'>
-                    <span className='buser_list_title'>用户列表</span>
+                    <span className='buser_list_title'>管理员列表</span>
                     <Table columns={columns} dataSource={this.state.data} />
                 </div>
             </div>

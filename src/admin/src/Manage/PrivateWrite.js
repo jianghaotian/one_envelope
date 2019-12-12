@@ -8,34 +8,40 @@ export default class UserManage extends Component {
     state = {
         searchText: '',
         searchedColumn: '',
-        data: [
+        data:[
             {
                 key: '1',
-                Uimage: <Avatar src="https://zos.alipayobjects.com/rmsportal/ODTLcjxAfvqbxHnVXCYX.png" />,
-                Uname: 'yifeng',
-                Uid:1,
-                Uphone:'15231148825',
-                share:1,
-                Uday:'2019-11-27'
+                Pid:1,
+                fromUid:1,
+                toUid:1,
+                Ptitle:'致自己',
+                paper:'1',
+                Pday:'2019-11-30',
+                link:'无连接',
+                // operation:<a>删除</a> && <a>预览</a>
             },
             {
                 key: '2',
-                Uimage:  <Avatar src="https://zos.alipayobjects.com/rmsportal/ODTLcjxAfvqbxHnVXCYX.png" />,
-                Uname: "haha",
-                Uid:2,
-                Uphone:'17631695087',
-                share:1,
-                Uday:'2019-11-27'
+                Pid:2,
+                fromUid:2,
+                toUid:2,
+                Ptitle:'致自己',
+                paper:'1',
+                Pday:'2019-12-2',
+                link:'无连接',
+                // operation:<a>删除</a> || <a>预览</a>
             },
             {
                 key: '3',
-                Uimage:  <Avatar src="https://zos.alipayobjects.com/rmsportal/ODTLcjxAfvqbxHnVXCYX.png" />,
-                Uname: 'lala',
-                Uid:3,
-                Uphone:'17631695087',
-                share:1,
-                Uday:'2019-11-27'
-            }
+                Pid:3,
+                fromUid:1,
+                toUid:1,
+                Ptitle:'致自己',
+                paper:'1',
+                Pday:'2020-1-1',
+                link:'无连接',
+                // operation:<a>删除</a> || <a>预览</a>
+            },
         ]
     };
     getColumnSearchProps = dataIndex => ({
@@ -104,59 +110,63 @@ export default class UserManage extends Component {
     render() {
         const columns = [
             {
-                title: '用户头像',
-                key: 'Uimage',
-                dataIndex: 'Uimage'
+                title: '信件id',
+                key: 'Pid',
+                dataIndex: 'Pid'
             },
             {
-                title: '昵称',
-                dataIndex: 'Uname',
-                key: 'Uname',
-                ...this.getColumnSearchProps('Uname'),
+                title: 'from',
+                dataIndex: 'fromUid',
+                key: 'fromUid ',
+                ...this.getColumnSearchProps('fromUid'),
             },
             {
-                title: '用户id',
-                dataIndex: 'Uid',
-                key: 'Uid',
-                ...this.getColumnSearchProps('Uid'),
+                title: 'to',
+                dataIndex: 'toUid',
+                key: 'toUid',
+                ...this.getColumnSearchProps('toUid'),
             },
             {
-                title: '手机号',
-                dataIndex: 'Uphone',
-                key: 'Uphone',
-                ...this.getColumnSearchProps('Uphone'),
+                title: '标题',
+                dataIndex: 'Ptitle',
+                key: 'Ptitle',
+                ...this.getColumnSearchProps('Ptitle'),
             },
             {
-                title: '分享链接数',
-                dataIndex: 'share',
-                key: 'share',
+                title: '信纸',
+                dataIndex: 'paper',
+                key: 'paper',
             },
             {
-                title: '注册时间',
-                dataIndex: 'Uday',
-                key: 'Uday',
-                ...this.getColumnSearchProps('Uday'),
+                title: '创建时间',
+                dataIndex: 'Pday',
+                key: 'Pday',
+                ...this.getColumnSearchProps('Pday'),
+            },
+            {
+                title: '链接',
+                dataIndex: 'link',
+                key: 'link',
             },
             {
                 title: '操作',
                 dataIndex: 'operation',
                 key: 'operation',
                 render: (text, record) => 
-                this.state.data.length >= 1 ? (
-                    <Popconfirm title="Sure to delete?" 
-                    // onConfirm={() => this.handleDelete(record.key)}
-                    >
-                      <a>删除</a>
-                    </Popconfirm>
-                  ) : null,
-                
+                    this.state.data.length >= 1 ? (
+                        <Popconfirm title="Sure to delete?" 
+                        // onConfirm={() => this.handleDelete(record.key)}
+                        >
+                          <a>删除</a>
+                        </Popconfirm>
+                ) : null,
             }
         ];
         return (
             <div>
                 <div className='bmuser'>
-                    <span className='bmanage_user'>用户管理</span>
-                    <span className='buser_sum'>总用户数：</span>
+                    <span className='bmanage_user'>私密信管理</span>
+                    <span className='buser_sum'>总信件数：</span>
                 </div>
                 <div style={{background:'rgb(238, 238, 238)',height:10}}></div>
                 <div className='if_search'>
@@ -164,7 +174,7 @@ export default class UserManage extends Component {
                     <i className='iconfont iconzhuyi'style={{float:'right',margin:'15px 50px 0'}}></i>
                 </div>
                 <div className='buser_list'>
-                    <span className='buser_list_title'>用户列表</span>
+                    <span className='buser_list_title'>信件列表</span>
                     <Table columns={columns} dataSource={this.state.data} />
                 </div>
             </div>

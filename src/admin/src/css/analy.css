@@ -1,0 +1,152 @@
+/* Useranaly.css */
+
+.right-con{
+    margin:auto 10px;
+}
+.bruser-title{
+    border-bottom:1px solid #e0e0e0;
+    width: 880px;
+    padding: 7px 0;
+}
+.bruser-con{
+  border-bottom:1px solid #e0e0e0;
+  width: 880px;
+  height: 150px;
+}
+.bruser-con li{
+    list-style: none;
+    float: left;
+    margin:30px auto 0px;
+    width: 293px;
+    height: 120px;
+    padding: 0 80px;
+    border-right: 1px solid #e0e0e0;
+    text-align: center;
+}
+#usertr{
+    border:none
+}
+.usernum{
+    display: block;
+    font-size: 16px;
+    margin: 40px 0;
+}
+#rdata-sum{
+    height: 50px;
+    background: #e0e0e0;
+}
+.ant-input{
+    background-color:#f8f7f7 ;
+}
+.table-title th{
+    padding: 10px 0 10px 20px;
+    width: 293px;
+    border-bottom: 1px solid #e0e0e0; 
+}
+#ta-time{
+    padding-left: 30px;
+}
+#table-content td{
+    padding: 10px 0 10px 25px;
+    width: 293px;
+    border-bottom: 1px solid #e0e0e0; 
+}
+
+/* UserManage.css */
+.bmuser{
+    margin:auto 10px;
+}
+.bmanage_user{
+    padding: 15px 100px 15px 0;
+    display: inline-block;
+}
+.buser_sum{
+    font-weight: bold;
+}
+.if_search{
+    background-color:#e0e0e0;
+}
+.if_search_child{
+    padding: 15px 0 15px 10px;
+    display: inline-block;
+}
+/* .buser_list{
+    margin: auto 10px;
+    border-bottom:2px solid #e0e0e0 ;
+} */
+.buser_list_title{
+    width: 958px;
+    margin: auto 10px;
+    padding: 10px 0;
+    display: inline-block;
+    border-bottom:3px solid #e0e0e0 ;
+}
+
+
+/* TotalLetter.css */
+.back_box{
+    height: 400px;
+    position: relative;
+}
+.back_box_private{
+    height: 70px;
+    width: 400px;
+    background: #ff0000;
+    position: absolute;
+    left: 30%;
+    top: 20%;
+    text-align: center;
+    line-height: 70px;
+    font-size: 18px;
+}
+.back_box_public{
+    height: 70px;
+    width: 400px;
+    background: red;
+    position: absolute;
+    left: 30%;
+    bottom: 25%;
+    text-align: center;
+    line-height: 70px;
+    font-size: 18px;
+}
+
+/* PaperManage.css */
+.ant-upload-list-picture-card .ant-upload-list-item{
+    width: 150px;
+    height: 150px;
+}
+.ant-upload-list-picture-card-container{
+    width: 150px;
+    height: 150px;
+    margin:20px;
+}
+.ant-upload.ant-upload-select-picture-card{
+    margin:15px; 
+    width: 150px;
+    height: 150px;
+}
+
+/* TogetherWrite.css */
+.hidden{
+    position: fixed;
+    top: 0;
+    right: 0;
+    bottom: 0;
+    left: 0;
+    z-index: 1000;
+    height: 100%;
+    background-color: rgba(0, 0, 0, 0.45);
+}
+.hidden_child{
+    position: absolute;
+    width: 200px;
+    height: 200px;
+    top: 40%;
+    left: 40%;
+    background-color: #fff;
+    background-clip: padding-box;
+    border-radius: 4px;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+    pointer-events: auto;
+}

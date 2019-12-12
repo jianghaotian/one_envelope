@@ -1,0 +1,46 @@
+@import '~antd/dist/antd.css';
+
+.container{
+  width: 500px;
+  height: 400px;
+  position: absolute;
+  left: 50%;
+  top:50%;
+  transform: translate(-50%, -50%);
+  text-align: center;
+  background: #fff;
+}
+.myLogin{
+  width: 100px;
+  height: 100px;
+}
+.login-form{
+  width: 300px;
+  margin-top: 50px;
+  margin-left: 100px;
+}
+.login-form-button{
+  width: 300px;
+  background-color: red;
+  border: 1px solid red;
+}
+.login-form-button:hover{
+  /* width: 300px; */
+  background-color: red;
+  border: 1px solid red;
+}
+.login-form-button:active{
+  /* width: 300px; */
+  background-color: red;
+  border: 1px solid red;
+}
+
+#components-form-demo-normal-login .login-form {
+  max-width: 300px;
+}
+#components-form-demo-normal-login .login-form-forgot {
+  float: right;
+}
+#components-form-demo-normal-login .login-form-button {
+  width: 100%;
+}

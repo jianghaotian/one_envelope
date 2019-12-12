@@ -33,13 +33,19 @@
     font-size: 14px;
     position: absolute;
     top: 0;
-    right: 190px;
+    right: 250px;
 }
 #top-exit{
     position: absolute;
     top: 0;
-    right: 115px;
+    right: 150px;
     text-decoration: none;
+}
+#top-et{
+    position: absolute;
+    top: 0;
+    right: 120px;
+    color: #3f3d3d;
 }
 .header header a{
     font-size: 14px;
@@ -49,14 +55,3 @@
     right: 80px;
     text-decoration: none;
 }
-/* BackMenu.css */
-
-.left-analy a{
-    display: block;
-    margin:20px 0 10px 50px;
-    color: rgb(79, 78, 78);
-    font-size: 13px;
-  }
-  .left-statistics{
-    border-bottom: 1px solid #e0e0e0;
-  }
