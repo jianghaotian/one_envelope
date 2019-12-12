@@ -89,6 +89,7 @@ router.get('/theme/showtitle',function(req,res,next){
  *      tid:主题id
  * 返回参数：
  *      uname:用户名
+ *      uid:用户id
  *      tid:主题id
  */
 router.get("/theme/showtheme/member",function(req,res,next){
@@ -98,7 +99,7 @@ router.get("/theme/showtheme/member",function(req,res,next){
         if(result.status != 0){
             res.json(result);
             }else{
-                runSql(`select distinct user.uname,tmember.tid from tmember,user where tmember.tid=? and (tmember.uid = user.uid)`,[tid],(result1) =>{
+                runSql(`select distinct user.uname,user.uid,tmember.tid from tmember,user where tmember.tid=? and (tmember.uid = user.uid)`,[tid],(result1) =>{
                     res.json(result1);
                 } )
         }
@@ -146,14 +147,13 @@ router.post("/theme/delletter",function(req,res,next){
             res.json(result);
         }else{
             runSql(`delete from tletter where lid=?`,[lid],(result1)=>{
-                // runSql(`select * from tletter where lid=?`,[lid],(result2)=>{
-                //     res.json(result2);
-                // })
+                res.json(result1);
             })
 
         }
     })
 })
+
 
 /**
  * 添加主题
@@ -182,4 +182,26 @@ router.post("/theme/delletter",function(req,res,next){
          }
      })
  })
+  /**
+  * 删除成员
+  * 请求方式：
+  *      POST
+  * 接受参数：
+  *     uid:用户id
+  *     tid:主题id
+  * 返回参数：
+  *     
+  */
+ router.post('/theme/deltmember',function(req,res,next){
+    let {uid,tid} = req.body;
+    checkToken(token,(result)=>{
+        if(result.status != 0){
+            res.json(result.json);
+        }else{
+           runSql(`delete from tmember where uid=? and tid=?`,[uid,tid],(result1)=>{
+               res.json(result1);
+           })
+        }
+    })
+})
 module.exports = router;

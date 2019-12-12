@@ -486,7 +486,8 @@ GET
   message: 'OK',
   data: [
    	 {
-      uname:"anwenyue"
+      uname:"anwenyue"，
+      uid:'2'
     }
   ]
 }
@@ -553,6 +554,8 @@ POST
 }
 ```
 
+#### 13.添加主题
+
 ###### 请求url
 
 ```
@@ -573,6 +576,36 @@ POST
 | timage    | 主题图片 |            |
 | tday      | 创建日期 | 时间戳     |
 | isPrivate | 是否公开 | tinyint(2) |
+
+###### 返回参数（示例）:
+
+```
+{
+  status: 0,
+  message: 'OK',
+}
+```
+
+#### 14.删除成员
+
+###### 请求url
+
+```
+URL : https://yf.htapi.pub/v1/together/theme/deltmember
+```
+
+###### 请求方式
+
+```
+POST
+```
+
+###### 接收参数
+
+| 参数 | 说明   | 类型 |
+| ---- | ------ | ---- |
+| tid  | 主题id | int  |
+| uid  | 用户id | int  |
 
 ###### 返回参数（示例）:
 
