@@ -1,52 +1,93 @@
 import React, { Component } from 'react'
 import "../css/home.css";
-import * as data from './data';
 import { Popover,Button,Modal,List} from 'antd-mobile';
+import { ActionSheet, Toast } from 'antd-mobile';
+import {HashRouter as Router,Route,Link} from 'react-router-dom'
 
 const Item = Popover.Item;
-var bodyStartX,bodyEndX;
 const prompt = Modal.prompt;
-var list = data.dataList;
 const alert = Modal.alert;
 const LiItem = List.Item;
+
+//触摸事件变量
+var bodyStartX,bodyEndX,bodyStartY;
 
 export default class Home extends Component {
     constructor(){
         super();
         this.state = {
-            toType : "",
-            silder : {},
-            dataList : [],
-            toList : [],
-            visible:false,
-            selected: ''
+            toUid:0,
+            toType : "",//toNick
+            silder : {},//滑动样式
+            dataList : [],//信件列表
+            toList : [],//收件人列表
+            visible:false,//滑动事件
+            selected: '',
+            clicked: 'none'
         }
     }
     //点击气泡项
     onSelect = (opt) => {
+        //console.log(opt);
         console.log(opt.props.value);
         var item = opt.props.item;
         this.setState({
             visible: false,
             selected: opt.props.value,
         });
+        //信件删除
         if(opt.props.value == "del"){
+            console.log(item);
+            var pid = item.Pid;
             alert('Delete', '确认删除此信件?', [
-                { text: 'Cancel', onPress: () => console.log('cancel') },
+                { text: 'Cancel', onPress: () => {
+                    console.log('cancel');
+                } },
                 { text: 'Ok', onPress: () => {
                     console.log('ok');
+                    //改变state
+                    let list = this.state.dataList;
+                    //console.log(list);
+                    for(let i=0;i<list.length;i++){
+                        if(list[i].Pid == pid){
+                            list.splice(i,1);
+                        }
+                    }
+                    //console.log(list);
+                    this.setState({
+                        dataList : list
+                    })
+                    //后端删除
+                    this.$api.delPrivateLetter({pid:pid}).then(res=>{
+                        console.log(res.data);
+                    })
                 } },
             ]);
-        }else if(opt.props.value == "add-del"){
+        }else if(opt.props.value == "share"){//分享
+            this.showShareActionSheet();
+        }else if(opt.props.value == "add-del"){//删除收信人
             var item = opt.props.item;
             console.log(item);
             alert('Delete', '确认删除给Ta的所有信?', [
                 { text: 'Cancel', onPress: () => console.log('cancel') },
                 { text: 'Ok', onPress: () => {
                     console.log('ok');
+                    let newTo = this.state.toList;
+                    //console.log(newTo.indexOf(item));
+                    newTo.splice(newTo.indexOf(item),1);
+                    //console.log(newTo);
+                    this.$api.delAddressee({toNick : item}).then(res=>{
+                        console.log(res);
+                        alert('Delete','删除成功',[
+                            {text : 'ok',onPress:()=>{}}
+                        ])
+                        this.setState({
+                            toList : newTo
+                        })
+                    })
                 } },
             ]);
-        }else if(opt.props.value == "add-edit"){
+        }else if(opt.props.value == "add-edit"){//重命名
             prompt(
                 'ReName',
                 'Please input name',
@@ -56,10 +97,20 @@ export default class Home extends Component {
                                                     if(addName=="" || addName==undefined){
                                                         console.log("name为空");
                                                     }else{
-                                                        let newList = [...this.state.toList,text];
-                                                        this.setState({
-                                                            toList : newList
+                                                        let list = this.state.toList;
+                                                        var old = item;
+                                                        for(var i=0;i<list.length;i++){
+                                                            if(list[i] == item){
+                                                                list[i]= addName;
+                                                            }
+                                                        }
+                                                        //console.log(list);
+                                                        this.$api.reName({newtoNick:addName,oldtoNick:old}).then(res=>{
+                                                            console.log(res);
                                                         })
+                                                        this.setState({
+                                                            toList : list
+                                                        })           
                                                     }}   },
                 ],
                 'default',
@@ -67,7 +118,7 @@ export default class Home extends Component {
         }else if(opt.props.value == "add-write"){
             console.log("写信");
         }
-      };
+    };
     // 显示slider
     select=()=>{
         this.setState({
@@ -85,16 +136,29 @@ export default class Home extends Component {
                                                 if(addName=="" || addName==undefined){
                                                     console.log("name为空");
                                                 }else{
-                                                    let newList = [...this.state.toList,text];
-                                                    this.setState({
-                                                        toList : newList
+                                                    let timestamp = Date.parse(new Date());
+                                                    this.$api.addAddressee({toNick :addName,pday:timestamp}).then(res=>{
+                                                        console.log(res);
+                                                        this.$api.getToUList().then(res=>{
+                                                            console.log(res.data.data);
+                                                            //改变state
+                                                            let list = res.data.data;
+                                                            let toUArr = [];
+                                                            for(let i=0;i<list.length;i++){
+                                                                toUArr.push(list[i].toNick)
+                                                            }
+                                                            //console.log(toUArr);
+                                                            this.setState({
+                                                                toList : toUArr
+                                                            })
+                                                        })
                                                     })
                                                 }}   },
             ],
             'default',
         )
     }
-    // 返回主页
+    //收回Slider
     cancel=()=>{
         this.setState({
             silder:{left:"-70%",transitionDuration:"1s"}
@@ -103,7 +167,13 @@ export default class Home extends Component {
     //滑动事件
     bodyTouchStart=(e)=>{
         bodyStartX = e.touches[0].pageX;
-        //console.log(bodyStartX);
+        bodyStartY = e.touches[0].pageY;
+        //console.log(bodyStartX,bodyStartY);
+        if(bodyStartX > 220 || bodyStartY > 510){
+            this.setState({
+                silder:{left:"-70%",transitionDuration:"1s"}
+            })
+        }
     }
     bodyTouchMove=(e)=>{
         bodyEndX = e.changedTouches[0].pageX;
@@ -119,24 +189,93 @@ export default class Home extends Component {
         }
     }
     componentDidMount(){
+        
         //body滑动
         document.ontouchstart = this.bodyTouchStart;
         document.ontouchmove = this.bodyTouchMove;
-        //获取toList
-        let toList = [];
-        for(var i=0;i<list.length;i++){
-            if(toList.indexOf(list[i].to) == -1){
-                toList.push(list[i].to);
+        
+        //getToUListData
+        this.$api.getToUList().then(res=>{
+            //console.log(res.data.data);
+            let toU = [];
+            let list = res.data.data;
+            //console.log(list[0].toNick);
+
+            //getToUList
+            for(let i=0;i<list.length;i++){
+                toU.push(list[i].toNick);
             }
-        }
-        this.setState({ 
-            dataList : list,
-            toList : toList,
-            toType : toList[0]
+            //console.log(toU);
+
+            //Set toType
+            //console.log(this.props.history.location.search);
+            var search = this.props.history.location.search;
+            //console.log(search.indexOf("="));
+            //console.log(search.substr(4,search.length));
+            let to = decodeURI(search.substr(4,search.length));
+            //console.log(to,toU[0]);
+            if(to == ""){
+                //无参数时
+                this.$api.getLetter({toNick:toU[0]}).then(res =>{
+                    //console.log(res.data.data);
+                    this.setState({
+                        dataList : res.data.data,
+                        toType:toU[0]
+                    })
+                })
+            }else{
+                //有参数时
+                this.$api.getLetter({toNick:to}).then(res =>{
+                    //console.log(res.data.data);
+                    this.setState({
+                        dataList : res.data.data,
+                        toType:to
+                    })
+                })
+            }
+
+            //Set toList
+            this.setState({
+                toUid: 0,
+                toList : toU,
+            })
         })
     }
+    //分享
+    dataList = [
+        { url: 'umnHwvEgSyQtXlZjNJTt', title: '微信好友' },
+        { url: 'SxpunpETIwdxNjcJamwB', title: 'QQ' },
+      ].map(obj => ({
+        icon: <img src={`https://gw.alipayobjects.com/zos/rmsportal/${obj.url}.png`} alt={obj.title} style={{ width: 36 }} />,
+        title: obj.title,
+    }));
+    showShareActionSheet = () => {
+        ActionSheet.showShareActionSheetWithOptions({
+          options: this.dataList,
+          // title: 'title',
+          message: 'share with friend',
+        },
+        (buttonIndex) => {
+          this.setState({ clicked: buttonIndex > -1 ? this.dataList[buttonIndex].title : 'cancel' });
+          //console.log(buttonIndex);
+          if(buttonIndex == 0){
+              console.log("share to weixin");
+          }else{
+            console.log("share to qq");
+          }
+        });
+      }
+    //select toType
     selTo=(item)=>{
-        //console.log(item);
+        this.props.history.push("/home?to="+item);
+        //获取收信人对应信件
+        this.$api.getLetter({toNick:item}).then(res =>{
+            //console.log(res.data.data);
+             this.setState({
+                 dataList : res.data.data
+             })
+        })
+        //set toType并收回Slider
         this.setState({
             toType : item,
             silder:{left:"-70%",transitionDuration:"1s"}
@@ -151,6 +290,7 @@ export default class Home extends Component {
         console.log("tomy");
     }
     render() {
+        //console.log(this.state.toUid);
         return (
             <div>
                 {/* 顶部 */}
@@ -162,43 +302,65 @@ export default class Home extends Component {
 
                 {/* 信件动态 */}
                 <div className="home-body">
+                    {/* 信件列表 dataList */}
                     <ul>
                         {
                             this.state.dataList.map((item,index)=>{
-                                if(item.to == this.state.toType){
+                                if(item.toNick == this.state.toType){
                                     return <li className="content" key={index}>
                                             <div className="c-top">
                                                 <div className="title">
                                                     <span style={{fontSize:"15px",color:"rgb(75, 76, 141)",fontWeight:"bold"}}>
-                                                        {item.title}
+                                                        {item.Ptitle}
                                                     </span>
-                                                    {/* <br /> */}
                                                     <p style={{margin:"0",marginTop:"3px"}}>
-                                                        {item.publishYear}年{item.publishMonth}月{item.publishDay}日
-                                                        &nbsp;&nbsp;&nbsp;
-                                                        {item.publishHour}:{item.publishTime}
+                                                        {/* {item.Pday} */}
+                                                        {new Date(item.Pday).getFullYear()}年
+                                                        {new Date(item.Pday).getMonth()+1}月
+                                                        {new Date(item.Pday).getDate()}日
+                                                        &nbsp;&nbsp;
+                                                        {new Date(item.Pday).getHours()<10?"0"+ new Date(item.Pday).getHours():new Date(item.Pday).getHours()}
+                                                        :
+                                                        {new Date(item.Pday).getMinutes()<10?"0"+ new Date(item.Pday).getMinutes():new Date(item.Pday).getMinutes()}
                                                     </p>
                                                 </div>
                                                 <div className="home-down">
-                                                    <Popover mask
+                                                    <Popover mask={true}
                                                         visible={this.state.visible}
                                                         onSelect={this.onSelect}
                                                         overlay={[
-                                                        (<Item value="share" item={item}><p className="DM-p" ><img className="DM-img" src={require("../imgs/Home/share.png")} />分享</p></Item>),
-                                                        (<Item value="edit" item={item}><p className="DM-p" ><img className="DM-img" src={require("../imgs/Home/direct.png")} />编辑</p></Item>),
-                                                        (<Item value="del" item={item}><p className="DM-p" ><img className="DM-img" src={require("../imgs/Home/del.png")} />删除</p></Item>),
+                                                        (<Item value="share" item={item}>
+                                                            <button className="DM-p" ><img className="DM-img" src={require("../imgs/Home/share.png")} />
+                                                                分享
+                                                            </button>
+                                                        </Item>),
+                                                        (<Item value="edit" item={item}>
+                                                            <Router><Link style={{color:"black"}} to={"/homeWrite/?pid="+item.Pid+"&type=edit"}>
+                                                            <button className="DM-p" ><img className="DM-img" src={require("../imgs/Home/direct.png")} />
+                                                                编辑
+                                                            </button>
+                                                            </Link></Router>
+                                                        </Item>),
+                                                        (<Item value="del" item={item}>
+                                                            <button className="DM-p" ><img className="DM-img" src={require("../imgs/Home/del.png")} />
+                                                                删除
+                                                            </button>
+                                                        </Item>),
 
                                                         ]}
-                                                        align={{overflow: { adjustY: 0, adjustX: 0 },offset: [-10, 0],}}>
+                                                        align={{overflow: { adjustY: 0, adjustX: 0 },offset: [0, 5],}}>
                                                         <div>
                                                             <img src={require("../imgs/Home/down(1).png")} />
                                                         </div>
                                                     </Popover>
                                                 </div>
                                             </div>
+                                            {/* <Link to={"/homeWrite/"+item.Pid} > */}
+                                            <Link to={"/homeWrite/?pid="+item.Pid+"&type=edit"} >
                                             <div className="c-content">
-                                                {item.content}
+                                                {item.Pcontent}
                                             </div>
+                                            </Link>
                                         </li>
                                 }
                             })
@@ -233,6 +395,7 @@ export default class Home extends Component {
                                 <img src={require("../imgs/Home/addTo.png")} />
                             </button>
                         </div>
+                        {/* 收信人列表 toList */}
                             <List>
                                 {
                                     this.state.toList.map((item,index)=>{
@@ -247,7 +410,11 @@ export default class Home extends Component {
                                                         overlay={[
                                                                 (<Item value="add-edit" item={item} ><button className="DM-p" ><img className="DM-img" src={require("../imgs/Home/direct.png")} />编辑</button></Item>),
                                                                 (<Item value="add-del" item={item}  ><button className="DM-p" ><img className="DM-img" src={require("../imgs/Home/del.png")} />删除</button></Item>),
-                                                                (<Item value="add-write" item={item}  ><button className="DM-p" ><img className="DM-img" src={require("../imgs/Home/write.png")} />写信</button></Item>)
+                                                                (<Item value="add-write" item={item}  >
+                                                                    <Router><Link style={{color:"black"}} to={"/homeWrite/?toNick="+item+"&type=create"}>
+                                                                        <button className="DM-p" ><img className="DM-img" src={require("../imgs/Home/write.png")} />写信</button>
+                                                                    </Link></Router>
+                                                                </Item>)
             
                                                         ]}
                                                         align={{overflow: { adjustY: 0, adjustX: 0 },offset: [-10, 0],}}>
@@ -264,9 +431,11 @@ export default class Home extends Component {
                 </div>
 
                 {/* pencil */}
-                <div className="pencil" onClick={this.toWrite}>
+                <Link to={"/homeWrite/?toNick="+this.state.toType+"&type=create"}>
+                    <div className="pencil" onClick={this.toWrite}>
 
-                </div>
+                    </div>
+                </Link>
             </div>
         )
     }
