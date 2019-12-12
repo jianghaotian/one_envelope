@@ -66,6 +66,7 @@ POST
 | verification | 验证码              | string |
 | password     | 密码                | string |
 | name         | 昵称 (可选)         | string |
+| uday         | 注册时间            | 时间戳 |
 
 ######  返回参数:
 
