@@ -2,10 +2,23 @@ import { get, post } from './http';
 
 const api = {
 
-    login: p => post('user/login', p),
+    //Login
+    login: p => post('users/login', p),//登录
+    login_Vcode: p => post('users/verification', p),//登录验证码
+    register_Vcode: p => post('users/verification', p),//注册验证码
+    register: p => post('users/register', p),//注册
+    getLetter: p => get('private/getletter',p),//获取信件
+    getToUList:p =>get('private/getlist',p),//获取收件人列表
+    delPrivateLetter : p=> post('private/getletter/pdelete',p),//删除信件
+    reName : p=> post('private/changetoNick',p),//重命名
+    getContent : p=> get('showletter/show',p),//展示信件内容
+    writeLetter : p =>post('private/writeletter',p),//新建信件
+    editLetter : p=> post('showletter/edit',p),//编辑信件
+    addAddressee : p=> post('private/addlist',p),//添加收信人
+    delAddressee : p=> post('private/dellist',p),//删除收信人
+
     theme: p=> get('together/theme',p),
-    themeContent: p=>get('together/theme/showtheme',p),
-    member: p=>get('together/theme/showtheme/member',p),
+
     headimg: p => post('image/head',p)
     // login: p => post('users/login', p),
     // login_veri: p => post('users/login/verification', p),
