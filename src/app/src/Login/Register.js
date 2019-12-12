@@ -1,6 +1,8 @@
 import React, { Component } from 'react'
 import "../css/Login.css";
 import { Button,Modal,List,InputItem } from 'antd-mobile';
+import {setTokenAll} from '../redux/actions';
+import { Toast } from 'antd-mobile';
 
 //手机,邮箱,密码正则表达式
 const regTel = /^1\d{10}$/;
@@ -17,6 +19,7 @@ export default class Register extends Component {
             btn : false
         }
     }
+    //返回登录
     back=()=>{
         this.props.history.push("/login");
     }
@@ -37,8 +40,27 @@ export default class Register extends Component {
             alert("两次密码不一致！")
         }else if(regTel.test(info) && regPwd.test(pwd)){
             console.log("电话号码注册");
+            let timestamp = Date.parse(new Date());
+            //注册接口
+            this.$api.register({account:info,type:'phone',verification:Vcode,password:pwd,name : name,uday:timestamp}).then(res=>{
+                console.log(res);
+                if (res.data.status === 0) { 
+                    alert("注册成功");        
+                } else {
+                    Toast.fail('登录失败', 1, null, false)
+                }
+            })
         }else if(regEmail.test(info) && regPwd.test(pwd)){
             console.log("邮箱注册");
+            let timestamp = Date.parse(new Date());
+            this.$api.register({account:info,type:'email',verification:Vcode,password:pwd,name : name,uday:timestamp}).then(res=>{
+                console.log(res);
+                if (res.data.status === 0) { 
+                    alert("注册成功");        
+                } else {
+                    Toast.fail('登录失败', 1, null, false)
+                }
+            })
         }else{
             alert("电话号码或邮箱格式错误");
         }
@@ -50,9 +72,16 @@ export default class Register extends Component {
         }else if(regTel.test(info) || regEmail.test(info)){
             if(regTel.test(info)){
                 console.log('发送手机验证码');
+                this.$api.register_Vcode({account:info,type:'phone'}).then(res=>{
+                    console.log(res);
+                })
             }else{
                 console.log('发送邮箱验证码');
+                this.$api.register_Vcode({account:info,type:'email'}).then(res=>{
+                    console.log(res);
+                })
             }
+            //重新获取验证码
             var time = 30;
             this.timer = setInterval(() => {
                 time = time -1;

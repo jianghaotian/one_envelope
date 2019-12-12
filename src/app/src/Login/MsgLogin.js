@@ -1,5 +1,7 @@
 import React, { Component } from 'react'
 import { Button,Modal} from 'antd-mobile';
+import {setTokenAll} from '../redux/actions';
+import { Toast } from 'antd-mobile';
 
 const regTel = /^1\d{10}$/;
 const alert = Modal.alert;
@@ -15,6 +17,7 @@ export default class MsgLogin extends Component {
     toLogin=()=>{
         this.props.history.push("/login");
     }
+    //获取验证码
     getVcode=()=>{
         var tel = this.tel.value;
         if(tel == ""){
@@ -23,6 +26,7 @@ export default class MsgLogin extends Component {
             alert("电话号码格式错误");
         }else{
             var time = 30;
+            //重新获取验证码计时器
             var timer = setInterval(() => {
                 time = time -1;
                 if(time <0){
@@ -40,7 +44,19 @@ export default class MsgLogin extends Component {
                 }
                 
             },1000);
+            //获取验证码
+            this.$api.login_Vcode({account : tel,type : 'phone'}).then(res=>{
+                console.log(res);
+                if (res.data.status === 0) { 
+                    console.log("发送验证码");
+                } else {
+                    Toast.fail('获取失败', 1, null, false)
+                }
+            })
         }
+    }
+    login=()=>{
+        
     }
     render() {
         return (
@@ -54,11 +70,18 @@ export default class MsgLogin extends Component {
                 <div className="msg">
                     <input ref={(inp)=>{this.tel=inp}} type="phone" placeholder="请输入手机号"/>
                     <input ref={(inp)=>{this.vcode=inp}} type="text" placeholder="请输入验证码" style={{marginTop:"20px"}} />
-                    <Button style={{marginTop:"50px",background:"rgb(93, 179, 255)",color:"white"}}
-                    activeStyle={{background:"rgb(75, 142, 243)"}}
+                    <Button style={{marginTop:"50px",background:"white",color:"grey"}}
+                    activeStyle={{background:"lightgrey"}}
                     onClick={this.getVcode}
                     disabled={this.state.btn}
                     >{this.state.code}</Button>
+
+                    <Button 
+                    onClick={this.login} 
+                    activeStyle={{background:"lightgrey"}}
+                    style={{marginTop:"10px",background:"white",color:"grey"}}>
+                        登录
+                    </Button>
                 </div>
             </div>
         )

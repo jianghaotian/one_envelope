@@ -19,15 +19,19 @@ export default class Login extends Component {
     componentDidMount(){
         //console.log(this.props);
     }
+    //跳转到注册页
     Register=()=>{
         this.props.history.push("/register");
     }
+    //微信登录
     WXLogin=()=>{
         console.log("wx");
     }
+    //qq登录
     QQLogin=()=>{
         console.log("qq");
     }
+    //登录
     submit=()=>{
         var info = this.loginInfo.value;
         var pwd = this.pwd.value;
@@ -35,31 +39,37 @@ export default class Login extends Component {
             alert("请输入完整的登录信息")
         }else if(regTel.test(info) && regPwd.test(pwd)){
             console.log("手机号登录");
+            //登录接口
+            this.$api.login({account: info ,type: 'phone',password: pwd }).then(res => {
+                console.log(res);
+                if (res.data.status === 0) { 
+                    this.$store.dispatch(setTokenAll(res.data.data.token, res.data.data.uid));
+                    //登陆成功跳转Home
+                    this.props.history.push("/home");         
+                } else {
+                    Toast.fail('登录失败', 1, null, false)
+                }
+            })
         }else if(regEmail.test(info) && regPwd.test(pwd)){
             console.log("邮箱登录");
+            this.$api.login({account: info ,type: 'email',password: pwd }).then(res => {
+                console.log(res);
+                if (res.data.status === 0) { 
+                    this.$store.dispatch(setTokenAll(res.data.data.token, res.data.data.uid));
+                    this.props.history.push("/home");         
+                } else {
+                    Toast.fail('登录失败', 1, null, false)
+                }
+            })
         }else if(!regPwd.test(pwd)){
             alert("请输入6-20位的密码(可包含英文,数字,下划线)")
         }else{
             alert("手机号或邮箱格式错误");
         }
     }
+    //短信登录
     msg=()=>{
         this.props.history.push("/msgLogin");
-    }
-    submit = () => {
-        this.$api.login({account: '手机号/邮箱',type: '类型 (phone/email)',password: '密码'}).then(res => {
-            if (res.data.status === 0) {
-                
-                this.$store.dispatch(setTokenAll(res.data.data.token, res.data.data.uid));
-                this.props.history.push("/home");
-                
-            } else {
-                Toast.fail('登录失败', 1, null, false)
-
-
-            }
-
-        })
     }
     render() {
         return (
