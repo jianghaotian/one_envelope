@@ -33,6 +33,7 @@ import Cropimg from './My/Cropimg'
 
 import api from './request/api';
 import store from './redux/store';
+import HomeWrite from './Home/HomeWrite'
 
 React.Component.prototype.$api = api;
 React.Component.prototype.$store = store;
@@ -47,6 +48,7 @@ ReactDOM.render(
             <Route path="/register" component={Register} />
             <Route path="/msgLogin" component={MsgLogin} />
             <Route path="/home" component={Tabbar} />
+            <Route path="/homeWrite" component={HomeWrite} />
             {/* lxc */}
             <Route path="/recover" component={Recover} />
             <Route path="/setting" component={Setting}/>
@@ -65,15 +67,10 @@ ReactDOM.render(
 
             {/* zym */}
             <Route exact path="/invitewrite" component={InviteWrite}/>
-            {/* <Route exact path="/invitewrite/:id" component={InviteWrite}/> */}
-
             <Route exact path="/writeTogether" component={WriteTogether}/>
-            <Route exact path="/writeTogether/:id" component={WriteTogether}/>
-
             <Route path="/togecreate" component={togeCreate} />
             <Route path="/togeContent" component={togeContent} />
             <Route path="/inviteMember" component={inviteMember} />
-            {/* <Route path="/inviteMember/:id" component={inviteMember} /> */}
             <Route path="/addressee" component={Addressee} />
 
             <Route path="/touxiang" component={Touxiang} />
