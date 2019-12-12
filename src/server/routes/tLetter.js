@@ -52,7 +52,7 @@ router.get('/theme/showtheme',function(req,res,next){
             res.json(result);
         }else{
             let uid = result.data.uid;
-            runSql(`select theme.tname,theme.timage,theme.tday,tletter.ltitle,tletter.lcontent,tletter.tid,tletter.lday,tid.lid from theme,tletter where theme.uid=? and theme.tid=? and (theme.tid=tletter.tid)`,
+            runSql(`select theme.tname,theme.timage,theme.tday,tletter.ltitle,tletter.lcontent,tletter.tid,tletter.lday,tletter.lid from theme,tletter where theme.uid=? and theme.tid=? and (theme.tid=tletter.tid)`,
                     [uid,tid],(result1) => {
                         res.json(result1);
                     })
@@ -76,7 +76,7 @@ router.get('/theme/showtitle',function(req,res,next){
             console.log('ji')
             res.json(result);
         }else{
-            runSql(`select theme.*  from theme where theme.tid=?  `,[tid],(result1)=>{
+            runSql(`select theme.*  from theme where theme.tid=?`,[tid],(result1)=>{
                 res.json(result1);
             })
         }
