@@ -185,3 +185,90 @@ POST
 
 #### 4.删除管理员
 
+
+
+# 统计
+
+#### 1.获取昨日新注册用户数量
+
+###### 请求url
+
+```
+URL : https://yf.htapi.pub/v1/analy
+```
+
+###### 请求方式
+
+```
+GET
+```
+
+###### 接收参数
+
+###### 返回参数
+
+```
+{
+	status: 0, 
+ 	message: 'OK', 
+ 	data: [ { usernum: 3 } ]     
+ } 
+```
+
+#### 2.获取累计注册
+
+###### 请求url
+
+```
+URL : https://yf.htapi.pub/v1/analy/totalnum
+```
+
+###### 请求方式
+
+```
+GET
+```
+
+###### 接收参数
+
+###### 返回参数
+
+```
+{
+	status: 0, 
+ 	message: 'OK', 
+ 	data: [ { totalnum: 3 } ]     
+ } 
+```
+
+#### 3.获取历史数据查询
+
+###### 请求url
+
+```
+URL : https://yf.htapi.pub/v1/analy/userdata
+```
+
+###### 请求方式
+
+```
+GET
+```
+
+###### 接收参数
+
+###### 返回参数
+
+```
+{
+	status: 0, 
+	message: 'OK', 
+    data: [
+    	{
+             Uday:'2019-12-13',
+             newregist:1
+         } 
+    ]     
+} 
+```
+
