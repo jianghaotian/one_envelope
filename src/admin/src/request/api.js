@@ -12,7 +12,10 @@ const api = {
     showadmin: p => get('adminmanager/show',p),
     deladmin: p => post('adminmanager/deladmin',p),
     checkphone: p=> get('adminmanager/checkphone',p),
-    addadmin: p => post('adminmanager/addadmin',p)
+    addadmin: p => post('adminmanager/addadmin',p),
+    newuser: p => get('analy', p),
+    totalnum: p => get('analy/totalnum',p),
+    userdata: p => get('analy/userdata',p),
 }
 
 
