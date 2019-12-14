@@ -13,6 +13,8 @@ var sLetterRouter = require('./routes/showLetter');
 var mineRouter = require('./routes/mine');
 var mailboxRouter = require('./routes/mailbox');
 var imageRouter = require('./routes/image');
+var adminLogin = require('./routes/adminlogin');
+var adminManager = require('./routes/adminManager');
 var app = express();
 
 app.use(cors());
@@ -30,4 +32,6 @@ app.use('/v1/together',tLetterRouter)
 app.use('/v1/mine',mineRouter)
 app.use('/v1/mailbox',mailboxRouter)
 app.use('/v1/image',imageRouter)
+app.use('/v1/adminlogin',adminLogin);
+app.use('/v1/adminmanager',adminManager);
 module.exports = app;
