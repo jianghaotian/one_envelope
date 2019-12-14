@@ -13,7 +13,22 @@ import {Addform} from '../Manage/Add';
 const { SubMenu } = Menu;
 const { Header, Content, Sider } = Layout;
 export default class TotalLetter extends Component {
-
+    constructor(){
+      super();
+      this.state={
+          name : ''
+      }
+    }
+    componentDidMount(){
+      this.$api.getname().then(res => {
+        if(res.data.status ===0){
+          console.log(res);
+          this.setState({
+            name:res.data.data[0].aname
+          })
+        }
+      })
+    }
     render() {
         return (
             <Layout>
@@ -22,7 +37,7 @@ export default class TotalLetter extends Component {
                     <span className='top-font'>一封管理平台</span>
                     <div>
                         <img src={require('../image/avatar.png')} alt='' className='top-avatar'/>
-                        <span className='top-admin'>用户名</span>
+                        <span className='top-admin'>{this.state.name}</span>
                         <i className="iconfont icontuichu" id='top-exit'></i>
                         <Link id='top-et'>退出</Link>
                     </div>

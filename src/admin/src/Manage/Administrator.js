@@ -3,37 +3,31 @@ import '../css/analy.css'
 import { Table, Input, Button, Icon,Avatar,Popconfirm,Form } from 'antd';
 import Highlighter from 'react-highlight-words';
 import {Link} from 'react-router-dom'
-
+import { Alert } from 'antd';
 const { Search } = Input;
 export default class UserManage extends Component {
-    state = {
-        searchText: '',
-        searchedColumn: '',
-        data: [
-            {
-                key: '1',
-                Aname: 'yifeng',
-                Aid:1,
-                Aphone:'15231148825',
-                Aday:'2019-11-27'
-            },
-            {
-                key: '2',
-                Aname: "haha",
-                Aid:2,
-                Aphone:'17631695087',
-                Aday:'2019-11-27'
-            },
-            {
-                key: '3',
-                Aname: 'lala',
-                Aid:3,
-                Aphone:'17631695087',
-                Aday:'2019-11-27'
+    constructor(){
+        super();
+        this.state={
+            searchText: '',
+            searchedColumn: '',
+            data:[],
+            show:false
+        }
+      }
+    componentDidMount(){
+        this.$api.showadmin().then(res=>{
+            let list = res.data.data;
+            for(var i=0;i<list.length;i++){
+                list[i].Aday = new Date(list[i].Aday).getFullYear()+'-'+(new Date(list[i].Aday).getMonth()+1)+'-'+new Date(list[i].Aday).getDate();
             }
-        ]
-    };
+            this.setState({
+                data:list
+            })
+        })
+    }
     getColumnSearchProps = dataIndex => ({
+        
         filterDropdown: ({ setSelectedKeys, selectedKeys, confirm, clearFilters }) => (
             <div style={{ padding: 8 }}>
                 <Input
@@ -53,10 +47,10 @@ export default class UserManage extends Component {
                     size="small"
                     style={{ width: 90, marginRight: 8 }}
                 >
-                    Search
+                    搜索
                 </Button>
                 <Button onClick={() => this.handleReset(clearFilters)} size="small" style={{ width: 90 }}>
-                    Reset
+                    恢复
                 </Button>
             </div>
             ),
@@ -91,7 +85,26 @@ export default class UserManage extends Component {
             searchedColumn: dataIndex,
         });
     };
-    
+    handleDelete = (e) => {
+        this.$api.deladmin({aid:e}).then(res=>{
+            if(res.data == 0){
+                this.setState({
+                    show:true
+                })
+            }
+            if(res.data.status === 0){
+                let list = this.state.data;
+                for(var i=0;i<list.length;i++){
+                    if(list[i].Aid == e){
+                       list.splice(i,1);
+                    }
+                }
+                this.setState({
+                    data:list
+                })
+            }
+        });
+    }
     handleReset = clearFilters => {
         clearFilters();
         this.setState({ searchText: '' });
@@ -126,11 +139,12 @@ export default class UserManage extends Component {
                 key: 'operation',
                 render: (text, record) => 
                 this.state.data.length >= 1 ? (
-                    <Popconfirm title="Sure to delete?" 
-                    // onConfirm={() => this.handleDelete(record.key)}
+                    <Popconfirm title="确定删除?" 
+                    onConfirm={() => this.handleDelete(record.Aid)}
                     >
-                      <a>删除</a>
+                        <a>删除</a>   
                     </Popconfirm>
+                    
                   ) : null,
                 
             }
