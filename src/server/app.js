@@ -15,6 +15,8 @@ var mailboxRouter = require('./routes/mailbox');
 var imageRouter = require('./routes/image');
 var adminLogin = require('./routes/adminlogin');
 var adminManager = require('./routes/adminManager');
+var countRouter = require('./routes/adminStatistics');
+
 var app = express();
 
 app.use(cors());
@@ -34,4 +36,6 @@ app.use('/v1/mailbox',mailboxRouter)
 app.use('/v1/image',imageRouter)
 app.use('/v1/adminlogin',adminLogin);
 app.use('/v1/adminmanager',adminManager);
+app.use('/v1/analy',countRouter);
+
 module.exports = app;
