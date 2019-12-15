@@ -111,6 +111,7 @@ router.post('/verification', function (req, res, next) {
  *     verification : 验证码
  *     password     : 密码
  *     name         : 昵称 (可选)
+ *     uday         : 注册时间
  * 
  * 返回参数:
  *     status: 0,
@@ -118,7 +119,9 @@ router.post('/verification', function (req, res, next) {
  */
 router.post('/register', function (req, res, next) {    
     let { account, type, verification, password, name } = req.body;
-
+    let date = new Date();
+    let a = '' + date.getFullYear()+'-'+ (date.getMonth() < 9 ? '0' + (date.getMonth()+1)+'-' : (date.getMonth()+1))+'-' + (date.getDate() < 10 ? '0' + date.getDate() : date.getDate());
+    console.log(a);
     runSql('select vcode,vtime from verification where vaccount = ?', [account], (result) => {
         if (result.status === 0) {
             if (result.data.length === 0) {
@@ -132,7 +135,7 @@ router.post('/register', function (req, res, next) {
                 if ((getTimestamp_13() - result.data[0].vtime) < minuteTimestamp) {
                     if (result.data[0].vcode === verification) {
                         if (type === 'phone' || type === 'email') {
-                            runSql(`insert into user(u${type}, upassword, uname) values (?,?,?)`, [account, password, name], (result) => {
+                            runSql(`insert into user(u${type}, upassword, uname,uday) values (?,?,?,?)`, [account, password, name,a], (result) => {
                                 runSql('delete from verification where vaccount = ?', [account], (result) => {
                                     // console.log(result);
                                 });
