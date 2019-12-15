@@ -101,7 +101,7 @@ router.get("/theme/showtheme/member",function(req,res,next){
             }else{
                 runSql(`select distinct user.uname,user.uid,tmember.tid from tmember,user where tmember.tid=? and (tmember.uid = user.uid)`,[tid],(result1) =>{
                     res.json(result1);
-                } )
+            } )
         }
     })
 })
@@ -202,6 +202,32 @@ router.post("/theme/delletter",function(req,res,next){
                res.json(result1);
            })
         }
+    })
+})
+ /**
+  * 删除主题
+  * 请求方式：
+  *     POST
+  * 接收参数：
+  *     tid：主题id
+  * 返回参数：
+  */
+ router.post('/theme/deltheme',function(req,res,next){
+    let {tid} = req.body;
+    checkToken(token,(result)=>{
+        if(result.status !=0){
+            res.json(result)
+        }else{
+            runSql(`delete from theme where tid=?`,[tid],(result1)=>{
+               runSql(`delete from tletter where tid=?`,[tid],(result2)=>{
+                   runSql(`delete from tmember where tid=?`,[tid],(result3)=>{
+                       res.json(result3)
+                   })
+               })
+           })
+
+        }
+        
     })
 })
 module.exports = router;
