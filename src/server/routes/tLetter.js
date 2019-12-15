@@ -110,21 +110,19 @@ router.get("/theme/showtheme/member",function(req,res,next){
  * 书写主题信件内容
  * POST
  * 接收参数:
- *     Ltitle:信件标题
- *     Lcontent:信件内容
- *     Uid:写信人id
- *     Lday:创建日期
- *     Tid:主题id
+ *     title:信件标题
+ *     content:信件内容
+ *     lday:创建日期
  */
 router.post('/theme/writeletter', function (req, res, next) {
     // http://localhost:3000/v1/together/theme/writeletter
-    let { title, content,lday,tid} = req.body;
+    let { title, content,lday} = req.body;
     checkToken(token, (result) => {
         if(result.status != 0){
             res.json(result);
         }else{
             let uid = result.data.uid;
-            runSql(`insert into tletter(Ltitle, Lcontent, Uid,Lday,Tid,isDeletc) values (?,?,?,?,?,?)`,
+            runSql(`insert into tletter(Ltitle, Lcontent, Uid,Lday,Tid,isDelete) values (?,?,?,?,?,?)`,
              [title, content,uid,lday,tid,0],(result1)=>{
                 res.json(result1);
             })
