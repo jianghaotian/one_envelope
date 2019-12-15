@@ -209,26 +209,72 @@ router.post("/theme/delletter",function(req,res,next){
      })
  })
  /**
-  * 删除成员
+  * 删除主题
   * 请求方式：
-  *      POST
-  * 接受参数：
-  *     uid:用户id
-  *     tid:主题id
+  *     POST
+  * 接收参数：
+  *     tid：主题id
   * 返回参数：
-  *     
   */
- router.post('/theme/deltmember',function(req,res,next){
-     let {uid,tid} = req.body;
-     checkToken(token,(result)=>{
-         if(result.status != 0){
-             res.json(result.json);
-         }else{
-            runSql(`delete from tmember where uid=? and tid=?`,[uid,tid],(result1)=>{
-                console.log(result1)
-                res.json(result1);
+ router.post('/theme/deltheme',function(req,res,next){
+    let {tid} = req.body;
+    checkToken(token,(result)=>{
+        if(result.status !=0){
+            res.json(result)
+        }else{
+               runSql(`delete from tletter where tid=?`,[tid],(result2)=>{
+                   runSql(`delete from tmember where tid=?`,[tid],(result3)=>{
+                       runSql(`delete from theme where tid=?`,[tid],(result1)=>{
+                       res.json(result1)
+                   })
+               })
+           })
+        }
+    })
+})
+ /**
+ * 一起写修改信件内容()
+ * 请求方式：
+ *      POST
+ * 接受参数：
+ *      lid：信件id
+ *      title:信件标题
+ *      content：信件内容
+ *      lday：信件修改后的日期
+ * 返回参数：
+ *      
+ */
+router.post('/edit',function(req,res,next){
+    let {lid,title,content,lday} = req.body;
+    checkToken(token,(result) => {
+        if(result.status !=0){
+            res.json(result);
+        }else{
+            let uid =  result.data.uid;
+            runSql(`update tletter set ltitle=?,lcontent=?,lday=? where lid=? and uid=? `,
+                [title,content,lday,lid,uid],(result2)=>{
+                res.json(result2);
             })
-         }
-     })
- })
+        }        
+        })    
+})
+/**
+ * 展示信件内容(编辑和展示用)
+ * GET
+ * 接收参数:
+ *      lid:信件id
+ * 
+ */
+router.get('/theme/show', function (req, res, next) {
+    let {lid} = req.query;
+    checkToken(token, (result) => {
+        if (result.status !== 0) {
+            res.json(result);
+        } else {   
+            runSql(`select * from tletter where lid=?`, [lid], (result) => {
+                res.json(result);
+            });
+        }
+    });
+});
 module.exports = router;
