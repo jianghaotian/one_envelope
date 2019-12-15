@@ -16,6 +16,15 @@ const api = {
     newuser: p => get('analy', p),
     totalnum: p => get('analy/totalnum',p),
     userdata: p => get('analy/userdata',p),
+    addletternum: p => get('analy/addletternum',p),
+    totalletnum: p => get('analy/totalletnum',p),
+    shareletternum: p => get('analy/shareletternum',p),
+    adminletman: p => get('adminletman',p),
+    delpletter: p=> post('adminletman/delpletter',p),
+    tletterlist: p => get('adminletman/tletterlist',p),
+    deltletter: p=> post('adminletman/deltletter',p),
+    totallid: p=> get('adminletman/totallid',p),
+
 }
 
 
