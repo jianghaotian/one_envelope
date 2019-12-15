@@ -272,3 +272,237 @@ GET
 } 
 ```
 
+#### 4.获取昨日新增加的写信数
+
+###### 请求url
+
+```
+URL : https://yf.htapi.pub/v1/analy/addletternum
+```
+
+###### 请求方式
+
+```
+GET
+```
+
+###### 接收参数
+
+###### 返回参数
+
+```
+{
+	status: 0, 
+	message: 'OK', 
+	data: [ { newletnum: 1 } ]     
+} 
+```
+
+#### 5.获取昨日新增加分享数
+
+###### 请求url
+
+```
+URL : https://yf.htapi.pub/v1/analy/shareletternum
+```
+
+###### 请求方式
+
+```
+GET
+```
+
+###### 接收参数
+
+###### 返回参数
+
+```
+{
+	status: 0, 
+	message: 'OK', 
+	data: [ { sharenum: 1 } ]     
+} 
+```
+
+#### 6.获取累计写信数
+
+###### 请求url
+
+```
+URL : https://yf.htapi.pub/v1/analy/totalletnum
+```
+
+###### 请求方式
+
+```
+GET
+```
+
+###### 接收参数
+
+###### 返回参数
+
+```
+{
+	status: 0, 
+	message: 'OK', 
+	data: [ { totalletnum: 1 } ]     
+} 
+```
+
+# 管理
+
+#### 1.获取私密写信件列表
+
+###### 请求url
+
+```
+URL : https://yf.htapi.pub/v1/adminletman
+```
+
+###### 请求方式
+
+```
+GET
+```
+
+###### 接收参数
+
+###### 返回参数
+
+```
+{
+	status: 0, 
+ 	message: 'OK', 
+ 	data:[
+          {
+            Pid: 23,
+            Ptitle: '快来给他写信吧',
+            Pcontent: '他的信箱还没有东西哦',
+            Uid: 1,
+            toUid: null,
+            toNick: '哈哈哈',
+            isSend: 0,
+            Pday: 1576045963000,
+            isCollection: 0,
+            isDelete: 0
+           }
+       ]  
+ } 
+```
+
+#### 2.私密写信件列表删除操作
+
+###### 请求url
+
+```
+URL : https://yf.htapi.pub/v1/adminletman/delpletter
+```
+
+###### 请求方式
+
+```
+POST
+```
+
+###### 接收参数
+
+###### 返回参数
+
+```
+{
+	status: 0, 
+ 	message: 'OK'
+ } 
+```
+
+#### 3.获取一起写信件列表
+
+###### 请求url
+
+```
+URL : https://yf.htapi.pub/v1/adminletman/tletterlist
+```
+
+###### 请求方式
+
+```
+GET
+```
+
+###### 接收参数
+
+###### 返回参数
+
+```
+{
+	status: 0, 
+	message: 'OK', 
+	data:[
+		{
+			Lid: 2,
+			Ltitle: '邀请朋友吧',
+			Lcontent: '欢迎来到一起写',
+			Uid: 1,
+			Lday: 1576045963000,
+			isDelete: 0
+		}
+		]
+}
+```
+
+#### 4.一起写信件列表删除操作
+
+###### 请求url
+
+```
+URL : https://yf.htapi.pub/v1/adminletman/deltletter
+```
+
+###### 请求方式
+
+```
+POST
+```
+
+###### 接收参数
+
+###### 返回参数
+
+```
+{
+	status: 0, 
+ 	message: 'OK'
+ } 
+```
+
+#### 5.获取一起写信件总数
+
+###### 请求url
+
+```
+URL : https://yf.htapi.pub/v1/adminletman/totallid
+```
+
+###### 请求方式
+
+```
+GET
+```
+
+###### 接收参数
+
+###### 返回参数
+
+```
+{
+	status: 0, 
+ 	message: 'OK'
+ 	data:[
+        {
+            totallid:2
+        }
+ 	]
+ } 
+```
+
