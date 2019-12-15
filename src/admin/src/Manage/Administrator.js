@@ -96,12 +96,15 @@ export default class UserManage extends Component {
                 let list = this.state.data;
                 for(var i=0;i<list.length;i++){
                     if(list[i].Aid == e){
+                        console.log(list.splice(i,1));
                        list.splice(i,1);
                     }
                 }
+                console.log(list);
                 this.setState({
                     data:list
                 })
+                console.log(this.state.data);
             }
         });
     }

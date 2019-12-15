@@ -24,6 +24,10 @@ const api = {
     tletterlist: p => get('adminletman/tletterlist',p),
     deltletter: p=> post('adminletman/deltletter',p),
     totallid: p=> get('adminletman/totallid',p),
+    getusers: p => get('usermanager/getusers',p),
+    userlist: p => get('usermanager/userlist',p),
+    checkuid: p => get('usermanager/checkuid',p),
+    deluser:p => post('usermanager/deluser',p)
 
 }
 

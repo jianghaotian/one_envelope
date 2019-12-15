@@ -17,6 +17,8 @@ var adminLogin = require('./routes/adminlogin');
 var adminManager = require('./routes/adminManager');
 var countRouter = require('./routes/adminStatistics');
 var adminLetterManage = require('./routes/adminletterManage');
+var adminManager = require('./routes/adminManager');
+var userManager = require('./routes/userManager');
 var app = express();
 
 app.use(cors());
@@ -38,5 +40,7 @@ app.use('/v1/adminlogin',adminLogin);
 app.use('/v1/adminmanager',adminManager);
 app.use('/v1/analy',countRouter);
 app.use('/v1/adminletman',adminLetterManage);
+app.use('/v1/adminmanager',adminManager);
+app.use('/v1/usermanager',userManager);
 
 module.exports = app;

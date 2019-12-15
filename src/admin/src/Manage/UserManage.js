@@ -5,39 +5,28 @@ import Highlighter from 'react-highlight-words';
 
 const { Search } = Input;
 export default class UserManage extends Component {
-    state = {
-        searchText: '',
-        searchedColumn: '',
-        data: [
-            {
-                key: '1',
-                Uimage: <Avatar src="https://zos.alipayobjects.com/rmsportal/ODTLcjxAfvqbxHnVXCYX.png" />,
-                Uname: 'yifeng',
-                Uid:1,
-                Uphone:'15231148825',
-                share:1,
-                Uday:'2019-11-27'
-            },
-            {
-                key: '2',
-                Uimage:  <Avatar src="https://zos.alipayobjects.com/rmsportal/ODTLcjxAfvqbxHnVXCYX.png" />,
-                Uname: "haha",
-                Uid:2,
-                Uphone:'17631695087',
-                share:1,
-                Uday:'2019-11-27'
-            },
-            {
-                key: '3',
-                Uimage:  <Avatar src="https://zos.alipayobjects.com/rmsportal/ODTLcjxAfvqbxHnVXCYX.png" />,
-                Uname: 'lala',
-                Uid:3,
-                Uphone:'17631695087',
-                share:1,
-                Uday:'2019-11-27'
-            }
-        ]
-    };
+    constructor(){
+        super();
+        this.state={
+            searchText: '',
+            searchedColumn: '',
+            data: [],
+            num:''
+        }
+    }
+    componentDidMount(){
+        this.$api.getusers().then(res => {
+            this.setState({
+                num:res.data.data[0].num
+            })
+        })
+        this.$api.userlist().then(res=>{
+            this.setState({
+                data:res.data.data
+            })
+        })
+
+    }
     getColumnSearchProps = dataIndex => ({
         filterDropdown: ({ setSelectedKeys, selectedKeys, confirm, clearFilters }) => (
             <div style={{ padding: 8 }}>
@@ -58,10 +47,10 @@ export default class UserManage extends Component {
                     size="small"
                     style={{ width: 90, marginRight: 8 }}
                 >
-                    Search
+                    搜索
                 </Button>
                 <Button onClick={() => this.handleReset(clearFilters)} size="small" style={{ width: 90 }}>
-                    Reset
+                    恢复
                 </Button>
             </div>
             ),
@@ -100,7 +89,50 @@ export default class UserManage extends Component {
     handleReset = clearFilters => {
         clearFilters();
         this.setState({ searchText: '' });
-    };
+    }
+    handleDelete =(uid) =>{
+        this.$api.checkuid({uid:uid}).then(res =>{
+            let tidlist = res.data.data
+            if(res.data.data.length > 0){
+                for(var i=0;i<tidlist.length;i++){
+                    this.$api.deluser({uid:uid,tid:tidlist[i].tid}).then((res)=>{
+                        console.log(res.data.status);
+                        if(res.data.status === 0){
+                            let list = this.state.data;
+                            for(var i=0;i<list.length;i++){
+                                if(list[i].Uid == uid){
+                                    console.log(list.splice(i,1));
+                                    list.splice(i,1);
+                                }
+                            }
+                            console.log(list);
+                            this.setState({
+                                data:list
+                            })
+                        }
+                    })
+                
+                }      
+            }else{
+                this.$api.deluser({uid:uid,tid:0}).then((res)=>{
+                    console.log(res.data.status);
+                    if(res.data.status === 0){
+                        let list = this.state.data;
+                        for(var i=0;i<list.length;i++){
+                            if(list[i].Uid == uid){
+                                console.log(list.splice(i,1));
+                                list.splice(i,1);
+                            }
+                        }
+                        console.log(list);
+                        this.setState({
+                            data:list
+                        })
+                    }
+                })
+            }
+        })
+    }
     render() {
         const columns = [
             {
@@ -127,11 +159,6 @@ export default class UserManage extends Component {
                 ...this.getColumnSearchProps('Uphone'),
             },
             {
-                title: '分享链接数',
-                dataIndex: 'share',
-                key: 'share',
-            },
-            {
                 title: '注册时间',
                 dataIndex: 'Uday',
                 key: 'Uday',
@@ -144,7 +171,7 @@ export default class UserManage extends Component {
                 render: (text, record) => 
                 this.state.data.length >= 1 ? (
                     <Popconfirm title="Sure to delete?" 
-                    // onConfirm={() => this.handleDelete(record.key)}
+                    onConfirm={() => this.handleDelete(record.Uid)}
                     >
                       <a>删除</a>
                     </Popconfirm>
@@ -156,7 +183,7 @@ export default class UserManage extends Component {
             <div>
                 <div className='bmuser'>
                     <span className='bmanage_user'>用户管理</span>
-                    <span className='buser_sum'>总用户数：</span>
+                    <span className='buser_sum'>总用户数：{this.state.num}</span>
                 </div>
                 <div style={{background:'rgb(238, 238, 238)',height:10}}></div>
                 <div className='if_search'>

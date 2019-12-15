@@ -13,6 +13,7 @@ const { getToken, checkToken } = require('../src/token');
  * 返回参数：
  *  
  */
+
 router.post('/login', function (req, res, next) {
     let { account, password } = req.body;
         runSql(`select aid,apassword from admin where aphone = ?`, [account], (result) => {
@@ -35,7 +36,6 @@ router.post('/login', function (req, res, next) {
                         let token = getToken(tokenContent, params);
                         runSql(`select  * from notice`,[],(result1)=>{
                             // let data = result1.data;
-                            
                             let jsonData = {
                                 status: 0,
                                 message: 'OK',
@@ -45,8 +45,7 @@ router.post('/login', function (req, res, next) {
                                 }
                             }
                             res.json(jsonData);
-                        })
-                       
+                        })  
                     } else {
                         let jsonData = {
                             status: 10010,
