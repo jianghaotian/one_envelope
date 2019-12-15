@@ -1,49 +1,27 @@
 import React, { Component } from 'react'
 import '../css/analy.css';
-import { DatePicker,Table, Input, Button, Icon} from 'antd';
-import moment from 'moment';
-
+import {Table, Input, Button, Icon} from 'antd';
 import Highlighter from 'react-highlight-words';
 
-const { RangePicker } = DatePicker;
-const dateFormat = 'YYYY年MM月DD日';
-
-const data = [
-    {
-        key: '1',
-        Uday: '2019-11-26',
-        newregist: 100,
-        dayVisit:800,
-        registSum: 1000,
-    },
-    {
-        key: '2',
-        Uday: '2019-11-28',
-        newregist: 100,
-        dayVisit:800,
-        registSum: 1000,
-    },
-    {
-        key: '3',
-        Uday: '2019-11-29',
-        newregist: 100,
-        dayVisit:800,
-        registSum: 1000,
-    },
-    {
-        key: '4',
-        Uday: '2019-12-30',
-        newregist: 100,
-        dayVisit:800,
-        registSum: 1000,
-    }
-];
 export default class UserAnaly extends Component {
-
-    state = {
-        searchText: '',
-        searchedColumn: '',
-    };
+    constructor(){
+        super();
+        this.state = {
+            searchText: '',
+            searchedColumn: '',
+            newuser:'',
+            totalusers:'',
+            data:[
+                {
+                    key: '1',
+                    Uday: '2019-11-26',
+                    newregist: 100,
+                    dayVisit:800,
+                    registSum: 1000,
+                },
+            ]
+        };
+    }
     
     getColumnSearchProps = dataIndex => ({
         filterDropdown: ({ setSelectedKeys, selectedKeys, confirm, clearFilters }) => (
@@ -108,26 +86,50 @@ export default class UserAnaly extends Component {
         clearFilters();
         this.setState({ searchText: '' });
     };
-        
-    // stringToDate = (dateStr,separator)=>{ 
-    //     if(!separator){ 
-    //         separator="-"; 
-    //     } 
-    //     var dateArr = dateStr.split(separator); 
-    //     var year = parseInt(dateArr[0]); 
-    //     var month; 
-    //     // if(dateArr[1].indexOf("0") == 0){ 
-    //     //     month = parseInt(dateArr[1].substring(1)); 
-    //     // }else{ 
-    //          month = parseInt(dateArr[1]); 
-    //     // } 
-    //     var day = parseInt(dateArr[2]); 
-    //     var date = new Date(year,month -1,day); 
-    //     return date; 
-    // } 
 
     onChange=(value,dateString)=>{
         console.log(dateString);
+    }
+    componentDidMount(){
+        this.$api.newuser({}).then(res => {
+            if (res.data.status === 0) { 
+                let arr = res.data.data;
+                console.log(arr[0].usernum);
+                this.setState({
+                    newuser:arr[0].usernum,
+                })
+            } else {
+                console.log("error")
+            }
+        })
+        this.$api.totalnum({}).then(res => {
+            if (res.data.status === 0) { 
+                let arr = res.data.data;
+                console.log(arr)
+                console.log(arr[0].totalnum);
+                this.setState({
+                    totalusers:arr[0].totalnum
+                })
+            } else {
+                console.log("error")
+            }
+        })
+        this.$api.userdata({}).then(res => {
+            if (res.data.status === 0) { 
+                let arr = res.data.data;
+                console.log(arr);
+                for(var i=0;i<arr.length;i++){
+                    arr[i].key = i+1;
+                    arr[i].dayVisit = 3;
+                    arr[i].registSum = this.state.totalusers;   
+                }
+                this.setState({
+                    data:arr
+                })
+            } else {
+                console.log("error")
+            }
+        })
     }
     render() {
         const columns = [
@@ -147,7 +149,6 @@ export default class UserAnaly extends Component {
                 title: '日访问',
                 dataIndex: 'dayVisit',
                 key: 'dayVisit',
-                ...this.getColumnSearchProps('dayVisit'),
             },
             {
                 title: '累计注册',
@@ -159,24 +160,20 @@ export default class UserAnaly extends Component {
             <div className='right-con'>
                <div className='ruseranaly'>
                    <div className='bruser-title'>用户分析</div>
-                   <div className='bruser-con'>
+                   <div className='bruser-con1'>
                        <li>
                            <span>昨日新注册用户</span>
-                           <span className='usernum'>100</span>
-                       </li>
-                       <li>
-                           <span>昨日访问</span>
-                           <span className='usernum'>100</span>
+                           <span className='usernum'>{this.state.newuser}</span>
                        </li>
                        <li id='usertr'>
                            <span>累计注册</span>
-                           <span className='usernum'>100</span>
+                           <span className='usernum'>{this.state.totalusers}</span>
                        </li>
                    </div>
                </div>
                 <div className='rdata-inquire'>
                     <div className='bruser-title'>历史数据查询</div>
-                    <Table columns={columns} dataSource={data} />             
+                    <Table columns={columns} dataSource={this.state.data} />             
                 </div>
             </div>
         )

@@ -2,48 +2,31 @@ import React, { Component } from 'react'
 import '../css/analy.css'
 import { Table, Input, Button, Icon,Avatar,Popconfirm } from 'antd';
 import Highlighter from 'react-highlight-words';
+import { compose } from 'redux';
 
 const { Search } = Input;
 export default class UserManage extends Component {
-    state = {
-        searchText: '',
-        searchedColumn: '',
-        data:[
-            {
-                key: '1',
-                Pid:1,
-                fromUid:1,
-                toUid:1,
-                Ptitle:'致自己',
-                paper:'1',
-                Pday:'2019-11-30',
-                link:'无连接',
-                // operation:<a>删除</a> && <a>预览</a>
-            },
-            {
-                key: '2',
-                Pid:2,
-                fromUid:2,
-                toUid:2,
-                Ptitle:'致自己',
-                paper:'1',
-                Pday:'2019-12-2',
-                link:'无连接',
-                // operation:<a>删除</a> || <a>预览</a>
-            },
-            {
-                key: '3',
-                Pid:3,
-                fromUid:1,
-                toUid:1,
-                Ptitle:'致自己',
-                paper:'1',
-                Pday:'2020-1-1',
-                link:'无连接',
-                // operation:<a>删除</a> || <a>预览</a>
-            },
-        ]
-    };
+    constructor(){
+        super();
+        this.state = {
+            searchText: '',
+            searchedColumn: '',
+            totalletnum:'',
+            data:[
+                {
+                    key: '1',
+                    Pid:1,
+                    Uid:1,
+                    toUid:1,
+                    Ptitle:'致自己',
+                    paper:'1',
+                    Pday:'2019-11-30',
+                    link:'无连接',
+                    // operation:<a>删除</a> && <a>预览</a>
+                }
+            ]
+        }
+    }
     getColumnSearchProps = dataIndex => ({
         filterDropdown: ({ setSelectedKeys, selectedKeys, confirm, clearFilters }) => (
             <div style={{ padding: 8 }}>
@@ -107,6 +90,61 @@ export default class UserManage extends Component {
         clearFilters();
         this.setState({ searchText: '' });
     };
+    handleDelete = (e) => {
+        console.log(e);
+        this.$api.delpletter({pid:e}).then(res=>{
+            if(res.data.status === 0){
+                let arr = this.state.data;
+                for(var i=0;i<arr.length;i++){
+                    if(arr[i].Pid == e){
+                       arr.splice(i,1);
+                    }
+                }
+                console.log(arr);
+                this.setState({
+                    data:arr
+                })
+                
+            }
+        });
+    }
+    componentDidMount(){
+        this.$api.adminletman({}).then(res => {
+            if (res.data.status === 0) { 
+                let arr = res.data.data;
+                // console.log(arr);
+                for(var i=0;i<arr.length;i++){
+                    arr[i].key = i+1; 
+                    arr[i].paper = 1; 
+                    arr[i].Pday=new Date(arr[i].Pday).getFullYear()+'-'+(new Date(arr[i].Pday).getMonth()+1)+'-'+new Date(arr[i].Pday).getDate(); 
+                    if(arr[i].isSend == 1){
+                        arr[i].link ='有链接';
+                    }else{
+                        arr[i].link = '无链接';
+                    }
+                    if(arr[i].toUid == null){
+                        arr[i].toUid = 'NULL';
+                    }
+                }
+                this.setState({
+                    data:arr
+                })
+            } else {
+                console.log("error")
+            }
+        });
+        this.$api.totalletnum({}).then(res => {
+            if (res.data.status === 0) { 
+                let arr = res.data.data;
+                console.log(arr[0].totalletnum);
+                this.setState({
+                    totalletnum:arr[0].totalletnum
+                })
+            } else {
+                console.log("error")
+            }
+        });
+    }
     render() {
         const columns = [
             {
@@ -116,9 +154,9 @@ export default class UserManage extends Component {
             },
             {
                 title: 'from',
-                dataIndex: 'fromUid',
-                key: 'fromUid ',
-                ...this.getColumnSearchProps('fromUid'),
+                dataIndex: 'Uid',
+                key: 'Uid ',
+                ...this.getColumnSearchProps('Uid'),
             },
             {
                 title: 'to',
@@ -155,7 +193,7 @@ export default class UserManage extends Component {
                 render: (text, record) => 
                     this.state.data.length >= 1 ? (
                         <Popconfirm title="Sure to delete?" 
-                        // onConfirm={() => this.handleDelete(record.key)}
+                        onConfirm={() => this.handleDelete(record.Pid)}
                         >
                           <a>删除</a>
                         </Popconfirm>
@@ -166,7 +204,7 @@ export default class UserManage extends Component {
             <div>
                 <div className='bmuser'>
                     <span className='bmanage_user'>私密信管理</span>
-                    <span className='buser_sum'>总信件数：</span>
+                    <span className='buser_sum'>总信件数：{this.state.totalletnum}</span>
                 </div>
                 <div style={{background:'rgb(238, 238, 238)',height:10}}></div>
                 <div className='if_search'>
