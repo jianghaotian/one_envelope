@@ -213,21 +213,21 @@ router.post("/theme/delletter",function(req,res,next){
   * 返回参数：
   */
  router.post('/theme/deltheme',function(req,res,next){
-    let {tid} = req.body;
-    checkToken(token,(result)=>{
-        if(result.status !=0){
-            res.json(result)
-        }else{
-            runSql(`delete from theme where tid=?`,[tid],(result1)=>{
-               runSql(`delete from tletter where tid=?`,[tid],(result2)=>{
-                   runSql(`delete from tmember where tid=?`,[tid],(result3)=>{
-                       res.json(result3)
-                   })
-               })
-           })
+     let {tid} = req.body;
+     checkToken(token,(result)=>{
+         if(result.status !=0){
+             res.json(result)
+         }else{
+             runSql(`delete from theme where tid=?`,[tid],(result1)=>{
+                runSql(`delete from tletter where tid=?`,[tid],(result2)=>{
+                    runSql(`delete from tmember where tid=?`,[tid],(result3)=>{
+                        res.json(result3)
+                    })
+                })
+            })
 
-        }
-        
-    })
-})
+         }
+         
+     })
+ })
 module.exports = router;
