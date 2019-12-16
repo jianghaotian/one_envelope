@@ -47,7 +47,7 @@ export default class Register extends Component {
                 if (res.data.status === 0) { 
                     alert("注册成功");        
                 } else {
-                    Toast.fail('登录失败', 1, null, false)
+                    Toast.fail('注册失败', 1, null, false)
                 }
             })
         }else if(regEmail.test(info) && regPwd.test(pwd)){
@@ -58,7 +58,7 @@ export default class Register extends Component {
                 if (res.data.status === 0) { 
                     alert("注册成功");        
                 } else {
-                    Toast.fail('登录失败', 1, null, false)
+                    Toast.fail('注册失败', 1, null, false)
                 }
             })
         }else{
@@ -92,7 +92,7 @@ export default class Register extends Component {
                     })
                     clearInterval(this.timer);
                 }else{
-                    var str = "重新获取验证码"+"("+time+")";
+                    var str = "重新获取"+"("+time+")";
                     this.setState({
                         code : str,
                         btn :true

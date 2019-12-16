@@ -45,7 +45,19 @@ export default class Login extends Component {
                 if (res.data.status === 0) { 
                     this.$store.dispatch(setTokenAll(res.data.data.token, res.data.data.uid));
                     //登陆成功跳转Home
-                    this.props.history.push("/home");         
+                    this.props.history.push("/home");
+                    //存储消息通知
+                    this.$api.notice().then(res=>{
+                        console.log(res.data.data);
+                        let notice = [];
+                        let data = res.data.data;
+                        for(let i=0;i<data.length;i++){
+                            console.log(data[i]);
+                            notice.push(data[i]);
+                        }
+                        var ls = window.localStorage;
+                        ls.setItem("notice",JSON.stringify(notice));
+                    })         
                 } else {
                     Toast.fail('登录失败', 1, null, false)
                 }

@@ -30,15 +30,13 @@ Link{
     right:5%;
 }
 /* block */
-.together-block{
+#together-block{
     display: inline-block;
     position:relative;
     width: 100%;
     height: 190px;
     margin:0 auto;
     padding:10px 10px 5px 10px;
-    text-overflow:ellipsis; white-space:nowrap; overflow:hidden;
-
 }
 .together-bacimg{
     width: 100%;
@@ -51,19 +49,28 @@ Link{
 .together-title{
     font-size:20px;
     position:absolute;
-    top:38%;
+    top:27%;
     width:100%;
     height:5%;
     color:white;
     text-align:center;
-    /* font-weight: bold; */
+    font-weight: bold;
+}
+.together-member{
+    font-size:15px;
+    width:40%;
+    position:absolute;
+    top:50%;
+    left:10%;
+    color:white;
+    text-align: center;
 }
 .together-paper{
     width:40%;
     font-size:15px;
     position:absolute;
     text-align: center;
-    top:60%;
+    top:50%;
     right: 10%;
     color:white;
 }
@@ -90,12 +97,9 @@ Link{
 }
 .invite-title{
     position: absolute;
-    padding: 10px;
-    bottom:40%;
-    left:30%;
+    top:50%;
+    left:10%;
     font-size:  20px;
-    background-color: rgba(107, 112, 112, 0.267);
-    border-radius: 5px;
     color: white;
 }
 .invite-return{
@@ -161,11 +165,9 @@ Link{
 }
 .c-day{
     font-weight: bold;
-    padding-left:20%;
-
 }
 .c-month{
-    padding-left:20%;
+    padding-left:10%;
 }
 .inviteyear{
     color:rgb(98, 69, 143);
@@ -174,8 +176,6 @@ Link{
     font: bold 17px none;
     padding-left: 2%;
     padding-bottom: 3%;
-    padding-top: 2%;
-
 }
 /* 回到顶部 */
 .invite-totop{

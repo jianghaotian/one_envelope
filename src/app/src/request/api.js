@@ -16,6 +16,7 @@ const api = {
     editLetter : p=> post('showletter/edit',p),//编辑信件
     addAddressee : p=> post('private/addlist',p),//添加收信人
     delAddressee : p=> post('private/dellist',p),//删除收信人
+    notice :p=> get('mine/notice',p),//消息通知
 
     theme: p=> get('together/theme',p),
 

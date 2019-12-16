@@ -8,7 +8,7 @@
 }
 .login input{
     text-align: center;
-    height:35px;
+    height:40px;
     width:96%;
     padding:5px;
     margin:0 auto;
@@ -93,13 +93,14 @@
 }
 .msg input{
     text-align: center;
-    height:35px;
+    height:45px;
     width:96%;
     padding:5px;
     margin:0 auto;
     border: none;
     background-color: rgb(219, 219, 219);
     border-radius:30px;
+    font-size:15px;
 }
 .pwdLogin{
     float:right;

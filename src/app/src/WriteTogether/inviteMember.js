@@ -7,21 +7,25 @@ import { NavBar} from 'antd-mobile';
 
 export default class inviteMember extends Component {
     constructor(){
-        super();
-        this.state={                                                          
-                data:[{}]         
+        super();       
+        this.state={
+            data:[
+                {
+                    id:0,
+                    title:"快邀请ta一起写",
+                    member:2,
+                    paper:2,
+                    img:require("../imgs//WriteTogether/toge0.jpg"),
+                },
+                {
+                    id:1,
+                    title:'致我们的宝贝',
+                    member:2,
+                    paper:26,
+                    img:require("../imgs//WriteTogether/toge1.jpg"),
+                }
+                ]       
         }
-    }
-    componentDidMount(){
-        console.log("4")
-        this.$api.member({tid:"2"}).then(res => {                     
-            if (res.data.status === 0) {                
-                this.setState({
-                    data:res.data.data
-                })
-                console.log(this.state.data);
-            }         
-        }) 
     }
     
     render() {
@@ -32,9 +36,31 @@ export default class inviteMember extends Component {
                     <img src={require("../imgs//WriteTogether/tianjia.png")} className='together-img'/>
                     <Link to='/inviteWrite'><img src={require("../imgs/WriteTogether/return1.png")} className='member-return'/></Link>
                 </NavBar>
-                
-                    <List>
-                    {this.state.data.map((val)=>(
+                <List>
+                <SwipeAction
+                    style={{ backgroundColor: 'gray' ,border:"0.2px solid gray"}}
+                    autoClose
+                    right={[
+                        {
+                        text: 'Cancel',
+                        onPress: () => console.log('cancel'),
+                        style: { backgroundColor: '#ddd', color: 'white' },
+                        },
+                        {
+                        text: 'Delete',
+                        onPress: () => console.log('delete'),
+                        style: { backgroundColor: '#F4333C', color: 'white' },
+                        },
+                    ]}
+                    >
+                    <List.Item
+                        extra=""
+                        arrow="horizontal"
+                        onClick={e => console.log(e)}
+                    >
+                        妈妈
+                    </List.Item>                   
+                    </SwipeAction>
                     <SwipeAction
                     style={{ backgroundColor: 'gray' ,border:"0.2px solid gray"}}
                     autoClose
@@ -54,17 +80,14 @@ export default class inviteMember extends Component {
                     <List.Item
                         extra=""
                         arrow="horizontal"
-                        onClick={e => console.log(e)}>
-                        {val.uname}
-                    </List.Item>  
-                                     
+                        onClick={e => console.log(e)}
+                    >
+                        爸爸
+                    </List.Item>                   
                     </SwipeAction>
-                 ))}   
                 </List>
                 
-                
             </div>
-            
         )
     }
 }

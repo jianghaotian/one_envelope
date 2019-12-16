@@ -15,7 +15,7 @@ export default class Tabbar extends React.Component {
     };
   }
   render() {
-    console.log(this.props.match.params.id);
+    //console.log(this.props.match.params.id);
     return (
       <div style={ { position: 'fixed', height: '100%', width: '100%', top: 0 } }>
         <TabBar
@@ -41,7 +41,7 @@ export default class Tabbar extends React.Component {
             }}
             data-seed="logId"
           >
-            <Home />
+            <Home history={this.props.history}/>
           </TabBar.Item>
           <TabBar.Item
             icon={
