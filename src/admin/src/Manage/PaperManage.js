@@ -11,38 +11,43 @@ function getBase64(file) {
     });
 }
 export default class PaperManage extends Component {
-    state = {
-        previewVisible: false,
-        previewImage: '',
-        fileList: [
-          {
-              uid: '-1',
-              name: 'image.png',
-              status: 'done',
-              url: 'http://photocdn.sohu.com/20111111/Img325292992.jpg',
-          },
-          {
-              uid: '-2',
-              name: 'image.png',
-              status: 'done',
-              url:'http://photocdn.sohu.com/20111111/Img325292992.jpg',
-          },
-          {
-              uid: '-3',
-              name: 'image.png',
-              status: 'done',
-              url: 'http://b-ssl.duitang.com/uploads/item/201507/13/20150713153609_YKU8V.jpeg',
-          },
-          {
-              uid: '-4',
-              name: 'image.png',
-              status: 'done',
-              url: 'http://b-ssl.duitang.com/uploads/item/201303/14/20130314101209_4HRcn.jpeg'
-          },
-        ],
-    };
+    constructor(){
+        super();
+        this.state={
+            previewVisible: false,
+            previewImage: '',
+            fileList: [],
+            num:''
+        }
+    }
+    componentDidMount(){
+        this.$api.getpaper().then(res => {
+            this.setState({
+                num:res.data.data[0].num
+            })
+        })
+        this.$api.paperlist().then(res => {
+            let list = res.data.data;
+            for(var i=0;i<list.length;i++){
+                list[i].url = "http://localhost:8000/head/" + list[i].ppimage
+                list[i].uid =-(i+1);
+            }
+            this.setState({
+                fileList:list
+            })
+        })
+    }
+    //     fileList: [
+    //       {
+    //           uid: '-1',
+    //           name: 'image.png',
+    //           status: 'done',
+    //           url: 'http://photocdn.sohu.com/20111111/Img325292992.jpg',
+    //       },
+
     handleCancel = () => this.setState({ previewVisible: false });
     handlePreview = async file => {
+        console.log(file);
         if (!file.url && !file.preview) {
         file.preview = await getBase64(file.originFileObj);
         }
@@ -51,7 +56,23 @@ export default class PaperManage extends Component {
         previewVisible: true,
         });
     };
-    handleChange = ({ fileList }) => this.setState({ fileList });
+    handleChange = ({ fileList }) =>{
+        // console.log(fileList);
+        // var num = fileList.length-1;
+        // let name = fileList[num].name
+        // this.$api.addpaper({file:name}).then(res => {
+        //     console.log(res.data)
+        // })
+         this.setState({ fileList })
+        };
+    handleRemove = async file =>{
+        // console.log(fileList)
+        this.$api.delpaper({ppid:file.ppid}).then(res=>{
+            console.log(res)
+        })
+        // this.setState({ fileList })
+
+    }
     render() {
         const { previewVisible, previewImage, fileList } = this.state;
         const uploadButton = (
@@ -64,7 +85,7 @@ export default class PaperManage extends Component {
             <div>
                  <div className='bmuser'>
                     <span className='bmanage_user'>信纸管理</span>
-                    <span className='buser_sum'>总信纸数：</span>
+                    <span className='buser_sum'>总信纸数：{this.state.num}</span>
                     <div className="clearfix">
                         <Upload
                             action="https://www.mocky.io/v2/5cc8019d300000980a055e76"
@@ -72,6 +93,7 @@ export default class PaperManage extends Component {
                             fileList={fileList}
                             onPreview={this.handlePreview}
                             onChange={this.handleChange}
+                            onRemove={this.handleRemove}
                         >
                             {fileList.length >= 50 ? null : uploadButton}
                         </Upload>

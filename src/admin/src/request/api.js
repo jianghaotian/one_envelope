@@ -2,10 +2,6 @@ import { get, post } from './http';
 
 const api = {
 
-    //Login
-    // login: p => post('users/login', p),//登录
-    // login_Vcode: p => post('users/verification', p),//登录验证码
-    // register_Vcode: p => post('users/verification', p),//注册验证码
     
     login: p => post('adminlogin/login',p),
     getname:p => get('adminlogin/getname',p),
@@ -13,21 +9,14 @@ const api = {
     deladmin: p => post('adminmanager/deladmin',p),
     checkphone: p=> get('adminmanager/checkphone',p),
     addadmin: p => post('adminmanager/addadmin',p),
-    newuser: p => get('analy', p),
-    totalnum: p => get('analy/totalnum',p),
-    userdata: p => get('analy/userdata',p),
-    addletternum: p => get('analy/addletternum',p),
-    totalletnum: p => get('analy/totalletnum',p),
-    shareletternum: p => get('analy/shareletternum',p),
-    adminletman: p => get('adminletman',p),
-    delpletter: p=> post('adminletman/delpletter',p),
-    tletterlist: p => get('adminletman/tletterlist',p),
-    deltletter: p=> post('adminletman/deltletter',p),
-    totallid: p=> get('adminletman/totallid',p),
     getusers: p => get('usermanager/getusers',p),
     userlist: p => get('usermanager/userlist',p),
     checkuid: p => get('usermanager/checkuid',p),
-    deluser:p => post('usermanager/deluser',p)
+    deluser:p => post('usermanager/deluser',p),
+    getpaper: p => get('papermanager/getpaper',p),
+    paperlist: p=> get('papermanager/paperlist',p),
+    addpaper: p => post('image/paper',p),
+    delpaper: p => post('papermanager/delpaper',p)
 
 }
 
