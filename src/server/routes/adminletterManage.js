@@ -52,7 +52,26 @@ router.post('/delpletter', function (req, res, next) {
         res.json(result1);
     }); 
 });
-
+/**
+ * 获取私密写信件总数
+ * GET
+ * 返回参数：
+ *  {
+ *     status: 0, 
+ *     message: 'OK', 
+ *     data:[
+ *         {
+ *          totalpid: 10,
+ *          }
+ *      ]
+ *  }
+ */
+router.get('/totalpid', function (req, res, next) {
+    runSql(`select count(*) as totalpid from pletter`, [], (result1) => {
+        console.log(result1);
+        res.json(result1);
+    }); 
+});
 /**
  * 获取一起写信件列表
  * GET
@@ -106,7 +125,7 @@ router.post('/deltletter', function (req, res, next) {
  *     message: 'OK', 
  *     data:[
  *         {
- *          Lid: 2,
+ *          totallid: 2,
  *          }
  *      ]
  *  }
