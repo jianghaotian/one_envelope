@@ -28,7 +28,6 @@ router.get('/getusers',function(req,res,next){
  *      uid：用户id
  *      uname：用户名
  *      uphone：用户手机号
- *      ushare：分享链接数
  *      uday：注册时间
  *      
  */
@@ -58,6 +57,7 @@ router.get('/checkuid',function(req,res,next){
  *      POST
  * 接收参数：
  *      uid：用户id
+ *      tid:用户id
  * 返回参数：
  * 
  */

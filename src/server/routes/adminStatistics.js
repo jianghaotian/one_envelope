@@ -45,7 +45,7 @@ router.get('/totalnum', function (req, res, next) {
     });
 });
 /**
- * 获取历史数据查询
+ * 用户分析获取历史数据查询
  * GET
  * 返回参数：
  *  {
@@ -68,22 +68,27 @@ router.get('/userdata', function (req, res, next) {
 });
 
 /**
- * 获取昨日新增加的写信数
+ * 获取昨日新增加的写信数(私密写+一起写)
  * GET
  * 返回参数：
  *  {
  *     status: 0, 
  *     message: 'OK', 
- *     data: [ { newletnum: 1 } ]     
+ *     data: [ { newpletnum: 1 } ]     
  *  } 
  * 
  */
-router.get('/addletternum', function (req, res, next) {
+router.get('/addpletternum', function (req, res, next) {
     let timestamp1 = new Date(new Date(new Date().toLocaleDateString()).getTime())-24 * 60 * 60 * 1000;
     let timestamp = new Date(new Date(new Date().toLocaleDateString()).getTime())-1;
-    runSql(`select count(pid) as newletnum,count(isSend) as sharenum from pletter where pday between ? and ?`, [timestamp1,timestamp], (result1) => {
-        console.log(result1);
-        res.json(result1);
+    runSql(`select count(pid) as newpletnum from pletter where pday between ? and ?`, [timestamp1,timestamp], (result1) => {
+        var num = result1.data[0];
+        runSql(`select count(lid) as newtletnum from tletter where lday between ? and ?`, [timestamp1,timestamp], (result2) => {
+            result2.data.push(num);
+            res.json(result2);
+            console.log(result2);
+
+        });
     });
 });
 /**
@@ -113,15 +118,48 @@ router.get('/shareletternum', function (req, res, next) {
  *  {
  *     status: 0, 
  *     message: 'OK', 
- *     data: [ { usernum: 3 } ]     
+ *     data: [ { totalletnum: 3 } ]     
  *  } 
  * 
  */
 router.get('/totalletnum', function (req, res, next) {
-    runSql(`select count(pid) as totalletnum from pletter`, [], (result1) => {
-        console.log(result1);
-        res.json(result1);
+    runSql(`select count(pid) as totalpletnum from pletter`, [], (result1) => {
+        var num1 = result1.data[0];
+        runSql(`select count(lid) as totaltletnum from tletter`, [], (result2) => {
+            console.log(result2);
+            result2.data.push(num1);
+            res.json(result2);
+            console.log(result2);
+        });
     });
 });
-
+/**
+ * 信件分析获取历史数据查询
+ * GET
+ * 返回参数：
+{
+	"status":0,
+	"data":{
+		"p":[
+			{"date":"2019-12-12","pidnum":1},
+			{"date":"2019-12-13","pidnum":1}],
+		"t":[]
+	}
+}
+ * 
+ */
+router.get('/letterdata', function (req, res, next) {
+    runSql(`select DATE_FORMAT(FROM_UNIXTIME(ROUND(pday/1000)),'%Y-%m-%d') as date,count(pid) as pidnum from pletter group by date`, [], (result1) => {   
+        runSql(`select DATE_FORMAT(FROM_UNIXTIME(ROUND(lday/1000)),'%Y-%m-%d') as date1,count(lid) as lidnum from tletter group by date1`, [], (result2) => {
+            let diet = {
+                status: 0,
+                data: {
+                    p: result1.data,
+                    t: result2.data
+                }
+            }
+            res.json(diet);
+        });
+    });
+});
 module.exports = router;

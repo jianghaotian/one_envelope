@@ -5,39 +5,52 @@ import Highlighter from 'react-highlight-words';
 
 const { Search } = Input;
 export default class UserManage extends Component {
-    state = {
-        searchText: '',
-        searchedColumn: '',
-        data: [
-            {
-                key: '1',
-                Lid:1,
-                Uid:1,
-                Tid:1,
-                Ltitle:'致自己',
-                Pday:'2019-11-30',
-                link:'无连接',
-            },
-            {
-                key: '2',
-                Lid:2,
-                Uid:2,
-                Tid:2,
-                Ltitle:'致自己',
-                Pday:'2019-11-30',
-                link:'无连接',
-            },
-            {
-                key: '3',
-                Lid:3,
-                Uid:3,
-                Tid:3,
-                Ltitle:'致自己',
-                Pday:'2019-11-30',
-                link:'无连接',
-            },
-        ]
-    };
+    constructor(){
+        super();
+        this.state = {
+            searchText: '',
+            searchedColumn: '',
+            totallid:'',
+            data: [
+                {
+                    key: '1',
+                    Lid:1,
+                    Uid:1,
+                    Tid:1,
+                    Ltitle:'致自己',
+                    Lday:'2019-11-30',
+                }
+            ]
+        }
+    }
+    componentDidMount(){
+        this.$api.tletterlist({}).then(res => {
+            if (res.data.status === 0) { 
+                let arr = res.data.data;
+                console.log(arr);
+                for(var i=0;i<arr.length;i++){
+                    arr[i].key = i+1; 
+                    arr[i].Lday=new Date(arr[i].Lday).getFullYear()+'-'+(new Date(arr[i].Lday).getMonth()+1)+'-'+new Date(arr[i].Lday).getDate(); 
+                }
+                this.setState({
+                    data:arr
+                })
+            } else {
+                console.log("error")
+            }
+        })
+        this.$api.totallid({}).then(res => {
+            if (res.data.status === 0) { 
+                let arr = res.data.data;
+                console.log(arr[0].totallid);
+                this.setState({
+                    totallid:arr[0].totallid
+                })
+            } else {
+                console.log("error")
+            }
+        });
+    }
     getColumnSearchProps = dataIndex => ({
         filterDropdown: ({ setSelectedKeys, selectedKeys, confirm, clearFilters }) => (
             <div style={{ padding: 8 }}>
@@ -103,10 +116,23 @@ export default class UserManage extends Component {
         this.setState({ searchText: '' });
     };
 
-    // handleDelete = key => {
-    //     const data = [...this.state.data];
-    //     this.setState({ data: data.filter(item => item.key !== key) });
-    // };
+    handleDelete = (e) => {
+        console.log(e);
+        this.$api.deltletter({lid:e}).then(res=>{
+            if(res.data.status === 0){
+                let arr = this.state.data;
+                for(var i=0;i<arr.length;i++){
+                    if(arr[i].Lid == e){
+                       arr.splice(i,1);
+                    }
+                }
+                this.setState({
+                    data:arr
+                })
+                
+            }
+        });
+    }
     handleSee = key => {
         const data = [...this.state.data];
         console.log(data[key-1]);
@@ -136,9 +162,9 @@ export default class UserManage extends Component {
             },
             {
                 title: '创建时间',
-                dataIndex: 'Pday',
-                key: 'Pday',
-                ...this.getColumnSearchProps('Pday'),
+                dataIndex: 'Lday',
+                key: 'Lday',
+                ...this.getColumnSearchProps('Lday'),
             },
             {
                 title: '操作',
@@ -147,7 +173,7 @@ export default class UserManage extends Component {
                 render: (text, record) => 
                 this.state.data.length >= 1 ? (
                     <Popconfirm title="Sure to delete?" 
-                    // onConfirm={() => this.handleDelete(record.key)}
+                    onConfirm={() => this.handleDelete(record.Lid)}
                     >
                       <a>删除</a>
                     </Popconfirm>
@@ -166,7 +192,7 @@ export default class UserManage extends Component {
             <div>
                 <div className='bmuser'>
                     <span className='bmanage_user'>一起写管理</span>
-                    <span className='buser_sum'>总信件数：</span>
+                    <span className='buser_sum'>总信件数：{this.state.totallid}</span>
                 </div>
                 <div style={{background:'rgb(238, 238, 238)',height:10}}></div>
                 <div className='if_search'>

@@ -22,7 +22,6 @@ export default class TotalLetter extends Component {
     componentDidMount(){
       this.$api.getname().then(res => {
         if(res.data.status ===0){
-          console.log(res);
           this.setState({
             name:res.data.data[0].aname
           })
@@ -39,7 +38,7 @@ export default class TotalLetter extends Component {
                         <img src={require('../image/avatar.png')} alt='' className='top-avatar'/>
                         <span className='top-admin'>{this.state.name}</span>
                         <i className="iconfont icontuichu" id='top-exit'></i>
-                        <Link id='top-et'>退出</Link>
+                        <Link id='top-et' to='/'>退出</Link>
                     </div>
                 </Header>
                 <Layout>

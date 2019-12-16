@@ -1,33 +1,20 @@
 import React, { Component } from 'react'
 import '../css/analy.css';
-import { DatePicker,Table, Input, Button, Icon} from 'antd';
-import moment from 'moment';
-
+import {Table, Input, Button, Icon} from 'antd';
 import Highlighter from 'react-highlight-words';
-
-const { RangePicker } = DatePicker;
-const dateFormat = 'YYYY年MM月DD日';
 export default class UserAnaly extends Component {
     constructor(){
         super();
         this.state = {
             searchText: '',
             searchedColumn: '',
-            newletnum:'',
+            newletnum:0,
             totalletnum:'',
             sharenum:'',
             data:[
-                {
-                    key: '1',
-                    Uday: '2019-11-26',
-                    newletter: 100,
-                    newShare:800,
-                    letterSum: 1000,
-                }
             ]
         }
     }
-    
     getColumnSearchProps = dataIndex => ({
         filterDropdown: ({ setSelectedKeys, selectedKeys, confirm, clearFilters }) => (
             <div style={{ padding: 8 }}>
@@ -95,13 +82,14 @@ export default class UserAnaly extends Component {
         console.log(dateString);
     }
     componentDidMount(){
-        this.$api.addletternum({}).then(res => {
+        this.$api.addpletternum({}).then(res => {
             if (res.data.status === 0) { 
                 let arr = res.data.data;
-                console.log(arr[0].newletnum);
+                console.log(arr);
                 this.setState({
-                    newletnum:arr[0].newletnum,
+                    newletnum:arr[0].newtletnum+arr[1].newpletnum
                 })
+
             } else {
                 console.log("error")
             }
@@ -120,33 +108,73 @@ export default class UserAnaly extends Component {
         this.$api.totalletnum({}).then(res => {
             if (res.data.status === 0) { 
                 let arr = res.data.data;
-                console.log(arr[0].totalletnum);
                 this.setState({
-                    totalletnum:arr[0].totalletnum
+                    totalletnum:arr[0].totaltletnum+arr[1].totalpletnum
+                })
+            } else {
+                console.log("error")
+            }
+        });
+        this.$api.letterdata({}).then(res => {
+            if (res.data.status === 0) { 
+                let simixie = res.data.data.p;
+                let yiqixie = res.data.data.t;
+                console.log(yiqixie);
+                let d = [];
+                for (var i = 0; i > -10; i--) {
+                    let date = this.GetDateStr(i);
+                    let simixieNum = 0;
+                    let yiqixieNum = 0;
+                
+                    simixie.forEach(item => {
+                        if (item.date == date) {
+                            simixieNum += item.pidnum;
+                        }
+                    })
+        
+                    yiqixie.forEach(item => {
+                        if (item.date1 == date) {
+                            yiqixieNum += item.lidnum;
+                        }
+                    })
+                    console.log(yiqixieNum);
+                    d.push({key:i+1,date: date, simixieNum: simixieNum, yiqixieNum: yiqixieNum,letterSum:simixieNum+yiqixieNum});
+                }
+                this.setState({
+                    data: d
                 })
             } else {
                 console.log("error")
             }
         })
     }
+    GetDateStr=(c)=>{   
+        var dd = new Date();  
+        dd.setDate(dd.getDate() + c);
+        var y = dd.getFullYear();
+        var m = (dd.getMonth() + 1) <10 ? "0" + (dd.getMonth() + 1) : (dd.getMonth() + 1);
+        var d = dd.getDate() < 10 ? "0" + dd.getDate() : dd.getDate();
+        return y + "-" + m + "-" + d;   
+    }
     render() {
         const columns = [
             {
                 title: '时间',
-                dataIndex: 'Uday',
-                key: 'Uday',
-                ...this.getColumnSearchProps('Uday'),
+                dataIndex: 'date',
+                key: 'date',
+                ...this.getColumnSearchProps('date'),
             },
             {
-                title: '新增写信',
-                dataIndex: 'newletter',
-                key: 'newletter',
-                ...this.getColumnSearchProps('newletter'),
+                title: '新增私密写信',
+                dataIndex: 'simixieNum',
+                key: 'simixieNum',
+                ...this.getColumnSearchProps('simixieNum'),
             },
             {
-                title: '新增分享链接',
-                dataIndex: 'newShare',
-                key: 'newShare'
+                title: '新增一起写信',
+                dataIndex: 'yiqixieNum',
+                key: 'yiqixieNum',
+                ...this.getColumnSearchProps('yiqixieNum'),
             },
             {
                 title: '累计写信',

@@ -24,6 +24,15 @@ export default class UserManage extends Component {
             this.setState({
                 data:res.data.data
             })
+            let list = this.state.data;
+            for(var i=0;i<list.length;i++){
+                // console.log(list[i].Uimage);
+                list[i].Uimage = <img src={"http://localhost:8000/head/" + list[i].Uimage} style={{width:'48px',height:'48px',textAlign:'center',lineHeight:'48px',borderRadius:'50%'}} />
+                // http://localhost:8000/head/1234567891234_56.jpg
+            }
+            this.setState({
+                data:list
+            })
         })
 
     }
@@ -93,6 +102,7 @@ export default class UserManage extends Component {
     handleDelete =(uid) =>{
         this.$api.checkuid({uid:uid}).then(res =>{
             let tidlist = res.data.data
+            console.log(tidlist);
             if(res.data.data.length > 0){
                 for(var i=0;i<tidlist.length;i++){
                     this.$api.deluser({uid:uid,tid:tidlist[i].tid}).then((res)=>{
@@ -114,10 +124,13 @@ export default class UserManage extends Component {
                 
                 }      
             }else{
+                console.log(this.state.data);
+
                 this.$api.deluser({uid:uid,tid:0}).then((res)=>{
-                    console.log(res.data.status);
+                    console.log(uid)
                     if(res.data.status === 0){
-                        let list = this.state.data;
+                        var list = this.state.data;
+                        console.log(list);
                         for(var i=0;i<list.length;i++){
                             if(list[i].Uid == uid){
                                 console.log(list.splice(i,1));
