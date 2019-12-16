@@ -1,9 +1,36 @@
 import React, { Component } from 'react'
 import '../css/My.css'
-import {NavLink,Link,Switch} from 'react-router-dom'
-
+import {Link,Switch} from 'react-router-dom'
+import { SwipeAction, List } from 'antd-mobile';
 
 export default class Collection extends Component {
+    constructor(){
+        super();
+        this.state={
+            arr:[{'collection':'1'}]
+        }
+    }
+    componentDidMount(){
+        this.$api.favorite().then(res => {
+            this.setState({
+                arr:res.data.data
+            })
+        }) 
+    }
+    // 取消收藏
+    deleEmail =(pid)=>{
+        console.log("pid:"+pid);
+        this.$api.delcollect({pid:pid}).then(res => {});
+        let list = this.state.arr;
+        for(let i= 0; i < list.length;i++){
+            if(list[i].Pid == pid){
+                list.splice(i,1);
+            }
+        }
+        this.setState({
+            dataList : list
+        })
+    }
     render() {
         return (
             <div>
@@ -31,24 +58,47 @@ export default class Collection extends Component {
                         fontSize:"1.2em"     
                     }}></i>
                 </div>
-                {/* 内容 */}
-                <ul style={{marginTop:"0.6em"}}>
-                    <li className='lb-text'>
-                        <img src={require("../imgs/my-bg.jpg")} style={{
-                            borderRadius:'50%',
-                            height:'50%',
-                            width:'15%',
-                            margin:'1em'
-                        }} />
-                        <span className="lb-user"><b>小萌妹</b></span>
-                        <span className="lb-date">2019/10/20</span>
-                        <span className="lb-content">
-                            今天学会了一首诗——观沧海，东临碣石以观沧海
-                            水何澹澹，山岛竦峙，树木丛生，百草丰茂，秋风萧瑟
-                            洪波涌起。
-                        </span>
-                    </li>
-                </ul>
+                
+                {/* content */}
+                <List>
+                    {this.state.arr.map((item,index)=>{
+                    return(
+                        <SwipeAction
+                        style={{ backgroundColor: 'gray' }}
+                        autoClose
+                        right={[
+                            {
+                            text: '取消收藏',
+                            // onClick: 
+                            onPress: ()=>this.deleEmail(item.Pid),
+                            style: { backgroundColor: '#F4333C', color: 'white' },
+                            },
+                        ]}
+                        >
+                            <List.Item className='my-text' onClick={() => {}} 
+                            key={index}>
+                                <Link
+                                to={`/collecletter/${item.Pid}`} style={{
+                                    color:'black'
+                                }} key={index}
+                                >
+                                <img src={item.img} style={{
+                                    borderRadius:'50%',
+                                    height:'50%',
+                                    width:'15%',
+                                    margin:'1em'
+                                }} /> 
+                                <span className="my-user">{item.toNick}</span>
+                                <span className="my-date">{new Date(item.Pday).toLocaleString()}</span>
+                                <span className="my-title">{item.Ptitle}</span>
+                                <span className="my-content">
+                                    {item.Pcontent}
+                                </span>
+                                </Link>
+                            </List.Item>
+                        </SwipeAction>
+                    )})}
+                </List>
             </div>
         )
     }

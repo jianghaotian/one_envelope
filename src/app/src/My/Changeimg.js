@@ -52,7 +52,8 @@ export default class Changeimg extends Component {
                         backgroundColor:'white',
                         lineHeight:"9vw",
                         borderRadius:'5vw'
-                    }}>
+                    }}
+                    >
                         上传
                     </Button>
                 </div>

@@ -63,7 +63,7 @@ class Setting extends Component {
                 <WhiteSpace size="xs" />
                 <List>
                     <Link to='/changepsw'><Item arrow="horizontal" onClick={() => {}}>修改密码</Item></Link>
-                    <Item extra="1.0.0" arrow="horizontal" onClick={() => {}}>版本号</Item>
+                    <Item extra="1.0.0"  onClick={() => {}}>版本号</Item>
                 </List>
                 
                 {/* 退出登录 */}

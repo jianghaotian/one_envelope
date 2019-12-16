@@ -1,8 +1,54 @@
 import React, { Component } from 'react'
 import '../css/My.css'
 import {Link} from 'react-router-dom'
+import { SwipeAction, List } from 'antd-mobile';
 
 export default class Recover extends Component {
+    constructor(){
+        super();
+        this.state={
+            arr:[{'sfsd':'1'}]
+        }
+    }
+    componentDidMount(){
+        this.$api.recyclepletter().then(res => {
+            // 获取数据成功后的其他操作
+            this.setState({
+                arr:res.data.data
+            })
+            console.log(this.state.arr)
+        }) 
+    }
+    // 彻底删除
+    deleForever =(pid)=>{
+        console.log("pid:"+pid);
+        this.$api.recyclebin({pid:pid}).then(res => {});
+        let list = this.state.arr;
+        for(let i= 0; i < list.length;i++){
+            if(list[i].Pid == pid){
+                list.splice(i,1);
+            }
+        }
+        this.setState({
+            dataList : list
+        })
+    }
+    //恢复到私密写
+    recoverTs =(pid) =>{
+        console.log("pid:"+pid);
+
+        this.$api.restore({pid:pid}).then(res => {});
+        let list = this.state.arr;
+        for(let i= 0; i < list.length;i++){
+            if(list[i].Pid == pid){
+                list.splice(i,1);
+            }
+        }
+        this.setState({
+            dataList : list
+        })
+    }
+
     render() {
         return (
             <div>
@@ -19,7 +65,6 @@ export default class Recover extends Component {
                         top:"0",
                         zIndex:"1"
                     }}
-                    onClick={()=>console.log("recover to my")}
                     ></Link>
                     <i                           
                     className="iconfont icon-fanhui" 
@@ -30,24 +75,39 @@ export default class Recover extends Component {
                         fontSize:"1.2em"    
                     }}></i>
                 </div>
-                {/* 内容 */}
-                <ul style={{marginTop:"0.6em"}}>
-                    <li className='lb-text'>
-                        <img src={require("../imgs/my-bg.jpg")} style={{
-                            borderRadius:'50%',
-                            height:'50%',
-                            width:'15%',
-                            margin:'1em'
-                        }} />
-                        <span className="lb-user"><b>小萌妹</b></span>
-                        <span className="lb-date">2019/10/20</span>
-                        <span className="lb-content">
-                            今天学会了一首诗——观沧海，东临碣石以观沧海
-                            水何澹澹，山岛竦峙，树木丛生，百草丰茂，秋风萧瑟
-                            洪波涌起。
-                        </span>
-                    </li>
-                </ul>
+
+                {/* content */}
+                <List>
+                {this.state.arr.map((item,index)=>{
+                    return(
+                        <SwipeAction
+                        style={{ backgroundColor: 'gray' }}
+                        autoClose
+                        right={[
+                            {
+                            text: '恢复',
+                            onPress: ()=>this.recoverTs(item.Pid),
+                            style: { backgroundColor: '#ddd', color: 'white' },
+                            },
+                            {
+                            text: '丢弃',
+                            onPress: ()=>this.deleForever(item.Pid),
+                            style: { backgroundColor: '#F4333C', color: 'white' },
+                            },
+                        ]}
+                        >
+                            <List.Item className='my-text' onClick={() => {}} 
+                            key={index}>
+                                <span className="my-user">{item.toNick}</span>
+                                <span className="my-date">{new Date(item.Pday).toLocaleString()}</span>
+                                <span className="my-title">{item.Ptitle}</span>
+                                <span className="my-content">
+                                    {item.Pcontent}
+                                </span>
+                            </List.Item>
+                        </SwipeAction>
+                    )})}
+                </List>
             </div>
         )
     }

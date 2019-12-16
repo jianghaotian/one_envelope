@@ -48,11 +48,11 @@ export default class Login extends Component {
                     this.props.history.push("/home");
                     //存储消息通知
                     this.$api.notice().then(res=>{
-                        console.log(res.data.data);
+                        //console.log(res.data.data);
                         let notice = [];
                         let data = res.data.data;
                         for(let i=0;i<data.length;i++){
-                            console.log(data[i]);
+                            //console.log(data[i]);
                             notice.push(data[i]);
                         }
                         var ls = window.localStorage;

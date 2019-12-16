@@ -2,28 +2,53 @@ import React, { Component } from 'react'
 import { List } from 'antd-mobile'
 import {Link} from 'react-router-dom'
 
-const arr=[
-    {
-        id:'1',
-        img:require("../imgs/LetBox/lb-1.png"),
-        fm_user:'姐姐',
-        fm_date:'2019/11/27',
-        fm_title:'偷走那瓶橘子汽水',
-        fm_content:'当时我手从键盘上挪开，屏幕那头没了声，可能对方在笑，可能觉得她无聊，更可能两者都有。这种情况夏笛早就习惯了，在家里，她和骆扬的对话几乎都是如此收场——骆扬觉得她可笑，骆扬觉得她无聊，骆扬觉得她可笑又无聊。最后，骆扬都会用老练的沉默回敬妻子，继续缩回他那电脑和电脑椅包围的一方小天地里，弓着腰，驼着背，腆着肚子，活脱脱一只在婚姻老卤里熬过了头的虾。'
-    },
-    {
-        id:'2',
-        img:require("../imgs/my-bg.jpg"),
-        fm_user:'姑姑',
-        fm_date:'2019/11/28',
-        fm_title:'年轻',
-        fm_content:'当我年轻的时候，我想成为任何人，除了我自己'
-    }
-]
-
 export default class Letter extends Component {
+    constructor(){
+        super()
+        this.state={
+            isLike:0,
+            arr:[{
+                "toNick":"属性值",
+                "Ptitle":"一个小标题奥",
+                "Pcontent":'这是内容奥'
+            }]
+        }
+    }
+    collec = () => {
+        if(this.state.isLike){
+            // 后台取消收藏
+            this.$api.delcollect({pid:this.props.match.params.id}).then(res => {});
+            this.setState({
+                isLike:!this.state.isLike
+            })
+        }else{
+            // 后台收藏
+            this.$api.collec({pid:this.props.match.params.id}).then(res => {})
+            this.setState({
+                isLike:!this.state.isLike
+                
+            })
+        }
+    }
+    componentDidMount(){
+        this.$api.showmail({pid:this.props.match.params.id}).then(res => {
+            console.log(res);
+            console.log(this.props);
+            console.log(this.props.match.params.id)
+            // 获取数据成功后的其他操作
+            this.setState({
+                arr:res.data.data
+            });
+            // 获取当前状态值
+            this.setState({
+                isLike:res.data.data[0].isCollection
+            })
+        }) 
+    }
+    deleEmail =(e)=>{
+        this.$api.deletemail({pid:this.props.match.params.Pid}).then(res => {}) 
+    }
     render() {
-        var id = this.props.match.params.id
         return (
             <div className="lt">
                 {/* tab */}
@@ -31,7 +56,7 @@ export default class Letter extends Component {
                     color:'black',
                     backgroundColor: 'whitesmoke'
                 }}>
-                    {arr[id-1].fm_user}
+                        {this.state.arr[0].toNick}
                     <Link to="/home/letterbox" 
                     style={{
                         float:"left",
@@ -52,18 +77,19 @@ export default class Letter extends Component {
                         fontSize:"1.2em"    
                     }}></i>
                 </div>
+                
                 {/* content */}
                 <div className="lt-title" style={{
                     backgroundColor: 'rgb(247, 245, 245)',
                     width: '100%',
                     fontSize: '1.7em',
                     padding:'0.5em 0.8em'
-                }}><b>{arr[id-1].fm_title}</b></div>
+                }}><b>{this.state.arr[0].Ptitle}</b></div>
                 <hr style={{
                     borderWidth:'0.4px',
                     color:'lightgrey'
                 }}/>
-                <div className='lt-content'>{arr[id-1].fm_content}</div>
+                <div className='lt-content'>{this.state.arr[0].Pcontent}</div>
                               
                 {/* buttom-choice */}
                 <List style={{
@@ -71,25 +97,29 @@ export default class Letter extends Component {
                     bottom:'1em',
                     left:'0',
                     width:'100%',
-                    height:'2em',
-                    backgroundColor:'pink'
+                    height:'2em'
                 }}>
                     <List.Item style={{
                         width:"33.3%",
                         float:'left'
                     }}>
-                        <i className='iconfont icon-collection' style={{
+                        <i 
+                        className={ this.state.isLike ? 'iconfont icon-collection-b':'iconfont icon-collection'} 
+                        onClick={this.collec.bind(this)}
+                        style={{
                             paddingLeft:"45%"
                         }}></i>
                     </List.Item>
-                    <List.Item style={{
+                    <Link to='/home/letterbox'><List.Item style={{
                         width:"33.3%",
                         float:'left'
-                    }}>
+                    }}
+                    onClick={(e)=>this.deleEmail(e)}
+                    >
                         <i className='iconfont icon-lajixiang' style={{
                             paddingLeft:"45%"
                         }}></i>
-                    </List.Item>
+                    </List.Item></Link>
                     <List.Item style={{
                         width:"33.3%",
                         float:'left'

@@ -3,6 +3,20 @@ import {NavLink,Link,Switch} from 'react-router-dom'
 import { List } from 'antd-mobile'
 
 export default class Myedit extends Component {
+    constructor(){
+        super();
+        this.state={
+            arr:[{"Uname":"你的昵称",'pidname':'0'}]
+        }
+    }
+    componentDidMount(){
+        this.$api.mine().then(res => {
+            // 获取数据成功后的其他操作
+            this.setState({
+                arr:res.data.data
+            })
+        })
+    }
     render() {
         return (
             <div>
@@ -19,7 +33,6 @@ export default class Myedit extends Component {
                         top:"0",
                         zIndex:"1"                       
                     }}
-                    onClick={()=>console.log("collection to my")}
                     ></Link>
                     <i                           
                     className="iconfont icon-fanhui" 
@@ -31,12 +44,10 @@ export default class Myedit extends Component {
                     }}></i>
                 </div>
                 {/* 内容 */}
-
-                <Link to="/changeimg"><img src={require("../imgs/LetBox/lb-1.png")} className="ed-img"/></Link>
-
+                <Link to="/touxiang"><img src={require("../imgs/LetBox/lb-1.png")} className="ed-img"/></Link>
                 <List>
-                    <List.Item extra={'1233213213'}>账号</List.Item>
-                    <Link to="/changename"><List.Item extra={'XueueCu'} arrow="horizontal" onClick={() => {}}>
+                    <List.Item extra={this.state.arr[0].Uphone}>账号</List.Item>
+                    <Link to="/changename"><List.Item extra={this.state.arr[0].Uname} arrow="horizontal" onClick={() => {}}>
                         昵称
                     </List.Item></Link>
                 </List>

@@ -44,9 +44,11 @@ button{
 }
 .myinfospan{
     position: absolute;
+    width: 47%;
     left: 33%;
     bottom: 30%;
     font-size: 2em;
+    text-overflow:ellipsis; white-space:nowrap; overflow:hidden;
 }
 .mytitle{
     position: absolute;
@@ -103,34 +105,41 @@ button{
 
 }
 /* 信件样式-recover-collection */
-.lb-text{
+.my-text{
     height: 8em;
     background-color: #fff;
     position: relative;
     width: 100%;
     border-bottom: 0.5px solid lightgrey;
 }
-.lb-user{
+.my-user{
     position: absolute;
-    left:23%;
-    top:8%;
-    font-size:1.2em;
+    left:3%;
+    top:9%;
+    width:20%;
+    font-size:1.3em;
+    text-overflow:ellipsis; white-space:nowrap; overflow:hidden;
 }
-.lb-date{
+.my-date{
     top:9%;
     position: absolute;
-    right:5%
+    color:lightgrey;
+    right:5%;
 }
-.lb-title{
-    left:23%;
-    top:32%;
+.my-title{
+    left:3%;
+    top:44%;
+    width: 70%;
+    text-overflow:ellipsis; white-space:nowrap; overflow:hidden;
     position: absolute;
 }
-.lb-content{
+.my-content{
     position: absolute;
-    left:23%;
-    top:52%;
-    width: 72%;
+    left:3%;
+    text-overflow:ellipsis; white-space:nowrap; overflow:hidden;
+    top:70%;
+    width: 82%;
+    color:rgb(186, 184, 184);
 }
 /* ----------------Message.js------------------------与Articalbun共用------------------------------------------------ */
 .me-text{

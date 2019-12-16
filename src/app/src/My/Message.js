@@ -1,18 +1,24 @@
 import React, { Component } from 'react'
-import {NavLink,Link,Switch} from 'react-router-dom'
-import { List } from 'antd-mobile'
+import { SwipeAction, List } from 'antd-mobile';
+import {Link,Switch} from 'react-router-dom'
 import '../css/My.css'
 
-const arr=[
-    {
-        id:'1',
-        fm_date:'2019/11/28',
-        fm_title:'通知',
-        fm_content:'一封版本更新啦，据统计90%的用户选则了更新'
-    }
-]
-
 export default class Message extends Component {
+    constructor(){
+        super();
+        this.state={
+            arr:[{'sfsd':'1'}]
+        }
+    }
+    componentDidMount(){
+        this.$api.notice().then(res => {
+            this.setState({
+                arr:res.data.data
+            })
+            console.log(res.data.data)
+            console.log(this.state.arr)
+        }) 
+    }
     render() {
         return (
             <div>
@@ -41,22 +47,30 @@ export default class Message extends Component {
                     }}></i>
                 </div>
                 {/* 内容 */}
-                <List >
-                    {arr.map((item,index)=>{
-                        return(
+                <List>
+                {this.state.arr.map((item,index)=>{
+                    return(
+                        <SwipeAction
+                        style={{ backgroundColor: 'gray' }}
+                        autoClose
+                        right={[
+                            {
+                            text: '删除',
+                            // onClick: 
+                            onPress: ()=>this.deleEmail(item.Pid),
+                            style: { backgroundColor: '#F4333C', color: 'white' },
+                            },
+                        ]}
+                        >
                             <List.Item className='me-text' onClick={() => {}} key={index}>
-                                <Link to={`/letter/${item.id}`} style={{
-                                    color:'black'
-                                }}>
-                                <span className="me-title">{item.fm_title}</span>
-                                <span className="me-date">{item.fm_date}</span>
+                                <span className="me-title">{item.Ntitle}</span>
+                                <span className="me-date">{new Date(item.Nday).toLocaleString()}</span>
                                 <span className="me-content">
-                                    {item.fm_content}
+                                    {item.Ncontent}
                                 </span>
-                                </Link>
                             </List.Item>
-                        )
-                    })}
+                        </SwipeAction>
+                    )})}
                 </List>
             </div>
         )

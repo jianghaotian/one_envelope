@@ -4,8 +4,33 @@ import {NavLink,Link} from 'react-router-dom'
 import '../css/My.css'
 import { List,WhiteSpace } from 'antd-mobile'
 const Item = List.Item;
+
 export default class My extends Component {
+    constructor(){
+        super();
+        this.state={
+            arr:[{"Uname":"你的昵称",'pidname':'0'}],
+            brr:[{"sharenum":'0',"pidnum":"0"}]
+        }
+    }
+    componentDidMount(){
+        this.$api.mine().then(res => {
+            console.log(res.data.data);
+            // 获取数据成功后的其他操作
+            this.setState({
+                arr:res.data.data
+            })
+        console.log(this.state.arr[0])
+        }) 
+        this.$api.sharenum().then(res => {
+            // 获取数据成功后的其他操作
+            this.setState({
+                brr:res.data.data
+            })
+        }) 
+    }
     render() {
+        // console.log(this.state.arr[0].pidname)
         return (
             <div className="mydiv">
                 {/* 个人信息 */}
@@ -31,7 +56,9 @@ export default class My extends Component {
                     {/* title */}
                     <span className="mytitle">我的</span>
                     {/* 用户名 */}
-                    <span className="myinfospan"><b>XueueCu</b></span>
+                    <span className="myinfospan"><b>
+                        {this.state.arr[0].Uname}
+                    </b></span>
                     {/* 编辑用户信息 */}
                     <Link to="/myedit"><i className="icon-bianji iconfont"
                     style={{
@@ -45,12 +72,8 @@ export default class My extends Component {
                     {/* 选项 */}
                     <div className="myinfodiv">
                         <ul>
-                            <Link to="/articalnum" style={{
-                                color:'black'
-                            }}><li><span>2</span>写信数</li></Link>
-                            <Link to="/sharenum" style={{
-                                color:'black'
-                            }}><li><span>1</span>分享</li></Link>
+                            <li><span>{this.state.arr[0].pidnum}</span>写信数</li>
+                            <li><span>{this.state.brr[0].sharenum}</span>分享</li>
                         </ul>
                     </div>
                 </div>
@@ -79,11 +102,11 @@ export default class My extends Component {
                 </List>
                 <WhiteSpace size="lg" />
                 <List>
-                    <Item extra={
-                        <i className="iconfont icon-lajixiang" ></i>
-                    } onClick={() => {}}><Link to='/recover' style={{
+                    <Link to='/recover' style={{
                             color:'black'
-                    }}>回收站</Link></Item>
+                    }}><Item extra={
+                        <i className="iconfont icon-lajixiang" ></i>
+                    } onClick={() => {}}>回收站</Item></Link>
                     
                     <Item extra={
                         <i className="iconfont icon-iconfontzhizuobiaozhun023133" ></i>

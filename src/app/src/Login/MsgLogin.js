@@ -36,7 +36,7 @@ export default class MsgLogin extends Component {
                     })
                     clearInterval(timer);
                 }else{
-                    var str = "重新获取验证码"+"("+time+")";
+                    var str = "重新获取"+"("+time+")";
                     this.setState({
                         code : str,
                         btn :true

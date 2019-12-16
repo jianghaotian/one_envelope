@@ -20,7 +20,24 @@ const api = {
 
     theme: p=> get('together/theme',p),
 
-    headimg: p => post('image/head',p)
+    headimg: p => post('image/head',p),
+
+    // lxc
+    mailbox: p => get('mailbox',p),
+    showmail: p => get('mailbox/showmail',p),
+    mine: p => get("mine",p),
+    sharenum : p => get("mine/sharenum",p),
+    favorite : p => get('mine/favorite',p),
+    recyclebin : p => post('mine/recyclebin/deletebin',p),
+    changename : p => post('mine/changename',p),
+    collec: p => get("mailbox/collect",p),
+    delcollect:p => post("mine/delcollect",p),
+    deletemail:p => post("mailbox/deletemail",p),
+    recyclepletter:p=> get('mine/recyclepletter',p),
+    restore:p => post('mine/recyclebin/restore',p),
+    changepwd:p => post('mine/changepwd',p),
+    getoldpwd: p => get('mine/getoldpwd',p),
+    notice: p => get('mine/notice',p)
     // login: p => post('users/login', p),
     // login_veri: p => post('users/login/verification', p),
     // veri_login: p => post('users/verilogin', p),

@@ -37,7 +37,7 @@ export default class HomeWrite extends Component {
         var arr  = pid.split("&");
         var idArr = arr[0].split("=");
         var typeArr = arr[1].split("=");
-        console.log(idArr);
+        //console.log(idArr);
         if(idArr[0] == "pid"){  //编辑
             this.$api.getContent({pid : idArr[1]}).then(res=>{
                 //console.log(res.data.data);
