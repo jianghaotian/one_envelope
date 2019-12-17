@@ -12,19 +12,7 @@ export default class UserManage extends Component {
             searchText: '',
             searchedColumn: '',
             totalpid:'',
-            data:[
-                {
-                    key: '1',
-                    Pid:1,
-                    Uid:1,
-                    toUid:1,
-                    Ptitle:'致自己',
-                    paper:'1',
-                    Pday:'2019-11-30',
-                    link:'无连接',
-                    // operation:<a>删除</a> && <a>预览</a>
-                }
-            ]
+            data:[]
         }
     }
     getColumnSearchProps = dataIndex => ({
@@ -102,7 +90,8 @@ export default class UserManage extends Component {
                 }
                 console.log(arr);
                 this.setState({
-                    data:arr
+                    data:arr,
+                    totalpid:this.state.totalpid-1
                 })
                 
             }

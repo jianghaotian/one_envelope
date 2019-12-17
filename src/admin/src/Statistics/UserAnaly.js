@@ -11,15 +11,7 @@ export default class UserAnaly extends Component {
             searchedColumn: '',
             newuser:'',
             totalusers:'',
-            data:[
-                {
-                    key: '1',
-                    Uday: '2019-11-26',
-                    newregist: 100,
-                    dayVisit:800,
-                    registSum: 1000,
-                },
-            ]
+            data:[]
         };
     }
     

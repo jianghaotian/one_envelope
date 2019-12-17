@@ -11,16 +11,7 @@ export default class UserManage extends Component {
             searchText: '',
             searchedColumn: '',
             totallid:'',
-            data: [
-                {
-                    key: '1',
-                    Lid:1,
-                    Uid:1,
-                    Tid:1,
-                    Ltitle:'致自己',
-                    Lday:'2019-11-30',
-                }
-            ]
+            data: []
         }
     }
     componentDidMount(){

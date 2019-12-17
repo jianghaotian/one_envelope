@@ -11,8 +11,7 @@ export default class UserAnaly extends Component {
             newletnum:0,
             totalletnum:'',
             sharenum:'',
-            data:[
-            ]
+            data:[]
         }
     }
     getColumnSearchProps = dataIndex => ({
