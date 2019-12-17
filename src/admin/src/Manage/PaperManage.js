@@ -29,7 +29,7 @@ export default class PaperManage extends Component {
         this.$api.paperlist().then(res => {
             let list = res.data.data;
             for(var i=0;i<list.length;i++){
-                list[i].url = "http://localhost:8000/head/" + list[i].ppimage
+                list[i].url = "http://localhost:8000/paper/" + list[i].ppimage
                 list[i].uid =-(i+1);
             }
             this.setState({
@@ -56,21 +56,20 @@ export default class PaperManage extends Component {
         previewVisible: true,
         });
     };
-    handleChange = ({ fileList }) =>{
-        // console.log(fileList);
-        // var num = fileList.length-1;
-        // let name = fileList[num].name
-        // this.$api.addpaper({file:name}).then(res => {
-        //     console.log(res.data)
-        // })
-         this.setState({ fileList })
+    handleChange = ({ fileList ,event}) =>{
+        console.log(event)
+        if(event){
+            this.setState({ num:this.state.num+1 })
+
+        }
+        this.setState({ fileList })
+
         };
-    handleRemove = async file =>{
-        // console.log(fileList)
-        this.$api.delpaper({ppid:file.ppid}).then(res=>{
-            console.log(res)
+    handleRemove = file =>{
+        console.log(file);
+        this.$api.delpaper({ppid:file.ppid,ppimage:file.ppimage}).then(res=>{
         })
-        // this.setState({ fileList })
+        this.setState({ num:this.state.num -1 })
 
     }
     render() {
@@ -88,7 +87,7 @@ export default class PaperManage extends Component {
                     <span className='buser_sum'>总信纸数：{this.state.num}</span>
                     <div className="clearfix">
                         <Upload
-                            action="https://www.mocky.io/v2/5cc8019d300000980a055e76"
+                            action="http://localhost:8000/v1/image/paper"
                             listType="picture-card"
                             fileList={fileList}
                             onPreview={this.handlePreview}
