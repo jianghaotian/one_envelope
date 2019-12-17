@@ -10,6 +10,8 @@ import PaperManage from '../Manage/PaperManage';
 import TogetherWrite from '../Manage/TogetherWrite';
 import Administrator from '../Manage/Administrator';
 import {Addform} from '../Manage/Add';
+import {clearTokenAll} from '../redux/actions';
+
 const { SubMenu } = Menu;
 const { Header, Content, Sider } = Layout;
 export default class TotalLetter extends Component {
@@ -22,11 +24,19 @@ export default class TotalLetter extends Component {
     componentDidMount(){
       this.$api.getname().then(res => {
         if(res.data.status ===0){
-          this.setState({
+          if(res.data.data[0] == undefined){
+            this.props.history.push("/");      
+          }else{
+            this.setState({
             name:res.data.data[0].aname
           })
+          }
+          
         }
       })
+    }
+    handleClick =()=>{
+      this.$store.dispatch(clearTokenAll())
     }
     render() {
         return (
@@ -38,7 +48,7 @@ export default class TotalLetter extends Component {
                         <img src={require('../image/avatar.png')} alt='' className='top-avatar'/>
                         <span className='top-admin'>{this.state.name}</span>
                         <i className="iconfont icontuichu" id='top-exit'></i>
-                        <Link id='top-et' to='/'>退出</Link>
+                        <Link id='top-et' to='/' onClick={this.handleClick}>退出</Link>
                     </div>
                 </Header>
                 <Layout>
