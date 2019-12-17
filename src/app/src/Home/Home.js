@@ -252,7 +252,7 @@ export default class Home extends Component {
         ActionSheet.showShareActionSheetWithOptions({
           options: this.dataList,
           // title: 'title',
-          message: 'share with friend',
+          message: '分享给朋友',
         },
         (buttonIndex) => {
           this.setState({ clicked: buttonIndex > -1 ? this.dataList[buttonIndex].title : 'cancel' });
