@@ -39,11 +39,11 @@ export default class Home extends Component {
         if(opt.props.value == "del"){
             //console.log(item);
             var pid = item.Pid;
-            alert('Delete', '确认删除此信件?', [
-                { text: 'Cancel', onPress: () => {
+            alert('删除', '确认丢弃此信件?', [
+                { text: '留着', onPress: () => {
                     console.log('cancel');
                 } },
-                { text: 'Ok', onPress: () => {
+                { text: '不要啦', onPress: () => {
                     console.log('ok');
                     //改变state
                     let list = this.state.dataList;
@@ -89,7 +89,7 @@ export default class Home extends Component {
             ]);
         }else if(opt.props.value == "add-edit"){//重命名
             prompt(
-                'ReName',
+                '编辑',
                 '请输入昵称',
                 [
                     { text: '取消' },
@@ -309,7 +309,7 @@ export default class Home extends Component {
                                     return <li className="content" key={index}>
                                             <div className="c-top">
                                                 <div className="title">
-                                                    <span style={{fontSize:"15px",color:"rgb(75, 76, 141)",fontWeight:"bold"}}>
+                                                    <span style={{fontSize:"15px",color:"black"}}>
                                                         {item.Ptitle}
                                                     </span>
                                                     <p style={{margin:"0",marginTop:"3px"}}>
@@ -373,7 +373,8 @@ export default class Home extends Component {
                 <div className="slider" style={this.state.silder}>
                     {/* 返回键 */}
                     <div className="slider-top">
-                        <img src={require("../imgs/Home/cancel.png")} onClick={this.cancel} style={{float:"right",padding:"5px"}} />
+                        {/* <img src={require("../imgs/Home/cancel.png")} onClick={this.cancel} style={{float:"right",padding:"5px"}} /> */}
+                        <i className="iconfont icon-guanbi" style={{float:"right",padding:"5px",color:'orange'}}  onClick={this.cancel}/>
                     </div>
 
                     {/* 用户信息 */}
