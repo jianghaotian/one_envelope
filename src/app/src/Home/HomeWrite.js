@@ -15,7 +15,9 @@ export default class HomeWrite extends Component {
             type:"",//新建 or 编辑
             pid:0,//信件pid
             modal:"none",
-            toList : []// 收信人列表
+            toList : [],// 收信人列表
+            back:"",//背景图片
+            ppid:0//ppid
         }
     }
     //返回Home
@@ -32,9 +34,28 @@ export default class HomeWrite extends Component {
     componentDidMount(){
         var info = window.location.hash;
         // console.log(info);
-        // console.log(info.substr(13,info.length));
-        var pid = info.substr(13,info.length);
-        var arr  = pid.split("&");
+        console.log(info.substr(13,info.length));
+        var dataArr = info.substr(13,info.length);
+        var arr  = dataArr.split("&");
+        console.log(arr);
+        //设置背景
+        if(arr.length == 3){
+            let ppid = arr[2].split("=")[1];
+            console.log(ppid);
+            this.$api.selBack().then(res=>{
+                let imgList = res.data.data;
+                console.log(imgList,ppid);
+                for(let i=0;i<imgList.length;i++){
+                    if(imgList[i].ppid == ppid){
+                        //console.log(imgList[i].ppimage);
+                        this.setState({
+                            ppid : imgList[i].ppid,
+                            back : "http://10.7.84.116:8000/paper/"+imgList[i].ppimage
+                        })
+                    }
+                }
+            })
+        }
         var idArr = arr[0].split("=");
         var typeArr = arr[1].split("=");
         //console.log(idArr);
@@ -48,7 +69,20 @@ export default class HomeWrite extends Component {
                     value : resData.Pcontent,
                     toUid : resData.toUid,
                     type : typeArr[1],
-                    pid : idArr[1]
+                    pid : idArr[1],
+                })
+                this.$api.selBack().then(res=>{
+                    let imgList = res.data.data;
+                    console.log(imgList,resData.ppid);
+                    for(let i=0;i<imgList.length;i++){
+                        if(imgList[i].ppid == resData.ppid){
+                            //console.log(imgList[i].ppimage);
+                            this.setState({
+                                ppid : imgList[i].ppid,
+                                back : "http://10.7.84.116:8000/paper/"+imgList[i].ppimage
+                            })
+                        }
+                    }
                 })
             })
         }else if(idArr[0] == "toNick"){ //新建
@@ -68,6 +102,16 @@ export default class HomeWrite extends Component {
                             type : typeArr[1],
                         })
                     }
+                }
+                if(arr.length <3){
+                    this.$api.selBack().then(res=>{
+                        let imgList = res.data.data;
+                        console.log(imgList);
+                        this.setState({
+                            ppid : imgList[0].ppid,
+                            back : "http://10.7.84.116:8000/paper/"+imgList[0].ppimage
+                        })
+                    })
                 }
                 this.setState({
                     toList : toList
@@ -91,13 +135,14 @@ export default class HomeWrite extends Component {
         let title = this.state.title;
         let content = this.state.value;
         let id = this.state.toUid;
+        let ppid = this.state.ppid;
         if( title == ""){
             alert("请填写标题");
         }else if(content == ""){
             alert("请填写信件内容");
         }else if(this.state.type == "create"){
             let timestamp = Date.parse(new Date());
-            this.$api.writeLetter({Ptitle:title,Pcontent:content,toUid:id,toNick:to,Pday:timestamp}).then(res=>{
+            this.$api.writeLetter({Ptitle:title,Pcontent:content,toUid:id,toNick:to,Pday:timestamp,ppid:ppid}).then(res=>{
                 console.log(res);
             })
             alert('WriteLetter', '保存成功', [
@@ -106,7 +151,7 @@ export default class HomeWrite extends Component {
         }else if(this.state.type == "edit"){
             let timestamp = Date.parse(new Date());
             let pid = this.state.pid;
-            this.$api.editLetter({pid:pid,title:title,content:content,pday:timestamp}).then(res=>{
+            this.$api.editLetter({pid:pid,title:title,content:content,pday:timestamp,ppid:ppid}).then(res=>{
                 console.log(res);
             })
             alert('EditLetter', '修改成功', [
@@ -138,9 +183,16 @@ export default class HomeWrite extends Component {
         })
         this.tag = true;
     }
+    //选择背景
+    selback=()=>{
+        //console.log(this.props.history.location.search);
+        var back = this.props.history.location.search;
+        this.props.history.push("/back"+back);
+    }
     render() {
         //console.log(this.state.type,this.state.pid);
         //console.log(this.state.toList);
+        //console.log(this.state.ppid);
         return (
             <div className="homeWrite">
                 {/* 顶部 */}
@@ -187,7 +239,7 @@ export default class HomeWrite extends Component {
                     <TextareaItem
                         value={this.state.value}
                         onChange={this.Edit}
-                        className="TextArea"
+                        style={{backgroundImage:"url("+this.state.back+")",backgroundSize:"100% 380px"}}
                         rows={15}
                         count={10000}
                     />
@@ -196,7 +248,7 @@ export default class HomeWrite extends Component {
 
                 {/* 底部 */}
                 <div className="hw-bottom">
-                    <img src={require("../imgs/Home/makalong.png")} />
+                    <img src={require("../imgs/Home/selback.png")} onClick={this.selback} />
                     <img src={require("../imgs/Home/caomei.png")} />
                     <img src={require("../imgs/Home/caomei.png")} />
                     <img src={require("../imgs/Home/makalong.png")} />

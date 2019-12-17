@@ -34,6 +34,7 @@ import Cropimg from './My/Cropimg'
 import api from './request/api';
 import store from './redux/store';
 import HomeWrite from './Home/HomeWrite'
+import Back from './Home/Back'
 
 React.Component.prototype.$api = api;
 React.Component.prototype.$store = store;
@@ -49,6 +50,7 @@ ReactDOM.render(
             <Route path="/msgLogin" component={MsgLogin} />
             <Route path="/home" component={Tabbar} />
             <Route path="/homeWrite" component={HomeWrite} />
+            <Route path="/back" component={Back} />
             {/* lxc */}
             <Route path="/recover" component={Recover} />
             <Route path="/setting" component={Setting}/>

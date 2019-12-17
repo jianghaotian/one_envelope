@@ -37,7 +37,7 @@ export default class Home extends Component {
         });
         //信件删除
         if(opt.props.value == "del"){
-            console.log(item);
+            //console.log(item);
             var pid = item.Pid;
             alert('Delete', '确认删除此信件?', [
                 { text: 'Cancel', onPress: () => {
@@ -90,7 +90,7 @@ export default class Home extends Component {
         }else if(opt.props.value == "add-edit"){//重命名
             prompt(
                 'ReName',
-                'Please input name',
+                '请输入昵称',
                 [
                     { text: '取消' },
                     { text: '提交', onPress: text =>{var addName = `${text}`;
@@ -129,7 +129,7 @@ export default class Home extends Component {
     addTo=()=>{
         prompt(
             'Name',
-            'Please input name',
+            '请输入昵称',
             [
                 { text: '取消' },
                 { text: '提交', onPress: text =>{var addName = `${text}`;
@@ -189,7 +189,6 @@ export default class Home extends Component {
         }
     }
     componentDidMount(){
-        
         //body滑动
         document.ontouchstart = this.bodyTouchStart;
         document.ontouchmove = this.bodyTouchMove;
@@ -215,7 +214,7 @@ export default class Home extends Component {
             let to = decodeURI(search.substr(4,search.length));
             //console.log(to,toU[0]);
             if(to == ""){
-                //无参数时
+                //无参数时,显示第一个收件人
                 this.$api.getLetter({toNick:toU[0]}).then(res =>{
                     //console.log(res.data.data);
                     this.setState({
@@ -224,9 +223,9 @@ export default class Home extends Component {
                     })
                 })
             }else{
-                //有参数时
+                //有参数时，显示对应收件人
                 this.$api.getLetter({toNick:to}).then(res =>{
-                    //console.log(res.data.data);
+                    console.log(res.data.data);
                     this.setState({
                         dataList : res.data.data,
                         toType:to
@@ -336,7 +335,8 @@ export default class Home extends Component {
                                                         </Item>),
                                                         (<Item value="edit" item={item}>
                                                             <Router><Link style={{color:"black"}} to={"/homeWrite/?pid="+item.Pid+"&type=edit"}>
-                                                            <button className="DM-p" ><img className="DM-img" src={require("../imgs/Home/direct.png")} />
+                                                            <button className="DM-p" >
+                                                                <img className="DM-img" src={require("../imgs/Home/direct.png")} />
                                                                 编辑
                                                             </button>
                                                             </Link></Router>
@@ -348,7 +348,8 @@ export default class Home extends Component {
                                                         </Item>),
 
                                                         ]}
-                                                        align={{overflow: { adjustY: 0, adjustX: 0 },offset: [0, 5],}}>
+                                                        // align={{overflow: { adjustY: 0, adjustX: 0 },offset: [0, 5],}}
+                                                        >
                                                         <div>
                                                             <img src={require("../imgs/Home/down(1).png")} />
                                                         </div>

@@ -52,15 +52,6 @@
     height:30px;
     line-height:30px;
     font-size:15px;
-    /* background: url(../imgs/Home/sm3.png);
-    background-size: cover;
-    margin-top:3px;
-    margin-bottom:3px; */
-}
-.TextArea{
-    background:url(../imgs/Home/bc2.png);
-    background-size: cover;
-    border:none;
 }
 .hw-bottom{
     height:40px;
@@ -92,4 +83,32 @@
 }
 .selectTo li:active{
     background-color: rgb(238, 238, 238);
+}
+
+
+/* 信纸选择 */
+.back-top{
+    height:40px;
+    width:100%;
+    font-size:18px;
+    padding-left:10px;
+    line-height:40px;
+    color:black;
+    background-color: burlywood;
+}
+.back-img{
+    height:100%;
+    width:100%;
+    /* display:flex;
+    justify-content:space-around; */
+    background-color: pink;
+}
+.back-imgBox{
+    float: left;
+    height:130px;
+    margin:1% 1%;
+    width:23%;
+    background-color: lightgrey;
+    border:1px solid grey;
+    background-size: cover;
 }

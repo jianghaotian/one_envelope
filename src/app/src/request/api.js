@@ -17,6 +17,8 @@ const api = {
     addAddressee : p=> post('private/addlist',p),//添加收信人
     delAddressee : p=> post('private/dellist',p),//删除收信人
     notice :p=> get('mine/notice',p),//消息通知
+    selBack : p=>get('private/getback',p),//选择背景
+    changeBack : p=>post('private/changeback',p),//更换背景
 
     theme: p=> get('together/theme',p),
 
