@@ -192,4 +192,44 @@ router.post('/dellist',function(req,res,next){
         }
     })
 })
+/**
+ * 获取信纸图片
+ * 请求方式：
+ *      GET
+ * 接受参数：
+ * 返回参数：
+ */
+router.get('/getback',function(req,res,next){
+    let {token} = req.header('token');
+    checkToken(token,(result)=>{
+        if(result.status !=0){
+            res.json(ree.json);
+        }else{
+            runSql(`select * from paper`,[],(result1)=>{
+                res.json(result1);
+            })
+        }
+    })
+})
+/**
+ * 更换信纸
+ * 请求方式：
+ *      POST
+ * 接收参数：
+ *      pid：信件id
+ *      ppid：更换后的信纸id
+ */
+router.post('/changeback',function(req,res,next){
+    let token = req.header('token');
+    let {pid,ppid} =  req.body;
+    checkToken(token,(result)=>{
+        if(result.status != 0){
+            res.json(result)
+        }else{
+            runSql('update pletter set ppid=? where pid=? ',[ppid,pid],(result1)=>{
+                res.json(result1);
+            })
+        }
+    })
+})
 module.exports = router;
