@@ -13,6 +13,7 @@ textarea{
     background-size: 100% 100%;
 
 }
+
 .ge-body{
     width:100%;
     height: 100%;
@@ -27,10 +28,13 @@ textarea{
 }
 #ge-cancel{
     padding-left: 5%;
+    color: gray;
 }
 #ge-save{
     float: right;
     padding-right: 5%;
+    color: gray;
+
 }
 .ge-title{
     width:100%;
@@ -53,7 +57,7 @@ textarea{
     font-size: 17px;
 }
 .ge-content{
-    width:85%;
+    width:90%;
     height: 500px;
     background: none; 
     font-size: 16px;
@@ -92,10 +96,10 @@ textarea{
     height: 55px;
     padding-top: 5%;
 }
-.add-back{
+/* .add-back{
     position:fixed;
     left:20px;
-}
+} */
 .add-title{
     font-size:18px;
     color:black;
@@ -108,7 +112,8 @@ textarea{
     width:300px;
     /* background-color: tomato; */
     margin:0 auto;
-    margin-top:100px;
+    text-align: center;
+    margin-top:80px;
 }
 .add-img{
     width:300px;
@@ -125,6 +130,15 @@ textarea{
     opacity:0;
     background-color: tomato;
 }
+
+
+
+.ant-upload.ant-upload-select-picture-card {
+  
+    width: 254px!important;
+    height: 254px!important;
+   
+}
 #add-btn{
     height:40px;
     background: grey;
@@ -132,7 +146,7 @@ textarea{
     font-size:16px;
     width:300px;
     border-radius:45px;
-    margin-top:40px;
+    margin-top:30px;
 }
 #add-name{
     width:300px;
@@ -140,4 +154,48 @@ textarea{
 }
 #add-file{
     display:none;
+}
+/* 大框 */
+.am-image-picker-list .am-image-picker-upload-btn {
+    box-sizing: border-box;
+    border-radius: 3px;
+    border: 1PX solid #ddd;
+    background-color: #fff;
+    width: 200px;
+    height: 200px;
+
+}
+
+.am-image-picker-list {
+    /* padding: 9px 8px 0; */
+    padding: 0;
+    margin-bottom: 15px;
+    margin: 0 auto;
+    height: 200px;
+    width: 200px;
+}
+
+.am-flexbox {
+    text-align: left;
+    /* overflow: hidden; */
+    display: flex;
+    align-items: center;
+}
+.am-image-picker-list .am-flexbox {
+    /* margin-bottom: 6px; */
+    height: 200px;
+    width: 200px;
+}
+.am-image-picker-list .am-image-picker-item .am-image-picker-item-content {
+    height: 200px;
+    width: 200px;
+    border-radius: 3px;
+    /* background-size: cover; */
+}
+.am-image-picker-list .am-image-picker-item {
+    position: absolute;
+    /* top: 50%; */
+    transform: translateY(-50%);
+    width: 200px; 
+    height: 200px;
 }

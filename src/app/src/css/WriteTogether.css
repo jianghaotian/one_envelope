@@ -13,6 +13,13 @@ Link{
     margin: 0;
     padding: 0;
 }
+#invite-back button{
+    margin: 0;
+    padding: 0;
+    outline: none; 
+    border: none;
+    background-color: transparent;
+}
 
 .together-back{
     background-color:white;
@@ -23,20 +30,17 @@ Link{
     text-align: center;
     border-bottom: 0.5px solid rgb(104, 104, 102);
 }
-.together-imge{
-    width:17px;
-    position:absolute;
-    top:45%;
-    right:5%;
-}
+
 /* block */
-#together-block{
+.together-block{
     display: inline-block;
     position:relative;
     width: 100%;
     height: 190px;
     margin:0 auto;
     padding:10px 10px 5px 10px;
+    text-overflow:ellipsis; white-space:nowrap; overflow:hidden;
+
 }
 .together-bacimg{
     width: 100%;
@@ -49,28 +53,19 @@ Link{
 .together-title{
     font-size:20px;
     position:absolute;
-    top:27%;
+    top:38%;
     width:100%;
     height:5%;
     color:white;
     text-align:center;
-    font-weight: bold;
-}
-.together-member{
-    font-size:15px;
-    width:40%;
-    position:absolute;
-    top:50%;
-    left:10%;
-    color:white;
-    text-align: center;
+    /* font-weight: bold; */
 }
 .together-paper{
     width:40%;
     font-size:15px;
     position:absolute;
     text-align: center;
-    top:50%;
+    top:60%;
     right: 10%;
     color:white;
 }
@@ -81,6 +76,7 @@ Link{
     display: inline-block;
     background-color: white;
     margin:0 auto;
+    
     /* margin-bottom: 15px; */
 
 }
@@ -92,14 +88,20 @@ Link{
 }
 .invite-img{
     width: 100%;
+    height: 260px;
     margin:0 auto;
     vertical-align:top ;
 }
 .invite-title{
+    width: 80%;
     position: absolute;
-    top:50%;
+    text-align: center;
+    padding: 10px;
+    bottom:40%;
     left:10%;
     font-size:  20px;
+    background-color: rgba(74, 75, 75, 0.267);
+    border-radius: 5px;
     color: white;
 }
 .invite-return{
@@ -161,13 +163,26 @@ Link{
     width:86%;
     border-top:0.7px dashed grey;
     padding-top:10px;
+    position: relative;
+
     /* background-color: red; */
+}
+.c-span{
+    font-size:15px;
+    color:rgb(129, 129, 129);
+    height:100%;
+    width:60%;
+    
 }
 .c-day{
     font-weight: bold;
+    padding-left:20%;
+
 }
 .c-month{
-    padding-left:10%;
+    width: 20px;
+    text-align: center;
+    /* padding-left:14%; */
 }
 .inviteyear{
     color:rgb(98, 69, 143);
@@ -176,6 +191,8 @@ Link{
     font: bold 17px none;
     padding-left: 2%;
     padding-bottom: 3%;
+    padding-top: 2%;
+
 }
 /* 回到顶部 */
 .invite-totop{
@@ -187,11 +204,15 @@ Link{
     z-index: 1;
 }
 .invite-pencil{
-    width: 30px;
-    height: 20px;
-    /* background-color: tomato; */
+    width: 60px;
+    height: 60px;
+    border-radius: 60px;
+    text-align: center;
+    line-height: 60px;
+    background-color: rgb(150, 144, 144);
+    opacity: 2;
     position: fixed;
     right:16%;
-    bottom:10%;
+    bottom:6%;
     z-index:2;
 }
