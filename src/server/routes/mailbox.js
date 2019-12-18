@@ -40,7 +40,7 @@ router.get('/showmail', function (req, res, next) {
             res.json(result);
         } else {
             let uid = result.data.uid;
-            runSql(`select pletter.Ptitle,pletter.Pcontent,pletter.pday,paper.ppimage from pletter,paper where isSend = ? and touid=? and pid=? and paper.ppid=pletter.ppid`, [1,uid,pid], (result1) => {
+            runSql(`select pletter.*,paper.ppimage from pletter,paper where isSend = ? and touid=? and pid=? and paper.ppid=pletter.ppid`, [1,uid,pid], (result1) => {
                 // console.log(result1);
                 res.json(result1);
             });
