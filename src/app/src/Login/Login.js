@@ -38,9 +38,10 @@ export default class Login extends Component {
         if(info=="" || pwd==""){
             alert("请输入完整的登录信息")
         }else if(regTel.test(info) && regPwd.test(pwd)){
-            console.log("手机号登录");
             //登录接口
             this.$api.login({account: info ,type: 'phone',password: pwd }).then(res => {
+                console.log("手机号登录");
+
                 console.log(res);
                 if (res.data.status === 0) { 
                     this.$store.dispatch(setTokenAll(res.data.data.token, res.data.data.uid));
@@ -57,7 +58,7 @@ export default class Login extends Component {
                         }
                         var ls = window.localStorage;
                         ls.setItem("notice",JSON.stringify(notice));
-                    })         
+                    })      
                 } else {
                     Toast.fail('登录失败', 1, null, false)
                 }

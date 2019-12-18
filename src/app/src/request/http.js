@@ -9,6 +9,7 @@ axios.defaults.headers.post['Content-Type'] = 'application/x-www-form-urlencoded
 axios.defaults.headers.common['token'] = store.getState().token.token;
 
 // axios.defaults.baseURL = 'http://localhost:8000/v1';  //配置接口地址
+// axios.defaults.baseURL = 'http://192.168.2.135:8000/v1';  //配置接口地址
 axios.defaults.baseURL = 'http://10.7.84.116:8000/v1';  //配置接口地址
 // axios.defaults.baseURL = 'http://xyw.haotian.pub/v1';  //配置接口地址
 

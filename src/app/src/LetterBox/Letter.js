@@ -16,8 +16,10 @@ export default class Letter extends Component {
         }
     }
     componentDidMount(){
+        console.log(this.props.match.params.id)
         this.$api.showmail({pid:this.props.match.params.id}).then(res => {
             // 获取数据成功后的其他操作
+            console.log(res.data.data)
             this.setState({
                 arr:res.data.data
             });
@@ -32,13 +34,13 @@ export default class Letter extends Component {
     collec = () => {
         if(this.state.isLike){
             // 后台取消收藏
-            this.$api.delcollect({pid:this.props.match.params.Pid}).then(res => {});
+            this.$api.delcollect({pid:this.props.match.params.id}).then(res => {});
             this.setState({
                 isLike:!this.state.isLike
             })
         }else{
             // 后台收藏
-            this.$api.collec({pid:this.props.match.params.Pid}).then(res => {})
+            this.$api.collec({pid:this.props.match.params.id}).then(res => {})
             this.setState({
                 isLike:!this.state.isLike
             })
@@ -91,6 +93,7 @@ export default class Letter extends Component {
                 }}/>
                 <div className='lt-content'>
                     <img src={"http://10.7.84.116:8000/paper/"+this.state.arr[0].ppimage} className="lt-img"/>
+
                     <span className="lt-span">{this.state.arr[0].Pcontent}</span>
                 </div>
                               
@@ -108,7 +111,9 @@ export default class Letter extends Component {
                     }}>
                         <i 
                         className={ this.state.isLike ? 'iconfont icon-collection-b':'iconfont icon-collection'} 
+                        
                         onClick={this.collec.bind(this)}
+
                         style={{
                             paddingLeft:"45%"
                         }}></i>

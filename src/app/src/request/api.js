@@ -54,6 +54,7 @@ const api = {
     notice :p=> get('mine/notice',p),//消息通知
     changeBack : p=>post('private/changeback',p),//更换背景
     selBack : p=>get('private/getback',p),//选择背景
+    // getpid:p => get('private/getpd',p)
         
 }
 

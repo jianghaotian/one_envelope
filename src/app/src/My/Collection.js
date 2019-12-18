@@ -47,7 +47,6 @@ export default class Collection extends Component {
                         top:"0",
                         zIndex:"1"                       
                     }}
-                    onClick={()=>console.log("collection to my")}
                     ></Link>
                     <i                           
                     className="iconfont icon-fanhui" 

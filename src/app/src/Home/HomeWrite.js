@@ -146,7 +146,7 @@ export default class HomeWrite extends Component {
                 console.log(res);
             })
             alert('WriteLetter', '保存成功', [
-                { text: 'Ok', onPress: () => console.log('ok') },
+                { text: 'Ok', onPress: () => this.backHome },
             ])
         }else if(this.state.type == "edit"){
             let timestamp = Date.parse(new Date());
@@ -154,8 +154,8 @@ export default class HomeWrite extends Component {
             this.$api.editLetter({pid:pid,title:title,content:content,pday:timestamp,ppid:ppid}).then(res=>{
                 console.log(res);
             })
-            alert('EditLetter', '修改成功', [
-                { text: 'Ok', onPress: () => console.log('ok') },
+            alert('', '修改成功', [
+                { text: 'Ok', onPress: () =>{this.props.history.push('/home')} },
             ])
         }
     }
@@ -240,7 +240,7 @@ export default class HomeWrite extends Component {
                         value={this.state.value}
                         onChange={this.Edit}
                         style={{backgroundImage:"url("+this.state.back+")",backgroundSize:"100% 380px"}}
-                        rows={15}
+                        rows={17}
                         count={10000}
                     />
                 </List>
@@ -248,10 +248,10 @@ export default class HomeWrite extends Component {
 
                 {/* 底部 */}
                 <div className="hw-bottom">
-                    <img src={require("../imgs/Home/selback.png")} onClick={this.selback} />
-                    <img src={require("../imgs/Home/caomei.png")} />
-                    <img src={require("../imgs/Home/caomei.png")} />
-                    <img src={require("../imgs/Home/makalong.png")} />
+                    <img src={require("../imgs/Home/img.png")}  onClick={this.selback} />
+                    <img src={require("../imgs/Home/DVR.png")}/>
+                    <img src={require("../imgs/Home/music.png")}/>
+                    <img src={require("../imgs/Home/set.png")} />
                 </div>
             </div>
         )
