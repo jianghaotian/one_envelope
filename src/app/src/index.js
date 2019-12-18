@@ -33,8 +33,6 @@ import Cropimg from './My/Cropimg'
 
 import api from './request/api';
 import store from './redux/store';
-import HomeWrite from './Home/HomeWrite'
-import Back from './Home/Back'
 
 React.Component.prototype.$api = api;
 React.Component.prototype.$store = store;
@@ -49,8 +47,6 @@ ReactDOM.render(
             <Route path="/register" component={Register} />
             <Route path="/msgLogin" component={MsgLogin} />
             <Route path="/home" component={Tabbar} />
-            <Route path="/homeWrite" component={HomeWrite} />
-            <Route path="/back" component={Back} />
             {/* lxc */}
             <Route path="/recover" component={Recover} />
             <Route path="/setting" component={Setting}/>
@@ -69,11 +65,19 @@ ReactDOM.render(
 
             {/* zym */}
             <Route exact path="/invitewrite" component={InviteWrite}/>
+            <Route exact path="/invitewrite/:id" component={InviteWrite}/>
             <Route exact path="/writeTogether" component={WriteTogether}/>
-            <Route path="/togecreate" component={togeCreate} />
-            <Route path="/togeContent" component={togeContent} />
-            <Route path="/inviteMember" component={inviteMember} />
+            <Route exact path="/togecreate" component={togeCreate} />
+            <Route exact path="/togecreate/:id" component={togeCreate} />
+
+            <Route exact path="/togeContent" component={togeContent} />
+            <Route exact path="/togeContent/:id" component={togeContent} />
+
+            <Route exact path="/inviteMember" component={inviteMember} />
+            <Route exact path="/inviteMember/:id" component={inviteMember} />
+
             <Route path="/addressee" component={Addressee} />
+
 
             <Route path="/touxiang" component={Touxiang} />
             <Route path="/cropimg" component={Cropimg} />
