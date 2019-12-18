@@ -23,7 +23,9 @@ export default class Home extends Component {
             toList : [],//收件人列表
             visible:false,//滑动事件
             selected: '',
-            clicked: 'none'
+            clicked: 'none',
+            headImg:"",//用户头像
+            Uname:""//用户名
         }
     }
     //点击气泡项
@@ -195,10 +197,15 @@ export default class Home extends Component {
         
         //getToUListData
         this.$api.getToUList().then(res=>{
-            //console.log(res.data.data);
+            console.log(res.data.data);
             let toU = [];
             let list = res.data.data;
+            //console.log(list[0].uname);
             //console.log(list[0].toNick);
+            this.setState({
+                Uname : list[0].uname,
+                headImg : list[0].uimage
+            })
 
             //getToUList
             for(let i=0;i<list.length;i++){
@@ -381,11 +388,11 @@ export default class Home extends Component {
                     <div className="slider-user" onClick={this.toMy}>
                         {/* 用户头像 */}
                         <div className="slider-profile">
-                            <img src={require("../imgs/Home/girl.png")} style={{width:"50px",height:"50px"}} />
+                            <img src={"http://10.7.84.116:8000/head/"+this.state.headImg} style={{width:"50px",height:"50px"}} />
                         </div>
                         {/* 用户名 */}
                         <span className="slider-userName">
-                            一封
+                            {this.state.Uname}
                         </span>
                     </div>
 
