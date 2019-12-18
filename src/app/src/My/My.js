@@ -10,17 +10,16 @@ export default class My extends Component {
         super();
         this.state={
             arr:[{"Uname":"你的昵称",'pidname':'0'}],
-            brr:[{"sharenum":'0',"pidnum":"0"}]
+            brr:[{"sharenum":'0'}]
         }
     }
     componentDidMount(){
         this.$api.mine().then(res => {
-            console.log(res.data.data);
             // 获取数据成功后的其他操作
             this.setState({
                 arr:res.data.data
             })
-        console.log(this.state.arr[0])
+            console.log(this.state.arr[0].pidname)
         }) 
         this.$api.sharenum().then(res => {
             // 获取数据成功后的其他操作
@@ -30,7 +29,7 @@ export default class My extends Component {
         }) 
     }
     render() {
-        // console.log(this.state.arr[0].pidname)
+        console.log(this.state.arr[0].pidname)
         return (
             <div className="mydiv">
                 {/* 个人信息 */}
@@ -41,7 +40,7 @@ export default class My extends Component {
                     className="myifbg" />
                     {/* 头像 */}
                     <img 
-                    src={require("../imgs/my-login.jpg")} className="portrait" onClick={() =>{this.props.history.push('/touxiang')}}/>
+                    src={"http://10.7.84.116:8000/head/"+this.state.arr[0].Uimage} className="portrait" />
                     {/* 通知信息-图标 */}
                     <Link to='/mymessage'><i className="icon-xinxiang iconfont"
                     style={{
@@ -82,17 +81,17 @@ export default class My extends Component {
                 <List style={{
                     marginTop:'1em'
                 }}>
-                    <Item extra={
+                    {/* <Item extra={
                         <i className="iconfont icon-huiyuan" ></i>
-                    } onClick={() => {}}>会员中心</Item>
-                    <Item extra={
+                    } onClick={() => {}}>会员中心</Item> */}
+                    {/* <Item extra={
                         <i className="iconfont icon-weibiaoti-" style={{
                             fontSize:"1.0em"
                         }}></i>
                     } onClick={() => {}}>我的订单</Item>
                     <Item extra={
                         <i className="iconfont icon-kaquan" ></i>
-                    } onClick={() => {}}>我的卡券</Item>
+                    } onClick={() => {}}>我的卡券</Item> */}
 
                     <Link to='/collection' style={{
                             color:'black'
@@ -108,18 +107,19 @@ export default class My extends Component {
                         <i className="iconfont icon-lajixiang" ></i>
                     } onClick={() => {}}>回收站</Item></Link>
                     
-                    <Item extra={
+                    {/* <Item extra={
                         <i className="iconfont icon-iconfontzhizuobiaozhun023133" ></i>
-                    } onClick={() => {}}>在线咨询</Item>
-                    <Item extra={
-                        <i className="iconfont icon-bangzhu1" ></i>
-                    } onClick={() => {}}>帮助与反馈</Item>
-
+                    } onClick={() => {}}>在线咨询</Item> */}
                     <Link to='/setting' style={{
                             color:'black'
                     }}><Item extra={
                         <i className="iconfont icon-dingbudaohang-zhangh" ></i>
                     } onClick={() => {}}>我的设置</Item></Link>
+                    <Item extra={
+                        <i className="iconfont icon-bangzhu1" ></i>
+                    } onClick={() => {}}>帮助与反馈</Item>
+
+                    
                 </List>
             </div>
         )

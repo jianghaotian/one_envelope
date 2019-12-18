@@ -77,7 +77,7 @@ export default class Collection extends Component {
                         >
                             <List.Item className='my-text' onClick={() => {}} 
                             key={index}>
-                                <Link
+                                <Link 
                                 to={`/collecletter/${item.Pid}`} style={{
                                     color:'black'
                                 }} key={index}

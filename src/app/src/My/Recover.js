@@ -98,6 +98,12 @@ export default class Recover extends Component {
                         >
                             <List.Item className='my-text' onClick={() => {}} 
                             key={index}>
+                                <img src={item.img} style={{
+                                    borderRadius:'50%',
+                                    height:'50%',
+                                    width:'15%',
+                                    margin:'1em'
+                                }} /> 
                                 <span className="my-user">{item.toNick}</span>
                                 <span className="my-date">{new Date(item.Pday).toLocaleString()}</span>
                                 <span className="my-title">{item.Ptitle}</span>

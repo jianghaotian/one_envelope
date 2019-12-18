@@ -6,27 +6,25 @@ export default class Collecletter extends Component {
     constructor(){
         super()
         this.state={
-            isLike:true,
+            isLike:0,
             arr:[{
                 "toNick":"属性值",
                 "Ptitle":"一个小标题奥",
-                "Pcontent":'这是内容奥'
+                "Pcontent":'这是内容奥',
+                'ppimage':'1234567891234_56.jpg'
             }]
         }
     }
-    collec = () => {
-        this.setState({
-            isLike:!this.state.isLike
-        })
-    }
     componentDidMount(){
         this.$api.showmail({pid:this.props.match.params.Pid}).then(res => {
-            // 获取数据成功后的其他操作
             this.setState({
                 arr:res.data.data
             });
-            // 不能将数组直接赋值到state中
-            // console.log(this.state.arr);
+            console.log(this.state.arr)
+            // 获取当前状态值
+            this.setState({
+                isLike:res.data.data[0].isCollection
+            })
         }) 
     }
     render() {
@@ -70,7 +68,10 @@ export default class Collecletter extends Component {
                     borderWidth:'0.4px',
                     color:'lightgrey'
                 }}/>
-                <div className='lt-content'>{this.state.arr[0].Pcontent}</div>
+                <div className='lt-content'>
+                    <img src={"http://10.7.84.116:8000/paper/"+this.state.arr[0].ppimage} className="lt-img"/>
+                    <span className="lt-span">{this.state.arr[0].Pcontent}</span>
+                </div>
             </div>
         )
     }

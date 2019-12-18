@@ -10,41 +10,41 @@ export default class Letter extends Component {
             arr:[{
                 "toNick":"属性值",
                 "Ptitle":"一个小标题奥",
-                "Pcontent":'这是内容奥'
+                "Pcontent":'这是内容奥',
+                'ppimage':'1234567891234_56.jpg'
             }]
         }
     }
-    collec = () => {
-        if(this.state.isLike){
-            // 后台取消收藏
-            this.$api.delcollect({pid:this.props.match.params.id}).then(res => {});
-            this.setState({
-                isLike:!this.state.isLike
-            })
-        }else{
-            // 后台收藏
-            this.$api.collec({pid:this.props.match.params.id}).then(res => {})
-            this.setState({
-                isLike:!this.state.isLike
-                
-            })
-        }
-    }
     componentDidMount(){
-        this.$api.showmail({pid:this.props.match.params.id}).then(res => {
-            console.log(res);
-            console.log(this.props);
-            console.log(this.props.match.params.id)
+        this.$api.showmail({pid:this.props.match.params.Pid}).then(res => {
             // 获取数据成功后的其他操作
             this.setState({
                 arr:res.data.data
             });
+
+            console.log(this.state.arr)
             // 获取当前状态值
             this.setState({
                 isLike:res.data.data[0].isCollection
             })
         }) 
     }
+    collec = () => {
+        if(this.state.isLike){
+            // 后台取消收藏
+            this.$api.delcollect({pid:this.props.match.params.Pid}).then(res => {});
+            this.setState({
+                isLike:!this.state.isLike
+            })
+        }else{
+            // 后台收藏
+            this.$api.collec({pid:this.props.match.params.Pid}).then(res => {})
+            this.setState({
+                isLike:!this.state.isLike
+            })
+        }
+    }
+    // 删除
     deleEmail =(e)=>{
         this.$api.deletemail({pid:this.props.match.params.Pid}).then(res => {}) 
     }
@@ -89,7 +89,10 @@ export default class Letter extends Component {
                     borderWidth:'0.4px',
                     color:'lightgrey'
                 }}/>
-                <div className='lt-content'>{this.state.arr[0].Pcontent}</div>
+                <div className='lt-content'>
+                    <img src={"http://10.7.84.116:8000/paper/"+this.state.arr[0].ppimage} className="lt-img"/>
+                    <span className="lt-span">{this.state.arr[0].Pcontent}</span>
+                </div>
                               
                 {/* buttom-choice */}
                 <List style={{

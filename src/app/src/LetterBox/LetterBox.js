@@ -43,14 +43,13 @@ export default class LetterBox extends Component {
                                     color:'black'
                                 }} key={index}
                                 >
-                                <img src={item.img} style={{
+                                <img src={"http://10.7.84.116:8000/head/" + item.uimage} style={{
                                     borderRadius:'50%',
-                                    height:'50%',
-                                    width:'15%',
-                                    margin:'1em'
+                                    height:'64px',
+                                    width:'64px'
                                 }} />
                                 <span className="lb-user">{item.toNick}</span>
-                                <span className="lb-date">{new Date(item.Pday).toLocaleString()}</span>
+                                <span className="lb-date">{new Date(item.Pday).getFullYear()+'-'+(new Date(item.Pday).getMonth()+1)+'-'+new Date(item.Pday).getDate()}</span>
                                 <span className="lb-title">{item.Ptitle}</span>
                                 <span className="lb-content">
                                     {item.Pcontent}

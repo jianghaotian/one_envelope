@@ -6,7 +6,7 @@ export default class Myedit extends Component {
     constructor(){
         super();
         this.state={
-            arr:[{"Uname":"你的昵称",'pidname':'0'}]
+            arr:[{"Uname":"你的昵称",'pidname':'0',Uimage:'1234567891234_56.jpg'}]
         }
     }
     componentDidMount(){
@@ -15,9 +15,11 @@ export default class Myedit extends Component {
             this.setState({
                 arr:res.data.data
             })
+            console.log(this.state.arr[0].Uimage)
         })
     }
     render() {
+        console.log(this.state.arr[0].Uimage)
         return (
             <div>
                 {/* tab */}
@@ -44,7 +46,7 @@ export default class Myedit extends Component {
                     }}></i>
                 </div>
                 {/* 内容 */}
-                <Link to="/touxiang"><img src={require("../imgs/LetBox/lb-1.png")} className="ed-img"/></Link>
+                <Link to="/touxiang"><img src={"http://10.7.84.116:8000/head/"+this.state.arr[0].Uimage} className="ed-img"/></Link>
                 <List>
                     <List.Item extra={this.state.arr[0].Uphone}>账号</List.Item>
                     <Link to="/changename"><List.Item extra={this.state.arr[0].Uname} arrow="horizontal" onClick={() => {}}>

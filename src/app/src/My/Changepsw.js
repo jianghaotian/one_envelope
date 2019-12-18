@@ -73,6 +73,7 @@ export default class changepsw extends Component {
                 <List renderHeader={() => '旧密码：'}>
                     <InputItem
                     clear
+                    type='password'
                     placeholder="若包含字母，请区分大小写"
                     onChange={(e)=>this.oldChange(e)}
                 ></InputItem>
@@ -80,6 +81,7 @@ export default class changepsw extends Component {
                 <List renderHeader={() => '新密码：'}>
                     <InputItem
                     clear
+                    type='password'
                     placeholder="8-16位，至少含有数字"
                     ref={el => this.autoFocusInst = el}
                     onChange={(e)=>this.newChange(e)}
