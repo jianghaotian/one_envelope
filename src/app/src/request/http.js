@@ -4,7 +4,7 @@ import qs from 'qs';
 import { Toast } from 'antd-mobile';
 
 // axios.defaults.withCredentials = true;
-axios.defaults.timeout = 10000;  // 响应时间
+axios.defaults.timeout = 90000;  // 响应时间
 axios.defaults.headers.post['Content-Type'] = 'application/x-www-form-urlencoded;charset=UTF-8';  // 配置请求头
 axios.defaults.headers.common['token'] = store.getState().token.token;
 

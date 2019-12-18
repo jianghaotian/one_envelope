@@ -16,7 +16,7 @@ export default class Letter extends Component {
         }
     }
     componentDidMount(){
-        this.$api.showmail({pid:this.props.match.params.Pid}).then(res => {
+        this.$api.showmail({pid:this.props.match.params.id}).then(res => {
             // 获取数据成功后的其他操作
             this.setState({
                 arr:res.data.data

@@ -2,7 +2,7 @@ import { get, post } from './http';
 
 const api = {
 
-    login: p => post('user/login', p),
+    login: p => post('users/login', p),
     theme: p=> get('together/theme',p),
     headimg: p => post('image/head',p),
 
@@ -52,9 +52,9 @@ const api = {
     addAddressee : p=> post('private/addlist',p),//添加收信人
     delAddressee : p=> post('private/dellist',p),//删除收信人
     notice :p=> get('mine/notice',p),//消息通知
-    
-    
-    
+    changeBack : p=>post('private/changeback',p),//更换背景
+    selBack : p=>get('private/getback',p),//选择背景
+        
 }
 
 

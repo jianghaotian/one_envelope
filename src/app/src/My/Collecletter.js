@@ -16,7 +16,10 @@ export default class Collecletter extends Component {
         }
     }
     componentDidMount(){
-        this.$api.showmail({pid:this.props.match.params.Pid}).then(res => {
+        console.log("12312313")
+
+        this.$api.showmail({pid:this.props.match.params.id}).then(res => {
+            console.log("12312313")
             this.setState({
                 arr:res.data.data
             });
@@ -28,6 +31,7 @@ export default class Collecletter extends Component {
         }) 
     }
     render() {
+        console.log("12312")
         return (
             <div className="lt">
                 {/* tab */}
