@@ -3,7 +3,7 @@ var router = express.Router();
 
 const runSql = require('../mysql');
 const { getToken, checkToken } = require('../src/token');
-let token = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1aWQiOjEsImlhdCI6MTU3NDkzNDk1NCwiZXhwIjoxNTc3NjEzMzU0fQ.PQu7Dzp4MsurerTMR-wYSITeWKxGoo_aH_002CeEzqg';
+// let token = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1aWQiOjEsImlhdCI6MTU3NDkzNDk1NCwiZXhwIjoxNTc3NjEzMzU0fQ.PQu7Dzp4MsurerTMR-wYSITeWKxGoo_aH_002CeEzqg';
 
 
 /**
@@ -14,21 +14,21 @@ let token = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1aWQiOjEsImlhdCI6MTU3NDkzND
  * 
  */
 router.get('/show', function (req, res, next) {
-    // let { account, type } = req.query;
     let {pid} = req.query;
-    console.log(req.query);
+    let token = req.header('token');
     checkToken(token, (result) => {
         if (result.status !== 0) {
             res.json(result);
         } else {
             let uid = result.data.uid;
             runSql(`select * from pletter where uid=? and pid=?`, [uid,pid], (result) => {
-                console.log(result);
+                // console.log(result);
                 res.json(result);
             });
         }
     });
 });
+
 /**
  * 修改信件内容()
  * 请求方式：
@@ -43,6 +43,7 @@ router.get('/show', function (req, res, next) {
  */
 router.post('/edit',function(req,res,next){
     let {pid,title,content,pday} = req.body;
+    let token = req.header('token');
     checkToken(token,(result) => {
         if(result.status !=0){
             res.json(result);
@@ -63,5 +64,4 @@ router.post('/edit',function(req,res,next){
         }
     })
 })
-
 module.exports = router;

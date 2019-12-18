@@ -14,6 +14,7 @@ const { getToken, checkToken } = require('../src/token');
  */
 router.get('/getusers',function(req,res,next){
     runSql(`select count(*) as num from user`,[],(result)=>{
+        console.log(result)
         res.json(result);
         
     })

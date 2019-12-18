@@ -135,7 +135,7 @@ router.post('/register', function (req, res, next) {
                 if ((getTimestamp_13() - result.data[0].vtime) < minuteTimestamp) {
                     if (result.data[0].vcode === verification) {
                         if (type === 'phone' || type === 'email') {
-                            runSql(`insert into user(u${type}, upassword, uname,uday) values (?,?,?,?)`, [account, password, name,a], (result) => {
+                            runSql(`insert into user(u${type}, upassword, uname,uimage,uday) values (?,?,?,?,?)`, [account, password, name,'1234567890987_11.jpg',a], (result) => {
                                 runSql('delete from verification where vaccount = ?', [account], (result) => {
                                     // console.log(result);
                                 });
@@ -237,6 +237,90 @@ router.post('/login', function (req, res, next) {
         }
         res.json(jsonData);
     }
+});
+
+/**
+ * 用户短信登录
+ * POST
+ * 接收参数:
+ *     uphone     : 手机号/邮箱
+ * 返回参数:
+ *     status: 0,
+ *     message: "OK"
+ */
+router.post('/smslogin', function (req, res, next) {
+    let { uphone} = req.body;
+        runSql(`select * from user where uphone = ?`, [uphone], (result) => {
+            if (result.status === 0) {
+                if (result.data.length === 0) {
+                    let jsonData = {
+                        status: 10004,
+                        message: 'no user'
+                    }
+                    res.json(jsonData);
+                } else {
+                    res.json(result);
+                    }
+            } else {
+                // console.log(result)
+                res.json(result);
+            }
+        });
+});
+
+/**
+ * 短信登录获取验证码
+ * POST
+ * 接收参数:
+ *     account : 手机号/邮箱
+ *     type    : 类型  (phone/email)
+ * 返回参数:
+ *     status: 0,
+ *     message: "OK"
+ */
+router.post('/smsverification', function (req, res, next) {    
+    let {uphone} = req.body;
+    
+    var verification = getRandom(6);
+    var minute = '' + v_minute;
+
+    runSql(`select uid from user where uphone = ?`, [uphone], (result) => {
+        if (result.status === 0) {
+            runSql('insert into verification(vaccount, vtype, vcode, vtime) values (?,?,?,?)', [uphone, 'phone', verification, getTimestamp_13()], (result) => {
+                if (result.status === 0) {
+                    sendMsg(uphone, verification, minute, (result) => {
+                        let jsonData = {
+                            status: result.status,
+                            message: result.message
+                        }
+                        res.json(jsonData);
+                    });    
+                } else if (result.status === 1062) {
+                    runSql('update verification set vcode = ?, vtime = ? where vaccount = ?', [verification, getTimestamp_13(), uphone], (result) => {
+                        if (result.status === 0) {
+                            sendMsg(uphone, verification, minute, (result) => {
+                                let jsonData = {
+                                    status: result.status,
+                                    message: result.message
+                                }
+                                res.json(jsonData);
+                            });
+                        } else {
+                            res.json(result);
+                        }
+                    });
+                } else {
+                    res.json(result);
+                }
+                runSql('delete from verification where vaccount = ?', [uphone], (result) => {
+                    // console.log(result);
+                });
+            });
+        } 
+        else {
+            res.json(result);
+        }
+    })
 });
 
 module.exports = router;

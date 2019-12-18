@@ -4,7 +4,7 @@ var router = express.Router();
 const runSql = require('../mysql');
 const { getToken, checkToken } = require('../src/token');
 
-let token = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1aWQiOjEsImlhdCI6MTU3NDkzNDk1NCwiZXhwIjoxNTc3NjEzMzU0fQ.PQu7Dzp4MsurerTMR-wYSITeWKxGoo_aH_002CeEzqg';
+// let token = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1aWQiOjEsImlhdCI6MTU3NDkzNDk1NCwiZXhwIjoxNTc3NjEzMzU0fQ.PQu7Dzp4MsurerTMR-wYSITeWKxGoo_aH_002CeEzqg';
 /**
  * 获取个人信息+写信数
  * GET
@@ -13,6 +13,7 @@ let token = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1aWQiOjEsImlhdCI6MTU3NDkzND
  * 返回参数：
  */
 router.get('/', function (req, res, next) {
+    let token = req.header('token');
     checkToken(token, (result) => {
         let uid = result.data.uid;
         if (result.status !== 0) {
@@ -33,6 +34,7 @@ router.get('/', function (req, res, next) {
  * 返回参数：
  */
 router.get('/sharenum', function (req, res, next) {
+    let token = req.header('token');
     checkToken(token, (result) => {
         let uid = result.data.uid;
         if (result.status !== 0) {
@@ -46,28 +48,7 @@ router.get('/sharenum', function (req, res, next) {
         }
     });
 });
-/**
- * 获取回收站信件
- * GET
- * 接收参数:
- *     
- * 返回参数：
- *      status: 0,
- *      message: 'OK',
- */
-// router.get('/recyclebin', function (req, res, next) {
-//     checkToken(token, (result) => {
-//         if (result.status !== 0) {
-//             res.json(result);
-//         } else {
-//             let uid = result.data.uid;
-//             runSql(`select * from pletter where isSend = ? and isDelete=? and touid=?`, [1,1,uid], (result1) => {
-//                 console.log(result1);
-//                 res.json(result1);
-//             });
-//         }
-//     }); 
-// });
+
 /**
  * 获取回收站信件(来自私密写)
  * GET
@@ -78,12 +59,13 @@ router.get('/sharenum', function (req, res, next) {
  *      message: 'OK',
  */
 router.get('/recyclepletter', function (req, res, next) {
+    let token = req.header('token');
     checkToken(token, (result) => {
         if (result.status !== 0) {
             res.json(result);
         } else {
             let uid = result.data.uid;
-            runSql(`select * from pletter where isDelete=? and uid=?`, [1,uid], (result1) => {
+            runSql(`select pletter.*,paper.ppimage from pletter,paper where isDelete=? and uid=? and pletter.ppid=paper.ppid`, [1,uid], (result1) => {
                 console.log(result1);
                 res.json(result1);
             });
@@ -101,6 +83,7 @@ router.get('/recyclepletter', function (req, res, next) {
  */
 router.post('/recyclebin/deletebin', function (req, res, next) {
     let {pid} = req.body;
+    let token = req.header('token');
     checkToken(token, (result) => {
         if (result.status !== 0) {
             res.json(result);
@@ -124,14 +107,15 @@ router.post('/recyclebin/deletebin', function (req, res, next) {
  */
 router.post('/recyclebin/restore', function (req, res, next) {
     let {pid} = req.body;
-    console.log(pid);
+    let token = req.header('token');
+    // console.log(pid);
     checkToken(token, (result) => {
         if (result.status !== 0) {
             res.json(result);
         } else {
             let uid = result.data.uid;
             runSql(`update pletter set isDelete=? where isDelete=? and uid=? and pid=?`, [0,1,uid,pid], (result1) => {
-                console.log(result1);
+                // console.log(result1);
                 res.json(result1);
             });
         }
@@ -147,13 +131,14 @@ router.post('/recyclebin/restore', function (req, res, next) {
  *      message: 'OK',
  */
 router.get('/favorite', function (req, res, next) {
+    let token = req.header('token');
     checkToken(token, (result) => {
         if (result.status !== 0) {
             res.json(result);
         } else {
             let uid = result.data.uid;
             runSql(`select * from pletter where isSend = ? and isCollection=? and touid=?`, [1,1,uid], (result1) => {
-                console.log(result1);
+                // console.log(result1);
                 res.json(result1);
             });
         }
@@ -170,13 +155,14 @@ router.get('/favorite', function (req, res, next) {
  */
 router.post('/delcollect', function (req, res, next) {
     let {pid} = req.body;
+    let token = req.header('token');
     checkToken(token, (result) => {
         if (result.status !== 0) {
             res.json(result);
         } else {
             let uid = result.data.uid;
             runSql(`update pletter set isCollection=? where isSend=? and isCollection=? and touid=? and pid=?`,[0,1,1,uid,pid],(result1) => {
-                console.log(result1);
+                // console.log(result1);
                 res.json(result1);
             });
         } 
@@ -193,6 +179,7 @@ router.post('/delcollect', function (req, res, next) {
  */
 router.post('/changename', function (req, res, next) {
     let {uname}=req.body;
+    let token = req.header('token');
     checkToken(token, (result) => {
         let uid = result.data.uid;
         if (result.status !== 0) {
@@ -214,12 +201,14 @@ router.post('/changename', function (req, res, next) {
  */
 
 router.get('/getoldpwd',function(req,res,next){
+    let token = req.header('token');
     checkToken(token,(result)=>{
         if(result.status != 0){
             res.json(result);
         }else{
             let uid = result.data.uid;
-            runSql(`select upassword from user where uid=?`,[uid],(result1)=>{
+            runSql(`select upassword from user where uid=? `,[uid],(result1)=>{
+                // console.log(result1);
                 res.json(result1);
             })
         }
@@ -236,6 +225,7 @@ router.get('/getoldpwd',function(req,res,next){
  */
 router.post('/changepwd',function(req,res,next){
     let{newpwd} = req.body;
+    let token = req.header('token');
     checkToken(token,(result)=>{
         if(result.status != 0){
             res.json(result);
@@ -247,6 +237,7 @@ router.post('/changepwd',function(req,res,next){
         }
     })
 })
+
 /**
  * 获取通知
  * GET
@@ -257,13 +248,14 @@ router.post('/changepwd',function(req,res,next){
  *      message: 'OK',
  */
 router.get('/notice', function (req, res, next) {
+    let token = req.header('token');
     checkToken(token, (result) => {
         if (result.status !== 0) {
             res.json(result);
         } else {
-            // let uid = result.data.uid;
+            let uid = result.data.uid;
             runSql(`select * from notice`,[], (result1) => {
-                console.log(result1);
+                // console.log(result1);
                 res.json(result1);
             });
         }

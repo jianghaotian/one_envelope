@@ -2,6 +2,7 @@ var express = require('express');
 var router = express.Router();
 const fs = require('fs');
 const path = require('path');
+
 const runSql = require('../mysql');
 
 /**
@@ -30,6 +31,7 @@ router.post('/delpaper',function(req,res,next){
     console.log(ppimage);
     runSql(`delete from paper where ppid=?`,[ppid],(result)=>{
         fs.unlinkSync(path.join(__dirname,'../public/paper/'+ppimage));
+        res.json(result);
     })
 })
 module.exports = router;

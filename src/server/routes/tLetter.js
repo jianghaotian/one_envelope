@@ -4,7 +4,7 @@ var router = express.Router();
 const runSql = require('../mysql');
 const { getToken, checkToken } = require('../src/token');
 
-let token = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1aWQiOjEsImlhdCI6MTU3NDkzNDk1NCwiZXhwIjoxNTc3NjEzMzU0fQ.PQu7Dzp4MsurerTMR-wYSITeWKxGoo_aH_002CeEzqg';
+// let token = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1aWQiOjEsImlhdCI6MTU3NDkzNDk1NCwiZXhwIjoxNTc3NjEzMzU0fQ.PQu7Dzp4MsurerTMR-wYSITeWKxGoo_aH_002CeEzqg';
 /**
  * 获取一起写主题
  * 请求方式：
@@ -13,6 +13,7 @@ let token = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1aWQiOjEsImlhdCI6MTU3NDkzND
  *      Uid:用户id
  */
 router.get('/theme', function (req, res, next) {
+    let token = req.header('token');
     checkToken(token, (result) => {
         // console.log(result);//这个可以获取到uid
         if (result.status !== 0) {
@@ -46,6 +47,7 @@ router.get('/theme', function (req, res, next) {
  */
 router.get('/theme/showtheme',function(req,res,next){
     // http:localhost:8000/v1/together/theme/showtheme?tid=1
+    let token = req.header('token');
     let {tid} = req.query;
     checkToken(token,(result)=>{
         if(result.status != 0){
@@ -71,10 +73,10 @@ router.get('/theme/showtheme',function(req,res,next){
  */
 router.get('/theme/showtitle',function(req,res,next){
     let{tid} = req.query;
-    console.log(tid)
+    let token = req.header('token');
+    // console.log(tid)
     checkToken(token,(result)=>{
         if(result.status !=0){
-            
             res.json(result);
         }else{
             runSql(`select theme.*  from theme where theme.tid=?  `,[tid],(result1)=>{
@@ -95,6 +97,7 @@ router.get('/theme/showtitle',function(req,res,next){
 router.get("/theme/showtheme/member",function(req,res,next){
     // http://localhost:3000/v1/together/theme/showtheme/member?tid=2
     let{tid} = req.query;
+    let token = req.header('token');
     checkToken(token,(result)=>{
         if(result.status != 0){
             res.json(result);
@@ -116,6 +119,7 @@ router.get("/theme/showtheme/member",function(req,res,next){
 router.post('/theme/writeletter', function (req, res, next) {
     // http://localhost:3000/v1/together/theme/writeletter
     let { title, content,lday,tid} = req.body;
+    let token = req.header('token');
     checkToken(token, (result) => {
         if(result.status != 0){
             res.json(result);
@@ -140,6 +144,7 @@ router.post('/theme/writeletter', function (req, res, next) {
  */
 router.post("/theme/delletter",function(req,res,next){
     let {lid} = req.body;
+    let token = req.header('token');
     checkToken(token,(result)=>{
         if(result.status != 0){
             res.json(result);
@@ -148,6 +153,7 @@ router.post("/theme/delletter",function(req,res,next){
                 // runSql(`select * from tletter where lid=?`,[lid],(result2)=>{
                 //     res.json(result2);
                 // })
+                res.json(result1);
             })
 
         }
@@ -168,6 +174,7 @@ router.post("/theme/delletter",function(req,res,next){
  */
  router.post('/theme/addtheme',function(req,res,next){
      let {tname,timage,tday,isPrivate} = req.body;
+     let token = req.header('token');
      checkToken(token,(result) => {
          if(result.status != 0){
              res.json(result);
@@ -192,6 +199,7 @@ router.post("/theme/delletter",function(req,res,next){
   */
  router.post('/theme/deltmember',function(req,res,next){
     let {uid,tid} = req.body;
+    let token = req.header('token');
     checkToken(token,(result)=>{
         if(result.status != 0){
             res.json(result.json);
@@ -212,6 +220,7 @@ router.post("/theme/delletter",function(req,res,next){
   */
  router.post('/theme/deltheme',function(req,res,next){
     let {tid} = req.body;
+    let token = req.header('token');
     checkToken(token,(result)=>{
         if(result.status !=0){
             res.json(result)
@@ -240,6 +249,8 @@ router.post("/theme/delletter",function(req,res,next){
  */
 router.post('/theme/edit',function(req,res,next){
     let {lid,title,content,lday} = req.body;
+    let token = req.header('token');
+    // console.log(title,content);
     checkToken(token,(result) => {
         if(result.status !=0){
             res.json(result);
@@ -261,6 +272,7 @@ router.post('/theme/edit',function(req,res,next){
  */
 router.get('/theme/show', function (req, res, next) {
     let {lid} = req.query;
+    let token = req.header('token');
     checkToken(token, (result) => {
         if (result.status !== 0) {
             res.json(result);
