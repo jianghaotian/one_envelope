@@ -50,7 +50,7 @@ export default class HomeWrite extends Component {
                         //console.log(imgList[i].ppimage);
                         this.setState({
                             ppid : imgList[i].ppid,
-                            back : "http://10.7.84.116:8000/paper/"+imgList[i].ppimage
+                            back : "http://localhost:8000/paper/"+imgList[i].ppimage
                         })
                     }
                 }
@@ -79,7 +79,7 @@ export default class HomeWrite extends Component {
                             //console.log(imgList[i].ppimage);
                             this.setState({
                                 ppid : imgList[i].ppid,
-                                back : "http://10.7.84.116:8000/paper/"+imgList[i].ppimage
+                                back : "http://localhost:8000/paper/"+imgList[i].ppimage
                             })
                         }
                     }
@@ -109,7 +109,7 @@ export default class HomeWrite extends Component {
                         console.log(imgList);
                         this.setState({
                             ppid : imgList[0].ppid,
-                            back : "http://10.7.84.116:8000/paper/"+imgList[0].ppimage
+                            back : "http://localhost:8000/paper/"+imgList[0].ppimage
                         })
                     })
                 }

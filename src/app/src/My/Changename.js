@@ -1,5 +1,5 @@
 import React, { Component } from 'react'
-import { Button,WhiteSpace,InputItem} from 'antd-mobile'
+import { Button,WhiteSpace,InputItem,Toast} from 'antd-mobile'
 import {Link} from 'react-router-dom'
 
 export default class Changename extends Component {
@@ -18,7 +18,12 @@ export default class Changename extends Component {
     }
     handleChange = () => {
         console.log(this.state.username);
-        this.$api.changename({uname:this.state.username}).then(res => {})
+        this.$api.changename({uname:this.state.username}).then(res => {
+            this.props.history.push("/myedit");
+            Toast.success('修改成功', 1);
+        });
+        
+
     }
     // 页面拿数据
     render() {

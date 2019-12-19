@@ -51,7 +51,7 @@ export default class WriteTogether extends Component {
                     {this.state.data.map((val)=> (                           
                         <Link to={"/invitewrite/"+val.Tid} style={{color:"white"}}>
                         <div key={val} className="together-block">                            
-                            <img src={"http://10.7.84.116:8000/theme/"+val.Timage} alt="" className="together-bacimg"/>
+                            <img src={"http://localhost:8000/theme/"+val.Timage} alt="" className="together-bacimg"/>
                             <div className="together-title">{val.Tname}</div>                            
                             <div className="together-paper">
                             <span>—{new Date(val.Tday).toLocaleDateString()}</span>

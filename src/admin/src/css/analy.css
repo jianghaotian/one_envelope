@@ -128,8 +128,9 @@
 
 /* PaperManage.css */
 .ant-upload-list-picture-card .ant-upload-list-item{
-    width: 150px;
-    height: 150px;
+    /* width: 150px; */
+    width: 75%;
+    height: 160px;
 }
 .ant-upload-list-picture-card-container{
     width: 150px;

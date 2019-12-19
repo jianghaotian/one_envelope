@@ -16,7 +16,7 @@ export default class LetterBox extends Component {
             this.setState({
                 arr:res.data.data
             })
-            console.log(this.state.arr)
+            // console.log(this.state.arr)
         }) 
     }
     render() {
@@ -43,7 +43,7 @@ export default class LetterBox extends Component {
                                     color:'black'
                                 }} key={index}
                                 >
-                                <img src={"http://10.7.84.116:8000/head/" + item.uimage} style={{
+                                <img src={"http://localhost:8000/head/" + item.uimage} style={{
                                     borderRadius:'50%',
                                     height:'64px',
                                     width:'64px'

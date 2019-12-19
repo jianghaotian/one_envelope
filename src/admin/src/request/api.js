@@ -54,7 +54,8 @@ const api = {
     // 上传信纸
     addpaper: p => post('image/paper',p),
     // 删除信纸
-    delpaper: p => post('papermanager/delpaper',p)
+    delpaper: p => post('papermanager/delpaper',p),
+    
 }
 
 

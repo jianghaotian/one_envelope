@@ -1,5 +1,5 @@
 import React, { Component } from 'react'
-import { List } from 'antd-mobile'
+import { List,Toast } from 'antd-mobile'
 import {Link} from 'react-router-dom'
 
 export default class Letter extends Component {
@@ -48,7 +48,9 @@ export default class Letter extends Component {
     }
     // 删除
     deleEmail =(e)=>{
-        this.$api.deletemail({pid:this.props.match.params.Pid}).then(res => {}) 
+        this.$api.deletemail({pid:this.props.match.params.id}).then(res => {
+            Toast.success('删除成功', 1);
+        }) 
     }
     render() {
         return (
@@ -92,7 +94,7 @@ export default class Letter extends Component {
                     color:'lightgrey'
                 }}/>
                 <div className='lt-content'>
-                    <img src={"http://10.7.84.116:8000/paper/"+this.state.arr[0].ppimage} className="lt-img"/>
+                    <img src={"http://localhost:8000/paper/"+this.state.arr[0].ppimage} className="lt-img"/>
 
                     <span className="lt-span">{this.state.arr[0].Pcontent}</span>
                 </div>

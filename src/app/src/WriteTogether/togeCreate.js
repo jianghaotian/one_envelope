@@ -1,6 +1,7 @@
 import React, { Component } from 'react'
 import '../css/togeCreate.css'
-import { List, TextareaItem } from 'antd-mobile';
+import { List, TextareaItem,Toast } from 'antd-mobile';
+
 import {HashRouter as Router,Link,Switch,Route} from 'react-router-dom'
 
 export default class togeCreate extends Component {
@@ -25,7 +26,8 @@ export default class togeCreate extends Component {
                     this.setState({
                         data:res.data.data                   
                     })                    
-                    alert("创建成功~");
+                    Toast.success('创建成功', 1);
+                    // alert("创建成功~");
                     this.totoge();
                     console.log(this.state.data);
                 }         
@@ -40,7 +42,7 @@ export default class togeCreate extends Component {
         this.refs.input1.value=""
     }
     textChange=(e)=>{
-        console.log(e)
+        // console.log(e)
         this.setState({
             inputValue : e
         })

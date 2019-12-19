@@ -27,7 +27,7 @@ export default class UserManage extends Component {
             let list = this.state.data;
             for(var i=0;i<list.length;i++){
                 // console.log(list[i].Uimage);
-                list[i].Uimage = <img src={"http://localhost:8000/head/" + list[i].Uimage} style={{width:'48px',height:'48px',textAlign:'center',lineHeight:'48px',borderRadius:'50%'}} />
+                list[i].Uimage = <img src={"https://yf.htapi.pub/head/" + list[i].Uimage} style={{width:'48px',height:'48px',textAlign:'center',lineHeight:'48px',borderRadius:'50%'}} />
                 // http://localhost:8000/head/1234567891234_56.jpg
             }
             this.setState({
@@ -111,7 +111,7 @@ export default class UserManage extends Component {
                             let list = this.state.data;
                             for(var i=0;i<list.length;i++){
                                 if(list[i].Uid == uid){
-                                    console.log(list.splice(i,1));
+                                    // console.log(list.splice(i,1));
                                     list.splice(i,1);
                                 }
                             }

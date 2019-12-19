@@ -385,7 +385,7 @@ export default class Home extends Component {
                     <div className="slider-user" onClick={this.toMy}>
                         {/* 用户头像 */}
                         <div className="slider-profile">
-                            <img src={"http://10.7.84.116:8000/head/"+this.state.headImg} style={{width:"50px",height:"50px"}} />
+                            <img src={"http://localhost:8000/head/"+this.state.headImg} style={{width:"50px",height:"50px"}} />
                         </div>
                         {/* 用户名 */}
                         <span className="slider-userName">

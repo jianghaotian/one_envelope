@@ -113,7 +113,7 @@ export default class UserAnaly extends Component {
                 for(var i=0;i<arr.length;i++){
                     arr[i].key = i+1;
                     arr[i].dayVisit = 3;
-                    arr[i].registSum = this.state.totalusers;   
+                    // arr[i].registSum = this.state.totalusers;   
                 }
                 this.setState({
                     data:arr
@@ -142,11 +142,11 @@ export default class UserAnaly extends Component {
                 dataIndex: 'dayVisit',
                 key: 'dayVisit',
             },
-            {
-                title: '累计注册',
-                dataIndex: 'registSum',
-                key: 'registSum'
-            }
+            // {
+            //     title: '累计注册',
+            //     dataIndex: 'registSum',
+            //     key: 'registSum'
+            // }
         ];
         return (
             <div className='right-con'>
