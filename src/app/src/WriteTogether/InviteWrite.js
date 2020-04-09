@@ -112,7 +112,7 @@ export default class InviteWrite extends Component {
             <div id="invite-back">
                 {/* 背景图块 */}
                 <div className="invite-top">
-                    <img src={"http://localhost:8000/theme/"+this.state.theme[0].Timage}className='invite-img'/>
+                    <img src={"https://yf.htapi.pub/theme/"+this.state.theme[0].Timage}className='invite-img'/>
                     <span className="invite-title">{this.state.theme[0].Tname}</span>
                     <Link to='/home/writeTogether'>
                     <i className="icon-fanhui iconfont"

@@ -40,7 +40,7 @@ export default class My extends Component {
                     className="myifbg" />
                     {/* 头像 */}
                     <img 
-                    src={"http://localhost:8000/head/"+this.state.arr[0].Uimage} className="portrait" />
+                    src={"https://yf.htapi.pub/head/"+this.state.arr[0].Uimage} className="portrait" />
                     {/* 通知信息-图标 */}
                     <Link to='/mymessage'><i className="icon-xinxiang iconfont"
                     style={{

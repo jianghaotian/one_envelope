@@ -59,7 +59,7 @@ export default class Back extends Component {
                         this.state.imgList.map((item,index)=>{
                             return <li key={index} onClick={()=>{this.selImg(item)}}>
                                 <div className="back-imgBox">
-                                    <img src={"http://localhost:8000/paper/"+item.ppimage}  style={{width:"100%",height:"130px"}} />
+                                    <img src={"https://yf.htapi.pub/paper/"+item.ppimage}  style={{width:"100%",height:"130px"}} />
                                 </div>
                             </li>
                         })

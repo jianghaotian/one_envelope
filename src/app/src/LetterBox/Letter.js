@@ -94,7 +94,7 @@ export default class Letter extends Component {
                     color:'lightgrey'
                 }}/>
                 <div className='lt-content'>
-                    <img src={"http://localhost:8000/paper/"+this.state.arr[0].ppimage} className="lt-img"/>
+                    <img src={"https://yf.htapi.pub/paper/"+this.state.arr[0].ppimage} className="lt-img"/>
 
                     <span className="lt-span">{this.state.arr[0].Pcontent}</span>
                 </div>
