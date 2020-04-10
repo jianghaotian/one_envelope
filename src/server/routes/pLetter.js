@@ -109,18 +109,29 @@ router.get('/getlist',function(req,res,next){
         if(result.status != 0){
             res.json(result);
         }else{
-            // runSql(`insert into pletter(Ptitle, Pcontent, Uid,toUid,toNick,isSend,Pday,isCollection,isDelete,ppid) values (?,?,?,?,?,?,?,?,?,?) `,
-            // ["快来给他写信吧","他的信箱还没有东西哦",uid,null,'致自己',1,null,0,0,null],(result2)=>{
-                runSql(`select distinct user.uimage,user.uname,pletter.toNick from user,pletter where user.uid=? and(user.uid = pletter.uid)`,[uid],
-            (result1)=>{
-                console.log(result1);
-                res.json(result1);
-            // });
-            })
-            
+                runSql('select toNick from pletter where uid=?',[uid],(result)=>{
+                    if(result.data.length == 0){
+                        runSql(`select user.uimage,user.uname,toNick from user where user.uid=?`,[uid],
+                        (result1)=>{
+                            let pday = new Date();
+                            console.log(pday);
+                            runSql(`insert into pletter(Ptitle, Pcontent, Uid,toUid,toNick,isSend,Pday,isCollection,isDelete,ppid) values (?,?,?,?,?,?,?,?,?,?) `,
+                                ["快来给他写信吧","他的信箱还没有东西哦",uid,null,'致自己',1,pday,0,0,null],
+                                (result3)=>{
+                                    console.log("添加成功")
+                            })
+                            res.json(result1);
+                        });
+                    }else{
+                        runSql(`select distinct user.uimage,user.uname,pletter.toNick from user,pletter where user.uid=? and(user.uid=pletter.uid)`,[uid],
+                        (result1)=>{
+                            res.json(result1);
+                        });
+                    }
+                    
+                })
         }
     });
-
 });
 /**
  *更换收信人昵称
