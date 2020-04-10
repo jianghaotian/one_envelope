@@ -113,8 +113,7 @@ router.get('/getlist',function(req,res,next){
                     if(result.data.length == 0){
                         runSql(`select user.uimage,user.uname,toNick from user where user.uid=?`,[uid],
                         (result1)=>{
-                            let pday = new Date();
-                            console.log(pday);
+                            let pday = new Date().getTime();
                             runSql(`insert into pletter(Ptitle, Pcontent, Uid,toUid,toNick,isSend,Pday,isCollection,isDelete,ppid) values (?,?,?,?,?,?,?,?,?,?) `,
                                 ["快来给他写信吧","他的信箱还没有东西哦",uid,null,'致自己',1,pday,0,0,null],
                                 (result3)=>{
