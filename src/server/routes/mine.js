@@ -19,7 +19,7 @@ router.get('/', function (req, res, next) {
         if (result.status !== 0) {
             res.json(result);
         } else {
-            runSql(`select user.*,count(pletter.Pid) as pidnum from user,pletter where user.uid =? and user.uid=pletter.uid`,
+            runSql(`select user.Uname,user.Uimage,user.Ufraction,user.Uday,user.toNick,count(pletter.Pid) as pidnum from user,pletter where user.uid =? and user.uid=pletter.uid`,
             [uid],(result1)=>{
                 res.json(result1);
                 }
