@@ -4,6 +4,16 @@ import { List, TextareaItem,Modal,Button } from 'antd-mobile';
 
 const alert = Modal.alert;
 
+const color = [
+    {backgroundColor:'pink'},
+    {backgroundColor:'red'},
+    {backgroundColor:'purple'},
+    {backgroundColor:'grey'},
+    {backgroundColor:'lightblue'},
+    {backgroundColor:'black'},
+    {backgroundColor:'green'}
+];
+
 export default class HomeWrite extends Component {
     constructor(){
         super();
@@ -17,7 +27,10 @@ export default class HomeWrite extends Component {
             modal:"none",
             toList : [],// 收信人列表
             back:"",//背景图片
-            ppid:0//ppid
+            ppid:0,//ppid
+            colorState:{display:'none'},//字体颜色
+            colorTag:false,
+            fontColor:{}
         }
     }
     //返回Home
@@ -146,7 +159,7 @@ export default class HomeWrite extends Component {
                 console.log(res);
             })
             alert('WriteLetter', '保存成功', [
-                { text: 'Ok', onPress: () => this.backHome },
+                { text: 'Ok', onPress: () => console.log('ok') },
             ])
         }else if(this.state.type == "edit"){
             let timestamp = Date.parse(new Date());
@@ -154,8 +167,8 @@ export default class HomeWrite extends Component {
             this.$api.editLetter({pid:pid,title:title,content:content,pday:timestamp,ppid:ppid}).then(res=>{
                 console.log(res);
             })
-            alert('', '修改成功', [
-                { text: 'Ok', onPress: () =>{this.props.history.push('/home')} },
+            alert('EditLetter', '修改成功', [
+                { text: 'Ok', onPress: () => console.log('ok') },
             ])
         }
     }
@@ -188,6 +201,32 @@ export default class HomeWrite extends Component {
         //console.log(this.props.history.location.search);
         var back = this.props.history.location.search;
         this.props.history.push("/back"+back);
+    }
+    //选择音乐
+    selectMusic=()=>{
+
+    }
+    getMusic=()=>{
+        
+    }
+    fontColor=()=>{
+        if(!this.state.colorTag){
+            this.setState({
+                colorState:{display:"block"},
+                colorTag:true
+            })
+        }else{
+            this.setState({
+                colorState:{display:"none"},
+                colorTag:false
+            })
+        }
+    }
+    changeFontColor=(item)=>{
+        //console.log(item.backgroundColor);
+        this.setState({
+            fontColor : item.backgroundColor
+        })
     }
     render() {
         //console.log(this.state.type,this.state.pid);
@@ -235,24 +274,42 @@ export default class HomeWrite extends Component {
 
                 {/* 内容 */}
                 <div className="hw-write">
-                <List>
-                    <TextareaItem
-                        value={this.state.value}
-                        onChange={this.Edit}
-                        style={{backgroundImage:"url("+this.state.back+")",backgroundSize:"100% 380px"}}
-                        rows={17}
-                        count={10000}
-                    />
-                </List>
+                    <List>
+                        <TextareaItem
+                            value={this.state.value}
+                            onChange={this.Edit}
+                            style={{backgroundImage:"url("+this.state.back+")",backgroundSize:"100% 447px",color:this.state.fontColor}}
+                            rows={18}
+                            count={10000}
+                            onClick={()=>{
+                                this.setState({
+                                    colorState:{display:"none"},
+                                    colorTag:false
+                                })
+                            }}
+                        />
+                    </List>
                 </div>
 
                 {/* 底部 */}
                 <div className="hw-bottom">
-                    <img src={require("../imgs/Home/img.png")}  onClick={this.selback} />
-                    <img src={require("../imgs/Home/DVR.png")}/>
-                    <img src={require("../imgs/Home/music.png")}/>
-                    <img src={require("../imgs/Home/set.png")} />
+                    <img src={require("../imgs/Home/背景.png")} onClick={this.selback} />
+                    <img src={require("../imgs/Home/music(3).png")} onClick={this.selectMusic} />
+                    <img src={require("../imgs/Home/tupian.png")} />
+                    <div id="fontColor">
+                        <img src={require("../imgs/Home/color.png")} onClick={this.fontColor} />
+                        <div id="color" style={this.state.colorState}>
+                            <ul>
+                               {
+                                   color.map((item,index)=>{
+                                       return <li className="s-color" style={item} onClick={()=>{this.changeFontColor(item)}} ></li>
+                                   })
+                               }
+                            </ul>
+                        </div>
+                    </div>
                 </div>
+                
             </div>
         )
     }
