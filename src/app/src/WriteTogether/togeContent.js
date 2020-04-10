@@ -113,7 +113,7 @@ export default class togeContent extends Component {
                         <img src={require("../imgs/Home/DVR.png")}style={{width:"100%",height:"30px"}} />
                     </div>
                     <div>
-                        <img src={require("../imgs/Home/music.png")}style={{width:"90%",height:"27px"}} />
+                        {/* <img src={require("../imgs/Home/music.png")}style={{width:"90%",height:"27px"}} /> */}
                     </div>
                     <div>
                         <img src={require("../imgs/Home/set.png")}style={{width:"90%",height:"27px"}} />

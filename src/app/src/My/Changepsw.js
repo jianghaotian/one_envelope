@@ -82,7 +82,7 @@ export default class changepsw extends Component {
                     <InputItem
                     clear
                     type='password'
-                    placeholder="8-16位，至少含有数字"
+                    placeholder="请输入6-20位的密码(可包含英文,数字,下划线"
                     ref={el => this.autoFocusInst = el}
                     onChange={(e)=>this.newChange(e)}
                 ></InputItem>
