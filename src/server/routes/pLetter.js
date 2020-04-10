@@ -115,7 +115,7 @@ router.get('/getlist',function(req,res,next){
                         (result1)=>{
                             let pday = new Date().getTime();
                             runSql(`insert into pletter(Ptitle, Pcontent, Uid,toUid,toNick,isSend,Pday,isCollection,isDelete,ppid) values (?,?,?,?,?,?,?,?,?,?) `,
-                                ["快来给他写信吧","他的信箱还没有东西哦",uid,null,'致自己',1,pday,0,0,null],
+                                ["快来给他写信吧","他的信箱还没有东西哦",uid,null,'致自己',0,pday,0,0,null],
                                 (result3)=>{
                                     console.log("添加成功")
                             })
