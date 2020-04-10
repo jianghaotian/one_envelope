@@ -25,7 +25,7 @@ export default class Home extends Component {
             selected: '',
             clicked: 'none',
             headImg:"",//用户头像
-            Uname:"致自己"//用户名
+            Uname:""//用户名
         }
     }
     //点击气泡项
@@ -69,9 +69,10 @@ export default class Home extends Component {
             this.showShareActionSheet();
         }else if(opt.props.value == "add-del"){//删除收信人
             var item = opt.props.item;
-            alert('删除', '确认删除给Ta的所有信?', [
-                { text: '我再想想', onPress: () => console.log('cancel') },
-                { text: '狠心丢弃', onPress: () => {
+            console.log(item);
+            alert('Delete', '确认删除给Ta的所有信?', [
+                { text: 'Cancel', onPress: () => console.log('cancel') },
+                { text: 'Ok', onPress: () => {
                     console.log('ok');
                     let newTo = this.state.toList;
                     //console.log(newTo.indexOf(item));
@@ -129,7 +130,7 @@ export default class Home extends Component {
     //添加收信人
     addTo=()=>{
         prompt(
-            '给ta',
+            'Name',
             '请输入昵称',
             [
                 { text: '取消' },
@@ -169,8 +170,8 @@ export default class Home extends Component {
     bodyTouchStart=(e)=>{
         bodyStartX = e.touches[0].pageX;
         bodyStartY = e.touches[0].pageY;
-        // console.log(bodyStartX,bodyStartY);
-        if(bodyStartX > 230 || bodyStartY > 510){
+        //console.log(bodyStartX,bodyStartY);
+        if(bodyStartX > 245 || bodyStartY > 510){
             this.setState({
                 silder:{left:"-70%",transitionDuration:"1s"}
             })
@@ -196,12 +197,15 @@ export default class Home extends Component {
         
         //getToUListData
         this.$api.getToUList().then(res=>{
-            console.log(res.data.data);
+            console.log(res);
             let toU = [];
             let list = res.data.data;
+            console.log(list);
+            //console.log(list[0].uname);
+            //console.log(list[0].toNick);
             this.setState({
                 Uname : list[0].uname,
-                headImg :list[0].uimage
+                headImg : list[0].uimage
             })
 
             //getToUList
@@ -406,7 +410,7 @@ export default class Home extends Component {
                                 {
                                     this.state.toList.map((item,index)=>{
                                         return <li key={index} className="addli">
-                                                <LiItem arrow="horizontal" multipleLine onClick={()=>{this.selTo(item)}} className="addressee">
+                                                <LiItem arrow="empty" multipleLine onClick={()=>{this.selTo(item)}} className="addressee">
                                                     <span style={{fontSize:"16px"}}>{item}</span>
                                                 </LiItem>
                                                 <div className="add-edit">
@@ -425,7 +429,7 @@ export default class Home extends Component {
                                                         ]}
                                                         align={{overflow: { adjustY: 0, adjustX: 0 },offset: [-10, 0],}}>
                                                         <div>
-                                                            <img src={require("../imgs/Home/yinhua(1).png")} style={{marginTop:"10px",marginLeft:"8px"}} />
+                                                            <img src={require("../imgs/Home/xiala(2).png")} style={{marginTop:"8px",marginLeft:"0px"}} />
                                                         </div>
                                                     </Popover>
                                                 </div>
