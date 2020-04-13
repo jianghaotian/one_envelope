@@ -1,25 +1,24 @@
 import React, { Component } from 'react'
-import { List,Toast } from 'antd-mobile'
+import { List,Toast, ActionSheet } from 'antd-mobile'
 import {Link} from 'react-router-dom'
-
 export default class Letter extends Component {
     constructor(){
         super()
         this.state={
             isLike:0,
             arr:[{
-                "toNick":"属性值",
-                "Ptitle":"一个小标题奥",
-                "Pcontent":'这是内容奥',
+                "toNick":"寄信人",
+                "Ptitle":"小标题",
+                "Pcontent":'内容',
                 'ppimage':'1234567891234_56.jpg'
             }]
         }
     }
     componentDidMount(){
-        console.log(this.props.match.params.id)
+        // console.log(this.props.match.params.id)//打印文章信息号
         this.$api.showmail({pid:this.props.match.params.id}).then(res => {
             // 获取数据成功后的其他操作
-            console.log(res.data.data)
+            // console.log(res.data.data)//打印数据
             this.setState({
                 arr:res.data.data
             });
@@ -48,10 +47,16 @@ export default class Letter extends Component {
     }
     // 删除
     deleEmail =(e)=>{
-        this.$api.deletemail({pid:this.props.match.params.id}).then(res => {
-            Toast.success('删除成功', 1);
-        }) 
+        // this.$api.deletemail({pid:this.props.match.params.id}).then(res => {
+        //     Toast.success('删除成功', 1);
+        // }) 
+        console.log('123')
     }
+    // 分享
+    showShareActionSheet = () => {
+        console.log('分享')
+      }
+
     render() {
         return (
             <div className="lt">
@@ -98,7 +103,7 @@ export default class Letter extends Component {
 
                     <span className="lt-span">{this.state.arr[0].Pcontent}</span>
                 </div>
-                              
+
                 {/* buttom-choice */}
                 <List style={{
                     position:'fixed',
@@ -107,38 +112,44 @@ export default class Letter extends Component {
                     width:'100%',
                     height:'2em'
                 }}>
+                    {/* 收藏 */}
                     <List.Item style={{
                         width:"33.3%",
                         float:'left'
                     }}>
                         <i 
                         className={ this.state.isLike ? 'iconfont icon-collection-b':'iconfont icon-collection'} 
-                        
                         onClick={this.collec.bind(this)}
-
                         style={{
                             paddingLeft:"45%"
                         }}></i>
                     </List.Item>
-                    <Link to='/home/letterbox'><List.Item style={{
+                    {/* 删除 */}
+                    <Link to='/home/letterbox'>
+                        <List.Item style={{
                         width:"33.3%",
                         float:'left'
-                    }}
-                    onClick={(e)=>this.deleEmail(e)}
-                    >
-                        <i className='iconfont icon-lajixiang' style={{
-                            paddingLeft:"45%"
-                        }}></i>
-                    </List.Item></Link>
-                    <List.Item style={{
-                        width:"33.3%",
-                        float:'left'
-                    }}>
-                        <i className='iconfont icon-huifu' style={{
-                            paddingLeft:"45%",
-                            fontSize:'1.3em'
-                        }}></i>
-                    </List.Item>
+                        }}
+                        onClick={(e)=>this.deleEmail(e)}
+                        >
+                            <i className='iconfont icon-lajixiang' style={{
+                                paddingLeft:"45%"
+                            }}></i>
+                        </List.Item>
+                    </Link>
+                    <Link>
+                        <List.Item style={{
+                            width:"33.3%",
+                            float:'left'
+                        }}
+                        onClick={()=>this.showShareActionSheet()}
+                        >
+                            <i className='iconfont icon-huifu' style={{
+                                paddingLeft:"45%",
+                                fontSize:'1.3em'
+                            }}></i>
+                        </List.Item>
+                    </Link>
                 </List>
             </div>
         )
