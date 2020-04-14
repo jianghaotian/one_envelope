@@ -72,7 +72,7 @@ router.post('/getletter/pdelete', function (req, res, next) {
  * 
  */
 router.post('/writeletter', function (req, res, next) {
-    let { Ptitle, Pcontent,toUid,toNick,Pday,ppid } = req.body;
+    let { Ptitle, Pcontent,toUid,toNick,Pday,ppid,color } = req.body;
     // console.log(req.body);
     let token = req.header('token');
     // console.log(token);
@@ -81,13 +81,14 @@ router.post('/writeletter', function (req, res, next) {
             res.json(result);
         }else{
             let uid = result.data.uid;
-            runSql(`insert into pletter(Ptitle, Pcontent, Uid,toUid,toNick,isSend,Pday,isCollection,isDelete,ppid) values (?,?,?,?,?,?,?,?,?,?)`, [Ptitle, Pcontent,uid,null,toNick,0,Pday,0,0,ppid],(result1)=>{
+            runSql(`insert into pletter(Ptitle, Pcontent, Uid,toUid,toNick,isSend,Pday,isCollection,isDelete,ppid,color) values (?,?,?,?,?,?,?,?,?,?,?)`, [Ptitle, Pcontent,uid,null,toNick,0,Pday,0,0,ppid,color],(result1)=>{
                 // console.log(result1);
                 res.json(result1);
             });
         }
     });
 });
+
 
 /**
  * 展示收信人列表
