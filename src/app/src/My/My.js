@@ -99,27 +99,29 @@ export default class My extends Component {
                         <i className="iconfont icon-collection" ></i>
                     } onClick={() => {}}>我的收藏</Item></Link>                    
                 </List>
+                
                 <WhiteSpace size="lg" />
                 <List>
                     <Link to='/recover' style={{
                             color:'black'
-                    }}><Item extra={
+                    }}>
+                        <Item extra={
                         <i className="iconfont icon-lajixiang" ></i>
-                    } onClick={() => {}}>回收站</Item></Link>
+                        } onClick={() => {}}>回收站</Item>
+                    </Link>
                     
                     {/* <Item extra={
                         <i className="iconfont icon-iconfontzhizuobiaozhun023133" ></i>
                     } onClick={() => {}}>在线咨询</Item> */}
-                    <Link to='/setting' style={{
-                            color:'black'
-                    }}><Item extra={
+                    <Link to='/setting' style={{color:'black'}}>
+                        <Item extra={
                         <i className="iconfont icon-dingbudaohang-zhangh" ></i>
                     } onClick={() => {}}>我的设置</Item></Link>
-                    <Item extra={
+                    <Link to='/feedback' style={{ color:'black'}}>
+                        <Item extra={
                         <i className="iconfont icon-bangzhu1" ></i>
-                    } onClick={() => {}}>帮助与反馈</Item>
-
-                    
+                        } onClick={() => {}}>帮助与反馈</Item>
+                    </Link>
                 </List>
             </div>
         )

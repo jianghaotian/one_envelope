@@ -70,8 +70,10 @@ class Setting extends Component {
                 <div className="my-unlogin">
                     <button><Link to="login" style={{
                         color:'white',
+                        borderStyle:"none",
                         fontSize:'1.1em'
-                    }}>退出登录</Link></button>
+                    }}>退出登录</Link>
+                    </button>
                 </div>  
             </div>
         )
