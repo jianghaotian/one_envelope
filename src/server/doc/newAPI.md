@@ -189,9 +189,39 @@ GET
 ]
 ```
 
+## 1.7帮助与反馈
 
+**请求url**
 
+```
+URL : https://yf.htapi.pub/v1/mine/feedback
+```
 
+**请求方式**
+
+```
+POST
+```
+
+**接收参数**
+
+| 参数     | 说明               | 类型feedback |
+| -------- | ------------------ | ------------ |
+| feedback | 用户输入的反馈信息 | text         |
+
+**返回参数**
+
+```
+{
+  status: 0,
+  message: 'OK',
+  data: [
+    RowDataPacket {
+      
+    }
+  ]
+}
+```
 
 
 
