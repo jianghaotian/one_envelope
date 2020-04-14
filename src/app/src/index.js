@@ -18,6 +18,7 @@ import Changename from './My/Changename'
 import Changeimg from './My/Changeimg'
 import Changepsw from './My/Changepsw'
 import Articalnum from './My/Articalnum'
+import Feedback from './My/Feedback'
 import Sharenum from './My/Sharenum'
 
 import InviteWrite from './WriteTogether/InviteWrite'
@@ -67,6 +68,7 @@ ReactDOM.render(
             <Route path="/changeimg" component={Changeimg} />
             <Route path="/changepsw" component={Changepsw} />
             <Route path="/articalnum" component={Articalnum} />
+            <Route path='/feedback' component={Feedback} />
             <Route path='/sharenum' component={Sharenum} />
 
             {/* zym */}
