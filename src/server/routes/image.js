@@ -175,4 +175,33 @@ router.post('/insertImg', function(req, res){
         }
     })
 });
+/**
+ * 展示插入图片
+ * 请求方式：
+ *      GET
+ * 接受参数：
+ *      pid：信件id
+ * 返回参数：
+ *      
+ */
+router.get('/showInsertImg',function(req,res){
+    let token = req.header('token');
+    let {pid} = req.query;
+    checkToken(token,(result)=>{
+        if(result.status !== 0) {
+            res.json(result);
+        }else{ 
+            runSql('select insertImg from pletter where pid=?',[pid],(result1)=>{
+                var img = result1.data[0].insertImg;
+                //空
+                if(!img){
+                    res.json(result1)
+                }else{
+                    var arr = img.split(",")
+                    res.send(arr);
+                }
+            })
+        }
+    })
+})
 module.exports = router;
