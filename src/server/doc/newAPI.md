@@ -1,9 +1,9 @@
-## 1.1插入图片
+## 1.1插入图片(私密写)
 
 **请求url**
 
 ```
-URL : https://yf.htapi.pub/v1/image/insertImg
+URL : https://yf.htapi.pub/v1/image/insertPimg
 ```
 
 **请求方式**
@@ -32,7 +32,7 @@ POST
 }
 ```
 
-## 1.2展示插入图片
+## 1.2展示插入图片（私密写）
 
 **请求url**
 
@@ -127,7 +127,67 @@ GET
 ]
 ```
 
+## 1.5插入图片(一起写)
 
+**请求url**
+
+```
+URL : https://yf.htapi.pub/v1/image/insertTimg
+```
+
+**请求方式**
+
+```
+POST
+```
+
+**接收参数**
+
+| 参数 | 说明   | 类型Lid |
+| ---- | ------ | ------- |
+| Lid  | 信件id | int     |
+
+**返回参数**
+
+```
+{
+  status: 0,
+  message: 'OK',
+  data: [
+    RowDataPacket {
+      
+    }
+  ]
+}
+```
+
+## 1.6展示插入图片(一起写)
+
+**请求url**
+
+```
+URL : https://yf.htapi.pub/v1/image/showTimg
+```
+
+**请求方式**
+
+```
+GET
+```
+
+**接收参数**
+
+| 参数 | 说明   | 类型Lid |
+| ---- | ------ | ------- |
+| Lid  | 信件id | int     |
+
+**返回参数**
+
+```
+[
+    "1234567894238_11.jpg"
+]
+```
 
 
 

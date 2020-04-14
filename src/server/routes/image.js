@@ -136,7 +136,7 @@ router.post('/paper', upload2.any(), function (req, res, next) {
  * 接受参数：
  *      pid:信件id
  */
-router.post('/insertImg', function(req, res){
+router.post('/insertPimg', function(req, res){
     let token = req.header('token');
     let {pid} = req.body;
     checkToken(token, (result) => {
@@ -158,17 +158,17 @@ router.post('/insertImg', function(req, res){
                         // let arr = [];
                         runSql('select insertImg from pletter where pid=?',[pid],(result)=>{
                             var img = result1.data[0].insertImg;
-                            if(!img){
-                                runSql('insert into pletter(insertImg) values(?) where pid=? ',[name,pid],(result1)=>{
+                            if(img==null){
+                                runSql('update pletter set insertImg=? where pid=? ',[name,pid],(result1)=>{
                                     res.json(result1);
                                 })
                             }else{
-                                runSql('insert into pletter(insertImg) values(?) where pid=? ',[img+','+name,pid],(result1)=>{
+                                runSql('update pletter set insertImg=? where pid=? ',[img+','+name,pid],(result1)=>{
                                     res.json(result1);
                                 })
                             }
                         })
-                        res.send(name);
+                        // res.send(name);
                     }
                 });
             });
@@ -192,6 +192,83 @@ router.get('/showInsertImg',function(req,res){
             res.json(result);
         }else{ 
             runSql('select insertImg from pletter where pid=?',[pid],(result1)=>{
+                var img = result1.data[0].insertImg;
+                //空
+                if(!img){
+                    res.json(result1)
+                }else{
+                    var arr = img.split(",")
+                    res.send(arr);
+                }
+            })
+        }
+    })
+})
+
+/**
+ * 插入图片(一起写)
+ * 请求方式：
+ *      POST
+ * 接受参数：
+ *      Lid:信件id
+ */
+router.post('/insertTimg', function(req, res){
+    let token = req.header('token');
+    let {Lid} = req.body;
+    checkToken(token, (result) => {
+        if (result.status !== 0) {
+            res.json(result);
+        } else {   
+            var form = new multiparty.Form();
+            form.parse(req, function(err, fields, files){
+                //将前台传来的base64数据去掉前缀
+                var imgData = req.body.imgData.replace(/^data:image\/\w+;base64,/, '');
+                var dataBuffer = new Buffer.from(imgData, 'base64');
+                //写入文件
+                var name = getTimestamp_13()+'_'+getRandom(2)+'.png';
+                var picPath = path.join(__dirname,'../public/insertimg/'+name);
+                fs.writeFile(picPath, dataBuffer, function(err){
+                    if(err){
+                        res.send(err);
+                    }else{
+                        // let arr = [];
+                        runSql('select insertImg from tletter where Lid=?',[Lid],(result)=>{
+                            var img = result1.data[0].insertImg;
+                            if(img==null){
+                                runSql('update tletter set insertImg=? where Lid=? ',[name,Lid],(result1)=>{
+                                    res.json(result1);
+                                })
+                            }else{
+                                runSql('update tletter set insertImg=? where Lid=? ',[img+','+name,Lid],(result1)=>{
+                                    res.json(result1);
+                                })
+                            }
+                        })
+                        // res.send(name);
+                    }
+                });
+            });
+        }
+    })
+});
+
+/**
+ * 展示插入图片(一起写)
+ * 请求方式：
+ *      GET
+ * 接受参数：
+ *      Lid：信件id
+ * 返回参数：
+ *      
+ */
+router.get('/showTimg',function(req,res){
+    let token = req.header('token');
+    let {Lid} = req.query;
+    checkToken(token,(result)=>{
+        if(result.status !== 0) {
+            res.json(result);
+        }else{ 
+            runSql('select insertImg from tletter where Lid=?',[Lid],(result1)=>{
                 var img = result1.data[0].insertImg;
                 //空
                 if(!img){

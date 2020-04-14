@@ -40,12 +40,12 @@ router.post('/insertMp3', function(req, res){
                             var mp3 = result1.data[0].music;
                             if(mp3==null){
                                 runSql('update pletter set music=? where pid=? ',[name,pid],(result2)=>{
-                                    console.log(result2)
+                                    // console.log(result2)
                                     res.json(result2);
                                 })
                             }else{
                                 runSql('update pletter set music=? where pid=? ',[mp3+','+name,pid],(result3)=>{
-                                    console.log(result3)
+                                    // console.log(result3)
                                     res.json(result3);
                                 })
                             }
