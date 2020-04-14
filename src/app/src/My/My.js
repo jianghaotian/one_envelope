@@ -120,7 +120,7 @@ export default class My extends Component {
                     <Link to='/feedback' style={{ color:'black'}}>
                         <Item extra={
                         <i className="iconfont icon-bangzhu1" ></i>
-                        } onClick={() => {}}>帮助与反馈</Item>
+                        } onClick={() => {}}>意见反馈</Item>
                     </Link>
                 </List>
             </div>

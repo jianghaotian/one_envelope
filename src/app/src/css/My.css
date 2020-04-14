@@ -75,8 +75,10 @@
     width: 100%;
     font-size: 1.3em;
     text-align: center;
-    color:white;
+    color:white; 
     background-color: black;
+    /* color:black;
+    background-color:whitesmoke; */
     position: relative;
 
 }

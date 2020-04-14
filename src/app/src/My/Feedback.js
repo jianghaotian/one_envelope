@@ -1,7 +1,8 @@
 import React, { Component } from 'react'
 import '../css/My.css'
 import {Link,Switch} from 'react-router-dom'
-import { SwipeAction, List } from 'antd-mobile';
+import { List,WhiteSpace } from 'antd-mobile'
+const Item = List.Item;
 
 export default class Feedback extends Component {
     render() {
@@ -9,7 +10,7 @@ export default class Feedback extends Component {
             <div>
                 {/* tab */}
                 <div className="col-tab">
-                    帮助与反馈
+                    意见反馈
                     <Link to="/home/my" 
                     style={{
                         float:"left",
@@ -32,21 +33,41 @@ export default class Feedback extends Component {
                 </div>
                 
                 {/* content */}
-                <textarea 
-                maxLength='1000'
-                rows='10'
-                style={{
-                    width:"100%",
-                    borderStyle:"none"
-                }}
-                placeholder='说点什么吧...'
-                >
-                </textarea>
-                <button style={{
-                    color:'white',
-                    borderStyle:"none",
-                    fontSize:'1.1em'}}>发表
-                </button>
+                <List>
+                    <Item>问题和意见</Item>
+                    <Item>
+                        <textarea 
+                        maxLength='1000'
+                        rows='10'
+                        style={{
+                            width:"100%",
+                            borderStyle:"none"
+                        }}
+                        placeholder='请填写10个字以上的问题描述以便我们提供更好的帮助'
+                        >
+                        </textarea>
+                    </Item>
+                    <Item style={{
+                        fontSize:'1.3em'
+                    }}>联系电话</Item>
+                    <Item >
+                        <input placeholder='选填，便于我们与你联系'
+                        style={{
+                            borderStyle:'none'
+                        }}
+                        />
+                    </Item>
+                </List>
+                
+
+                <div className="my-unlogin">
+                    <button style={{
+                        color:'white',
+                        borderStyle:"none",
+                        fontSize:'1.1em'
+                    }}>提交
+                    </button>
+                </div>  
             </div>
         )
     }
