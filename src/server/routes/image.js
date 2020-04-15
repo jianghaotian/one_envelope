@@ -160,14 +160,15 @@ router.post('/insertPimg', function(req, res){
                             var img = result.data[0].insertImg;
                             if(img==null){
                                 runSql('update pletter set insertImg=? where pid=? ',[name,pid],(result1)=>{
-                                    res.json(result1);
+                                    // res.json(result1);
                                 })
                             }else{
                                 runSql('update pletter set insertImg=? where pid=? ',[img+','+name,pid],(result1)=>{
-                                    res.json(result1);
+                                    // res.json(result1);
                                 })
                             }
                         })
+                        res.json({status: 0, data: [name]});
                         // res.send(name);
                     }
                 });
@@ -198,7 +199,8 @@ router.get('/showInsertImg',function(req,res){
                     res.json(result1)
                 }else{
                     var arr = img.split(",")
-                    res.send(arr);
+                    // res.send(arr);
+                    res.json({status: 0, data: arr});
                 }
             })
         }
@@ -214,7 +216,7 @@ router.get('/showInsertImg',function(req,res){
  */
 router.post('/insertTimg', function(req, res){
     let token = req.header('token');
-    let {Lid} = req.body;
+    let {Lid} = req.body;1
     checkToken(token, (result) => {
         if (result.status !== 0) {
             res.json(result);
@@ -236,15 +238,15 @@ router.post('/insertTimg', function(req, res){
                             var img = result.data[0].insertImg;
                             if(img==null){
                                 runSql('update tletter set insertImg=? where Lid=? ',[name,Lid],(result1)=>{
-                                    res.json(result1);
+                                    // res.json(result1);
                                 })
                             }else{
                                 runSql('update tletter set insertImg=? where Lid=? ',[img+','+name,Lid],(result1)=>{
-                                    res.json(result1);
+                                    // res.json(result1);
                                 })
                             }
+                            res.json({status: 0, data: [name]});
                         })
-                        // res.send(name);
                     }
                 });
             });
@@ -264,6 +266,7 @@ router.post('/insertTimg', function(req, res){
 router.get('/showTimg',function(req,res){
     let token = req.header('token');
     let {Lid} = req.query;
+
     checkToken(token,(result)=>{
         if(result.status !== 0) {
             res.json(result);
@@ -272,10 +275,11 @@ router.get('/showTimg',function(req,res){
                 var img = result1.data[0].insertImg;
                 //空
                 if(!img){
-                    res.json(result1)
+                    // res.json(result1)
+                    res.json({status: 1, data: []});
                 }else{
                     var arr = img.split(",")
-                    res.send(arr);
+                    res.json({status: 0, data: arr});
                 }
             })
         }
