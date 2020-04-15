@@ -19,7 +19,7 @@ export default class My extends Component {
             this.setState({
                 arr:res.data.data
             })
-            console.log(this.state.arr[0].pidname)
+            // console.log(this.state.arr[0].pidname)
         }) 
         this.$api.sharenum().then(res => {
             // 获取数据成功后的其他操作
@@ -29,7 +29,7 @@ export default class My extends Component {
         }) 
     }
     render() {
-        console.log(this.state.arr[0].pidname)
+        // console.log(this.state.arr[0].pidname)
         return (
             <div className="mydiv">
                 {/* 个人信息 */}
