@@ -11,19 +11,19 @@ export default class Changename extends Component {
         }
     }
     inputChange = (e) =>{
-        console.log(e)
         this.setState({
             username:e
         })
+        console.log(e)
+        // console.log(this.state.username);
+
     }
     handleChange = () => {
-        console.log(this.state.username);
+        // console.log(this.state.username);
         this.$api.changename({uname:this.state.username}).then(res => {
             this.props.history.push("/myedit");
             Toast.success('修改成功', 1);
         });
-        
-
     }
     // 页面拿数据
     render() {
@@ -53,12 +53,13 @@ export default class Changename extends Component {
                     }}></i>
                 </div>
                 <WhiteSpace size="lg" />
+                
                 {/* 输入框 */}
                 <InputItem
                 placeholder="好的昵称可以让你的朋友更容易记住你"
                 data-seed="logId"
                 autoFocus
-                ref={(inp)=>{this.username=inp}}
+                // ref={(inp)=>{this.username=inp}}
                 onChange={(e)=>this.inputChange(e)}
                 ></InputItem>
 
