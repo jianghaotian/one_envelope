@@ -157,7 +157,7 @@ router.post('/insertPimg', function(req, res){
                     }else{
                         // let arr = [];
                         runSql('select insertImg from pletter where pid=?',[pid],(result)=>{
-                            var img = result1.data[0].insertImg;
+                            var img = result.data[0].insertImg;
                             if(img==null){
                                 runSql('update pletter set insertImg=? where pid=? ',[name,pid],(result1)=>{
                                     res.json(result1);
