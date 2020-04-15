@@ -145,3 +145,50 @@
     width:25px;
     border-radius:45px;
 }
+
+/* 选择音乐 */
+
+.Music{
+    width: 80%;
+    height: 200px;
+    background-color: white;
+    border:1.5px solid gray;
+    border-radius:10px;
+    z-index:9;
+    position: absolute;
+    bottom:250px;
+    left:35px;
+    padding-top:3px;
+}
+#MusicFile{
+    display:none;
+}
+#sp-addMusci{
+    border:1px solid grey;
+    background-color: rgb(238, 238, 238);
+    padding:3px;
+    margin-right:5px;
+}
+.Music span{
+    margin-top:20px;
+    margin-left:20px;
+}
+audio{
+    width:100%;
+    height:40px;
+    margin-top:20px;
+}
+.music-up{
+    height:40px;
+    width:100%;
+    /* background-color: pink; */
+    margin-top:40px;
+}
+.music-btn{
+    width:80px;
+    height: 30px;
+    border:1px solid rgb(165, 165, 165);
+    background-color: rgb(204, 199, 199);
+    color:rgb(85, 84, 84);
+    margin-left:40px;
+}

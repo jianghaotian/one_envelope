@@ -31,6 +31,7 @@ export default class Home extends Component {
     //点击气泡项
     onSelect = (opt) => {
         //console.log(opt);
+        console.log(window.event.target)
         console.log(opt.props.value);
         var item = opt.props.item;
         this.setState({
@@ -294,7 +295,7 @@ export default class Home extends Component {
     }
     //跳转到我的页面
     toMy=()=>{
-        console.log("tomy");
+        this.props.getIndex(1);
     }
     render() {
         //console.log(this.state.toUid);
@@ -349,7 +350,7 @@ export default class Home extends Component {
                                                             </button>
                                                             </Link></Router>
                                                         </Item>),
-                                                        (<Item value="del" item={item}>
+                                                        (<Item  value="del" item={item}>
                                                             <button className="DM-p" ><img className="DM-img" src={require("../imgs/Home/del.png")} />
                                                                 删除
                                                             </button>
@@ -386,9 +387,9 @@ export default class Home extends Component {
                     </div>
 
                     {/* 用户信息 */}
-                    <div className="slider-user" onClick={this.toMy}>
+                    <div className="slider-user">
                         {/* 用户头像 */}
-                        <div className="slider-profile">
+                        <div className="slider-profile" onClick={this.toMy}>
                             <img src={"https://yf.htapi.pub/head/"+this.state.headImg} style={{width:"50px",height:"50px"}} />
                         </div>
                         {/* 用户名 */}

@@ -30,7 +30,10 @@ export default class HomeWrite extends Component {
             ppid:0,//ppid
             colorState:{display:'none'},//字体颜色
             colorTag:false,
-            fontColor:{}
+            fontColor:"",
+            musicName:'',
+            musicShow:{display:'none'},
+            musicTag:false,
         }
     }
     //返回Home
@@ -47,17 +50,17 @@ export default class HomeWrite extends Component {
     componentDidMount(){
         var info = window.location.hash;
         // console.log(info);
-        console.log(info.substr(13,info.length));
+        //console.log(info.substr(13,info.length));
         var dataArr = info.substr(13,info.length);
         var arr  = dataArr.split("&");
-        console.log(arr);
+        //console.log(arr);
         //设置背景
         if(arr.length == 3){
             let ppid = arr[2].split("=")[1];
             console.log(ppid);
             this.$api.selBack().then(res=>{
                 let imgList = res.data.data;
-                console.log(imgList,ppid);
+                //console.log(imgList,ppid);
                 for(let i=0;i<imgList.length;i++){
                     if(imgList[i].ppid == ppid){
                         //console.log(imgList[i].ppimage);
@@ -74,7 +77,7 @@ export default class HomeWrite extends Component {
         //console.log(idArr);
         if(idArr[0] == "pid"){  //编辑
             this.$api.getContent({pid : idArr[1]}).then(res=>{
-                //console.log(res.data.data);
+                console.log(res.data.data);
                 let resData = res.data.data[0];
                 this.setState({
                     to : resData.toNick,
@@ -83,10 +86,11 @@ export default class HomeWrite extends Component {
                     toUid : resData.toUid,
                     type : typeArr[1],
                     pid : idArr[1],
+                    fontColor:resData.color
                 })
+                //console.log(this.state.fontColor);
                 this.$api.selBack().then(res=>{
                     let imgList = res.data.data;
-                    console.log(imgList,resData.ppid);
                     for(let i=0;i<imgList.length;i++){
                         if(imgList[i].ppid == resData.ppid){
                             //console.log(imgList[i].ppimage);
@@ -119,7 +123,7 @@ export default class HomeWrite extends Component {
                 if(arr.length <3){
                     this.$api.selBack().then(res=>{
                         let imgList = res.data.data;
-                        console.log(imgList);
+                        //console.log(imgList);
                         this.setState({
                             ppid : imgList[0].ppid,
                             back : "https://yf.htapi.pub/paper/"+imgList[0].ppimage
@@ -149,13 +153,14 @@ export default class HomeWrite extends Component {
         let content = this.state.value;
         let id = this.state.toUid;
         let ppid = this.state.ppid;
+        let fontColor = this.state.fontColor;
         if( title == ""){
             alert("请填写标题");
         }else if(content == ""){
             alert("请填写信件内容");
         }else if(this.state.type == "create"){
             let timestamp = Date.parse(new Date());
-            this.$api.writeLetter({Ptitle:title,Pcontent:content,toUid:id,toNick:to,Pday:timestamp,ppid:ppid}).then(res=>{
+            this.$api.writeLetter({Ptitle:title,Pcontent:content,toUid:id,toNick:to,Pday:timestamp,ppid:ppid,color:fontColor}).then(res=>{
                 console.log(res);
             })
             alert('WriteLetter', '保存成功', [
@@ -204,11 +209,63 @@ export default class HomeWrite extends Component {
     }
     //选择音乐
     selectMusic=()=>{
+        if(!this.state.musicTag){
+            this.setState({
+                musicShow:{display:'block'},
+                musicTag:true
+            })
+        }else{
+            this.setState({
+                musicShow:{display:'none'},
+                musicTag:false
+            })
+        }
+    }
+    playMusic=()=>{
+        //上传音乐
+        let audio = document.getElementById("audio");
+        let pid = this.state.pid;
+        console.log(audio.src);
+        let src = audio.src;
+        this.$api.postMusic({pid:pid,mp3Data:src}).then(res=>{
+            console.log(res);
+        })
 
     }
-    getMusic=()=>{
-        
+    deleteMusic=()=>{
+        let audio = document.getElementById("audio");
+        audio.src=null;
+        this.setState({
+            musicName:""
+        })
     }
+    getMusic=()=>{
+        console.log('change');
+        let music = document.getElementById('MusicFile').files[0];
+        let audio = document.getElementById("audio");
+        let load = document.getElementById("loading");
+        //检查文件类型
+        if (!/audio\/\w+/.test(music.type)) {
+            alert("只能选择音频文件")
+            return false;
+        }
+        //console.log(music);
+        this.setState({
+            musicName : music.name
+        })
+        
+        var reader = new FileReader();
+        reader.readAsDataURL(music);
+        reader.onprogress=function(){
+            load.style.display = "block";
+        }
+        reader.onload=function(){
+            //console.log(reader.result);
+            audio.src = reader.result;
+            load.style.display = "none";
+        }
+    }
+     
     fontColor=()=>{
         if(!this.state.colorTag){
             this.setState({
@@ -284,7 +341,9 @@ export default class HomeWrite extends Component {
                             onClick={()=>{
                                 this.setState({
                                     colorState:{display:"none"},
-                                    colorTag:false
+                                    colorTag:false,
+                                    musicTag:false,
+                                    musicShow:{display:"none"}
                                 })
                             }}
                         />
@@ -309,7 +368,27 @@ export default class HomeWrite extends Component {
                         </div>
                     </div>
                 </div>
-                
+
+                <div className="Music" style={this.state.musicShow}>
+                    <input type= 'file' id="MusicFile" onChange={this.getMusic} />
+                    <img src={require('../imgs/Home/musicCancle.png')} style={{float:"right",marginRight:'5px'}} onClick={()=>{
+                        this.setState({
+                            musicTag:false,
+                            musicShow:{display:"none"}
+                        })
+                    }} />
+                    <br />
+                    <label htmlFor="MusicFile">
+                        <span id="sp-addMusci" >选择音乐</span>
+                    </label>
+                    <span>{this.state.musicName}</span>
+                    <audio  controls="controls" id="audio" autoPlay="autoplay" loop="loop"></audio>
+                    <p style={{display:'none'}} id="loading">正在加载...</p>
+                    <div className="music-up">
+                        <button className="music-btn" onClick={this.playMusic}>确认添加</button>
+                        <button className="music-btn" onClick={this.deleteMusic}>删除音乐</button>
+                    </div>
+                </div>
             </div>
         )
     }
