@@ -233,7 +233,7 @@ router.post('/insertTimg', function(req, res){
                     }else{
                         // let arr = [];
                         runSql('select insertImg from tletter where Lid=?',[Lid],(result)=>{
-                            var img = result1.data[0].insertImg;
+                            var img = result.data[0].insertImg;
                             if(img==null){
                                 runSql('update tletter set insertImg=? where Lid=? ',[name,Lid],(result1)=>{
                                     res.json(result1);
