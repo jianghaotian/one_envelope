@@ -138,14 +138,14 @@ export default class togeContent extends Component {
                     {/* 内容 */}
                     <div className="ge-content">                                                                               
                                 <div style={{height:"100%"}}>
-                                    <div>
+                                   
                                     {this.state.data.map((val)=> (   
                                         <div key={val} className="insertimg">                     
-                                            <img src={"https://yf.htapi.pub/insertimg/"+val} alt=""/> 
+                                            <img src={"https://yf.htapi.pub/insertimg/"+val} alt=""style={{width:"100%",height:"100%"}}/> 
                                         </div>
                             
                                     ))}
-                                    </div>
+                                   
                                     <TextareaItem     
                                     rows={13}
                                     placeholder="请输入内容"
