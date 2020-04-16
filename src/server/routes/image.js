@@ -206,7 +206,30 @@ router.get('/showInsertImg',function(req,res){
         }
     })
 })
-
+/**
+ * 删除插入图片()
+ * 请求方式
+ *      POST
+ * 接受参数：
+ *      Lid：信件id
+ *      insertImg：图片名称
+ */
+router.post('/delInsertTimg',function(req,res,next){
+    let token = req.header('token');
+    let {pid,insertImg} = req.body;
+    checkToken(token,(result)=>{
+        if(result.status !==0){
+            res.json(result)
+        }else{
+            runSql('select insertImg from pletter where pid=?',[pid],(result1)=>{
+                let img = result1.data[0].insertImg.replace(insertImg+',','');
+                runSql('update pletter set insertImg=? where pid=?',[img,pid],(result2)=>{
+                    res.json(result2);
+                })
+            })
+        }
+    })
+})
 /**
  * 插入图片(一起写)
  * 请求方式：
@@ -281,6 +304,30 @@ router.get('/showTimg',function(req,res){
                     var arr = img.split(",")
                     res.json({status: 0, data: arr});
                 }
+            })
+        }
+    })
+})
+/**
+ * 删除插入图片(一起写)
+ * 请求方式
+ *      POST
+ * 接受参数：
+ *      Lid：信件id
+ *      insertImg：图片名称
+ */
+router.post('/delInsertTimg',function(req,res,next){
+    let token = req.header('token');
+    let {lid,insertImg} = req.body;
+    checkToken(token,(result)=>{
+        if(result.status !==0){
+            res.json(result)
+        }else{
+            runSql('select insertImg from tletter where lid=?',[lid],(result1)=>{
+                let img = result1.data[0].insertImg.replace(insertImg+',','');
+                runSql('update tletter set insertImg=? where lid=?',[img,lid],(result2)=>{
+                    res.json(result2);
+                })
             })
         }
     })
