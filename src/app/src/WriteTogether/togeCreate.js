@@ -1,7 +1,6 @@
 import React, { Component } from 'react'
 import '../css/togeCreate.css'
 import { List, TextareaItem,Toast } from 'antd-mobile';
-
 import {HashRouter as Router,Link,Switch,Route} from 'react-router-dom'
 
 export default class togeCreate extends Component {
@@ -10,7 +9,8 @@ export default class togeCreate extends Component {
         this.state = {
             inputValue:"",
             inputTitle:"",
-            data:[{}] ,
+            data:[] ,
+            files:''
         }
     }
     
@@ -18,7 +18,7 @@ export default class togeCreate extends Component {
         var title = this.state.inputTitle;
         var content=this.state.inputValue;
         var timestamp = Date.parse(new Date()); 
-        if(content == undefined || content ==""){
+        if(title == undefined || title ==""){
             alert("请填写昵称");
         }else{
             this.$api.addletter({tid:this.props.match.params.id,title:title,content:content,lday:timestamp}).then(res => {                     
@@ -53,8 +53,69 @@ export default class togeCreate extends Component {
            
         })
     }
+    //选择背景
+    selback=()=>{
+        //console.log(this.props.history.location.search);
+        var back = this.props.history.location.search;
+        this.props.history.push("/back"+back);
+    }
+    //插入图片   
+    onChange = (e) => {       
+        console.log(e.target.files[0])          
+        let picture = document.getElementById("picture").files[0];
+        var reader = new FileReader();
+        reader.readAsDataURL(picture);
+        let src = picture.src;
+        // this.setState({
+        //     data:this.state.data.Timage,
+        // })
+        reader.onload=()=>{
+            src = reader.result;
+            console.log(src);
+            this.$api.insertTImg({Lid:this.props.match.params.id,imgData:src}).then(res => { 
+                console.log(res.data)
+                if (res.data.status === 0) {      
+                    this.setState({
+                        data:res.data.data,
+                    })
+                }
+            })   
+        }
+
+        
+        
+        if(!this.state.imgTag){
+            this.setState({
+                imgShow:{display:'block'},
+                imgTag:true
+            })
+        }else{
+            this.setState({
+                imgShow:{display:'none'},
+                imgTag:false
+            })
+        }  
+      }
+    componentDidMount(){
+        
+        this.$api.showTImg({lid:this.props.match.params.id}).then(res => { 
+            console.log(res.data)
+
+            if (res.data.status === 0) {      
+                this.setState({
+                    data:res.data.data,
+
+                })
+                // console.log(this.state.data);
+            }
+        })
+
+    }  
+    
     render() {
         return (
+            // <script type='text/javascript' src='jquery-1.9.js'></script>
+            
             <div className='toge-body'>
                 <div className="ge-body">
                     {/* 顶部 */}
@@ -76,36 +137,57 @@ export default class togeCreate extends Component {
                         标题：
                         <input type="text" name="ge-title" ref="input1" onChange={this.titleChange.bind(this)} id="ge-inp-title" />
                     </div>                  
-
                     <span className='ge-cont'>内容：</span>
                     {/* 内容 */}
-                    <div className="ge-content">                         
-                            <TextareaItem     
-                                rows={17}
-                                placeholder="请输入内容"
-                                style={{backgroundColor:'transparent'}}
-                                value={this.state.inputValue}
-                                onChange={this.textChange}
-                            />
+                    <div className="ge-content">                                                    
+                           
+                                <div style={{height:"100%"}}>
+                                    <div 
+                                    // onLoad={()=>{
+                                    //     this.setState({
+                                    //         imgTag:false,
+                                    //         imgShow:{display:"none"}
+                                    //     })
+                                    // }}
+                                    >
+                                    {this.state.data.map((val)=> (                                                   
+                                        <div key={val} className="insertimg">  
+                                            <img src='' className='hide'/>                          
+                                            {/* <img src={"https://yf.htapi.pub/data/"+val.Pimage} alt=""/>                                    */}
+                                            {/* <img src={"https://yf.htapi.pub/insertimg/1234567894238_11.jpg"} alt="" style={{width:"100%",height:"100%"}}/>                                    */}
+                                        
+                                        </div>
+                            
+                                    ))}
+                                    </div>
+                                    <TextareaItem     
+                                    rows={13}
+                                    placeholder="请输入内容"
+                                    style={{backgroundColor:'transparent'}}
+                                    value={this.state.inputValue}
+                                    onChange={this.textChange}
+                                     />
+                                    
+
+                                </div>
+
+                           
+                            
+                            
                         
                     </div>
                 </div>
 
                 {/* 底部 */}
                 <div className="ge-bottom">
-                    <div>
-                        <img src={require("../imgs/Home/img.png")} style={{width:"90%",height:"27px"}} />
-                    </div>
-                    <div>
-                        <img src={require("../imgs/Home/DVR.png")}style={{width:"100%",height:"30px"}} />
-                    </div>
-                    <div>
-                        <img src={require("../imgs/Home/music.png")}style={{width:"90%",height:"27px"}} />
-                    </div>
-                    <div>
-                        <img src={require("../imgs/Home/set.png")}style={{width:"90%",height:"27px"}} />
-                    </div>
+                    <img src={require("../imgs/Home/背景.png")} style={{width:"6%"}} onClick={this.selback} />
+                    <img src={require("../imgs/Home/music(3).png")} style={{width:"7%"}} onClick={this.selectMusic} />
+                    <label htmlFor='picture' style={{width:"7%"}}>
+                        <input type="file" id='picture' style={{width:"0%"}} onChange={this.onChange}/>
+                        <img src={require("../imgs/Home/tupian.png")} style={{width:"100%"}}/>
+                    </label>
                 </div>
+                
             </div>
         )
     }

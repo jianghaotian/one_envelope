@@ -7,7 +7,7 @@ export default class togeContent extends Component {
     constructor(){
         super();
         this.state={  
-            data:[{Ltitle:''}],
+            data:[],
             tid:'',
             lid:'',      
             inputValue:"",        
@@ -30,6 +30,16 @@ export default class togeContent extends Component {
 
             }
         }) 
+        this.$api.showTImg({Lid:this.props.match.params.id}).then(res => { 
+            console.log(res.data)
+            if (res.data.status === 0) {      
+                this.setState({
+                    data:res.data.data,
+
+                })
+              
+            }
+        })
         
     }
     //更新页面
@@ -68,6 +78,40 @@ export default class togeContent extends Component {
             tit: e.target.value
         })
     }
+    //选择背景
+    selback=()=>{
+        //console.log(this.props.history.location.search);
+        var back = this.props.history.location.search;
+        this.props.history.push("/back"+back);
+    }
+    //选择音乐
+    selectMusic=()=>{
+
+    }
+    getMusic=()=>{
+        
+    }   
+    //插入图片   
+    onChange = (e) => {       
+        console.log(e.target.files[0])          
+        let picture = document.getElementById("picture").files[0];
+        var reader = new FileReader();
+        reader.readAsDataURL(picture);
+        let src = picture.src;
+        reader.onload=()=>{
+            src = reader.result;
+            console.log(src);
+            this.$api.insertTImg({Lid:this.props.match.params.id,imgData:src}).then(res => { 
+                console.log(res.data)
+                if (res.data.status === 0) {      
+                    this.setState({
+                        data:res.data.data,
+                    })
+                }
+            })   
+        }       
+      }
+    
     render() {
         return (
             <div className='toge-body'>
@@ -92,33 +136,37 @@ export default class togeContent extends Component {
 
                     <span className='ge-cont'>内容：</span>
                     {/* 内容 */}
-                    <div className="ge-content">                      
-                            <TextareaItem     
-                                rows={17}
-                                placeholder="请输入内容"
-                                style={{backgroundColor:'transparent'}}
-                                value={this.state.inputValue}
-                                onChange={this.textChange}
-                            />
-                        
+                    <div className="ge-content">                                                                               
+                                <div style={{height:"100%"}}>
+                                    <div>
+                                    {this.state.data.map((val)=> (   
+                                        <div key={val} className="insertimg">                     
+                                            <img src={"https://yf.htapi.pub/insertimg/"+val} alt=""/> 
+                                        </div>
+                            
+                                    ))}
+                                    </div>
+                                    <TextareaItem     
+                                    rows={13}
+                                    placeholder="请输入内容"
+                                    style={{backgroundColor:'transparent'}}
+                                    value={this.state.inputValue}
+                                    onChange={this.textChange}
+                                     />
+                                </div>                                                  
                     </div>
                 </div>
 
                 {/* 底部 */}
                 <div className="ge-bottom">
-                    <div>
-                        <img src={require("../imgs/Home/img.png")} style={{width:"90%",height:"27px"}} />
-                    </div>
-                    <div>
-                        <img src={require("../imgs/Home/DVR.png")}style={{width:"100%",height:"30px"}} />
-                    </div>
-                    <div>
-                        <img src={require("../imgs/Home/music.png")}style={{width:"90%",height:"27px"}} />
-                    </div>
-                    <div>
-                        <img src={require("../imgs/Home/set.png")}style={{width:"90%",height:"27px"}} />
-                    </div>
+                    <img src={require("../imgs/Home/背景.png")} style={{width:"6%"}} onClick={this.selback} />
+                    <img src={require("../imgs/Home/music(3).png")} style={{width:"7%"}} onClick={this.selectMusic} />
+                    <label htmlFor='picture' style={{width:"7%"}}>
+                        <input type="file" id='picture' style={{width:"0%"}} onChange={this.onChange}/>
+                        <img src={require("../imgs/Home/tupian.png")} style={{width:"100%"}}/>
+                    </label>
                 </div>
+                
             </div>
         )
     }

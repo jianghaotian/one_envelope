@@ -2,6 +2,7 @@
     padding:0;
     margin:0;
 }
+
 textarea{
     list-style: none;
 }
@@ -198,4 +199,13 @@ textarea{
     transform: translateY(-50%);
     width: 200px; 
     height: 200px;
+}
+.insertimg{
+    width: 100%;
+    height: 33%;
+    margin: 0 auto;
+    text-align: center;
+    /* background-color: red; */
+    border: 1px;
+    margin-bottom: 3%;
 }
