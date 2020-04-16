@@ -93,4 +93,30 @@ router.post('/deletemail', function (req, res, next) {
         }
     });
 });
+
+/**
+ * 搜索信箱信件
+ * get
+ * 接收参数:
+ *     ptitle：信件title
+ * 返回参数：
+ *      status: 0,
+ *      message: 'OK',
+ */
+router.get('/searchmail', function (req, res, next) {
+    let {ptitle} = req.query;
+    let inputTitle = "%"+ptitle+"%";
+    let token = req.header('token');
+    checkToken(token, (result) => {
+        if (result.status !== 0) {
+            res.json(result);
+        } else {
+            let uid = result.data.uid;
+            runSql(`select pletter.*,paper.ppimage from pletter,paper where isSend = ? and touid=? and ptitle like ? and paper.ppid=pletter.ppid`, [1,uid,inputTitle], (result1) => {
+                console.log(result1);
+                res.json(result1);
+            });
+        }
+    });
+});
 module.exports = router;

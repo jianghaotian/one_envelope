@@ -85,17 +85,7 @@ POST
 ```
 {
   status: 0,
-  message: 'OK',
-  data: OkPacket {
-    fieldCount: 0,
-    affectedRows: 1,
-    insertId: 0,
-    serverStatus: 2,
-    warningCount: 0,
-    message: '(Rows matched: 1  Changed: 1  Warnings: 0',
-    protocol41: true,
-    changedRows: 1
-  }
+  message: 'OK'
 }
 ```
 
@@ -218,6 +208,42 @@ POST
   data: [
     RowDataPacket {
       
+    }
+  ]
+}
+```
+
+## 1.8搜索信箱
+
+**请求url**
+
+```
+URL : https://yf.htapi.pub/v1/mailbox/searchmail
+```
+
+**请求方式**
+
+```
+GET
+```
+
+**接收参数**
+
+| 参数   | 说明     | 类型   |
+| ------ | -------- | ------ |
+| ptitle | 信件标题 | string |
+
+**返回参数**
+
+```
+{
+  status: 0,
+  message: 'OK',
+  data: [
+    {
+        "pid":98,
+        "Ptitle":"快来给他写信吧",
+        ...
     }
   ]
 }

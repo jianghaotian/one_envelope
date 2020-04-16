@@ -40,17 +40,15 @@ router.post('/insertMp3', function(req, res){
                             var mp3 = result1.data[0].music;
                             if(mp3==null){
                                 runSql('update pletter set music=? where pid=? ',[name,pid],(result2)=>{
-                                    // console.log(result2)
-                                    res.json(result2);
+                                    // res.json(result2);
                                 })
                             }else{
                                 runSql('update pletter set music=? where pid=? ',[mp3+','+name,pid],(result3)=>{
-                                    // console.log(result3)
-                                    res.json(result3);
+                                    // res.json(result3);
                                 })
                             }
+                            res.json({status: 0, data: [name]});
                         })
-                        // res.send(name);
                     }
                 });
             });
@@ -79,7 +77,8 @@ router.get('/showmusic',function(req,res){
                     res.json(result1)
                 }else{
                     var mp3 = music.split(",")
-                    res.send(mp3);
+                    // res.send(mp3);
+                    res.json({status: 0, data: mp3});
                 }
             })
         }
