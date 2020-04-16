@@ -14,6 +14,8 @@ const color = [
     {backgroundColor:'green'}
 ];
 
+const ls = localStorage;
+
 export default class HomeWrite extends Component {
     constructor(){
         super();
@@ -39,13 +41,21 @@ export default class HomeWrite extends Component {
     //返回Home
     backHome=()=>{
         //console.log(this.props);
+        ls.setItem('color','');
+        ls.setItem('LetterContent','');
+        ls.setItem('LetterTitle','');
         this.props.history.push("/home?to="+this.state.to);
     }
     //编辑信件内容
     Edit=(val)=>{
+        ls.setItem('LetterContent',val);
         this.setState({
             value : val
         })
+    }
+    setMusicUrl=(url)=>{
+        let audio = document.getElementById("audio");
+        audio.src = 'https://yf.htapi.pub/music/'+url;
     }
     componentDidMount(){
         var info = window.location.hash;
@@ -75,9 +85,10 @@ export default class HomeWrite extends Component {
         var idArr = arr[0].split("=");
         var typeArr = arr[1].split("=");
         //console.log(idArr);
-        if(idArr[0] == "pid"){  //编辑
+        if(idArr[0] == "pid" ){  //编辑
+            var musicUrl;
             this.$api.getContent({pid : idArr[1]}).then(res=>{
-                console.log(res.data.data);
+                //console.log(res.data.data);
                 let resData = res.data.data[0];
                 this.setState({
                     to : resData.toNick,
@@ -87,22 +98,46 @@ export default class HomeWrite extends Component {
                     type : typeArr[1],
                     pid : idArr[1],
                     fontColor:resData.color
-                })
+            })
+            //getMusic
+            this.$api.showMusic({pid:idArr[1]}).then(res=>{
+                console.log(res.data.data);
+                musicUrl = res.data.data;
+                this.setMusicUrl(musicUrl);
+            })
                 //console.log(this.state.fontColor);
-                this.$api.selBack().then(res=>{
-                    let imgList = res.data.data;
-                    for(let i=0;i<imgList.length;i++){
-                        if(imgList[i].ppid == resData.ppid){
-                            //console.log(imgList[i].ppimage);
-                            this.setState({
-                                ppid : imgList[i].ppid,
-                                back : "https://yf.htapi.pub/paper/"+imgList[i].ppimage
-                            })
+                if(arr.length<3){
+                    ls.setItem('LetterContent',this.state.value);
+                    ls.setItem('color',this.state.fontColor);
+                    ls.setItem('LetterTitle',this.state.title);
+                    this.$api.selBack().then(res=>{
+                        let imgList = res.data.data;
+                        //console.log(imgList);
+                        for(let i=0;i<imgList.length;i++){
+                            if(imgList[i].ppid == resData.ppid){
+                                //console.log(imgList[i].ppid);
+                                this.setState({
+                                    ppid : imgList[i].ppid,
+                                    back : "https://yf.htapi.pub/paper/"+imgList[i].ppimage
+                                })
+                            }
                         }
-                    }
-                })
+                    })
+                }else if(arr.length>2){
+                    this.setState({
+                        title : ls.getItem('LetterTitle'),
+                        value : ls.getItem('LetterContent'),
+                        fontColor : ls.getItem('color')
+
+                    })
+                }
             })
         }else if(idArr[0] == "toNick"){ //新建
+            this.setState({
+                title : ls.getItem('LetterTitle'),
+                value : ls.getItem('LetterContent'),
+                fontColor : ls.getItem('color')
+            })
             this.$api.getToUList().then(res=>{
                 let list = res.data.data;
                 //console.log(list);
@@ -141,9 +176,13 @@ export default class HomeWrite extends Component {
         this.setState({
             title : e.target.value
         })
+        ls.setItem('LetterTitle',e.target.value);
     }
     //保存
     submitLetter=()=>{
+        ls.setItem('color','');
+        ls.setItem('LetterContent','');
+        ls.setItem('LetterTitle','');
         // console.log(this.state.to);
         // console.log(this.state.title);
         // console.log(this.state.value);
@@ -161,19 +200,26 @@ export default class HomeWrite extends Component {
         }else if(this.state.type == "create"){
             let timestamp = Date.parse(new Date());
             this.$api.writeLetter({Ptitle:title,Pcontent:content,toUid:id,toNick:to,Pday:timestamp,ppid:ppid,color:fontColor}).then(res=>{
-                console.log(res);
+                //console.log(res);
             })
+            
             alert('WriteLetter', '保存成功', [
-                { text: 'Ok', onPress: () => console.log('ok') },
+                { text: 'Ok', onPress: () => {
+                    console.log('ok');
+                    this.props.history.push("/home?to="+this.state.to);
+                } },
             ])
         }else if(this.state.type == "edit"){
             let timestamp = Date.parse(new Date());
             let pid = this.state.pid;
-            this.$api.editLetter({pid:pid,title:title,content:content,pday:timestamp,ppid:ppid}).then(res=>{
-                console.log(res);
+            this.$api.editLetter({pid:pid,title:title,content:content,pday:timestamp,ppid:ppid,color:fontColor}).then(res=>{
+                //console.log(res);
             })
             alert('EditLetter', '修改成功', [
-                { text: 'Ok', onPress: () => console.log('ok') },
+                { text: 'Ok', onPress: () => {
+                    console.log('ok');
+                    this.props.history.push("/home?to="+this.state.to);
+                } },
             ])
         }
     }
@@ -225,11 +271,16 @@ export default class HomeWrite extends Component {
         //上传音乐
         let audio = document.getElementById("audio");
         let pid = this.state.pid;
-        console.log(audio.src);
+        //console.log(pid);
+        //console.log(audio.src);
         let src = audio.src;
-        this.$api.postMusic({pid:pid,mp3Data:src}).then(res=>{
-            console.log(res);
-        })
+        if(pid){
+            this.$api.postMusic({pid:pid,mp3Data:src}).then(res=>{
+                console.log(res);
+            })
+        }else{
+            console.log('create');
+        }
 
     }
     deleteMusic=()=>{
@@ -284,6 +335,7 @@ export default class HomeWrite extends Component {
         this.setState({
             fontColor : item.backgroundColor
         })
+        ls.setItem('color',item.backgroundColor);
     }
     render() {
         //console.log(this.state.type,this.state.pid);

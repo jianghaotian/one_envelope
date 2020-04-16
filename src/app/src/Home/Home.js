@@ -31,7 +31,6 @@ export default class Home extends Component {
     //点击气泡项
     onSelect = (opt) => {
         //console.log(opt);
-        console.log(window.event.target)
         console.log(opt.props.value);
         var item = opt.props.item;
         this.setState({
@@ -70,7 +69,7 @@ export default class Home extends Component {
             this.showShareActionSheet();
         }else if(opt.props.value == "add-del"){//删除收信人
             var item = opt.props.item;
-            console.log(item);
+            //console.log(item);
             alert('Delete', '确认删除给Ta的所有信?', [
                 { text: 'Cancel', onPress: () => console.log('cancel') },
                 { text: 'Ok', onPress: () => {
@@ -109,11 +108,18 @@ export default class Home extends Component {
                                                         }
                                                         //console.log(list);
                                                         this.$api.reName({newtoNick:addName,oldtoNick:old}).then(res=>{
-                                                            console.log(res);
+                                                            //console.log('重命名成功');
                                                         })
                                                         this.setState({
                                                             toList : list
-                                                        })           
+                                                        })    
+                                                        //console.log(this.state.toType);     
+                                                        if(old = this.state.toType){
+                                                            this.props.history.push("/home?to="+addName);
+                                                            this.setState({
+                                                                toType : addName
+                                                            })
+                                                        }  
                                                     }}   },
                 ],
                 'default',
@@ -198,10 +204,10 @@ export default class Home extends Component {
         
         //getToUListData
         this.$api.getToUList().then(res=>{
-            console.log(res);
+            //console.log(res);
             let toU = [];
             let list = res.data.data;
-            console.log(list);
+            //console.log(list);
             //console.log(list[0].uname);
             //console.log(list[0].toNick);
             this.setState({
@@ -234,7 +240,7 @@ export default class Home extends Component {
             }else{
                 //有参数时，显示对应收件人
                 this.$api.getLetter({toNick:to}).then(res =>{
-                    console.log(res.data.data);
+                    //console.log(res.data.data);
                     this.setState({
                         dataList : res.data.data,
                         toType:to
@@ -248,6 +254,7 @@ export default class Home extends Component {
                 toList : toU,
             })
         })
+
     }
     //分享
     dataList = [
@@ -314,7 +321,7 @@ export default class Home extends Component {
                     <ul>
                         {
                             this.state.dataList.map((item,index)=>{
-                                if(item.toNick == this.state.toType){
+                               // if(item.toNick == this.state.toType){
                                     return <li className="content" key={index}>
                                             <div className="c-top">
                                                 <div className="title">
@@ -338,7 +345,8 @@ export default class Home extends Component {
                                                         onSelect={this.onSelect}
                                                         overlay={[
                                                         (<Item value="share" item={item}>
-                                                            <button className="DM-p" ><img className="DM-img" src={require("../imgs/Home/share.png")} />
+                                                            <button className="DM-p" >
+                                                                <img className="DM-img" src={require("../imgs/Home/share.png")} />
                                                                 分享
                                                             </button>
                                                         </Item>),
@@ -351,11 +359,11 @@ export default class Home extends Component {
                                                             </Link></Router>
                                                         </Item>),
                                                         (<Item  value="del" item={item}>
-                                                            <button className="DM-p" ><img className="DM-img" src={require("../imgs/Home/del.png")} />
+                                                            <button className="DM-p" >
+                                                                <img className="DM-img" src={require("../imgs/Home/del.png")} />
                                                                 删除
                                                             </button>
-                                                        </Item>),
-
+                                                        </Item>)
                                                         ]}
                                                         // align={{overflow: { adjustY: 0, adjustX: 0 },offset: [0, 5],}}
                                                         >
@@ -372,7 +380,7 @@ export default class Home extends Component {
                                             </div>
                                             </Link>
                                         </li>
-                                }
+                               // }
                             })
                         }
                     </ul>
