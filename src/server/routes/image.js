@@ -65,11 +65,11 @@ router.post('/changehead', function (req, res, next) {
  * 上传主题图片
  */
 router.post('/theme', function(req, res){
-    // let token = req.header('token');
-    // checkToken(token, (result) => {
-    //     if (result.status !== 0) {
-    //         res.json(result);
-    //     } else {   
+    let token = req.header('token');
+    checkToken(token, (result) => {
+        if (result.status !== 0) {
+            res.json(result);
+        } else {   
             var form = new multiparty.Form();
             form.parse(req, function(err, fields, files){
                 //将前台传来的base64数据去掉前缀
@@ -86,8 +86,8 @@ router.post('/theme', function(req, res){
                     }
                 });
             });
-    //     }
-    // })
+        }
+    })
 
 });
 
@@ -214,7 +214,7 @@ router.get('/showInsertImg',function(req,res){
  *      Lid：信件id
  *      insertImg：图片名称
  */
-router.post('/delInsertTimg',function(req,res,next){
+router.post('/delInsertPimg',function(req,res,next){
     let token = req.header('token');
     let {pid,insertImg} = req.body;
     checkToken(token,(result)=>{

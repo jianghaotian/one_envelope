@@ -249,5 +249,75 @@ GET
 }
 ```
 
+## 1.9删除插入图片（私密写）
+
+**请求url**
+
+```
+URL : https://yf.htapi.pub/v1/image/delInsertPimg
+```
+
+**请求方式**
+
+```
+POST
+```
+
+**接收参数**
+
+| 参数      | 说明     | 类型   |
+| --------- | -------- | ------ |
+| pid       | 信件id   | int    |
+| insertImg | 插图名称 | string |
+
+**返回参数**
+
+```
+{
+  status: 0,
+  message: 'OK',
+  data: [
+    RowDataPacket {
+      
+    }
+  ]
+}
+```
+
+## 2.0删除插入图片（一起写）
+
+**请求url**
+
+```
+URL : https://yf.htapi.pub/v1/image/delInsertTimg
+```
+
+**请求方式**
+
+```
+POST
+```
+
+**接收参数**
+
+| 参数      | 说明     | 类型   |
+| --------- | -------- | ------ |
+| pid       | 信件id   | int    |
+| insertImg | 插图名称 | string |
+
+**返回参数**
+
+```
+{
+  status: 0,
+  message: 'OK',
+  data: [
+    RowDataPacket {
+      
+    }
+  ]
+}
+```
+
 
 
