@@ -223,7 +223,9 @@ router.post('/delInsertPimg',function(req,res,next){
         }else{
             runSql('select insertImg from pletter where pid=?',[pid],(result1)=>{
                 let img = result1.data[0].insertImg.replace(insertImg+',','');
+                let imgName = insertImg;
                 runSql('update pletter set insertImg=? where pid=?',[img,pid],(result2)=>{
+                    fs.unlinkSync(path.join(__dirname,'../public/insertimg/'+imgName));
                     res.json(result2);
                 })
             })
@@ -327,7 +329,9 @@ router.post('/delInsertTimg',function(req,res,next){
         }else{
             runSql('select insertImg from tletter where lid=?',[lid],(result1)=>{
                 let img = result1.data[0].insertImg.replace(insertImg+',','');
+                let imgName= insertImg;
                 runSql('update tletter set insertImg=? where lid=?',[img,lid],(result2)=>{
+                    fs.unlinkSync(path.join(__dirname,'../public/insertimg/'+imgName));
                     res.json(result2);
                 })
             })
