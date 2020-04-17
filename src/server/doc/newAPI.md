@@ -319,5 +319,42 @@ POST
 }
 ```
 
+## 2.0删除音频（私密写）
+
+**请求url**
+
+```
+URL : https://yf.htapi.pub/v1/music/delMp3
+```
+
+**请求方式**
+
+```
+POST
+```
+
+**接收参数**
+
+| 参数  | 说明   | 类型   |
+| ----- | ------ | ------ |
+| pid   | 信件id | int    |
+| music | 音频名 | string |
+
+**返回参数**
+
+```
+{
+  status: 0,
+  message: 'OK',
+  data: [
+    RowDataPacket {
+      
+    }
+  ]
+}
+```
+
+
+
 
 

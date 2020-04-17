@@ -39,12 +39,10 @@ router.post('/insertMp3', function(req, res){
                         runSql('select music from pletter where pid=?',[pid],(result1)=>{
                             var mp3 = result1.data[0].music;
                             if(mp3==null){
-                                runSql('update pletter set music=? where pid=? ',[name,pid],(result2)=>{
-                                    // res.json(result2);
+                                runSql('update pletter set music=? where pid=? ',[name+',',pid],(result2)=>{
                                 })
                             }else{
-                                runSql('update pletter set music=? where pid=? ',[mp3+','+name,pid],(result3)=>{
-                                    // res.json(result3);
+                                runSql('update pletter set music=? where pid=? ',[mp3+name+',',pid],(result3)=>{
                                 })
                             }
                             res.json({status: 0, data: [name]});
@@ -77,9 +75,37 @@ router.get('/showmusic',function(req,res){
                     res.json(result1)
                 }else{
                     var mp3 = music.split(",")
-                    // res.send(mp3);
-                    res.json({status: 0, data: mp3});
+                    var len = mp3.length
+                    var mp3Arr = mp3.slice(0,len-1);
+                    res.json({status: 0, data: mp3Arr});
                 }
+            })
+        }
+    })
+})
+
+/**
+ * 删除插入音频()
+ * 请求方式
+ *      POST
+ * 接受参数：
+ *      pid：信件id
+ *      music：音乐名
+ */
+router.post('/delMp3',function(req,res,next){
+    let token = req.header('token');
+    let {pid,music} = req.body;
+    checkToken(token,(result)=>{
+        if(result.status !==0){
+            res.json(result)
+        }else{
+            runSql('select music from pletter where pid=?',[pid],(result1)=>{
+                let mp3 = result1.data[0].music.replace(music+',','');
+                console.log(mp3); 
+                runSql('update pletter set music=? where pid=?',[mp3,pid],(result2)=>{
+                    fs.unlinkSync(path.join(__dirname,'../public/music/'+music));
+                    res.json(result2);
+                })
             })
         }
     })
