@@ -332,7 +332,7 @@ router.post('/delInsertTimg',function(req,res,next){
                 let imgName= insertImg;
                 runSql('update tletter set insertImg=? where lid=?',[img,lid],(result2)=>{
                     fs.unlinkSync(path.join(__dirname,'../public/insertimg/'+imgName));
-                    res.json(result2);
+                    res.json({status: 0});
                 })
             })
         }
