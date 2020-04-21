@@ -76,9 +76,10 @@ POST
 
 **接收参数**
 
-| 参数 | 说明   | 类型pid |
-| ---- | ------ | ------- |
-| pid  | 信件id | int     |
+| 参数    | 说明           | 类型pid |
+| ------- | -------------- | ------- |
+| pid     | 信件id         | int     |
+| mp3Data | 音频base64编码 | string  |
 
 **返回参数**
 
@@ -345,12 +346,7 @@ POST
 ```
 {
   status: 0,
-  message: 'OK',
-  data: [
-    RowDataPacket {
-      
-    }
-  ]
+  message: 'OK'
 }
 ```
 
