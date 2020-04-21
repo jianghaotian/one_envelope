@@ -211,7 +211,7 @@ router.get('/showInsertImg',function(req,res){
  * 请求方式
  *      POST
  * 接受参数：
- *      Lid：信件id
+ *      pid：信件id
  *      insertImg：图片名称
  */
 router.post('/delInsertPimg',function(req,res,next){
@@ -261,11 +261,9 @@ router.post('/insertTimg', function(req, res){
                             var img = result.data[0].insertImg;
                             if(img==null){
                                 runSql('update tletter set insertImg=? where Lid=? ',[name,Lid],(result1)=>{
-                                    // res.json(result1);
                                 })
                             }else{
                                 runSql('update tletter set insertImg=? where Lid=? ',[img+','+name,Lid],(result1)=>{
-                                    // res.json(result1);
                                 })
                             }
                             res.json({status: 0, data: [name]});
@@ -297,12 +295,17 @@ router.get('/showTimg',function(req,res){
             runSql('select insertImg from tletter where Lid=?',[Lid],(result1)=>{
                 var img = result1.data[0].insertImg;
                 //空
-                if(!img){
-                    // res.json(result1)
+                if(img==null){
                     res.json({status: 1, data: []});
                 }else{
-                    var arr = img.split(",")
-                    res.json({status: 0, data: arr});
+                    if(img.length==20){
+                        res.json({status: 0, data: [img]});
+                    }else{
+                        // img = img.substring(0,img.length);
+                        var arr = img.split(",")
+                        res.json({status: 0, data: arr});
+                    }
+                    
                 }
             })
         }
@@ -319,15 +322,31 @@ router.get('/showTimg',function(req,res){
 router.post('/delInsertTimg',function(req,res,next){
     let token = req.header('token');
     let {lid,insertImg} = req.body;
+    console.log(lid)
     checkToken(token,(result)=>{
         if(result.status !==0){
             res.json(result)
         }else{
             runSql('select insertImg from tletter where lid=?',[lid],(result1)=>{
-                let img = result1.data[0].insertImg.replace(insertImg+',','');
-                runSql('update tletter set insertImg=? where lid=?',[img,lid],(result2)=>{
-                    res.json(result2);
-                })
+                let img = result1.data[0].insertImg
+                var arr = img.split(",")
+                for(var i=0;i<arr.length;i++){
+                    if(arr[i]==insertImg){
+                        arr.splice(i,1);
+                    }
+                }
+                var strimg = arr.join(",")
+                if(result1.data[0].insertImg.length==20){
+                    runSql('update tletter set insertImg=? where lid=?',[null,lid],(result2)=>{
+                        fs.unlinkSync(path.join(__dirname,'../public/insertimg/'+insertImg));
+                        res.json({status: 0});
+                    })
+                }else{
+                    runSql('update tletter set insertImg=? where lid=?',[strimg,lid],(result2)=>{
+                        fs.unlinkSync(path.join(__dirname,'../public/insertimg/'+insertImg));
+                        res.json({status: 0});
+                    })
+                }
             })
         }
     })
