@@ -328,7 +328,6 @@ router.post('/delInsertTimg',function(req,res,next){
             res.json(result)
         }else{
             runSql('select insertImg from tletter where lid=?',[lid],(result1)=>{
-                // let img = result1.data[0].insertImg.replaceAll(insertImg+',','');
                 let img = result1.data[0].insertImg
                 var arr = img.split(",")
                 for(var i=0;i<arr.length;i++){
