@@ -14,6 +14,12 @@ export default class Tabbar extends React.Component {
       selectedTab: this.props.match.params.tab || 'home'
     };
   }
+  getIndex=(index)=>{
+    //console.log(index);
+    this.setState({
+      selectedTab: 'my'
+    })
+  }
   render() {
     //console.log(this.props.match.params.id);
     return (
@@ -41,7 +47,7 @@ export default class Tabbar extends React.Component {
             }}
             data-seed="logId"
           >
-            <Home history={this.props.history}/>
+            <Home history={this.props.history} getIndex={this.getIndex} />
           </TabBar.Item>
           <TabBar.Item
             icon={
