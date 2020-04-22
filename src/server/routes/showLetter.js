@@ -38,11 +38,12 @@ router.get('/show', function (req, res, next) {
  *      title:信件标题
  *      content：信件内容
  *      pday：信件修改后的日期
+ *      color：修改后的信件字体颜色
  * 返回参数：
  *      
  */
 router.post('/edit',function(req,res,next){
-    let {pid,title,content,pday,color,insertImg,music} = req.body;
+    let {pid,title,content,pday,color} = req.body;
     let token = req.header('token');
     checkToken(token,(result) => {
         if(result.status !=0){
@@ -53,8 +54,8 @@ router.post('/edit',function(req,res,next){
             runSql(`select isSend from pletter where pid=?`,[pid],(result1)=>{
                 isSend = result1.data[0].isSend; 
                 if(isSend == 0 ){
-                    runSql(`update pletter set ptitle=?,pcontent=?,pday=?,color=?,insertImg=?,music=? where pid=? and uid=? `,
-                    [title,content,pday,color,insertImg,music,pid,uid],(result2)=>{
+                    runSql(`update pletter set ptitle=?,pcontent=?,pday=?,color=? where pid=? and uid=? `,
+                    [title,content,pday,color,pid,uid],(result2)=>{
                         res.json(result2);
                     })
                 }else{

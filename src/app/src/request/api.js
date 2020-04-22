@@ -59,6 +59,7 @@ const api = {
     selBack : p=>get('private/getback',p),//选择背景
     postMusic: p=>post('music/insertMp3',p),//上传音乐
     showMusic: p=>get('music/showmusic',p),//获取音乐
+    delMusic : p=>post('music/delMp3',p),//删除音乐
     // getpid:p => get('private/getpd',p)
         
 }

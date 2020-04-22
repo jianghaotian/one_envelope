@@ -101,9 +101,14 @@ export default class HomeWrite extends Component {
             })
             //getMusic
             this.$api.showMusic({pid:idArr[1]}).then(res=>{
-                console.log(res.data.data);
+                //console.log(res.data.data);
                 musicUrl = res.data.data;
-                this.setMusicUrl(musicUrl);
+                let regMusic = /.*(.mp3)$/gi
+                if(regMusic.test(musicUrl)){
+                    this.setMusicUrl(musicUrl);
+                }else{
+                    console.log('dont have music');
+                }
             })
                 //console.log(this.state.fontColor);
                 if(arr.length<3){
@@ -212,12 +217,18 @@ export default class HomeWrite extends Component {
         }else if(this.state.type == "edit"){
             let timestamp = Date.parse(new Date());
             let pid = this.state.pid;
-            this.$api.editLetter({pid:pid,title:title,content:content,pday:timestamp,ppid:ppid,color:fontColor}).then(res=>{
+            let name ;
+            this.$api.showMusic({pid : pid}).then(res=>{
+                let resData = res.data.data;
+                name = resData[0];
+                console.log(name);
+            })
+            this.$api.editLetter({pid:pid,title:title,content:content,pday:timestamp,ppid:ppid,color:fontColor,music:name}).then(res=>{
                 //console.log(res);
             })
             alert('EditLetter', '修改成功', [
                 { text: 'Ok', onPress: () => {
-                    console.log('ok');
+                    //console.log('ok');
                     this.props.history.push("/home?to="+this.state.to);
                 } },
             ])
@@ -274,25 +285,49 @@ export default class HomeWrite extends Component {
         //console.log(pid);
         //console.log(audio.src);
         let src = audio.src;
-        if(pid){
+        //console.log(src);
+        if(pid && src != ""){
             this.$api.postMusic({pid:pid,mp3Data:src}).then(res=>{
-                console.log(res);
+                //console.log(res);
+                alert('插入成功');
             })
+        }else if(src == ""){
+            alert("您还没有选择音乐哦");
         }else{
             console.log('create');
         }
 
     }
     deleteMusic=()=>{
-        let audio = document.getElementById("audio");
-        audio.src=null;
-        this.setState({
-            musicName:""
-        })
+        let info = window.location.hash;
+        let dataArr = info.substr(13,info.length);
+        let arr  = dataArr.split("&");
+        let idArr = arr[0].split("=");
+        let typeArr = arr[1].split("=");
+        let name;
+        alert('删除', '确认删除?', [
+            { text: '留着', onPress: () => {
+                console.log('cancel');
+            } },
+            { text: '不要啦', onPress: () => {
+                if(typeArr[1] == "edit"){
+                    //console.log('de');
+                    this.$api.showMusic({pid : idArr[1]}).then(res=>{
+                        let resData = res.data.data;
+                        name = resData[0];
+                    })
+                    this.$api.delMusic({pid:idArr[1],music:name}).then(res=>{
+                        console.log(res);
+                        alert('删除成功');
+                    })
+                }
+            }},
+        ]);
     }
     getMusic=()=>{
         console.log('change');
         let music = document.getElementById('MusicFile').files[0];
+        //console.log(music);
         let audio = document.getElementById("audio");
         let load = document.getElementById("loading");
         //检查文件类型
@@ -420,7 +455,8 @@ export default class HomeWrite extends Component {
                         </div>
                     </div>
                 </div>
-
+                
+                {/* 插入音乐 */}
                 <div className="Music" style={this.state.musicShow}>
                     <input type= 'file' id="MusicFile" onChange={this.getMusic} />
                     <img src={require('../imgs/Home/musicCancle.png')} style={{float:"right",marginRight:'5px'}} onClick={()=>{

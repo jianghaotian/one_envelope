@@ -5,26 +5,23 @@ export default class Letter extends Component {
     constructor(){
         super()
         this.state={
+            dataList:[],
             isLike:0,
             arr:[{
                 "toNick":"寄信人",
                 "Ptitle":"小标题",
                 "Pcontent":'内容',
-                'ppimage':'1234567891234_56.jpg'
+                'ppimage':''
             }]
         }
     }
     componentDidMount(){
         // console.log(this.props.match.params.id)//打印文章信息号
         this.$api.showmail({pid:this.props.match.params.id}).then(res => {
-            // 获取数据成功后的其他操作
             // console.log(res.data.data)//打印数据
             this.setState({
                 arr:res.data.data
             });
-
-            console.log(this.state.arr)
-            // 获取当前状态值
             this.setState({
                 isLike:res.data.data[0].isCollection
             })
@@ -50,11 +47,31 @@ export default class Letter extends Component {
         // this.$api.deletemail({pid:this.props.match.params.id}).then(res => {
         //     Toast.success('删除成功', 1);
         // }) 
-        console.log('123')
+        console.log('删除代码已注释')
     }
     // 分享
+    dataList = [
+        { url: 'umnHwvEgSyQtXlZjNJTt', title: '微信好友' },
+        { url: 'SxpunpETIwdxNjcJamwB', title: 'QQ' },
+      ].map(obj => ({
+        icon: <img src={`https://gw.alipayobjects.com/zos/rmsportal/${obj.url}.png`} alt={obj.title} style={{ width: 36 }} />,
+        title: obj.title,
+    }));
     showShareActionSheet = () => {
-        console.log('分享')
+        ActionSheet.showShareActionSheetWithOptions({
+          options: this.dataList,
+          // title: 'title',
+          message: '分享给朋友',
+        },
+        (buttonIndex) => {
+          this.setState({ clicked: buttonIndex > -1 ? this.dataList[buttonIndex].title : 'cancel' });
+          //console.log(buttonIndex);
+          if(buttonIndex == 0){
+              console.log("share to weixin");
+          }else if(buttonIndex == 1){
+            console.log("share to qq");
+          }
+        });
       }
 
     render() {
@@ -100,7 +117,6 @@ export default class Letter extends Component {
                 }}/>
                 <div className='lt-content'>
                     <img src={"https://yf.htapi.pub/paper/"+this.state.arr[0].ppimage} className="lt-img"/>
-
                     <span className="lt-span">{this.state.arr[0].Pcontent}</span>
                 </div>
 
