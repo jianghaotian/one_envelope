@@ -104,9 +104,7 @@ export default class Home extends Component {
                 { text: 'Ok', onPress: () => {
                     console.log('ok');
                     let newTo = this.state.toList;
-                    //console.log(newTo.indexOf(item));
                     newTo.splice(newTo.indexOf(item),1);
-                    //console.log(newTo);
                     this.$api.delAddressee({toNick : item}).then(res=>{
                         console.log(res);
                         alert('Delete','删除成功',[
@@ -135,14 +133,11 @@ export default class Home extends Component {
                                                                 list[i]= addName;
                                                             }
                                                         }
-                                                        //console.log(list);
                                                         this.$api.reName({newtoNick:addName,oldtoNick:old}).then(res=>{
-                                                            //console.log('重命名成功');
                                                         })
                                                         this.setState({
                                                             toList : list
                                                         })    
-                                                        //console.log(this.state.toType);     
                                                         if(old = this.state.toType){
                                                             this.props.history.push("/home?to="+addName);
                                                             this.setState({
@@ -248,7 +243,6 @@ export default class Home extends Component {
             //Set toType
             var search = this.props.history.location.search;
             let to = decodeURI(search.substr(4,search.length));
-            //console.log(to,toU[0]);
             if(to == ""){
                 //无参数时,显示第一个收件人
                 this.$api.getLetter({toNick:toU[0]}).then(res =>{
