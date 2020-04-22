@@ -61,12 +61,6 @@ export default class Feedback extends Component {
                         rows={8}
                         count={100}
                         placeholder='请填写10个字以上的问题描述以便我们提供更好的帮助'
-                            // onClick={()=>{
-                            //     this.setState({
-                            //         colorState:{display:"none"},
-                            //         colorTag:false
-                            //     })
-                            // }}
                         />
                     <Item style={{
                         fontSize:'1.3em'
