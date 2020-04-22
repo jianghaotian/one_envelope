@@ -236,9 +236,6 @@ export default class Home extends Component {
             //console.log(res);
             let toU = [];
             let list = res.data.data;
-            //console.log(list);
-            //console.log(list[0].uname);
-            //console.log(list[0].toNick);
             this.setState({
                 Uname : list[0].uname,
                 headImg : list[0].uimage
@@ -248,8 +245,6 @@ export default class Home extends Component {
             for(let i=0;i<list.length;i++){
                 toU.push(list[i].toNick);
             }
-            //console.log(toU);
-
             //Set toType
             var search = this.props.history.location.search;
             let to = decodeURI(search.substr(4,search.length));
