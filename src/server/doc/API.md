@@ -253,14 +253,16 @@ POST
 
 **接收参数**
 
-| 参数     | 说明       | 类型   |
-| -------- | ---------- | ------ |
-| Ptitle   | 信件标题   | string |
-| Pcontent | 信件内容   | string |
-| toUid    | 收信人id   | int    |
-| toNick   | 收信人称呼 | string |
-| Pday     | 创建时间   | 时间戳 |
-| color    | 字体颜色   | vachar |
+| 参数     | 说明             | 类型   |
+| -------- | ---------------- | ------ |
+| Ptitle   | 信件标题         | string |
+| Pcontent | 信件内容         | string |
+| toUid    | 收信人id         | int    |
+| toNick   | 收信人称呼       | string |
+| Pday     | 创建时间         | 时间戳 |
+| ppid     | 背景id           | int    |
+| mp3Data  | 音频的base64编码 | string |
+| color    | 字体颜色         | vachar |
 
 **返回参数**
 
@@ -346,15 +348,13 @@ POST
 
 **接收参数**
 
-| 参数      | 说明             | 类型   |
-| --------- | ---------------- | ------ |
-| pid       | 信件id           | int    |
-| title     | 信件标题         | string |
-| content   | 信件内容         | string |
-| pday      | 信件修改后的日期 | 时间戳 |
-| color     | 字体颜色         | string |
-| insertImg | 图片名称         | string |
-| music     | 音乐名称         | string |
+| 参数    | 说明             | 类型   |
+| ------- | ---------------- | ------ |
+| pid     | 信件id           | int    |
+| title   | 信件标题         | string |
+| content | 信件内容         | string |
+| pday    | 信件修改后的日期 | 时间戳 |
+| color   | 字体颜色         | string |
 
 **返回参数**
 
