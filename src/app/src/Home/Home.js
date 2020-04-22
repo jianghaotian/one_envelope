@@ -251,10 +251,7 @@ export default class Home extends Component {
             //console.log(toU);
 
             //Set toType
-            //console.log(this.props.history.location.search);
             var search = this.props.history.location.search;
-            //console.log(search.indexOf("="));
-            //console.log(search.substr(4,search.length));
             let to = decodeURI(search.substr(4,search.length));
             //console.log(to,toU[0]);
             if(to == ""){
@@ -314,7 +311,6 @@ export default class Home extends Component {
         this.props.history.push("/home?to="+item);
         //获取收信人对应信件
         this.$api.getLetter({toNick:item}).then(res =>{
-            //console.log(res.data.data);
              this.setState({
                  dataList : res.data.data
              })
