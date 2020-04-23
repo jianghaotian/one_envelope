@@ -1,9 +1,9 @@
-## 1.1插入图片(私密写)
+## 1.1选择背景(私密写) 
 
 **请求url**
 
 ```
-URL : https://yf.htapi.pub/v1/image/insertPimg
+URL : https://yf.htapi.pub/v1/image/choosebg
 ```
 
 **请求方式**
@@ -14,9 +14,10 @@ POST
 
 **接收参数**
 
-| 参数 | 说明   | 类型pid |
-| ---- | ------ | ------- |
-| pid  | 信件id | int     |
+| 参数   | 说明             | 类型pid |
+| ------ | ---------------- | ------- |
+| pid    | 信件id           | int     |
+| bgData | 背景的base64编码 |         |
 
 **返回参数**
 
@@ -25,19 +26,17 @@ POST
   status: 0,
   message: 'OK',
   data: [
-    RowDataPacket {
-      
-    }
+   
   ]
 }
 ```
 
-## 1.2展示插入图片（私密写）
+## 1.2展示背景（私密写） 
 
 **请求url**
 
 ```
-URL : https://yf.htapi.pub/v1/image/showInsertImg
+URL : https://yf.htapi.pub/v1/image/showpbg
 ```
 
 **请求方式**
@@ -55,9 +54,12 @@ GET
 **返回参数**
 
 ```
-[
-    "1234567894238_11.jpg"
-]
+{
+    status：0,
+    data:[
+        "1234567894238_11.jpg"
+    ]
+}
 ```
 
 ## 1.3插入音频
