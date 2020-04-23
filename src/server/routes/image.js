@@ -156,9 +156,10 @@ router.post('/choosebg', function(req, res){
                     if(err){
                         res.send(err);
                     }else{
-                        runSql('select bgimage from pletter where pid=?',[pid],(result1)=>{
+                        runSql('select bgimage,custom from pletter where pid=?',[pid],(result1)=>{
                             var bg = result1.data[0].bgimage;
-                            if(bg==null){
+                            var custom = result1.data[0].custom;
+                            if(custom==0){
                                 runSql('update pletter set bgimage=?,custom=?,ppid=? where pid=? ',[name,1,null,pid],(result2)=>{
                                 })
                             }else{
