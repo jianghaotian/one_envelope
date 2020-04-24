@@ -61,7 +61,7 @@ GET
     status：0,
     data:[
        {
-            "bg":"1234567894238_11.jpg",
+            "bgimage":"1234567894238_11.jpg",
             "custom":1
   	   }
     ]
