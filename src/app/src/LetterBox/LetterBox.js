@@ -50,6 +50,7 @@ export default class LetterBox extends Component {
                 onChange={(e)=>this.inputChange(e)}
                 cancelText='搜索'
                 onCancel={(e)=>this.handleChange(e)}
+                onSubmit={(e)=>this.handleChange(e)}
                 />
                 {/* 列表页 */}
                 <List>
