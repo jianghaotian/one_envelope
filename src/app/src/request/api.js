@@ -23,6 +23,7 @@ const api = {
     getoldpwd: p => get('mine/getoldpwd',p),
     headimg:p => post('image/head',p),
     changehead:p=>post('image/changehead',p),
+    searchmail : p => get('mailbox/searchmail',p),
 
     // zym
     theme: p=> get('together/theme',p),

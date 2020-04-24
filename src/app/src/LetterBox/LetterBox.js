@@ -7,7 +7,8 @@ export default class LetterBox extends Component {
     constructor(){
         super();
         this.state={
-            arr:[]
+            arr:[],
+            text:''
         }
     }
     componentDidMount(){
@@ -18,6 +19,18 @@ export default class LetterBox extends Component {
             })
             // console.log(this.state.arr)
         }) 
+    }
+    handleChange = (e) => {
+        this.setState({
+            text:e
+        })
+        console.log(this.state.text)
+
+        // console.log(this.state.username);
+        // this.$api.changename({uname:this.state.username}).then(res => {
+        //     this.props.history.push("/myedit");
+        //     Toast.success('修改成功', 1);
+        // });
     }
     render() {
         return (
@@ -30,7 +43,9 @@ export default class LetterBox extends Component {
                 }}
                 >信箱</NavBar>
                 {/* 搜索框 */}
-                <SearchBar  maxLength={8} style={{backgroundColor:'whitesmoke'}}/>
+                <SearchBar  maxLength={8} style={{backgroundColor:'whitesmoke'}}
+                onChange={(e)=>this.handleChange(e)}
+                />
                 {/* 列表页 */}
                 <List>
                     {this.state.arr.map((item,index)=>{
