@@ -167,7 +167,7 @@ router.post('/choosebg', function(req, res){
                                     fs.unlinkSync(path.join(__dirname,'../public/pbgimage/'+bg));
                                 })
                             }
-                            res.json({status: 0, data: [name]});
+                            res.json({status: 0, data: [{bg:name,custom:custom}]});
                         })
                     }
                 });
@@ -197,7 +197,7 @@ router.get('/showpbg',function(req,res){
                 if(custom == 0){
                     res.json(result1)
                 }else{
-                    res.json({status: 0, data: [bg]});
+                    res.json({status: 0, data: [{bg:bg,custom:custom}]});
                 }
             })
         }
