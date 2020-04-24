@@ -21,7 +21,7 @@ export default class Letter extends Component {
         this.setState({
             pid:this.props.match.params.id
         })
-        console.log(this.props.match.params.id)//打印文章信息号
+        // console.log(this.props.match.params.id)//打印文章信息号
         this.$api.showmail({pid:this.props.match.params.id}).then(res => {
             // console.log(res.data.data)//打印数据
             this.setState({
