@@ -38,7 +38,9 @@ const api = {
     changeletter:p=>post('together/theme/edit',p),
     addimage:p => post('image/theme',p),
     insertTImg:p => post('image/insertTimg',p),
-    showTImg:p => get('image/showTImg',p),
+    showTImg:p => get('image/showTimg',p),
+    delInsertTimg:p => post('image/delInsertTimg',p),
+
 
 
     //Login

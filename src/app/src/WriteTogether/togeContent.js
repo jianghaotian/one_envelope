@@ -1,6 +1,7 @@
 import React, { Component } from 'react'
 import '../css/togeCreate.css'
-import { List, TextareaItem } from 'antd-mobile';
+import { List, TextareaItem ,WingBlank,WhiteSpace,button} from 'antd-mobile';
+
 import {HashRouter as Router,Link,Switch,Route} from 'react-router-dom'
 
 export default class togeContent extends Component {
@@ -11,7 +12,9 @@ export default class togeContent extends Component {
             tid:'',
             lid:'',      
             inputValue:"",        
-            tit:""
+            tit:"",
+            timg:[],//图片数组
+            isImgdel:false
         }        
     }
     componentDidMount(){
@@ -24,23 +27,20 @@ export default class togeContent extends Component {
                     tit:res.data.data[0].Ltitle,
                     inputValue: res.data.data[0].Lcontent,
                     tid:res.data.data[0].Tid,
-                    lid:res.data.data[0].Lid
+                    lid:res.data.data[0].Lid,
+                    isImgdel:false
                 })
-                console.log(this.state.data)
-
             }
         }) 
         this.$api.showTImg({Lid:this.props.match.params.id}).then(res => { 
             console.log(res.data)
             if (res.data.status === 0) {      
                 this.setState({
-                    data:res.data.data,
-
+                    timg:res.data.data,
+                    isImgdel:false
                 })
-              
             }
         })
-        
     }
     //更新页面
     changeLetter=(e)=>{
@@ -52,15 +52,12 @@ export default class togeContent extends Component {
                 console.log(res);
                 this.setState({
                     data:res.data.data
-                    
                 })
                 this.totoge();
                 console.log(this.state.data)
-
             }
         }) 
                 // this.totoge();
-
     }
     totoge=()=>{
         this.props.history.push('/inviteWrite/'+this.state.tid);
@@ -71,7 +68,6 @@ export default class togeContent extends Component {
             inputValue : e
         })
     }
-    
     changeTit=(e)=>{
         console.log(e.target.value);
         this.setState({
@@ -84,13 +80,6 @@ export default class togeContent extends Component {
         var back = this.props.history.location.search;
         this.props.history.push("/back"+back);
     }
-    //选择音乐
-    selectMusic=()=>{
-
-    }
-    getMusic=()=>{
-        
-    }   
     //插入图片   
     onChange = (e) => {       
         console.log(e.target.files[0])          
@@ -105,14 +94,45 @@ export default class togeContent extends Component {
                 console.log(res.data)
                 if (res.data.status === 0) {      
                     this.setState({
-                        data:res.data.data,
+                        timg:res.data.data,
+                        isImgdel:false
+                    })
+                    this.$api.showTImg({Lid:this.props.match.params.id}).then(res => { 
+                        if (res.data.status === 0) {      
+                            this.setState({
+                                timg:res.data.data,
+                                isImgdel:false
+                            })
+                        }
                     })
                 }
+                console.log(this.state.timg);
             })   
         }       
-      }
-    
+    }
+
+    delTimg=(e2)=>{
+        let list = this.state.timg;
+        console.log(list)
+        console.log(e2)
+        for(let i=0;i<list.length;i++){
+            if(list[i] == e2){
+                list.splice(i,1);
+            }
+        } 
+        this.$api.delInsertTimg({lid:this.state.lid,insertImg:e2}).then(res => {      
+            console.log(res)         
+            if (res.data.status === 0) { 
+                this.setState({
+                    timg:list,
+                    isImgdel:true
+                }) 
+                alert("删除成功");               
+            }
+        }) 
+    }
     render() {
+        console.log(this.state.lid)
         return (
             <div className='toge-body'>
                 <div className="ge-body">
@@ -138,21 +158,22 @@ export default class togeContent extends Component {
                     {/* 内容 */}
                     <div className="ge-content">                                                                               
                                 <div style={{height:"100%"}}>
-                                   
-                                    {this.state.data.map((val)=> (   
-                                        <div key={val} className="insertimg">                     
-                                            <img src={"https://yf.htapi.pub/insertimg/"+val} alt=""style={{width:"100%",height:"100%"}}/> 
-                                        </div>
-                            
-                                    ))}
-                                   
                                     <TextareaItem     
-                                    rows={13}
-                                    placeholder="请输入内容"
-                                    style={{backgroundColor:'transparent'}}
-                                    value={this.state.inputValue}
-                                    onChange={this.textChange}
-                                     />
+                                        rows={1}
+                                        autoHeight
+                                        placeholder="请输入内容"
+                                        style={{backgroundColor:'transparent',paddingVertical: 5 }}
+                                        value={this.state.inputValue}
+                                        onChange={this.textChange}
+                                        />                                  
+                                    {this.state.timg.map((val)=> (   
+                                        <div key={val} className="insertimg" style={{position:'relative'}} >                     
+                                            <img src={"https://yf.htapi.pub/insertimg/"+val} alt=""style={{width: "100%",height: "90%"}}/> 
+                                            <img src={require('../imgs/Home/musicCancle.png')} style={{position:'absolute',top:0,right:0}} 
+                                                onClick={()=>this.delTimg(val)}
+                                            />
+                                        </div>
+                                    ))}
                                 </div>                                                  
                     </div>
                 </div>

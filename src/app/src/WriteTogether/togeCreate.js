@@ -75,9 +75,9 @@ export default class togeCreate extends Component {
             this.$api.insertTImg({Lid:this.props.match.params.id,imgData:src}).then(res => { 
                 console.log(res.data)
                 if (res.data.status === 0) {      
-                    this.setState({
-                        data:res.data.data,
-                    })
+                    // this.setState({
+                    //     data:res.data.data,
+                    // })
                 }
             })   
         }
@@ -96,21 +96,21 @@ export default class togeCreate extends Component {
             })
         }  
       }
-    componentDidMount(){
+    // componentDidMount(){
         
-        this.$api.showTImg({lid:this.props.match.params.id}).then(res => { 
-            console.log(res.data)
+    //     this.$api.showTImg({lid:this.props.match.params.id}).then(res => { 
+    //         console.log(res.data)
 
-            if (res.data.status === 0) {      
-                this.setState({
-                    data:res.data.data,
+    //         if (res.data.status === 0) {      
+    //             this.setState({
+    //                 data:res.data.data,
 
-                })
-                // console.log(this.state.data);
-            }
-        })
+    //             })
+    //             // console.log(this.state.data);
+    //         }
+    //     })
 
-    }  
+    // }  
     
     render() {
         return (
@@ -142,14 +142,6 @@ export default class togeCreate extends Component {
                     <div className="ge-content">                                                    
                            
                                 <div style={{height:"100%"}}>
-                                    <div 
-                                    // onLoad={()=>{
-                                    //     this.setState({
-                                    //         imgTag:false,
-                                    //         imgShow:{display:"none"}
-                                    //     })
-                                    // }}
-                                    >
                                     {this.state.data.map((val)=> (                                                   
                                         <div key={val} className="insertimg">  
                                             <img src='' className='hide'/>                          
@@ -159,7 +151,6 @@ export default class togeCreate extends Component {
                                         </div>
                             
                                     ))}
-                                    </div>
                                     <TextareaItem     
                                     rows={13}
                                     placeholder="请输入内容"
@@ -183,7 +174,7 @@ export default class togeCreate extends Component {
                     <img src={require("../imgs/Home/背景.png")} style={{width:"6%"}} onClick={this.selback} />
                     <img src={require("../imgs/Home/music(3).png")} style={{width:"7%"}} onClick={this.selectMusic} />
                     <label htmlFor='picture' style={{width:"7%"}}>
-                        <input type="file" id='picture' style={{width:"0%"}} onChange={this.onChange}/>
+                        <input type="file" id='picture' style={{width:"0%"}} />
                         <img src={require("../imgs/Home/tupian.png")} style={{width:"100%"}}/>
                     </label>
                 </div>
