@@ -20,17 +20,18 @@ export default class LetterBox extends Component {
             // console.log(this.state.arr)
         }) 
     }
-    handleChange = (e) => {
+    inputChange = (e) =>{
         this.setState({
             text:e
         })
-        console.log(this.state.text)
-
-        // console.log(this.state.username);
-        // this.$api.changename({uname:this.state.username}).then(res => {
-        //     this.props.history.push("/myedit");
-        //     Toast.success('修改成功', 1);
-        // });
+    }
+    handleChange = (e) => {
+        // console.log(this.state.text);
+        this.$api.searchmail({ptitle:this.state.text}).then(res => {
+            console.log(res.data)
+            // this.props.history.push("/myedit");
+            // Toast.success('修改成功', 1);
+        });
     }
     render() {
         return (
@@ -43,8 +44,13 @@ export default class LetterBox extends Component {
                 }}
                 >信箱</NavBar>
                 {/* 搜索框 */}
-                <SearchBar  maxLength={8} style={{backgroundColor:'whitesmoke'}}
-                onChange={(e)=>this.handleChange(e)}
+                <SearchBar  
+                maxLength={8} 
+                style={{backgroundColor:'whitesmoke'}}
+                onChange={(e)=>this.inputChange(e)}
+                cancelText='搜索'
+                onCancel={(e)=>this.handleChange(e)}
+                onSubmit={(e)=>this.handleChange(e)}
                 />
                 {/* 列表页 */}
                 <List>

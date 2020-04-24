@@ -23,7 +23,6 @@ a:active {
     background-color: #fff;
     position: relative;
     width: 100%;
-   
 }
 .lb-user{
     position: absolute;
@@ -62,7 +61,7 @@ a:active {
 .lt{
     background-color: rgb(250, 250, 250);
     position: relative;
-    height: 45em;
+    height: 37.5em;
     width: 100%;
 
 }
@@ -74,6 +73,8 @@ a:active {
 }
 .lt-content{
     position: relative;
+    height: 100%;
+    width: 100%;
 }
 .lt-span{
     position: absolute;
@@ -87,8 +88,9 @@ a:active {
     position: absolute;
     left: 0;
     top:0;
+    height: 100%;
+    width: 100%;
 }
-
 .col-tab{
     height: 3em;
     line-height: 3em;
