@@ -8,8 +8,25 @@ const { getTimestamp_13 } = require('../src/timer');
 const getRandom = require('../src/user/verification');
 var multiparty = require('multiparty');
 var fs = require('fs');
-// let token = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1aWQiOjEsImlhdCI6MTU3NDkzNDk1NCwiZXhwIjoxNTc3NjEzMzU0fQ.PQu7Dzp4MsurerTMR-wYSITeWKxGoo_aH_002CeEzqg';
-
+/**
+ * 分享信件
+ */
+router.get("/share",function(req,res,next){
+    let {pid} = req.query;
+    var data;
+    var ppimage;
+    runSql('select * from pletter where pid=?',[pid],(result)=>{
+        data = result.data[0];
+        if(data.ppid){
+            runSql('select ppimage from paper where ppid=?',[data.ppid],(result1)=>{
+                ppimage = result1.data[0].ppimage;
+                res.render('shareLetter',{data:data,ppimage:ppimage})
+            })
+        }else{
+            res.render('shareLetter',{data:data,ppimage:null})
+        }
+    })
+  })
 /**
  * 获取所有私密写信件
  * GET
