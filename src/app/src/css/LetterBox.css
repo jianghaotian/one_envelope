@@ -18,6 +18,12 @@ a:active {
     text-decoration: none;
 }
 /* -------列表页---------- */
+.active{
+    display: block;
+}
+.active1{
+  display: none;
+}
 .lb-text{
     height: 8em;
     background-color: #fff;
