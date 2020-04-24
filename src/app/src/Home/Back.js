@@ -26,6 +26,7 @@ export default class Back extends Component {
         this.props.history.push("/homeWrite/"+back);
     }
     selImg=(item)=>{
+        localStorage.setItem('customBack',false);
         let data = this.props.history.location.search;
         //console.log(data);
         let arr = data.split("&");
