@@ -31,7 +31,6 @@ export default class Home extends Component {
     //点击气泡项
     onSelect = (opt) => {
         //console.log(opt);
-        console.log(window.event.target)
         console.log(opt.props.value);
         var item = opt.props.item;
         this.setState({
@@ -67,18 +66,45 @@ export default class Home extends Component {
                 } },
             ]);
         }else if(opt.props.value == "share"){//分享
-            this.showShareActionSheet();
+            // this.showShareActionSheet();
+            var pid = item.Pid;
+            var shareModel1 = {
+                shareQQ: function (pid,type) {
+                    var param = {
+                        pid:pid,
+                        type:type
+                    };
+                    var s = [];
+                    for (var i in param) {
+                        s.push(i + '=' + encodeURIComponent(param[i] || ''));
+                    }
+                    // http://localhost:3000/#/homeWrite/?pid=97&type=edit
+                    var targetUrl = "http://localhost:3000/#/homeWrite/?pid="+pid+"&type=edit";
+                    return targetUrl;
+                }
+            }
+            var shareUrl = shareModel1.shareQQ(pid,'edit');
+            // console.log(shareUrl);
+            alert('分享链接', shareUrl, [
+                { text: '取消分享', onPress: () => console.log('cancel') },
+                { text: '复制链接', onPress: () => {this.handleCopy()
+                    // am-modal-alert-content
+                    alert('复制成功','',[
+                        {text:'确定',onPress:()=>{console.log('确定')}},
+                        {text:'打开链接',onPress:()=>{window.open(shareUrl,'一封','height=640, width=360')}}
+                    ])
+                    
+                } },
+            ]);
         }else if(opt.props.value == "add-del"){//删除收信人
             var item = opt.props.item;
-            console.log(item);
+            //console.log(item);
             alert('Delete', '确认删除给Ta的所有信?', [
                 { text: 'Cancel', onPress: () => console.log('cancel') },
                 { text: 'Ok', onPress: () => {
                     console.log('ok');
                     let newTo = this.state.toList;
-                    //console.log(newTo.indexOf(item));
                     newTo.splice(newTo.indexOf(item),1);
-                    //console.log(newTo);
                     this.$api.delAddressee({toNick : item}).then(res=>{
                         console.log(res);
                         alert('Delete','删除成功',[
@@ -107,13 +133,17 @@ export default class Home extends Component {
                                                                 list[i]= addName;
                                                             }
                                                         }
-                                                        //console.log(list);
                                                         this.$api.reName({newtoNick:addName,oldtoNick:old}).then(res=>{
-                                                            console.log(res);
                                                         })
                                                         this.setState({
                                                             toList : list
-                                                        })           
+                                                        })    
+                                                        if(old = this.state.toType){
+                                                            this.props.history.push("/home?to="+addName);
+                                                            this.setState({
+                                                                toType : addName
+                                                            })
+                                                        }  
                                                     }}   },
                 ],
                 'default',
@@ -198,12 +228,9 @@ export default class Home extends Component {
         
         //getToUListData
         this.$api.getToUList().then(res=>{
-            console.log(res);
+            //console.log(res);
             let toU = [];
             let list = res.data.data;
-            console.log(list);
-            //console.log(list[0].uname);
-            //console.log(list[0].toNick);
             this.setState({
                 Uname : list[0].uname,
                 headImg : list[0].uimage
@@ -213,15 +240,9 @@ export default class Home extends Component {
             for(let i=0;i<list.length;i++){
                 toU.push(list[i].toNick);
             }
-            //console.log(toU);
-
             //Set toType
-            //console.log(this.props.history.location.search);
             var search = this.props.history.location.search;
-            //console.log(search.indexOf("="));
-            //console.log(search.substr(4,search.length));
             let to = decodeURI(search.substr(4,search.length));
-            //console.log(to,toU[0]);
             if(to == ""){
                 //无参数时,显示第一个收件人
                 this.$api.getLetter({toNick:toU[0]}).then(res =>{
@@ -234,7 +255,7 @@ export default class Home extends Component {
             }else{
                 //有参数时，显示对应收件人
                 this.$api.getLetter({toNick:to}).then(res =>{
-                    console.log(res.data.data);
+                    //console.log(res.data.data);
                     this.setState({
                         dataList : res.data.data,
                         toType:to
@@ -248,37 +269,37 @@ export default class Home extends Component {
                 toList : toU,
             })
         })
+
     }
     //分享
-    dataList = [
-        { url: 'umnHwvEgSyQtXlZjNJTt', title: '微信好友' },
-        { url: 'SxpunpETIwdxNjcJamwB', title: 'QQ' },
-      ].map(obj => ({
-        icon: <img src={`https://gw.alipayobjects.com/zos/rmsportal/${obj.url}.png`} alt={obj.title} style={{ width: 36 }} />,
-        title: obj.title,
-    }));
-    showShareActionSheet = () => {
-        ActionSheet.showShareActionSheetWithOptions({
-          options: this.dataList,
-          // title: 'title',
-          message: '分享给朋友',
-        },
-        (buttonIndex) => {
-          this.setState({ clicked: buttonIndex > -1 ? this.dataList[buttonIndex].title : 'cancel' });
-          //console.log(buttonIndex);
-          if(buttonIndex == 0){
-              console.log("share to weixin");
-          }else{
-            console.log("share to qq");
-          }
-        });
-      }
+    // dataList = [
+    //     { url: 'umnHwvEgSyQtXlZjNJTt', title: '微信好友' },
+    //     { url: 'SxpunpETIwdxNjcJamwB', title: 'QQ' },
+    //   ].map(obj => ({
+    //     icon: <img src={`https://gw.alipayobjects.com/zos/rmsportal/${obj.url}.png`} alt={obj.title} style={{ width: 36 }} />,
+    //     title: obj.title,
+    // }));
+    // showShareActionSheet = () => {
+    //     ActionSheet.showShareActionSheetWithOptions({
+    //       options: this.dataList,
+    //       // title: 'title',
+    //       message: '分享给朋友',
+    //     },
+    //     (buttonIndex) => {
+    //       this.setState({ clicked: buttonIndex > -1 ? this.dataList[buttonIndex].title : 'cancel' });
+    //       //console.log(buttonIndex);
+    //       if(buttonIndex == 0){
+    //           console.log("share to weixin");
+    //       }else{
+    //         console.log("share to qq");
+    //       }
+    //     });
+    //   }
     //select toType
     selTo=(item)=>{
         this.props.history.push("/home?to="+item);
         //获取收信人对应信件
         this.$api.getLetter({toNick:item}).then(res =>{
-            //console.log(res.data.data);
              this.setState({
                  dataList : res.data.data
              })
@@ -314,7 +335,7 @@ export default class Home extends Component {
                     <ul>
                         {
                             this.state.dataList.map((item,index)=>{
-                                if(item.toNick == this.state.toType){
+                               // if(item.toNick == this.state.toType){
                                     return <li className="content" key={index}>
                                             <div className="c-top">
                                                 <div className="title">
@@ -338,7 +359,8 @@ export default class Home extends Component {
                                                         onSelect={this.onSelect}
                                                         overlay={[
                                                         (<Item value="share" item={item}>
-                                                            <button className="DM-p" ><img className="DM-img" src={require("../imgs/Home/share.png")} />
+                                                            <button className="DM-p" >
+                                                                <img className="DM-img" src={require("../imgs/Home/share.png")} />
                                                                 分享
                                                             </button>
                                                         </Item>),
@@ -351,11 +373,11 @@ export default class Home extends Component {
                                                             </Link></Router>
                                                         </Item>),
                                                         (<Item  value="del" item={item}>
-                                                            <button className="DM-p" ><img className="DM-img" src={require("../imgs/Home/del.png")} />
+                                                            <button className="DM-p" >
+                                                                <img className="DM-img" src={require("../imgs/Home/del.png")} />
                                                                 删除
                                                             </button>
-                                                        </Item>),
-
+                                                        </Item>)
                                                         ]}
                                                         // align={{overflow: { adjustY: 0, adjustX: 0 },offset: [0, 5],}}
                                                         >
@@ -372,7 +394,7 @@ export default class Home extends Component {
                                             </div>
                                             </Link>
                                         </li>
-                                }
+                               // }
                             })
                         }
                     </ul>

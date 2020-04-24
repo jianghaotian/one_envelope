@@ -1,8 +1,13 @@
 var express = require('express');
 var router = express.Router();
+const path = require('path');
 
 const runSql = require('../mysql');
 const { getToken, checkToken } = require('../src/token');
+const { getTimestamp_13 } = require('../src/timer');
+const getRandom = require('../src/user/verification');
+var multiparty = require('multiparty');
+var fs = require('fs');
 // let token = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1aWQiOjEsImlhdCI6MTU3NDkzNDk1NCwiZXhwIjoxNTc3NjEzMzU0fQ.PQu7Dzp4MsurerTMR-wYSITeWKxGoo_aH_002CeEzqg';
 
 /**
@@ -21,10 +26,8 @@ router.get('/getletter', function (req, res, next) {
         if (result.status !== 0) {
             res.json(result);
         } else {
-            // console.log(result);
             let uid = result.data.uid;
             runSql(`select pletter.* from pletter where uid=? and toNick=? and isDelete=?`, [uid,toNick,0], (result1) => {
-                // console.log(result1);
                 res.json(result1);
             });
         }
@@ -39,7 +42,6 @@ router.get('/getletter', function (req, res, next) {
 router.post('/getletter/pdelete', function (req, res, next) {
     //http://localhost:8000/v1/private/getletter/pdelete
     let {pid} = req.body;
-    // console.log(pid);
     let token = req.header('token');
     checkToken(token, (result) => {
         if (result.status !== 0) {
@@ -48,10 +50,8 @@ router.post('/getletter/pdelete', function (req, res, next) {
             // console.log(result);
             let uid = result.data.uid;
             runSql(`select isDelete from pletter where uid=? and pid=?`,[uid,pid],(result1) =>{
-                // console.log(result1.data[0].isDelete);
                 if(result1.data[0].isDelete == 0){
                     runSql(`update pletter set isDelete=? where uid=? and pid=? `, [1,uid,pid], (result2) => {
-                        // console.log(result2);                        
                             res.json(result2);
                     })
                 }
@@ -69,26 +69,39 @@ router.post('/getletter/pdelete', function (req, res, next) {
  *      toUid:收件人id
  *      toNick:收信人称呼
  *      pday:创建日期
- * 
+ *      ppid:背景id
+ *      mp3Data:音频的base64编码
+ *      color:字体颜色
  */
 router.post('/writeletter', function (req, res, next) {
-    let { Ptitle, Pcontent,toUid,toNick,Pday,ppid,color } = req.body;
-    // console.log(req.body);
+    let { Ptitle, Pcontent,toUid,toNick,Pday,ppid,mp3Data,color } = req.body;
     let token = req.header('token');
-    // console.log(token);
     checkToken(token, (result) => {
         if(result.status != 0){
             res.json(result);
         }else{
             let uid = result.data.uid;
-            runSql(`insert into pletter(Ptitle, Pcontent, Uid,toUid,toNick,isSend,Pday,isCollection,isDelete,ppid,color) values (?,?,?,?,?,?,?,?,?,?,?)`, [Ptitle, Pcontent,uid,null,toNick,0,Pday,0,0,ppid,color],(result1)=>{
-                // console.log(result1);
-                res.json(result1);
+            var form = new multiparty.Form();
+            form.parse(req, function(err, fields, files){
+                //将前台传来的base64数据去掉前缀
+                var musicData = mp3Data.replace(/^data:audio\/\w+;base64,/,"");;
+                var dataBuffer = new Buffer.from(musicData, 'base64');
+                //写入文件
+                var name = getTimestamp_13()+'_'+getRandom(2)+'.mp3';
+                var musicPath = path.join(__dirname,'../public/music/'+name);
+                fs.writeFile(musicPath, dataBuffer, function(err){
+                    if(err){
+                        res.send(err);
+                    }else{
+                        runSql(`insert into pletter(Ptitle, Pcontent, Uid,toUid,toNick,isSend,Pday,isCollection,isDelete,ppid,music,color) values (?,?,?,?,?,?,?,?,?,?,?,?)`, [Ptitle, Pcontent,uid,null,toNick,0,Pday,0,0,ppid,name,color],(result1)=>{
+                            res.json(result1);
+                        });
+                    }
+                });
             });
         }
     });
 });
-
 
 /**
  * 展示收信人列表

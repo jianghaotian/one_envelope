@@ -27,23 +27,27 @@ export default class Back extends Component {
     }
     selImg=(item)=>{
         let data = this.props.history.location.search;
-        console.log(data);
+        //console.log(data);
         let arr = data.split("&");
-        console.log(arr);
+        //console.log(arr);
         let type = arr[1].split("=")[1];
         // console.log(type);
         let pid = arr[0].split("=");
         //console.log(item.ppid,pid[1]);
-        if(type == "edit"){
+        if(type == "edit" && arr.length<3 ){
             this.$api.changeBack({pid:pid[1],ppid : item.ppid}).then(res=>{
-                console.log(res);
+                //console.log(res);
             })
-            this.props.history.push("/homeWrite/"+data);
+            this.props.history.push("/homeWrite/"+data+"&ppid="+item.ppid);
         }else if(type == "create" && arr.length<3){
             this.props.history.push("/homeWrite/"+data+"&ppid="+item.ppid);
         }else if(type == "create" && arr.length >2){
             arr.splice(2,1,"ppid="+item.ppid);
-            console.log(arr.join("&"));
+            //console.log(arr.join("&"));
+            this.props.history.push("/homeWrite/"+arr.join("&"));
+        }else if(type == "edit" && arr.length>2){
+            arr.splice(2,1,"ppid="+item.ppid);
+            //console.log(arr.join("&"));
             this.props.history.push("/homeWrite/"+arr.join("&"));
         }
     }
