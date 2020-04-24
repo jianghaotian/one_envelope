@@ -10,7 +10,8 @@ export default class LetterBox extends Component {
             arr:[],
             brr:[],
             text:'',
-            display: true,
+            display:true,
+            displayb:false
         }
         this.handleshow = this.handleshow.bind(this)
         this.handlehide = this.handlehide.bind(this)
@@ -21,7 +22,7 @@ export default class LetterBox extends Component {
             this.setState({
                 arr:res.data.data
             })
-            // console.log(this.state.arr)
+            console.log(this.state.arr)
         }) 
     }
     // 获取输入值
@@ -42,25 +43,32 @@ export default class LetterBox extends Component {
             this.handlehide();
             this.$api.searchmail({ptitle:this.state.text}).then(res => {
                 console.log(res.data.data)//返回数据
-                
+                this.setState({
+                    brr:res.data.data
+                })
+                this.setState({
+                    displayb:true
+                })
             });
         }
     }
-
+    // 失去焦点，显示原列表
     handleshow =(e)=> {
-        console.log('失去焦点，显示列表')
+        console.log('失去焦点，显示原列表')
         this.setState({
-            display:true
+            display:true,
+            displayb:false
         })
     }
+    // 获得焦点，显示搜索结果
     handlehide=(e)=>{
-        console.log('获得焦点，列表隐藏')
+        console.log('获得焦点，显示b列表')
         this.setState({
-            display:false
+            display:false,
+            displayb:true
         })
     }
     //获取焦点
-    
     render() {
         return (
             <div>
@@ -78,9 +86,8 @@ export default class LetterBox extends Component {
                 onChange={(e)=>this.inputChange(e)}
                 cancelText='搜索'
                 onCancel={(e)=>this.handleChange(e)}
-                onSubmit={(e)=>this.handleChange(e)}
+                // onSubmit={(e)=>this.handleChange(e)}
                 onFocus={(e)=>this.handlehide(e)}
-                // onFocus={console.log(123)}
                 onBlur={(e)=>this.handleshow(e)}
                 />
                 {/* 列表页 */}
@@ -113,7 +120,7 @@ export default class LetterBox extends Component {
                         )
                     })} 
                 </List>
-                {/* <List  className={this.state.display?"active":"active1"}>
+                <List  className={this.state.displayb?"active":"active1"}>
                     {this.state.brr.map((item,index)=>{
                         return(
                             <List.Item className='lb-text' onClick={() => {}} 
@@ -124,7 +131,7 @@ export default class LetterBox extends Component {
                                     color:'black'
                                 }} key={index}
                                 >
-                                <img src={"https://yf.htapi.pub/head/" + item.uimage} style={{
+                                <img src={"https://yf.htapi.pub/head/" + item.ppimage} style={{
                                     borderRadius:'50%',
                                     height:'64px',
                                     width:'64px'
@@ -140,7 +147,7 @@ export default class LetterBox extends Component {
                             </List.Item>
                         )
                     })} 
-                </List> */}
+                </List>
             </div>
         )
     }
