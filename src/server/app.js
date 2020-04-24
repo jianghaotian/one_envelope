@@ -40,8 +40,6 @@ app.use(express.urlencoded({extended: false,limit: '50mb'}));
 app.use(cookieParser());
 app.use(express.static(path.join(__dirname, 'public')));
 
-
-
 // app.use('/', indexRouter);
 app.use('/v1/users', usersRouter);
 app.use('/v1/private', pLetterRouter);
