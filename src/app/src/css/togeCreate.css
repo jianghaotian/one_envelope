@@ -200,12 +200,13 @@ textarea{
     width: 200px; 
     height: 200px;
 }
+.am-list-item{
+    background-color:transparent
+}
 .insertimg{
-    width: 100%;
-    height: 33%;
-    margin: 0 auto;
-    text-align: center;
-    /* background-color: red; */
+    width: 47%;
+    height: 30%;
+    float: left;
+    margin-right: 1%;
     border: 1px;
-    margin-bottom: 3%;
 }

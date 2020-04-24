@@ -166,7 +166,7 @@ export default class InviteWrite extends Component {
                             <div className="content-time">
                                 <span className="c-day">{new Date(val.lday).getFullYear()}</span>
                                 <br/>
-                                <span className="c-month">[{new Date(val.lday).getMonth()}/{new Date(val.lday).getDate()}]</span>
+                                <span className="c-month">[{new Date(val.lday).getMonth()+1}/{new Date(val.lday).getDate()}]</span>
                             </div>
                             <Link to={'/togeContent/'+val.lid}>
                             <div className="content-title">
