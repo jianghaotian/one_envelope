@@ -63,8 +63,6 @@ const api = {
     postMusic: p=>post('music/insertMp3',p),//上传音乐
     showMusic: p=>get('music/showmusic',p),//获取音乐
     delMusic : p=>post('music/delMp3',p),//删除音乐
-    postBgImg : p=>post('image/choosebg',p),//上传自定义背景
-    showBgImg : p=>get('image/showpbg',p),//获取自定义背景
     // getpid:p => get('private/getpd',p)
         
 }
