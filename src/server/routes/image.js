@@ -192,13 +192,7 @@ router.get('/showpbg',function(req,res){
             res.json(result);
         }else{ 
             runSql('select bgimage,custom from pletter where pid=?',[pid],(result1)=>{
-                var bg = result1.data[0].bgimage;
-                var custom = result1.data[0].custom;
-                if(custom == 0){
-                    res.json(result1)
-                }else{
-                    res.json({status: 0, data: [{bg:bg,custom:custom}]});
-                }
+                 res.json(result1);
             })
         }
     })
