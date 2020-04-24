@@ -112,7 +112,7 @@ router.get('/searchmail', function (req, res, next) {
             res.json(result);
         } else {
             let uid = result.data.uid;
-            runSql(`select pletter.*,paper.ppimage from pletter,paper where isSend = ? and touid=? and ptitle like ? and paper.ppid=pletter.ppid`, [1,uid,inputTitle], (result1) => {
+            runSql(`select pletter.*,paper.ppimage,user.uimage,user.uname from pletter,paper,user where isSend = ? and touid=? and ptitle like ? and paper.ppid=pletter.ppid and user.uid=pletter.uid`, [1,uid,inputTitle], (result1) => {
                 console.log(result1);
                 res.json(result1);
             });
