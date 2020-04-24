@@ -1,6 +1,7 @@
 import React, { Component } from 'react'
-import { List,Toast, ActionSheet } from 'antd-mobile'
+import { List,Toast, ActionSheet,Modal } from 'antd-mobile'
 import {Link} from 'react-router-dom'
+const alert = Modal.alert;
 export default class Letter extends Component {
     constructor(){
         super()
@@ -8,6 +9,7 @@ export default class Letter extends Component {
             dataList:[],
             isLike:0,
             arr:[{
+                'pid':0,
                 "toNick":"寄信人",
                 "Ptitle":"小标题",
                 "Pcontent":'内容',
@@ -16,12 +18,16 @@ export default class Letter extends Component {
         }
     }
     componentDidMount(){
-        // console.log(this.props.match.params.id)//打印文章信息号
+        this.setState({
+            pid:this.props.match.params.id
+        })
+        console.log(this.props.match.params.id)//打印文章信息号
         this.$api.showmail({pid:this.props.match.params.id}).then(res => {
             // console.log(res.data.data)//打印数据
             this.setState({
                 arr:res.data.data
             });
+            
             this.setState({
                 isLike:res.data.data[0].isCollection
             })
@@ -50,30 +56,61 @@ export default class Letter extends Component {
         console.log('删除代码已注释')
     }
     // 分享
-    dataList = [
-        { url: 'umnHwvEgSyQtXlZjNJTt', title: '微信好友' },
-        { url: 'SxpunpETIwdxNjcJamwB', title: 'QQ' },
-      ].map(obj => ({
-        icon: <img src={`https://gw.alipayobjects.com/zos/rmsportal/${obj.url}.png`} alt={obj.title} style={{ width: 36 }} />,
-        title: obj.title,
-    }));
-    showShareActionSheet = () => {
-        ActionSheet.showShareActionSheetWithOptions({
-          options: this.dataList,
-          // title: 'title',
-          message: '分享给朋友',
-        },
-        (buttonIndex) => {
-          this.setState({ clicked: buttonIndex > -1 ? this.dataList[buttonIndex].title : 'cancel' });
-          //console.log(buttonIndex);
-          if(buttonIndex == 0){
-              console.log("share to weixin");
-          }else if(buttonIndex == 1){
-            console.log("share to qq");
-          }
-        });
-      }
-
+    // dataList = [
+    //     { url: 'umnHwvEgSyQtXlZjNJTt', title: '微信好友' },
+    //     { url: 'SxpunpETIwdxNjcJamwB', title: 'QQ' },
+    // ].map(obj => ({
+    //     icon: <img src={`https://gw.alipayobjects.com/zos/rmsportal/${obj.url}.png`} alt={obj.title} style={{ width: 36 }} />,
+    //     title: obj.title,
+    // }));
+    // showShareActionSheet = () => {
+    //     ActionSheet.showShareActionSheetWithOptions({
+    //         options: this.dataList,
+    //       // title: 'title',
+    //         message: '分享给朋友',
+    //     },
+    //     (buttonIndex) => {
+    //         this.setState({ clicked: buttonIndex > -1 ? this.dataList[buttonIndex].title : 'cancel' });
+    //       //console.log(buttonIndex);
+    //         if(buttonIndex == 0){
+    //             console.log("share to weixin");
+    //         }else if(buttonIndex == 1){
+    //         console.log("share to qq");
+    //         }
+    //     });
+    // }
+    sharemail=()=>{
+        // console.log(this.state.pid)//打印文章信息号
+        var pid = this.state.pid;
+        var shareModel1 = {
+            shareQQ: function (pid,type) {
+                var param = {
+                    pid:pid,
+                    type:type
+                };
+                var s = [];
+                for (var i in param) {
+                    s.push(i + '=' + encodeURIComponent(param[i] || ''));
+                }
+                // http://localhost:3000/#/homeWrite/?pid=97&type=edit
+                var targetUrl = "http://localhost:3000/#/homeWrite/?pid="+pid+"&type=edit";
+                return targetUrl;
+            }
+        }
+        var shareUrl = shareModel1.shareQQ(pid,'edit');
+        // console.log(shareUrl);
+        alert('分享链接', shareUrl, [
+            { text: '取消分享', onPress: () => console.log('cancel') },
+            { text: '复制链接', onPress: () => {this.handleCopy()
+                // am-modal-alert-content
+                alert('复制成功','',[
+                    {text:'确定',onPress:()=>{console.log('确定')}},
+                    {text:'打开链接',onPress:()=>{window.open(shareUrl,'一封','height=640, width=360')}}
+                ])
+                
+            } },
+        ]);
+    }
     render() {
         return (
             <div className="lt">
@@ -158,7 +195,8 @@ export default class Letter extends Component {
                             width:"33.3%",
                             float:'left'
                         }}
-                        onClick={()=>this.showShareActionSheet()}
+                        // onClick={()=>this.showShareActionSheet()}
+                        onClick={()=>this.sharemail()}                        
                         >
                             <i className='iconfont icon-huifu' style={{
                                 paddingLeft:"45%",

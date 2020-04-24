@@ -16,7 +16,6 @@ export default class Changename extends Component {
         })
         console.log(e)
         // console.log(this.state.username);
-
     }
     handleChange = () => {
         // console.log(this.state.username);
