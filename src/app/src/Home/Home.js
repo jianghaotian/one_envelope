@@ -152,6 +152,17 @@ export default class Home extends Component {
             console.log("写信");
         }
     };
+    handleCopy = () => {
+        const spanText = document.getElementsByClassName('am-modal-alert-content')[0].innerText;
+        const oInput = document.createElement('input');
+        oInput.value = spanText;
+        document.body.appendChild(oInput);
+        oInput.select(); // 选择对象
+        document.execCommand('Copy'); // 执行浏览器复制命令
+        oInput.className = 'oInput';
+        oInput.style.display = 'none';
+        document.body.removeChild(oInput);
+      };
     // 显示slider
     select=()=>{
         this.setState({
