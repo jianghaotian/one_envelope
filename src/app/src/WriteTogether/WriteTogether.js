@@ -17,7 +17,7 @@ export default class WriteTogether extends Component {
     componentDidMount(){
         this.$api.theme().then(res => {
             if (res.data.status === 0) {
-                console.log(res);
+                // console.log(res);
                 this.setState({
                     data:res.data.data
                 })
@@ -26,7 +26,7 @@ export default class WriteTogether extends Component {
         
     }
     render() {
-        console.log(this.state.data);
+        // console.log(this.state.data);
 
         return (
             <div style={{backgroundColor:"rgb(240, 233, 233)"}}>
