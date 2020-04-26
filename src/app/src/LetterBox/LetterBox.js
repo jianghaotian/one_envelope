@@ -59,6 +59,7 @@ export default class LetterBox extends Component {
             display:true,
             displayb:false
         })
+        e=''
     }
     // 获得焦点，显示搜索结果
     handlehide=(e)=>{
@@ -67,6 +68,7 @@ export default class LetterBox extends Component {
             display:false,
             displayb:true
         })
+
     }
     //获取焦点
     render() {
@@ -108,7 +110,7 @@ export default class LetterBox extends Component {
                                     height:'64px',
                                     width:'64px'
                                 }} />
-                                <span className="lb-user">Uname</span>
+                                <span className="lb-user">{item.uname}</span>
                                 
                                 <span className="lb-date">{new Date(item.Pday).getFullYear()+'-'+(new Date(item.Pday).getMonth()+1)+'-'+new Date(item.Pday).getDate()}</span>
                                 <span className="lb-title">{item.Ptitle}</span>
@@ -131,12 +133,12 @@ export default class LetterBox extends Component {
                                     color:'black'
                                 }} key={index}
                                 >
-                                <img src={"https://yf.htapi.pub/head/" + item.ppimage} style={{
+                                <img src={"https://yf.htapi.pub/head/" + item.uimage} style={{
                                     borderRadius:'50%',
                                     height:'64px',
                                     width:'64px'
                                 }} />
-                                <span className="lb-user">Uname</span>
+                                <span className="lb-user">{item.uname}</span>
                                 
                                 <span className="lb-date">{new Date(item.Pday).getFullYear()+'-'+(new Date(item.Pday).getMonth()+1)+'-'+new Date(item.Pday).getDate()}</span>
                                 <span className="lb-title">{item.Ptitle}</span>

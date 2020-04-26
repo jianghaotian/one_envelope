@@ -91,31 +91,60 @@ router.post('/getletter/pdelete', function (req, res, next) {
  *      color:字体颜色
  */
 router.post('/writeletter', function (req, res, next) {
-    let { Ptitle, Pcontent,toUid,toNick,Pday,ppid,mp3Data,color } = req.body;
+    let { Ptitle, Pcontent,toUid,toNick,Pday,ppid,mp3Data,color,bgData} = req.body;
+    console.log(mp3Data,bgData)
     let token = req.header('token');
     checkToken(token, (result) => {
         if(result.status != 0){
             res.json(result);
         }else{
             let uid = result.data.uid;
-            var form = new multiparty.Form();
-            form.parse(req, function(err, fields, files){
-                //将前台传来的base64数据去掉前缀
-                var musicData = mp3Data.replace(/^data:audio\/\w+;base64,/,"");;
-                var dataBuffer = new Buffer.from(musicData, 'base64');
-                //写入文件
-                var name = getTimestamp_13()+'_'+getRandom(2)+'.mp3';
-                var musicPath = path.join(__dirname,'../public/music/'+name);
-                fs.writeFile(musicPath, dataBuffer, function(err){
-                    if(err){
-                        res.send(err);
-                    }else{
-                        runSql(`insert into pletter(Ptitle, Pcontent, Uid,toUid,toNick,isSend,Pday,isCollection,isDelete,ppid,music,color) values (?,?,?,?,?,?,?,?,?,?,?,?)`, [Ptitle, Pcontent,uid,null,toNick,0,Pday,0,0,ppid,name,color],(result1)=>{
-                            res.json(result1);
-                        });
-                    }
+            if(mp3Data == undefined && bgData == undefined){
+                runSql(`insert into pletter(Ptitle, Pcontent, Uid,toUid,toNick,isSend,Pday,isCollection,isDelete,ppid,music,color,bgimage,custom) values (?,?,?,?,?,?,?,?,?,?,?,?,?,?)`, [Ptitle, Pcontent,uid,null,toNick,0,Pday,0,0,ppid,null,color,null,0],(result1)=>{
+                    res.json(result1);
                 });
-            });
+            }else if(mp3Data !== undefined && bgData == undefined){
+                var form = new multiparty.Form();
+                form.parse(req, function(err, fields, files){
+                    //将前台传来的base64数据去掉前缀
+                    var musicData = mp3Data.replace(/^data:audio\/\w+;base64,/,"");;
+                    var dataBuffer = new Buffer.from(musicData, 'base64');
+                    //写入文件
+                    var name = getTimestamp_13()+'_'+getRandom(2)+'.mp3';
+                    var musicPath = path.join(__dirname,'../public/music/'+name);
+                    fs.writeFile(musicPath, dataBuffer, function(err){
+                        if(err){
+                            res.send(err);
+                        }else{
+                            runSql(`insert into pletter(Ptitle, Pcontent,Uid,toUid,toNick,isSend,Pday,isCollection,isDelete,ppid,music,color,bgimage,custom) values (?,?,?,?,?,?,?,?,?,?,?,?,?,?)`, [Ptitle, Pcontent,uid,null,toNick,0,Pday,0,0,ppid,name,color,null,0],(result1)=>{
+                                res.json(result1);
+                            });
+                        }
+                    });
+                });
+            }else if(mp3Data == undefined && bgData !== undefined){
+                var form = new multiparty.Form();
+                form.parse(req, function(err, fields, files){
+                    //将前台传来的base64数据去掉前缀
+                    var imgData = req.body.bgData.replace(/^data:image\/\w+;base64,/, '');
+                    var dataBuffer = new Buffer.from(imgData, 'base64');
+                    //写入文件
+                    var name = getTimestamp_13()+'_'+getRandom(2)+'.png';
+                    var picPath = path.join(__dirname,'../public/pbgimage/'+name);
+                    fs.writeFile(picPath, dataBuffer, function(err){
+                        if(err){
+                            res.send(err);
+                        }else{
+                            runSql(`insert into pletter(Ptitle, Pcontent,Uid,toUid,toNick,isSend,Pday,isCollection,isDelete,ppid,music,color,bgimage,custom) values (?,?,?,?,?,?,?,?,?,?,?,?,?,?)`, [Ptitle, Pcontent,uid,null,toNick,0,Pday,0,0,ppid,null,color,name,1],(result1)=>{
+                                res.json(result1);
+                            });
+                        }
+                    });
+                });
+            }
+            else{
+                res.json("Don't add BGM and custom background at the same time!")
+            }
         }
     });
 });

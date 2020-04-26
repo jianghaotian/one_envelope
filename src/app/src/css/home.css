@@ -7,11 +7,12 @@ li{
 }
 /* 背景图 */
 .home-back{
-    height:150px;
+    height:200px;
     width:100%;
     /* background-color: pink; */
     /* background: url(../imgs/Home/backImg3.png) 00px; */
-    background: url(../imgs/Home/backImg5.png) 00px;
+    /* background: url(../imgs/Home/backImg5.png) 00px; */
+    background: url('https://timgsa.baidu.com/timg?image&quality=80&size=b9999_10000&sec=1587725314365&di=5152e40813e4f5dffe79937d99dbcdf0&imgtype=0&src=http%3A%2F%2Fb-ssl.duitang.com%2Fuploads%2Fitem%2F201804%2F08%2F20180408003249_mplhn.thumb.700_0.jpg') 00px;
     background-size:cover;
     position:fixed;
     top:0;
@@ -33,7 +34,7 @@ li{
 .home-body{
     height:100%;
     position: relative;
-    top:150px;
+    top:200px;
     width:100%;
     /* background: rgb(177, 68, 68); */
 }
@@ -106,7 +107,7 @@ li{
     position:absolute;
     bottom:5px;
     right:10px;
-    background: url("../imgs/Home/pencil.png");
+    background: url("../imgs/Home/write.png");
     background-size:cover;
 }
 
