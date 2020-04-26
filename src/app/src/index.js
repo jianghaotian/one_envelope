@@ -37,6 +37,7 @@ import store from './redux/store';
 import Collecletter from './My/Collecletter'
 import HomeWrite from './Home/HomeWrite'
 import Back from './Home/Back'
+import CustomBack from './Home/CustomBack'
 
 React.Component.prototype.$api = api;
 React.Component.prototype.$store = store;
@@ -53,6 +54,7 @@ ReactDOM.render(
             <Route path="/home" component={Tabbar} />
             <Route exact path="/homeWrite" component={HomeWrite} />
             <Route path="/back" component={Back} />
+            <Route path='/cback' component={CustomBack} />
             {/* lxc */}
             <Route path="/recover" component={Recover} />
             <Route path="/setting" component={Setting}/>
