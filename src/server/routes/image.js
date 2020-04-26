@@ -212,7 +212,7 @@ router.post('/delbgimg',function(req,res,next){
         if(result.status !==0){
             res.json(result)
         }else{
-            runSql('update pletter set bgname=?,custom=? where pid=?',[null,0,pid],(result2)=>{
+            runSql('update pletter set bgimage=?,custom=? where pid=?',[null,0,pid],(result2)=>{
                 fs.unlinkSync(path.join(__dirname,'../public/pbgimage/'+bgname));
                 res.json(result2);
             })
