@@ -33,6 +33,17 @@ export default class Letter extends Component {
             })
         }) 
     }
+    handleCopy = () => {
+        const spanText = document.getElementsByClassName('am-modal-alert-content')[0].innerText;
+        const oInput = document.createElement('input');
+        oInput.value = spanText;
+        document.body.appendChild(oInput);
+        oInput.select(); // 选择对象
+        document.execCommand('Copy'); // 执行浏览器复制命令
+        oInput.className = 'oInput';
+        oInput.style.display = 'none';
+        document.body.removeChild(oInput);
+    };
     collec = () => {
         if(this.state.isLike){
             // 后台取消收藏
@@ -50,35 +61,12 @@ export default class Letter extends Component {
     }
     // 删除
     deleEmail =(e)=>{
-        // this.$api.deletemail({pid:this.props.match.params.id}).then(res => {
-        //     Toast.success('删除成功', 1);
-        // }) 
-        console.log('删除代码已注释')
+        this.$api.deletemail({pid:this.props.match.params.id}).then(res => {
+            Toast.success('删除成功', 1);
+        }) 
+        // console.log('删除代码已注释')
     }
-    // 分享
-    // dataList = [
-    //     { url: 'umnHwvEgSyQtXlZjNJTt', title: '微信好友' },
-    //     { url: 'SxpunpETIwdxNjcJamwB', title: 'QQ' },
-    // ].map(obj => ({
-    //     icon: <img src={`https://gw.alipayobjects.com/zos/rmsportal/${obj.url}.png`} alt={obj.title} style={{ width: 36 }} />,
-    //     title: obj.title,
-    // }));
-    // showShareActionSheet = () => {
-    //     ActionSheet.showShareActionSheetWithOptions({
-    //         options: this.dataList,
-    //       // title: 'title',
-    //         message: '分享给朋友',
-    //     },
-    //     (buttonIndex) => {
-    //         this.setState({ clicked: buttonIndex > -1 ? this.dataList[buttonIndex].title : 'cancel' });
-    //       //console.log(buttonIndex);
-    //         if(buttonIndex == 0){
-    //             console.log("share to weixin");
-    //         }else if(buttonIndex == 1){
-    //         console.log("share to qq");
-    //         }
-    //     });
-    // }
+    
     sharemail=()=>{
         // console.log(this.state.pid)//打印文章信息号
         var pid = this.state.pid;
@@ -93,7 +81,7 @@ export default class Letter extends Component {
                     s.push(i + '=' + encodeURIComponent(param[i] || ''));
                 }
                 // http://localhost:3000/#/homeWrite/?pid=97&type=edit
-                var targetUrl = "http://localhost:3000/#/homeWrite/?pid="+pid+"&type=edit";
+                var targetUrl = "https://yf.htapi.pub/v1/private/share?pid="+pid;
                 return targetUrl;
             }
         }
