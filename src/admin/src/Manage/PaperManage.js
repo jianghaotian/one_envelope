@@ -29,7 +29,7 @@ export default class PaperManage extends Component {
         this.$api.paperlist().then(res => {
             let list = res.data.data;
             for(var i=0;i<list.length;i++){
-                list[i].url = "http://localhost:8000/paper/" + list[i].ppimage
+                list[i].url = "https://yf.htapi.pub/paper/" + list[i].ppimage
                 list[i].uid =-(i+1);
             }
             this.setState({
@@ -87,7 +87,7 @@ export default class PaperManage extends Component {
                     <span className='buser_sum'>总信纸数：{this.state.num}</span>
                     <div className="clearfix">
                         <Upload
-                            action="http://localhost:8000/v1/image/paper"
+                            action="https://yf.htapi.pub/v1/image/paper"
                             listType="picture-card"
                             fileList={fileList}
                             onPreview={this.handlePreview}
