@@ -92,7 +92,6 @@ router.post('/getletter/pdelete', function (req, res, next) {
  */
 router.post('/writeletter', function (req, res, next) {
     let { Ptitle, Pcontent,toUid,toNick,Pday,ppid,mp3Data,color,bgData} = req.body;
-    console.log(mp3Data,bgData)
     let token = req.header('token');
     checkToken(token, (result) => {
         if(result.status != 0){
