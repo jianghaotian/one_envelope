@@ -198,25 +198,23 @@ router.get('/showpbg',function(req,res){
     })
 })
 /**
- * 删除插入图片()
+ * 删除自定义背景图(私密写)
  * 请求方式
  *      POST
  * 接受参数：
  *      pid：信件id
- *      insertImg：图片名称
+ *      bgname：自定义背景图名称
  */
-router.post('/delInsertPimg',function(req,res,next){
+router.post('/delbgimg',function(req,res,next){
     let token = req.header('token');
-    let {pid,insertImg} = req.body;
+    let {pid,bgname} = req.body;
     checkToken(token,(result)=>{
         if(result.status !==0){
             res.json(result)
         }else{
-            runSql('select insertImg from pletter where pid=?',[pid],(result1)=>{
-                let img = result1.data[0].insertImg.replace(insertImg+',','');
-                runSql('update pletter set insertImg=? where pid=?',[img,pid],(result2)=>{
-                    res.json(result2);
-                })
+            runSql('update pletter set bgname=?,custom=? where pid=?',[null,0,pid],(result2)=>{
+                fs.unlinkSync(path.join(__dirname,'../public/pbgimage/'+bgname));
+                res.json(result2);
             })
         }
     })
