@@ -65,6 +65,7 @@ const api = {
     delMusic : p=>post('music/delMp3',p),//删除音乐
     postBgImg : p=>post('image/choosebg',p),//上传自定义背景
     showBgImg : p=>get('image/showpbg',p),//获取自定义背景
+    delCustom : p=>post('image/delbgimg',p),//删除自定义背景
     // getpid:p => get('private/getpd',p)
         
 }
