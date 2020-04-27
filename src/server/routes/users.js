@@ -135,7 +135,7 @@ router.post('/register', function (req, res, next) {
                 if ((getTimestamp_13() - result.data[0].vtime) < minuteTimestamp) {
                     if (result.data[0].vcode === verification) {
                         if (type === 'phone' || type === 'email') {
-                            runSql(`insert into user(u${type}, upassword, uname,uimage,uday) values (?,?,?,?,?)`, [account, password, name,'1234567890987_11.jpg',a], (result) => {
+                            runSql(`insert into user(u${type}, upassword, uname,uimage,uday,signature,homeBack) values (?,?,?,?,?,'这家伙很懒什么也没有','1234567899876_11.jpg')`, [account, password, name,'1234567890987_11.jpg',a], (result) => {
                                 runSql('delete from verification where vaccount = ?', [account], (result) => {
                                     // console.log(result);
                                 });

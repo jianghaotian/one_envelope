@@ -341,4 +341,64 @@ router.post('/delInsertTimg',function(req,res,next){
         }
     })
 })
+/**
+ * 获取首页图片和信息
+ * 请求方式：
+ *      GET
+ * 接受参数：
+ * 
+ * 返回参数：
+ *     uid：用户id
+ *     homeBack：首页背景图 ，
+ *      signature：个性签名
+ */
+router.get('/homeImage',function(req,res,next){
+    let token = req.header('token');
+    checkToken(token,(result)=>{
+        if(result.status !== 0){
+            res.json(result)
+        }else{
+            let uid = result.data.uid;
+            runSql('select uid,signature,homeBack from user where uid=?',[uid],(result1)=>{
+                res.json(result1);
+            })
+        }
+    })
+})
+/**
+ * 更换首页背景图片
+ * 请求方式：
+ *      POST
+ * 接收参数：
+ *      src:图片base64位编码
+ */
+router.post('/changeHomeBack',function(req,res,next){
+    let token = req.header('token');
+    checkToken(token, (result) => {
+        if (result.status !== 0) {
+            res.json(result);
+        } else {  
+            let uid = result.data.uid; 
+            var form = new multiparty.Form();
+            form.parse(req, function(err, fields, files){
+                //将前台传来的base64数据去掉前缀
+                var imgData = req.body.imgData.replace(/^data:image\/\w+;base64,/, '');
+                var dataBuffer = new Buffer.from(imgData, 'base64');
+                //写入文件
+                var name = getTimestamp_13()+'_'+getRandom(2)+'.png';
+                var picPath = path.join(__dirname,'../public/homeBack/'+name);
+                fs.writeFile(picPath, dataBuffer, function(err){
+                    if(err){
+                        res.send(err);
+                    }else{
+                        runSql('update user set homeBack=? where uid=? ',[name,uid],(result1)=>{
+                            res.json(result1);
+                        })
+                           
+                    }
+                });
+            });
+        }
+    })
+})
 module.exports = router;
