@@ -479,7 +479,7 @@ POST
 **请求url**
 
 ```
-URL : https://yf.htapi.pub/v1/image/homeBack
+URL : https://yf.htapi.pub/v1/image/homeImage
 ```
 
 **请求方式**
