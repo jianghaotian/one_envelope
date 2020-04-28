@@ -296,7 +296,7 @@ router.post('/feedback', function (req, res, next) {
  */
 router.post('/changeSignature',function(req,res,next){
     let token=req.header('token');
-    let signature = req.body;
+    let {signature} = req.body;
     checkToken(token,(result)=>{
         if (result.status !== 0) {
             res.json(result);
