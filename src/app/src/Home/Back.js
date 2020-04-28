@@ -52,15 +52,18 @@ export default class Back extends Component {
             this.props.history.push("/homeWrite/"+arr.join("&"));
         }
         this.$api.showBgImg({pid:pid[1]}).then(res=>{
+            //console.log(res);
             let data = res.data.data;
-            let bgImg = data[0].bgimage;
-            let custom = data[0].custom;
-            console.log(bgImg,custom);
-            if(custom == 1){
+            if(data.length > 0){
+                let bgImg = data[0].bgimage;
+                let custom = data[0].custom;
                 console.log(bgImg,custom);
-                this.$api.delCustom({pid:pid[1],bgname : bgImg}).then(res=>{
-                    console.log(res);
-                })
+                if(custom == 1){
+                    console.log(bgImg,custom);
+                    this.$api.delCustom({pid:pid[1],bgname : bgImg}).then(res=>{
+                        console.log(res);
+                    })
+                }
             }
         })
     }

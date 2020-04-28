@@ -3,6 +3,7 @@ import "../css/home.css";
 import { Popover,Button,Modal,List} from 'antd-mobile';
 import { ActionSheet, Toast } from 'antd-mobile';
 import {HashRouter as Router,Route,Link} from 'react-router-dom'
+import { isImageUrl } from 'antd/lib/upload/utils';
 
 const Item = Popover.Item;
 const prompt = Modal.prompt;
@@ -25,7 +26,9 @@ export default class Home extends Component {
             selected: '',
             clicked: 'none',
             headImg:"",//用户头像
-            Uname:""//用户名
+            Uname:"",//用户名
+            bgImage:'',
+            signature:''
         }
     }
     //点击气泡项
@@ -233,6 +236,19 @@ export default class Home extends Component {
         }
     }
     componentDidMount(){
+        //获取背景和个性签名
+        this.$api.getHomeData().then(res=>{
+            console.log(res);
+            let data = res.data.data;
+            let sig = data[0].signature;
+            let hbg = data[0].homeBack;
+            let bgname = 'https://yf.htapi.pub/homeBack/'+hbg;
+            this.setState({
+                signature : sig,
+                bgImage : bgname
+            })
+        })
+
         //body滑动
         document.ontouchstart = this.bodyTouchStart;
         document.ontouchmove = this.bodyTouchMove;
@@ -329,14 +345,21 @@ export default class Home extends Component {
     toMy=()=>{
         this.props.getIndex(1);
     }
+    CustomBg=()=>{
+        this.props.history.push('/cback?to=致自己');
+    }
+    toSignature=()=>{
+        this.props.history.push('/signature');
+    }
     render() {
         //console.log(this.state.toUid);
         return (
             <div>
                 {/* 顶部 */}
-                <div className="home-back">
+                <div className="home-back" style={{backgroundImage:`url(`+this.state.bgImage+`)`}}>
                     <div className="home-toType" onClick={this.select}>
                         <span>{this.state.toType}</span>
+                        <img src={require('../imgs/Home/setbg(4).png')} id='setBg' onClick={this.CustomBg} />
                     </div>
                 </div>
 
@@ -416,11 +439,11 @@ export default class Home extends Component {
                     {/* 返回键 */}
                     <div className="slider-top">
                         {/* <img src={require("../imgs/Home/cancel.png")} onClick={this.cancel} style={{float:"right",padding:"5px"}} /> */}
-                        <i className="iconfont icon-guanbi" style={{float:"right",padding:"5px",color:'orange'}}  onClick={this.cancel}/>
+                        <i className="iconfont icon-guanbi" style={{float:"right",padding:"5px",color:'#B7BED1'}}  onClick={this.cancel}/>
                     </div>
 
                     {/* 用户信息 */}
-                    <div className="slider-user">
+                    <div className="slider-user" >
                         {/* 用户头像 */}
                         <div className="slider-profile" onClick={this.toMy}>
                             <img src={"https://yf.htapi.pub/head/"+this.state.headImg} style={{width:"50px",height:"50px"}} />
@@ -428,6 +451,10 @@ export default class Home extends Component {
                         {/* 用户名 */}
                         <span className="slider-userName">
                             {this.state.Uname}
+                        </span>
+                        <br />
+                        <span className="slider-signature" onClick={this.toSignature}>
+                            {this.state.signature}
                         </span>
                     </div>
 

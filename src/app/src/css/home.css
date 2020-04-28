@@ -10,13 +10,14 @@ li{
     height:200px;
     width:100%;
     /* background-color: pink; */
-    /* background: url(../imgs/Home/backImg3.png) 00px; */
-    /* background: url(../imgs/Home/backImg5.png) 00px; */
-    background: url('https://timgsa.baidu.com/timg?image&quality=80&size=b9999_10000&sec=1587725314365&di=5152e40813e4f5dffe79937d99dbcdf0&imgtype=0&src=http%3A%2F%2Fb-ssl.duitang.com%2Fuploads%2Fitem%2F201804%2F08%2F20180408003249_mplhn.thumb.700_0.jpg') 00px;
     background-size:cover;
     position:fixed;
     top:0;
     z-index:1;
+}
+#setBg{
+    float: right;
+    margin-right:10px;
 }
 .home-toType{
     /* color:white; */
@@ -137,7 +138,7 @@ li{
 
 /* 用户信息 */
 .slider-user{
-    height:80px;
+    height:90px;
     width:100%;
     background-color:white;
     padding-top:15px;
@@ -153,17 +154,28 @@ li{
 .slider-userName{
     float: left;
     margin-left:10px;
-    margin-top:10px;
+    margin-top:0px;
     font-weight: bold;
     font-size:16px;
 }
-
+.slider-signature{
+    display: -webkit-box;
+    -webkit-box-orient: vertical;
+    -webkit-line-clamp:2;
+    overflow: hidden;
+    position: relative;
+    right:30px;
+    top:8px;
+    background: url('../imgs/Home/signature(3).png') no-repeat;
+    padding-left:20px;
+    font-size: 13px;
+}
 
 /* 私密写列表 */
 .slider-toList{
     height:73%;
     width:100%;
-    margin-top:15px;
+    margin-top:10px;
     overflow:scroll;
     /* background-color: tomato; */
 }
@@ -207,3 +219,14 @@ li{
     /* background-color:white; */
 }
 
+/* 个性签名 */
+.sig-top{
+    height:40px;
+    background-color: rgb(75, 75, 75);
+    display: flex;
+    justify-content:space-between;
+    line-height:40px;
+    color:rgb(100, 98, 98);
+    padding:0 10px;
+    color: white;
+}

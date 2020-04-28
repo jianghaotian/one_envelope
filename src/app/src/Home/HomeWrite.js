@@ -67,7 +67,7 @@ export default class HomeWrite extends Component {
         //设置背景
         if(arr.length == 3){
             let ppid = arr[2].split("=")[1];
-            console.log(ppid);
+            //console.log(ppid);
             this.$api.selBack().then(res=>{
                 let imgList = res.data.data;
                 //console.log(imgList,ppid);
@@ -375,10 +375,10 @@ export default class HomeWrite extends Component {
         let audio = document.getElementById("audio");
         let load = document.getElementById("loading");
         //检查文件类型
-        if (!/audio\/\w+/.test(music.type)) {
-            alert("只能选择音频文件")
-            return false;
-        }
+        // if (!/audio\/\w+/.test(music.type)) {
+        //     alert("只能选择音频文件")
+        //     return false;
+        // }
         //console.log(music);
         this.setState({
             musicName : music.name
