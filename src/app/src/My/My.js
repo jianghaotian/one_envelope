@@ -10,7 +10,8 @@ export default class My extends Component {
         super();
         this.state={
             arr:[{"Uname":"你的昵称",'pidname':'0'}],
-            brr:[{"sharenum":'0'}]
+            brr:[{"sharenum":'0'}],
+            signature:''
         }
     }
     componentDidMount(){
@@ -27,6 +28,25 @@ export default class My extends Component {
                 brr:res.data.data
             })
         }) 
+        this.$api.getHomeData().then(res=>{
+            // console.log(res);
+            let data = res.data.data;
+            let sig = data[0].signature;
+            console.log(sig)
+            // if(sig == null || sig == undefined ||sig == ''){
+            if((sig == null)||(sig == '')){
+                sig='快来写个性签名吧'
+            }
+            // let bgname = 'https://yf.htapi.pub/homeBack/'+hbg;
+            this.setState({
+                signature : data[0].signature,
+            })
+            console.log(this.state.signature)
+        })
+    }
+    // 跳转个签编辑
+    toSignature=()=>{
+        this.props.history.push('/mysig');
     }
     render() {
         // console.log(this.state.arr[0].pidname)
@@ -51,13 +71,17 @@ export default class My extends Component {
                         fontSize:'1.7em',
                         color:"black"
                     }}
-                     /></Link> 
+                    /></Link> 
                     {/* title */}
                     <span className="mytitle">我的</span>
                     {/* 用户名 */}
                     <span className="myinfospan"><b>
                         {this.state.arr[0].Uname}
                     </b></span>
+                    {/* 个签 */}
+                    <span className="mysig" onClick={this.toSignature}>
+                        {this.state.signature}
+                    </span>
                     {/* 编辑用户信息 */}
                     <Link to="/myedit"><i className="icon-bianji iconfont"
                     style={{

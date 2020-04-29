@@ -67,7 +67,7 @@ export default class HomeWrite extends Component {
         //设置背景
         if(arr.length == 3){
             let ppid = arr[2].split("=")[1];
-            console.log(ppid);
+            //console.log(ppid);
             this.$api.selBack().then(res=>{
                 let imgList = res.data.data;
                 //console.log(imgList,ppid);
@@ -87,8 +87,9 @@ export default class HomeWrite extends Component {
         //console.log(idArr);
         if(idArr[0] == "pid" ){  //编辑
             var musicUrl;
+            //获取信件信息
             this.$api.getContent({pid : idArr[1]}).then(res=>{
-                //console.log(res.data.data);
+                console.log(res.data.data);
                 let resData = res.data.data[0];
                 this.setState({
                     to : resData.toNick,
@@ -115,25 +116,40 @@ export default class HomeWrite extends Component {
                     ls.setItem('LetterContent',this.state.value);
                     ls.setItem('color',this.state.fontColor);
                     ls.setItem('LetterTitle',this.state.title);
-                    this.$api.selBack().then(res=>{
-                        let imgList = res.data.data;
-                        //console.log(imgList);
-                        for(let i=0;i<imgList.length;i++){
-                            if(imgList[i].ppid == resData.ppid){
-                                //console.log(imgList[i].ppid);
-                                this.setState({
-                                    ppid : imgList[i].ppid,
-                                    back : "https://yf.htapi.pub/paper/"+imgList[i].ppimage
-                                })
-                            }
+                    let bgImg;
+                    let custom;
+                    this.$api.showBgImg({pid:idArr[1]}).then(res=>{
+                        //console.log(res.data.data);
+                        let rd = res.data.data;     
+                        bgImg = rd[0].bgimage;
+                        custom = rd[0].custom;
+                        //console.log(bgImg,custom);
+                        if(custom == 1){
+                            console.log('custom');         
+                            this.setState({
+                                back : 'https://yf.htapi.pub/pbgimage/'+bgImg
+                            })          
+                        }else{
+                            this.$api.selBack().then(res=>{
+                                let imgList = res.data.data;
+                                //console.log(imgList);
+                                for(let i=0;i<imgList.length;i++){
+                                    if(imgList[i].ppid == resData.ppid){
+                                        //console.log(imgList[i].ppid);
+                                        this.setState({
+                                            ppid : imgList[i].ppid,
+                                            back : "https://yf.htapi.pub/paper/"+imgList[i].ppimage
+                                        })
+                                    }
+                                }
+                            })
                         }
-                    })
+                    }) 
                 }else if(arr.length>2){
                     this.setState({
                         title : ls.getItem('LetterTitle'),
                         value : ls.getItem('LetterContent'),
                         fontColor : ls.getItem('color')
-
                     })
                 }
             })
@@ -141,7 +157,8 @@ export default class HomeWrite extends Component {
             this.setState({
                 title : ls.getItem('LetterTitle'),
                 value : ls.getItem('LetterContent'),
-                fontColor : ls.getItem('color')
+                fontColor : ls.getItem('color'),
+                type : typeArr[1]
             })
             this.$api.getToUList().then(res=>{
                 let list = res.data.data;
@@ -161,14 +178,22 @@ export default class HomeWrite extends Component {
                     }
                 }
                 if(arr.length <3){
-                    this.$api.selBack().then(res=>{
-                        let imgList = res.data.data;
-                        //console.log(imgList);
+                    let custom = ls.getItem('customBack');
+                    if(custom == 'true'){
                         this.setState({
-                            ppid : imgList[0].ppid,
-                            back : "https://yf.htapi.pub/paper/"+imgList[0].ppimage
+                            back : ls.getItem('cbackSrc')
                         })
-                    })
+                    }
+                    else{
+                        this.$api.selBack().then(res=>{
+                            let imgList = res.data.data;
+                            //console.log(imgList);
+                            this.setState({
+                                ppid : imgList[0].ppid,
+                                back : "https://yf.htapi.pub/paper/"+imgList[0].ppimage
+                            })
+                        })
+                    }
                 }
                 this.setState({
                     toList : toList
@@ -204,7 +229,8 @@ export default class HomeWrite extends Component {
             alert("请填写信件内容");
         }else if(this.state.type == "create"){
             let timestamp = Date.parse(new Date());
-            this.$api.writeLetter({Ptitle:title,Pcontent:content,toUid:id,toNick:to,Pday:timestamp,ppid:ppid,color:fontColor}).then(res=>{
+            let mp3 = ls.getItem('createMp3');
+            this.$api.writeLetter({Ptitle:title,Pcontent:content,toUid:id,toNick:to,Pday:timestamp,ppid:ppid,color:fontColor,mp3Data:mp3}).then(res=>{
                 //console.log(res);
             })
             
@@ -290,11 +316,22 @@ export default class HomeWrite extends Component {
             this.$api.postMusic({pid:pid,mp3Data:src}).then(res=>{
                 //console.log(res);
                 alert('插入成功');
+                this.setState({
+                    musicShow:{display:'none'},
+                    musicTag:false
+                })
             })
+            
         }else if(src == ""){
             alert("您还没有选择音乐哦");
         }else{
             console.log('create');
+            ls.setItem('createMp3',src);
+            alert('插入成功');
+            this.setState({
+                musicShow:{display:'none'},
+                musicTag:false
+            })
         }
 
     }
@@ -304,21 +341,28 @@ export default class HomeWrite extends Component {
         let arr  = dataArr.split("&");
         let idArr = arr[0].split("=");
         let typeArr = arr[1].split("=");
+        let audio = document.getElementById("audio");
         let name;
+        this.$api.showMusic({pid : idArr[1]}).then(res=>{
+            let resData = res.data.data;
+            name = resData[0];
+        })
         alert('删除', '确认删除?', [
             { text: '留着', onPress: () => {
                 console.log('cancel');
             } },
             { text: '不要啦', onPress: () => {
                 if(typeArr[1] == "edit"){
-                    //console.log('de');
-                    this.$api.showMusic({pid : idArr[1]}).then(res=>{
-                        let resData = res.data.data;
-                        name = resData[0];
-                    })
                     this.$api.delMusic({pid:idArr[1],music:name}).then(res=>{
                         console.log(res);
+                        audio.src = '';
                         alert('删除成功');
+                    })
+                }else{
+                    //console.log('create');
+                    audio.src = '';
+                    this.setState({
+                        musicName : ''
                     })
                 }
             }},
@@ -331,10 +375,10 @@ export default class HomeWrite extends Component {
         let audio = document.getElementById("audio");
         let load = document.getElementById("loading");
         //检查文件类型
-        if (!/audio\/\w+/.test(music.type)) {
-            alert("只能选择音频文件")
-            return false;
-        }
+        // if (!/audio\/\w+/.test(music.type)) {
+        //     alert("只能选择音频文件")
+        //     return false;
+        // }
         //console.log(music);
         this.setState({
             musicName : music.name
@@ -371,6 +415,17 @@ export default class HomeWrite extends Component {
             fontColor : item.backgroundColor
         })
         ls.setItem('color',item.backgroundColor);
+    }
+    selectImg=()=>{
+        let pid = this.state.pid;
+        let type = this.state.type;
+        if(type == 'edit'){
+            this.props.history.push('/cback?pid='+pid+'&type='+type);
+        }else{
+            //console.log('create');
+            //console.log(this.state.to);
+            this.props.history.push('/cback?toNick='+this.state.to+'&type='+type);
+        }
     }
     render() {
         //console.log(this.state.type,this.state.pid);
@@ -420,6 +475,7 @@ export default class HomeWrite extends Component {
                 <div className="hw-write">
                     <List>
                         <TextareaItem
+                            id="textBox"
                             value={this.state.value}
                             onChange={this.Edit}
                             style={{backgroundImage:"url("+this.state.back+")",backgroundSize:"100% 447px",color:this.state.fontColor}}
@@ -441,7 +497,7 @@ export default class HomeWrite extends Component {
                 <div className="hw-bottom">
                     <img src={require("../imgs/Home/背景.png")} onClick={this.selback} />
                     <img src={require("../imgs/Home/music(3).png")} onClick={this.selectMusic} />
-                    <img src={require("../imgs/Home/tupian.png")} />
+                    <img src={require("../imgs/Home/tupian.png")} onClick={this.selectImg} />
                     <div id="fontColor">
                         <img src={require("../imgs/Home/color.png")} onClick={this.fontColor} />
                         <div id="color" style={this.state.colorState}>

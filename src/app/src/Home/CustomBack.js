@@ -3,8 +3,9 @@ import React, { Component } from "react";
 import ReactCrop from "react-image-crop";
 import "react-image-crop/dist/ReactCrop.css";
 import '../css/cback.css';
-import { Button } from "antd-mobile";
-import { types } from "@babel/core";
+import { Button,Modal } from "antd-mobile";
+
+const alert = Modal.alert;
 
 var obj=null;
 
@@ -16,8 +17,37 @@ export default class CustomBack extends Component {
       crop: {
         aspect: 1/1.5,
         //width: 100,
-      }
+      },
+      to : '',
+      pid : null,
+      type : ''
     };
+  }
+  componentDidMount(){
+    let info = window.location.hash;
+    //console.log(info);
+    if(info.indexOf('to=')>0){
+      let toType = info.split('=')[1];
+      let to = decodeURI(toType);
+      //console.log(to);
+      this.setState({
+        to : to,
+        crop : {
+          aspect : 2/1.2
+        }
+      })
+    }else{
+      //获取pid
+      let dataArr = info.substr(8,info.length);
+      let arr = dataArr.split("&");
+      let pid = arr[0].split("=");
+      let type = arr[1].split("=");
+      console.log(pid[1],type[1]);
+      this.setState({
+        pid : pid[1],
+        type : type[1]
+      })
+    }
   }
   //选择图片
   onSelectFile = e => {
@@ -104,31 +134,53 @@ export default class CustomBack extends Component {
     let info = window.location.hash;
     //获取pid
     let dataArr = info.substr(8,info.length);
-    let arr = dataArr.split("&");
-    let pid = arr[0].split("=");
-    let type = arr[1].split("=");
+    // let arr = dataArr.split("&");
+    // let pid = arr[0].split("=");
+    // let type = arr[1].split("=");
     //上传
     reader.addEventListener("load", () =>
         {
           //console.log(type);
-          if(type[1] == 'create'){
+          if(this.state.type == 'create'){
             localStorage.setItem('customBack',true);
             localStorage.setItem('cbackSrc',reader.result);
-          }else{
-            this.$api.postBgImg({pid:pid[1],bgData:reader.result}).then(res=>{
+            alert('修改背景','修改成功!',[
+              {text:'确定',onPress:()=>{
+                this.props.history.push('homeWrite/?'+dataArr);
+              }}
+            ]);
+          }else if(this.state.type == 'edit'){
+            this.$api.postBgImg({pid:this.state.pid,bgData:reader.result}).then(res=>{
               console.log(res);
             })
-          }   
+            alert('修改背景','修改成功!',[
+              {text:'确定',onPress:()=>{
+                this.props.history.push('homeWrite/?'+dataArr);
+              }}
+            ]);
+          }else{
+            this.$api.changeHomeBg({imgData : reader.result}).then(res=>{
+              //console.log(res);
+            })
+            alert('修改背景','修改成功!',[
+              {text:'确定',onPress:()=>{
+                  this.props.history.push('/home');
+              }}
+            ]);
+          } 
         }
     );
-    this.props.history.push('homeWrite/?'+dataArr);
   }
   //取消
   back=()=>{
     //修改路由
     let info = window.location.hash;
     let dataArr = info.substr(8,info.length);
-    this.props.history.push('homeWrite/?'+dataArr);
+    if(this.state.type == 'edit' || this.state.type == 'create'){
+      this.props.history.push('homeWrite/?'+dataArr);
+    }else{
+      this.props.history.push('home/?to='+this.state.to);
+    }
   }
   render() {
     const { crop, croppedImageUrl, src } = this.state;
@@ -140,7 +192,6 @@ export default class CustomBack extends Component {
         </div>
         {src && (
           <ReactCrop
-            // style={{height:500,width:500}}
             src={src}
             crop={crop}
             onImageLoaded={this.onImageLoaded}

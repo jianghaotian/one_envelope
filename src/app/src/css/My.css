@@ -22,9 +22,22 @@
     position: absolute;
     width: 47%;
     left: 33%;
-    bottom: 30%;
+    bottom: 44%;
     font-size: 2em;
     text-overflow:ellipsis; white-space:nowrap; overflow:hidden;
+}
+.mysig{
+    position: absolute;
+    height: 12%;
+    line-height: 85%;
+    width: 47%;
+    left: 33%;
+    bottom: 31%;
+    font-size: 1.2em;
+    text-overflow:ellipsis; white-space:nowrap; overflow:hidden;
+    padding-left: 5%;
+    background: url('../imgs/Home/signature(3).png') no-repeat;
+    padding-bottom: 5%;
 }
 .mytitle{
     position: absolute;

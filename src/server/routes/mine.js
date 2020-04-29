@@ -19,7 +19,7 @@ router.get('/', function (req, res, next) {
         if (result.status !== 0) {
             res.json(result);
         } else {
-            runSql(`select user.Uname,user.Uimage,user.Ufraction,user.Uday,user.toNick,count(pletter.Pid) as pidnum from user,pletter where user.uid =? and user.uid=pletter.uid`,
+            runSql(`select user.Uname,user.Uimage,user.Ufraction,user.Uday,user.toNick,user.Signature,count(pletter.Pid) as pidnum from user,pletter where user.uid =? and user.uid=pletter.uid`,
             [uid],(result1)=>{
                 res.json(result1);
                 }
@@ -285,4 +285,27 @@ router.post('/feedback', function (req, res, next) {
         }
     });
 });
+/**
+ * 改变个性签名
+ * 请求方式：
+ *      POST
+ * 接收参数：
+ *      signaure:个性签名
+ * 返回参数:
+ * 
+ */
+router.post('/changeSignature',function(req,res,next){
+    let token=req.header('token');
+    let {signature} = req.body;
+    checkToken(token,(result)=>{
+        if (result.status !== 0) {
+            res.json(result);
+        } else {
+            let uid = result.data.uid;
+            runSql('update user set signature=? where uid=?',[signature,uid],(result1)=>{
+                res.json(result1)
+            })
+        }
+    })
+})
 module.exports = router;

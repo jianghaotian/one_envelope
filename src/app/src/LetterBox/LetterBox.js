@@ -22,7 +22,7 @@ export default class LetterBox extends Component {
             this.setState({
                 arr:res.data.data
             })
-            console.log(this.state.arr)
+            // console.log(this.state.arr)
         }) 
     }
     // 获取输入值
@@ -38,7 +38,7 @@ export default class LetterBox extends Component {
         })
         // console.log(this.state.text)
         if(this.state.text == ''){
-            Toast.success('输入不为空', 1);
+            Toast.fail('输入不为空', 1);
         }else{
             this.handlehide();
             this.$api.searchmail({ptitle:this.state.text}).then(res => {
