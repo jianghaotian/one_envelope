@@ -1,5 +1,7 @@
 import React, { Component } from 'react'
 import '../css/togeCreate.css'
+import "../css/HomeWrite.css";
+
 import { List, TextareaItem ,WingBlank,WhiteSpace,button} from 'antd-mobile';
 
 import {HashRouter as Router,Link,Switch,Route} from 'react-router-dom'
@@ -14,8 +16,15 @@ export default class togeContent extends Component {
             inputValue:"",        
             tit:"",
             timg:[],//图片数组
-            isImgdel:false
+            isImgdel:false,
+            musicName:'',
+            musicShow:{display:'none'},
+            musicTag:false,
         }        
+    }
+    setMusicUrl=(url)=>{
+        let audio = document.getElementById("audio");
+        audio.src = 'https://yf.htapi.pub/music/'+url;
     }
     componentDidMount(){
         //展示页面
@@ -39,6 +48,20 @@ export default class togeContent extends Component {
                     timg:res.data.data,
                     isImgdel:false
                 })
+            }
+        })
+        var musicUrl;
+        let name;
+        this.$api.showTmus({lid:this.props.match.params.id}).then(res=>{
+            console.log(res.data.data);
+            musicUrl = res.data.data;
+            let resData = res.data.data;
+            let regMusic = /.*(.mp3)$/gi
+            if(regMusic.test(musicUrl)){
+                this.setMusicUrl(musicUrl);               
+                name = resData[0];            
+            }else{
+                console.log('dont have music');
             }
         })
     }
@@ -80,8 +103,96 @@ export default class togeContent extends Component {
         var back = this.props.history.location.search;
         this.props.history.push("/back"+back);
     }
+    //选择音乐
+    selectMusic=()=>{
+        if(!this.state.musicTag){
+            this.setState({
+                musicShow:{display:'block'},
+                musicTag:true
+            })
+        }else{
+            this.setState({
+                musicShow:{display:'none'},
+                musicTag:false
+            })
+        }
+    }
+    playMusic=()=>{
+        //上传音乐
+        let audio = document.getElementById("audio");
+        let lid = this.state.lid;
+        //console.log(pid);
+        //console.log(audio.src);
+        let src = audio.src;
+        //console.log(src);
+        if(lid && src != ""){
+            this.$api.InsertTmus({lid:lid,mp3Data:src}).then(res=>{
+                //console.log(res);
+                alert('插入成功');
+            })
+        }else if(src == ""){
+            alert("您还没有选择音乐哦");
+        }else{
+            console.log('create');
+        }
+
+    }
+    deleteMusic=()=>{
+        let info = window.location.hash;
+        let dataArr = info.substr(13,info.length);
+        let arr  = dataArr.split("&");
+        let idArr = arr[0].split("=");
+        let typeArr = arr[1].split("=");
+        let name;
+        alert('删除', '确认删除?', [
+            { text: '留着', onPress: () => {
+                console.log('cancel');
+            } },
+            { text: '不要啦', onPress: () => {
+                if(typeArr[1] == "edit"){
+                    //console.log('de');
+                    this.$api.showTmus({lid : idArr[1]}).then(res=>{
+                        let resData = res.data.data;
+                        name = resData[0];
+                    })
+                    this.$api.delMusic({lid:idArr[1],music:name}).then(res=>{
+                        console.log(res);
+                        alert('删除成功');
+                    })
+                }
+            }},
+        ]);
+    }
+    getMusic=()=>{
+        console.log('change');
+        let music = document.getElementById('MusicFile').files[0];
+        console.log(music);
+        let audio = document.getElementById("audio");
+        let load = document.getElementById("loading");
+        //检查文件类型
+        if (!/audio\/\w+/.test(music.type)) {
+            alert("只能选择音频文件")
+            return false;
+        }
+        //console.log(music);
+        this.setState({
+            musicName : music.name
+            
+        })
+        
+        var reader = new FileReader();
+        reader.readAsDataURL(music);
+        reader.onprogress=function(){
+            load.style.display = "block";
+        }
+        reader.onload=function(){
+            //console.log(reader.result);
+            audio.src = reader.result;
+            load.style.display = "none";
+        }
+    }
     //插入图片   
-    onChange = (e) => {       
+    selectimg = (e) => {       
         console.log(e.target.files[0])          
         let picture = document.getElementById("picture").files[0];
         var reader = new FileReader();
@@ -110,7 +221,7 @@ export default class togeContent extends Component {
             })   
         }       
     }
-
+    //删除图片
     delTimg=(e2)=>{
         let list = this.state.timg;
         console.log(list)
@@ -127,7 +238,7 @@ export default class togeContent extends Component {
                     timg:list,
                     isImgdel:true
                 }) 
-                alert("删除成功");               
+                alert("是否删除");               
             }
         }) 
     }
@@ -165,6 +276,14 @@ export default class togeContent extends Component {
                                         style={{backgroundColor:'transparent',paddingVertical: 5 }}
                                         value={this.state.inputValue}
                                         onChange={this.textChange}
+                                        onClick={()=>{
+                                            this.setState({
+                                                colorState:{display:"none"},
+                                                colorTag:false,
+                                                musicTag:false,
+                                                musicShow:{display:"none"}
+                                            })
+                                        }}
                                         />                                  
                                     {this.state.timg.map((val)=> (   
                                         <div key={val} className="insertimg" style={{position:'relative'}} >                     
@@ -183,10 +302,32 @@ export default class togeContent extends Component {
                     <img src={require("../imgs/Home/背景.png")} style={{width:"6%"}} onClick={this.selback} />
                     <img src={require("../imgs/Home/music(3).png")} style={{width:"7%"}} onClick={this.selectMusic} />
                     <label htmlFor='picture' style={{width:"7%"}}>
-                        <input type="file" id='picture' style={{width:"0%"}} onChange={this.onChange}/>
+                        <input type="file" id='picture' style={{width:"0%"}} onChange={this.selectimg}/>
                         <img src={require("../imgs/Home/tupian.png")} style={{width:"100%"}}/>
                     </label>
                 </div>
+                {/* 插入音乐 */}
+                <div className="Music" style={this.state.musicShow}>
+                    <input type= 'file' id="MusicFile" onChange={this.getMusic} />
+                    <img src={require('../imgs/Home/musicCancle.png')} style={{float:"right",marginRight:'5px'}} onClick={()=>{
+                        this.setState({
+                            musicTag:false,
+                            musicShow:{display:"none"}
+                        })
+                    }} />
+                    <br />
+                    <label htmlFor="MusicFile">
+                        <span id="sp-addMusci" >选择音乐</span>
+                    </label>
+                    <span>{this.state.musicName}</span>
+                    <audio  controls="controls" id="audio" autoPlay="autoplay" loop="loop"></audio>
+                    <p style={{display:'none'}} id="loading">正在加载...</p>
+                    <div className="music-up">
+                        <button className="music-btn" onClick={this.playMusic}>确认添加</button>
+                        <button className="music-btn" onClick={this.deleteMusic}>删除音乐</button>
+                    </div>
+                </div>
+           
                 
             </div>
         )

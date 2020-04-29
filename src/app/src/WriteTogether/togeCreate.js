@@ -53,64 +53,59 @@ export default class togeCreate extends Component {
            
         })
     }
-    //选择背景
-    selback=()=>{
-        //console.log(this.props.history.location.search);
-        var back = this.props.history.location.search;
-        this.props.history.push("/back"+back);
-    }
-    //插入图片   
-    onChange = (e) => {       
-        console.log(e.target.files[0])          
-        let picture = document.getElementById("picture").files[0];
-        var reader = new FileReader();
-        reader.readAsDataURL(picture);
-        let src = picture.src;
-        // this.setState({
-        //     data:this.state.data.Timage,
-        // })
-        reader.onload=()=>{
-            src = reader.result;
-            console.log(src);
-            this.$api.insertTImg({Lid:this.props.match.params.id,imgData:src}).then(res => { 
-                console.log(res.data)
-                if (res.data.status === 0) {      
-                    // this.setState({
-                    //     data:res.data.data,
-                    // })
-                }
-            })   
-        }
+   
+    // //插入图片   
+    // onChange = (e) => {       
+    //     console.log(e.target.files[0])          
+    //     let picture = document.getElementById("picture").files[0];
+    //     var reader = new FileReader();
+    //     reader.readAsDataURL(picture);
+    //     let src = picture.src;
+    //     // this.setState({
+    //     //     data:this.state.data.Timage,
+    //     // })
+    //     reader.onload=()=>{
+    //         src = reader.result;
+    //         console.log(src);
+    //         this.$api.insertTImg({Lid:this.props.match.params.id,imgData:src}).then(res => { 
+    //             console.log(res.data)
+    //             if (res.data.status === 0) {      
+    //                 // this.setState({
+    //                 //     data:res.data.data,
+    //                 // })
+    //             }
+    //         })   
+    //     }
 
         
         
-        if(!this.state.imgTag){
-            this.setState({
-                imgShow:{display:'block'},
-                imgTag:true
-            })
-        }else{
-            this.setState({
-                imgShow:{display:'none'},
-                imgTag:false
-            })
-        }  
-      }
-    // componentDidMount(){
+    //     if(!this.state.imgTag){
+    //         this.setState({
+    //             imgShow:{display:'block'},
+    //             imgTag:true
+    //         })
+    //     }else{
+    //         this.setState({
+    //             imgShow:{display:'none'},
+    //             imgTag:false
+    //         })
+    //     }  
+    //   }
+    // // componentDidMount(){
         
-    //     this.$api.showTImg({lid:this.props.match.params.id}).then(res => { 
-    //         console.log(res.data)
+    // //     this.$api.showTImg({lid:this.props.match.params.id}).then(res => { 
+    // //         console.log(res.data)
 
-    //         if (res.data.status === 0) {      
-    //             this.setState({
-    //                 data:res.data.data,
+    // //         if (res.data.status === 0) {      
+    // //             this.setState({
+    // //                 data:res.data.data,
 
-    //             })
-    //             // console.log(this.state.data);
-    //         }
-    //     })
+    // //             })
+    // //             // console.log(this.state.data);
+    // //         }
+    // //     })
 
-    // }  
+    // // }  
     
     render() {
         return (

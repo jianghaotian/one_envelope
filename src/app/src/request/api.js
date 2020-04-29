@@ -23,7 +23,6 @@ const api = {
     getoldpwd: p => get('mine/getoldpwd',p),
     headimg:p => post('image/head',p),
     changehead:p=>post('image/changehead',p),
-    searchmail : p => get('mailbox/searchmail',p),
 
     // zym
     theme: p=> get('together/theme',p),
@@ -38,9 +37,12 @@ const api = {
     showletter:p=>get('together/theme/show',p),
     changeletter:p=>post('together/theme/edit',p),
     addimage:p => post('image/theme',p),
-    insertTImg:p => post('image/insertTimg',p),
-    showTImg:p => get('image/showTimg',p),
-    delInsertTimg:p => post('image/delInsertTimg',p),
+    insertTImg:p => post('image/insertTimg',p),//插入图片
+    showTImg:p => get('image/showTimg',p),//展示图片
+    delInsertTimg:p => post('image/delInsertTimg',p),//删除图片
+    InsertTmus:p => post('music/insertMusic',p),//插入音乐
+    showTmus:p => get('music/presentMusic',p),//展示音乐
+
 
 
 
@@ -63,9 +65,6 @@ const api = {
     postMusic: p=>post('music/insertMp3',p),//上传音乐
     showMusic: p=>get('music/showmusic',p),//获取音乐
     delMusic : p=>post('music/delMp3',p),//删除音乐
-    postBgImg : p=>post('image/choosebg',p),//上传自定义背景
-    showBgImg : p=>get('image/showpbg',p),//获取自定义背景
-    delCustom : p=>post('image/delbgimg',p),//删除自定义背景
     // getpid:p => get('private/getpd',p)
         
 }
