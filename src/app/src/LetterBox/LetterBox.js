@@ -22,7 +22,7 @@ export default class LetterBox extends Component {
             this.setState({
                 arr:res.data.data
             })
-            console.log(this.state.arr)
+            // console.log(this.state.arr)
         }) 
     }
     // 获取输入值

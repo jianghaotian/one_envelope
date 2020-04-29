@@ -39,6 +39,8 @@ import HomeWrite from './Home/HomeWrite'
 import Back from './Home/Back'
 import CustomBack from './Home/CustomBack'
 import Signature from './Home/Signature'
+import Mysig from './My/Signature'
+
 
 React.Component.prototype.$api = api;
 React.Component.prototype.$store = store;
@@ -57,6 +59,7 @@ ReactDOM.render(
             <Route path="/back" component={Back} />
             <Route path='/cback' component={CustomBack} />
             <Route path='/signature' component={Signature} />
+
             {/* lxc */}
             <Route path="/recover" component={Recover} />
             <Route path="/setting" component={Setting}/>
@@ -73,6 +76,7 @@ ReactDOM.render(
             <Route path="/changepsw" component={Changepsw} />
             <Route path="/articalnum" component={Articalnum} />
             <Route path='/feedback' component={Feedback} />
+            <Route path='/mysig' component={Mysig} />
             <Route path='/sharenum' component={Sharenum} />
 
             {/* zym */}
