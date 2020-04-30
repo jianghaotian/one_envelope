@@ -10,7 +10,7 @@ const getRandom = require('../src/user/verification');
 var multiparty = require('multiparty');
 var fs = require('fs');
 /**
- * 插入音频
+ * 插入音频（私密写）
  * 请求方式：
  *      POST
  * 接受参数：
@@ -54,7 +54,7 @@ router.post('/insertMp3', function(req, res){
     })
 });
 /**
- * 展示插入音频
+ * 展示插入音频（私密写）
  * 请求方式：
  *      GET
  * 接受参数：
@@ -82,7 +82,7 @@ router.get('/showmusic',function(req,res){
 })
 
 /**
- * 删除插入音频()
+ * 删除插入音频(私密写)
  * 请求方式
  *      POST
  * 接受参数：
@@ -172,6 +172,29 @@ router.get('/presentMusic',function(req,res){
                 }else{
                     res.json({status: 0, data: [music]});
                 }
+            })
+        }
+    })
+})
+
+/**
+ * 删除插入音频(一起写)
+ * 请求方式
+ *      POST
+ * 接受参数：
+ *      lid：信件id
+ *      music：音乐名
+ */
+router.post('/delmusic',function(req,res,next){
+    let token = req.header('token');
+    let {lid,music} = req.body;
+    checkToken(token,(result)=>{
+        if(result.status !==0){
+            res.json(result)
+        }else{
+            runSql('update tletter set music=? where lid=?',[null,lid],(result2)=>{
+                fs.unlinkSync(path.join(__dirname,'../public/music/'+music));
+                res.json(result2);
             })
         }
     })
