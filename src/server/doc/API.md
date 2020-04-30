@@ -804,6 +804,7 @@ POST
 | title   | 信件标题         | string |
 | content | 信件内容         | string |
 | lday    | 信件修改后的日期 | 时间戳 |
+| ppid    | 信件背景         | int    |
 
 **返回参数**
 

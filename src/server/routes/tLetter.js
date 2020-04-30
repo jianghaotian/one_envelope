@@ -244,11 +244,12 @@ router.post("/theme/delletter",function(req,res,next){
  *      title:信件标题
  *      content：信件内容
  *      lday：信件修改后的日期
+ *      ppid：信件背景
  * 返回参数：
  *      
  */
 router.post('/theme/edit',function(req,res,next){
-    let {lid,title,content,lday} = req.body;
+    let {lid,title,content,lday,ppid} = req.body;
     let token = req.header('token');
     // console.log(title,content);
     checkToken(token,(result) => {
@@ -256,8 +257,8 @@ router.post('/theme/edit',function(req,res,next){
             res.json(result);
         }else{
             let uid =  result.data.uid;
-            runSql(`update tletter set ltitle=?,lcontent=?,lday=? where lid=? and uid=? `,
-                [title,content,lday,lid,uid],(result2)=>{
+            runSql(`update tletter set ltitle=?,lcontent=?,lday=?,ppid=? where lid=? and uid=? `,
+                [title,content,lday,ppid,lid,uid],(result2)=>{
                 res.json(result2);
             })
         }        
