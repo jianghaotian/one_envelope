@@ -65,15 +65,12 @@ const api = {
     postMusic: p=>post('music/insertMp3',p),//上传音乐
     showMusic: p=>get('music/showmusic',p),//获取音乐
     delMusic : p=>post('music/delMp3',p),//删除音乐
-<<<<<<< HEAD
-=======
     postBgImg : p=>post('image/choosebg',p),//上传自定义背景
     showBgImg : p=>get('image/showpbg',p),//获取自定义背景
     delCustom : p=>post('image/delbgimg',p),//删除自定义背景
     getHomeData : p=>get('image/homeImage',p),
     changeHomeBg : p=>post('image/changeHomeBack',p),//修改首页背景图
     changeSignature : p=>post('mine/changeSignature',p),//修改个性签名
->>>>>>> 26c467480c0d900f23ab5e1ad832f50f34b7b1f0
     // getpid:p => get('private/getpd',p)
         
 }
