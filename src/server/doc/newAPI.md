@@ -566,6 +566,36 @@ POST
 }
 ```
 
+## 2.9更换背景（一起写）
+
+**请求url**
+
+```
+URL : https://yf.htapi.pub/v1/together/changebg
+```
+
+**请求方式**
+
+```
+POST
+```
+
+**接收参数**
+
+| 参数 | 说明   | 类型 |
+| ---- | ------ | ---- |
+| lid  | 信件id | int  |
+| ppid | 信纸id |      |
+
+**返回参数**
+
+```
+{
+  status: 0,
+  message: 'OK'
+}
+```
+
 
 
 

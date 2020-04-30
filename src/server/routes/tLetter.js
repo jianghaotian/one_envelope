@@ -283,4 +283,25 @@ router.get('/theme/show', function (req, res, next) {
         }
     });
 });
+/**
+ * 更换信纸
+ * 请求方式：
+ *      POST
+ * 接收参数：
+ *      lid：信件id
+ *      ppid：更换后的信纸id
+ */
+router.post('/changebg',function(req,res,next){
+    let token = req.header('token');
+    let {lid,ppid} =  req.body;
+    checkToken(token,(result)=>{
+        if(result.status != 0){
+            res.json(result)
+        }else{
+            runSql('update tletter set ppid=? where lid=? ',[ppid,lid],(result1)=>{
+                res.json(result1);
+            })
+        }
+    })
+})
 module.exports = router;
