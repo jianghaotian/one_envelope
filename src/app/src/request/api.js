@@ -42,6 +42,8 @@ const api = {
     delInsertTimg:p => post('image/delInsertTimg',p),//删除图片
     InsertTmus:p => post('music/insertMusic',p),//插入音乐
     showTmus:p => get('music/presentMusic',p),//展示音乐
+    delInsertTmus:p => post('music/delmusic',p),//删除音乐
+
 
 
 

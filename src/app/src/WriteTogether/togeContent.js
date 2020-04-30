@@ -2,9 +2,10 @@ import React, { Component } from 'react'
 import '../css/togeCreate.css'
 import "../css/HomeWrite.css";
 
-import { List, TextareaItem ,WingBlank,WhiteSpace,button} from 'antd-mobile';
+import { List, TextareaItem ,WingBlank,WhiteSpace,button,Modal} from 'antd-mobile';
 
 import {HashRouter as Router,Link,Switch,Route} from 'react-router-dom'
+const alert = Modal.alert;
 
 export default class togeContent extends Component {
     constructor(){
@@ -138,28 +139,28 @@ export default class togeContent extends Component {
 
     }
     deleteMusic=()=>{
-        let info = window.location.hash;
-        let dataArr = info.substr(13,info.length);
-        let arr  = dataArr.split("&");
-        let idArr = arr[0].split("=");
-        let typeArr = arr[1].split("=");
+        let audio = document.getElementById("audio");
         let name;
+        this.$api.showTmus({lid : this.props.match.params.id}).then(res=>{
+            let resData = res.data.data;
+            name = resData[0];
+        })
         alert('删除', '确认删除?', [
             { text: '留着', onPress: () => {
                 console.log('cancel');
             } },
-            { text: '不要啦', onPress: () => {
-                if(typeArr[1] == "edit"){
-                    //console.log('de');
-                    this.$api.showTmus({lid : idArr[1]}).then(res=>{
-                        let resData = res.data.data;
-                        name = resData[0];
-                    })
-                    this.$api.delMusic({lid:idArr[1],music:name}).then(res=>{
+            { text: '不要啦', onPress: () => {                
+                    this.$api.delInsertTmus({lid:this.props.match.params.id,music:name}).then(res=>{
                         console.log(res);
+                        audio.src = '';
                         alert('删除成功');
+                    })               
+                    //console.log('create');
+                    audio.src = '';
+                    this.setState({
+                        musicName : ''
                     })
-                }
+               
             }},
         ]);
     }

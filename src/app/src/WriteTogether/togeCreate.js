@@ -137,15 +137,15 @@ export default class togeCreate extends Component {
                     <div className="ge-content">                                                    
                            
                                 <div style={{height:"100%"}}>
-                                    {this.state.data.map((val)=> (                                                   
+                                    {/* {this.state.data.map((val)=> (                                                   
                                         <div key={val} className="insertimg">  
                                             <img src='' className='hide'/>                          
-                                            {/* <img src={"https://yf.htapi.pub/data/"+val.Pimage} alt=""/>                                    */}
-                                            {/* <img src={"https://yf.htapi.pub/insertimg/1234567894238_11.jpg"} alt="" style={{width:"100%",height:"100%"}}/>                                    */}
+                                            <img src={"https://yf.htapi.pub/data/"+val.Pimage} alt=""/>                                   
+                                            <img src={"https://yf.htapi.pub/insertimg/1234567894238_11.jpg"} alt="" style={{width:"100%",height:"100%"}}/>                                   
                                         
                                         </div>
                             
-                                    ))}
+                                    ))} */}
                                     <TextareaItem     
                                     rows={13}
                                     placeholder="请输入内容"
