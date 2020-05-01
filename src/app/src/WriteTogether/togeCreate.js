@@ -10,7 +10,8 @@ export default class togeCreate extends Component {
             inputValue:"",
             inputTitle:"",
             data:[] ,
-            files:''
+            files:'',
+            backImg:''
         }
     }
     
@@ -39,7 +40,27 @@ export default class togeCreate extends Component {
         this.props.history.push('/inviteWrite/'+this.props.match.params.id);
     }
     componentDidMount(){
-        this.refs.input1.value=""
+        this.refs.input1.value="";
+        //背景
+        let info = window.location.hash;
+        let infoArr = info.split("=");
+        if(infoArr.length == 2){
+            let ppid = infoArr[1];
+            this.$api.selBack().then(res=>{
+                let imgList = res.data.data;
+                for(let i=0;i<imgList.length;i++){
+                    if(imgList[i].ppid == ppid){
+                        this.setState({
+                            backImg : "https://yf.htapi.pub/paper/"+imgList[i].ppimage
+                        })
+                    }
+                }
+            })
+        }else{
+            this.setState({
+                backImg :'https://yf.htapi.pub/paper/1597538468975_22.png'
+            })
+        }
     }
     textChange=(e)=>{
         // console.log(e)
@@ -53,65 +74,16 @@ export default class togeCreate extends Component {
            
         })
     }
-   
-    // //插入图片   
-    // onChange = (e) => {       
-    //     console.log(e.target.files[0])          
-    //     let picture = document.getElementById("picture").files[0];
-    //     var reader = new FileReader();
-    //     reader.readAsDataURL(picture);
-    //     let src = picture.src;
-    //     // this.setState({
-    //     //     data:this.state.data.Timage,
-    //     // })
-    //     reader.onload=()=>{
-    //         src = reader.result;
-    //         console.log(src);
-    //         this.$api.insertTImg({Lid:this.props.match.params.id,imgData:src}).then(res => { 
-    //             console.log(res.data)
-    //             if (res.data.status === 0) {      
-    //                 // this.setState({
-    //                 //     data:res.data.data,
-    //                 // })
-    //             }
-    //         })   
-    //     }
+    selback=()=>{
+       //this.props.history.push("/wtBack?type=create&lid=null");
+    }
 
-        
-        
-    //     if(!this.state.imgTag){
-    //         this.setState({
-    //             imgShow:{display:'block'},
-    //             imgTag:true
-    //         })
-    //     }else{
-    //         this.setState({
-    //             imgShow:{display:'none'},
-    //             imgTag:false
-    //         })
-    //     }  
-    //   }
-    // // componentDidMount(){
-        
-    // //     this.$api.showTImg({lid:this.props.match.params.id}).then(res => { 
-    // //         console.log(res.data)
-
-    // //         if (res.data.status === 0) {      
-    // //             this.setState({
-    // //                 data:res.data.data,
-
-    // //             })
-    // //             // console.log(this.state.data);
-    // //         }
-    // //     })
-
-    // // }  
     
     render() {
         return (
             // <script type='text/javascript' src='jquery-1.9.js'></script>
             
-            <div className='toge-body'>
+            <div className='toge-body' style={{backgroundImage:"url("+this.state.backImg+")",backgroundSize:'100% 100%'}}>
                 <div className="ge-body">
                     {/* 顶部 */}
                     <div className="ge-top">

@@ -59,14 +59,14 @@ export default class InviteWrite extends Component {
     componentDidMount(){
         //主题内容详情列表        
         this.$api.themeContent({tid:this.props.match.params.id}).then(res => {         
-            console.log(res.data.data);
+            //console.log(res.data.data);
             if (res.data.status == 0) {    
-                console.log(res.data.data)  
+                //console.log(res.data.data)  
                 this.setState({
                     data:res.data.data,
                     // data: [{}]
                 })
-                console.log(this.state.data);
+                //console.log(this.state.data);
             }
         }) 
         this.$api.themetitle({tid:this.props.match.params.id}).then(res => {          
@@ -107,7 +107,7 @@ export default class InviteWrite extends Component {
     }
 
     render() {
-        console.log(this.state.data);
+        //console.log(this.state.data);
         return (
             <div id="invite-back">
                 {/* 背景图块 */}

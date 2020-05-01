@@ -21,6 +21,8 @@ export default class togeContent extends Component {
             musicName:'',
             musicShow:{display:'none'},
             musicTag:false,
+            backImg:'',
+            ppid:null
         }        
     }
     setMusicUrl=(url)=>{
@@ -28,22 +30,55 @@ export default class togeContent extends Component {
         audio.src = 'https://yf.htapi.pub/music/'+url;
     }
     componentDidMount(){
+        let info = window.location.hash;
+        let infoArr = info.split("=");
+        let ppid = infoArr[1];
         //展示页面
         this.$api.showletter({lid:this.props.match.params.id}).then(res => {
             if (res.data.status === 0) {
-                console.log(res);
+                // console.log(res.data.data);
                 this.setState({
                     data:res.data.data,
                     tit:res.data.data[0].Ltitle,
                     inputValue: res.data.data[0].Lcontent,
                     tid:res.data.data[0].Tid,
                     lid:res.data.data[0].Lid,
-                    isImgdel:false
+                    isImgdel:false,
+                    imgId:res.data.data[0].ppid
                 })
+                if(this.state.imgId != null && infoArr.length<2){
+                    // console.log(this.state.imgId);
+                    this.$api.selBack().then(res=>{
+                        let imgList = res.data.data;
+                        for(let i=0;i<imgList.length;i++){
+                            if(imgList[i].ppid == this.state.imgId){
+                                this.setState({
+                                    backImg : "https://yf.htapi.pub/paper/"+imgList[i].ppimage
+                                })
+                            }
+                        }
+                    })
+                }else if(this.state.imgId == null){
+                    this.setState({
+                        backImg :'https://yf.htapi.pub/paper/1597538468975_22.png'
+                    })
+                }else if(infoArr.length == 2){
+                    this.$api.selBack().then(res=>{
+                        let imgList = res.data.data;
+                        for(let i=0;i<imgList.length;i++){
+                            if(imgList[i].ppid == ppid){
+                                this.setState({
+                                    imgId : ppid,
+                                    backImg : "https://yf.htapi.pub/paper/"+imgList[i].ppimage
+                                })
+                            }
+                        }
+                    })
+                }
             }
         }) 
         this.$api.showTImg({Lid:this.props.match.params.id}).then(res => { 
-            console.log(res.data)
+            //console.log(res.data)
             if (res.data.status === 0) {      
                 this.setState({
                     timg:res.data.data,
@@ -54,7 +89,7 @@ export default class togeContent extends Component {
         var musicUrl;
         let name;
         this.$api.showTmus({lid:this.props.match.params.id}).then(res=>{
-            console.log(res.data.data);
+            //console.log(res.data.data);
             musicUrl = res.data.data;
             let resData = res.data.data;
             let regMusic = /.*(.mp3)$/gi
@@ -62,23 +97,29 @@ export default class togeContent extends Component {
                 this.setMusicUrl(musicUrl);               
                 name = resData[0];            
             }else{
-                console.log('dont have music');
+                //console.log('dont have music');
             }
         })
+        
     }
     //更新页面
     changeLetter=(e)=>{
         var title = this.state.tit;
         var content=this.state.inputValue;
         var timestamp = Date.parse(new Date()); 
-        this.$api.changeletter({lid:this.state.lid,title:title,content:content,lday:timestamp}).then(res => {
+        this.$api.changeletter({lid:this.state.lid,title:title,content:content,lday:timestamp,ppid:this.state.imgId}).then(res => {
             if (res.data.status === 0) {
-                console.log(res);
+                // console.log(res);
                 this.setState({
                     data:res.data.data
                 })
-                this.totoge();
-                console.log(this.state.data)
+                alert('EditLetter', '保存成功', [
+                    { text: 'Ok', onPress: () => {
+                        this.totoge();
+                    } },
+                ])
+                
+                // console.log(this.state.data)
             }
         }) 
                 // this.totoge();
@@ -100,9 +141,8 @@ export default class togeContent extends Component {
     }
     //选择背景
     selback=()=>{
-        //console.log(this.props.history.location.search);
-        var back = this.props.history.location.search;
-        this.props.history.push("/back"+back);
+        // console.log(this.state.lid)
+        this.props.history.push("/wtBack?type=edit&pid="+this.state.lid);
     }
     //选择音乐
     selectMusic=()=>{
@@ -244,9 +284,8 @@ export default class togeContent extends Component {
         }) 
     }
     render() {
-        console.log(this.state.lid)
         return (
-            <div className='toge-body'>
+            <div className='toge-body' style={{backgroundImage:"url("+this.state.backImg+")",backgroundSize:'100% 100%'}}>
                 <div className="ge-body">
                     {/* 顶部 */}
                     <div className="ge-top">
