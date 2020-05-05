@@ -348,13 +348,14 @@ POST
 
 **接收参数**
 
-| 参数    | 说明             | 类型   |
-| ------- | ---------------- | ------ |
-| pid     | 信件id           | int    |
-| title   | 信件标题         | string |
-| content | 信件内容         | string |
-| pday    | 信件修改后的日期 | 时间戳 |
-| color   | 字体颜色         | string |
+| 参数       | 说明             | 类型   |
+| ---------- | ---------------- | ------ |
+| pid        | 信件id           | int    |
+| title      | 信件标题         | string |
+| content    | 信件内容         | string |
+| pday       | 信件修改后的日期 | 时间戳 |
+| color      | 字体颜色         | string |
+| fontFamily | 字体样式         | string |
 
 **返回参数**
 
