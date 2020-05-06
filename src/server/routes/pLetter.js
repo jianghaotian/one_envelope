@@ -89,9 +89,11 @@ router.post('/getletter/pdelete', function (req, res, next) {
  *      ppid:背景id
  *      mp3Data:音频的base64编码
  *      color:字体颜色
+ *      fontFamily:字体样式
+ *      fontsize：字体大小
  */
 router.post('/writeletter', function (req, res, next) {
-    let { Ptitle, Pcontent,toUid,toNick,Pday,ppid,mp3Data,color,bgData} = req.body;
+    let { Ptitle, Pcontent,toUid,toNick,Pday,ppid,mp3Data,color,bgData,fontFamily,fontsize} = req.body;
     let token = req.header('token');
     checkToken(token, (result) => {
         if(result.status != 0){
@@ -99,7 +101,7 @@ router.post('/writeletter', function (req, res, next) {
         }else{
             let uid = result.data.uid;
             if(mp3Data == undefined && bgData == undefined){
-                runSql(`insert into pletter(Ptitle, Pcontent, Uid,toUid,toNick,isSend,Pday,isCollection,isDelete,ppid,music,color,bgimage,custom) values (?,?,?,?,?,?,?,?,?,?,?,?,?,?)`, [Ptitle, Pcontent,uid,null,toNick,0,Pday,0,0,ppid,null,color,null,0],(result1)=>{
+                runSql(`insert into pletter(Ptitle, Pcontent, Uid,toUid,toNick,isSend,Pday,isCollection,isDelete,ppid,music,color,bgimage,custom,fontFamily,fontsize) values (?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?)`, [Ptitle, Pcontent,uid,null,toNick,0,Pday,0,0,ppid,null,color,null,0,fontFamily,fontsize],(result1)=>{
                     res.json(result1);
                 });
             }else if(mp3Data !== undefined && bgData == undefined){
@@ -115,7 +117,7 @@ router.post('/writeletter', function (req, res, next) {
                         if(err){
                             res.send(err);
                         }else{
-                            runSql(`insert into pletter(Ptitle, Pcontent,Uid,toUid,toNick,isSend,Pday,isCollection,isDelete,ppid,music,color,bgimage,custom) values (?,?,?,?,?,?,?,?,?,?,?,?,?,?)`, [Ptitle, Pcontent,uid,null,toNick,0,Pday,0,0,ppid,name,color,null,0],(result1)=>{
+                            runSql(`insert into pletter(Ptitle, Pcontent,Uid,toUid,toNick,isSend,Pday,isCollection,isDelete,ppid,music,color,bgimage,custom,fontFamily,fontsize) values (?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?)`, [Ptitle, Pcontent,uid,null,toNick,0,Pday,0,0,ppid,name,color,null,0,fontFamily,fontsize],(result1)=>{
                                 res.json(result1);
                             });
                         }
@@ -134,7 +136,7 @@ router.post('/writeletter', function (req, res, next) {
                         if(err){
                             res.send(err);
                         }else{
-                            runSql(`insert into pletter(Ptitle, Pcontent,Uid,toUid,toNick,isSend,Pday,isCollection,isDelete,ppid,music,color,bgimage,custom) values (?,?,?,?,?,?,?,?,?,?,?,?,?,?)`, [Ptitle, Pcontent,uid,null,toNick,0,Pday,0,0,ppid,null,color,name,1],(result1)=>{
+                            runSql(`insert into pletter(Ptitle, Pcontent,Uid,toUid,toNick,isSend,Pday,isCollection,isDelete,ppid,music,color,bgimage,custom,fontFamily,fontsize) values (?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?)`, [Ptitle, Pcontent,uid,null,toNick,0,Pday,0,0,ppid,null,color,name,1,fontFamily,fontsize],(result1)=>{
                                 res.json(result1);
                             });
                         }
