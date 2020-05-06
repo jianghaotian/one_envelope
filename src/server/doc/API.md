@@ -356,6 +356,7 @@ POST
 | pday       | 信件修改后的日期 | 时间戳 |
 | color      | 字体颜色         | string |
 | fontFamily | 字体样式         | string |
+| fontsize   | 字体大小         | string |
 
 **返回参数**
 
