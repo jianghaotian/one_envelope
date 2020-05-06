@@ -40,6 +40,7 @@ import Back from './Home/Back'
 import CustomBack from './Home/CustomBack'
 import Signature from './Home/Signature'
 import Mysig from './My/Signature'
+import WTBack from './WriteTogether/WTBack'
 
 
 React.Component.prototype.$api = api;
@@ -97,6 +98,7 @@ ReactDOM.render(
 
             <Route path="/touxiang" component={Touxiang} />
             <Route path="/cropimg" component={Cropimg} />
+            <Route path='/wtBack' component={WTBack} />
 
 
         </Switch>

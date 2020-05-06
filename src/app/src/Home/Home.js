@@ -238,7 +238,7 @@ export default class Home extends Component {
     componentDidMount(){
         //获取背景和个性签名
         this.$api.getHomeData().then(res=>{
-            console.log(res);
+            // console.log(res);
             let data = res.data.data;
             let sig = data[0].signature;
             let hbg = data[0].homeBack;

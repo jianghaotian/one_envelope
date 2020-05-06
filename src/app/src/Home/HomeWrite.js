@@ -16,6 +16,28 @@ const color = [
 
 const ls = localStorage;
 
+var family = [
+    {name:'微软雅黑'},
+    {name:'宋体'},
+    {name:'隶书'},
+    {name:'新宋体'},
+    {name:'楷书'},
+    {name:'华文隶书'},
+    {name:'华文彩云'},
+    {name:'华文仿宋'},
+    {name:'华文琥珀'},
+    {name:'华文行楷'},
+    {name:'幼圆'},
+    {name:'华文新魏'},
+    {name:'方正舒体'},
+    {name:'方正姚体'},
+];
+
+var fontSize = [];
+for(let i=14;i<40;i++){
+    fontSize.push(i);
+}
+
 export default class HomeWrite extends Component {
     constructor(){
         super();
@@ -36,6 +58,10 @@ export default class HomeWrite extends Component {
             musicName:'',
             musicShow:{display:'none'},
             musicTag:false,
+            fontFamily:'',
+            fontSize:'',
+            sureSize:'',
+            sureFamily:''
         }
     }
     //返回Home
@@ -98,7 +124,11 @@ export default class HomeWrite extends Component {
                     toUid : resData.toUid,
                     type : typeArr[1],
                     pid : idArr[1],
-                    fontColor:resData.color
+                    fontColor:resData.color,
+                    fontSize:resData.fontsize,
+                    fontFamily:resData.fontFamily,
+                    sureFamily:resData.fontFamily,
+                    sureSize:resData.fontsize
             })
             //getMusic
             this.$api.showMusic({pid:idArr[1]}).then(res=>{
@@ -230,7 +260,7 @@ export default class HomeWrite extends Component {
         }else if(this.state.type == "create"){
             let timestamp = Date.parse(new Date());
             let mp3 = ls.getItem('createMp3');
-            this.$api.writeLetter({Ptitle:title,Pcontent:content,toUid:id,toNick:to,Pday:timestamp,ppid:ppid,color:fontColor,mp3Data:mp3}).then(res=>{
+            this.$api.writeLetter({Ptitle:title,Pcontent:content,toUid:id,toNick:to,Pday:timestamp,ppid:ppid,color:fontColor,mp3Data:mp3,fontFamily:this.state.sureFamily,fontsize:this.state.sureSize}).then(res=>{
                 //console.log(res);
             })
             
@@ -249,7 +279,7 @@ export default class HomeWrite extends Component {
                 name = resData[0];
                 console.log(name);
             })
-            this.$api.editLetter({pid:pid,title:title,content:content,pday:timestamp,ppid:ppid,color:fontColor,music:name}).then(res=>{
+            this.$api.editLetter({pid:pid,title:title,content:content,pday:timestamp,ppid:ppid,color:fontColor,music:name,fontFamily:this.state.sureFamily,fontsize:this.state.sureSize}).then(res=>{
                 //console.log(res);
             })
             alert('EditLetter', '修改成功', [
@@ -427,6 +457,34 @@ export default class HomeWrite extends Component {
             this.props.history.push('/cback?toNick='+this.state.to+'&type='+type);
         }
     }
+    setFamily=(item)=>{
+        //console.log(item);
+        this.setState({
+            fontFamily:item.name
+        })
+    }
+    setSize=(item)=>{
+        //console.log(item);
+        this.setState({
+            fontSize:item
+        })
+    }
+    fontCancle=()=>{
+        this.fontColor();
+        console.log(this.state.sureFamily,this.state.sureSize);
+        this.setState({
+            fontFamily:this.state.sureFamily,
+            fontSize:this.state.sureSize
+        })
+    }
+    fontSure=()=>{
+        this.fontColor();
+        this.setState({
+            sureFamily:this.state.fontFamily,
+            sureSize:this.state.fontSize
+        })
+        console.log(this.state.sureFamily,this.state.sureSize);
+    }
     render() {
         //console.log(this.state.type,this.state.pid);
         //console.log(this.state.toList);
@@ -478,7 +536,9 @@ export default class HomeWrite extends Component {
                             id="textBox"
                             value={this.state.value}
                             onChange={this.Edit}
-                            style={{backgroundImage:"url("+this.state.back+")",backgroundSize:"100% 447px",color:this.state.fontColor}}
+                            style={{backgroundImage:"url("+this.state.back+")",backgroundSize:"100% 100%",color:this.state.fontColor
+                            ,fontFamily:this.state.fontFamily,fontSize:this.state.fontSize+'px',
+                            padding:'10px'}}
                             rows={18}
                             count={10000}
                             onClick={()=>{
@@ -501,6 +561,7 @@ export default class HomeWrite extends Component {
                     <div id="fontColor">
                         <img src={require("../imgs/Home/color.png")} onClick={this.fontColor} />
                         <div id="color" style={this.state.colorState}>
+                            <span>颜色</span>
                             <ul>
                                {
                                    color.map((item,index)=>{
@@ -508,6 +569,40 @@ export default class HomeWrite extends Component {
                                    })
                                }
                             </ul>
+                            <div className="fontStyle" id="fontFamily">
+                                <span>字形</span>
+                                <input type='text' value={this.state.fontFamily} id="hw-ff" />
+                                <div className="ff-op">
+                                    <ul>
+                                        {
+                                            family.map((item,index)=>{
+                                                return <li onClick={()=>{this.setFamily(item)}}>
+                                                    {item.name}
+                                                </li>
+                                            })
+                                        }
+                                    </ul>
+                                </div>
+                            </div>
+                            <div className="fontStyle" id="fontSize">
+                            <span>大小</span>
+                                <input type='text' value={this.state.fontSize} id="hw-ff" />
+                                <div className="ff-op">
+                                    <ul>
+                                        {
+                                            fontSize.map((item,index)=>{
+                                                return <li onClick={()=>{this.setSize(item)}}>
+                                                    {item}
+                                                </li>
+                                            })
+                                        }
+                                    </ul>
+                                </div>
+                            </div>
+                            <div id='fontBtn'>
+                                <button id="font-cancle" onClick={this.fontCancle} >取消</button>
+                                <button id='font-sure' onClick={this.fontSure}>确认</button>
+                            </div>
                         </div>
                     </div>
                 </div>

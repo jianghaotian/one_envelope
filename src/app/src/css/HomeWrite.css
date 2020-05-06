@@ -123,20 +123,23 @@
 
 /* 字体颜色 */
 #color{
-    width:215px;
-    height:40px;
-    background-color: white;
+    background-color: rgb(255, 255, 255,0.9);
     position:absolute;
-    right:30px;
-    bottom:35px;
+    right:0;
+    bottom:200px;
+    left:0;
+    width:280px;
+    height:300px;
+    margin:  auto;
+    padding:10px;
     border:1px solid lightgrey;
     border-radius:10px;
 }
-#color ul{
+#color>ul{
     display: flex;
     justify-content: space-around;
 }
-#color li{
+#color>li{
     float: left;
     margin-top:6px;
 }
@@ -145,6 +148,61 @@
     width:25px;
     border-radius:45px;
 }
+.fontStyle{
+    width:120px;
+    height:160px;
+    box-sizing: border-box;
+    border:1px solid rgb(145, 145, 145);;
+    float: left;
+}
+#fontFamily{
+
+}
+#fontSize{
+    position: absolute;
+    right: 10px;
+}
+#hw-ff{
+    box-sizing: border-box;
+    width: 100%;
+    background-color:rgb(231, 231, 231);
+    border:1px solid rgb(255, 205, 139);
+}
+.ff-op{
+    /* background-color: greenyellow; */
+    height:114px;
+    overflow: scroll;
+}
+.ff-op li{
+    padding:1px 0;
+}
+#fontBtn{
+    position: relative;
+    top:180px;
+    height:40px;
+    /* background-color: greenyellow; */
+}
+#font-cancle{
+    width:100px;
+    height:35px;
+    background-color: transparent;
+    border:1px solid rgb(161, 161, 161);
+    border-radius:10px;
+    position: absolute;
+    left:10px;
+    font-weight: bold;
+}
+#font-sure{
+    width:100px;
+    height:35px;
+    background-color: transparent;
+    border:1px solid rgb(161, 161, 161);
+    border-radius:10px;
+    position: absolute;
+    right:10px;
+    font-weight: bold;
+}
+
 
 /* 选择音乐 */
 
