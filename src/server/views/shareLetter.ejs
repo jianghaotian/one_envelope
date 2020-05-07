@@ -69,7 +69,6 @@
             padding-left: 5px;
             padding-right: 5px;
             border: none;
-            /* font-family: '方正舒体'; */
         }
     </style>
 </head>
@@ -86,11 +85,11 @@
             </div>
         </div>
         <div style="height: 30px;"></div>
-        <div class="hw-write" style="font-family:<%=data.fontFamily%>;color:<%=data.color%>;font-size:<%=data.fontsize%>px;">
+        <div class="hw-write" style="font-family:<%=data.fontFamily%>;">
             <%if(!data.ppid){%>
-                <textarea class="backImg" style="background-image:url('<%=bgimage%><%=data.bgimage%>') ;"><%=data.Pcontent%>
+                <textarea class="backImg" style="font-family:<%=data.fontFamily%>;color:<%=data.color%>;font-size:<%=data.fontsize%>px;background-image:url('<%=bgimage%><%=data.bgimage%>') ;"><%=data.Pcontent%>
             <%}else{%>
-                <textarea class="backImg" style="background-image:url('<%=pimage%><%=ppimage%>');"><%=data.Pcontent%>               
+                <textarea class="backImg" style="font-family:<%=data.fontFamily%>;color:<%=data.color%>;font-size:<%=data.fontsize%>px;background-image:url('<%=pimage%><%=ppimage%>');"><%=data.Pcontent%>               
             <%}%>
                 </textarea>
         </div>
