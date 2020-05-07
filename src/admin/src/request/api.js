@@ -56,6 +56,13 @@ const api = {
     // 删除信纸
     delpaper: p => post('papermanager/delpaper',p),
     
+    //新增
+    //获取帮助用户信息
+    helpUser: p => get('help/helpUser',p),
+    //保存反馈信息
+    saveBack:p=> post('/help/saveBack',p),
+    //获取feedback
+    searchFeedback:p => get('/help/searchFeedback',p)
 }
 
 

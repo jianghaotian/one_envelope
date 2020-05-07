@@ -11,6 +11,8 @@ import TogetherWrite from '../Manage/TogetherWrite';
 import Administrator from '../Manage/Administrator';
 import {Addform} from '../Manage/Add';
 import {clearTokenAll} from '../redux/actions';
+import Help from '../Manage/Help';
+import {Backform} from '../Manage/BackMessage';
 
 const { SubMenu } = Menu;
 const { Header, Content, Sider } = Layout;
@@ -83,6 +85,7 @@ export default class TotalLetter extends Component {
                       <Menu.Item key="7"><Link to='/backhome/bprivatemanage'>私密信管理</Link></Menu.Item>
                       <Menu.Item key="8"><Link to='/backhome/btogethermanage'>一起写管理</Link></Menu.Item>
                       <Menu.Item key="9"><Link to='/backhome/bpapermanage'>信纸管理</Link></Menu.Item>
+                      <Menu.Item key="10"><Link to='/backhome/help'>帮助与反馈</Link></Menu.Item>
                     </SubMenu>
                   </Menu>
                 </Sider>
@@ -103,6 +106,8 @@ export default class TotalLetter extends Component {
                         <Route path='/backhome/btogethermanage' component={TogetherWrite}/>
                         <Route path='/backhome/bpapermanage' component={PaperManage}/>
                         <Route path='/backhome/add' component={Addform}/>
+                        <Route path='/backhome/help' component={Help}/>
+                        <Route path='/backhome/backmessage' component={Backform}/>
                     </Content>
                 </Layout>
                 </Layout>

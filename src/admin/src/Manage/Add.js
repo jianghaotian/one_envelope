@@ -24,6 +24,7 @@ class Add extends Component {
             if (err) {
                 console.log(err);
             }else{
+                console.log('values');
                 var num =values.phone + '';
                 const regTel = /^1\d{10}$/;
                 if(regTel.test(num) && num.length==11){
