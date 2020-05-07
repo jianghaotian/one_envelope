@@ -105,9 +105,9 @@ export default class My extends Component {
                 <List style={{
                     marginTop:'1em'
                 }}>
-                    {/* <Item extra={
+                    <Item extra={
                         <i className="iconfont icon-huiyuan" ></i>
-                    } onClick={() => {}}>会员中心</Item> */}
+                    } onClick={() => {}}>会员中心</Item>
                     {/* <Item extra={
                         <i className="iconfont icon-weibiaoti-" style={{
                             fontSize:"1.0em"

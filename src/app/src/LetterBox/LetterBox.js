@@ -110,10 +110,10 @@ export default class LetterBox extends Component {
                                     height:'64px',
                                     width:'64px'
                                 }} />
-                                <span className="lb-user">{item.uname}</span>
+                                <span className="lb-user">{item.Ptitle}</span>
                                 
                                 <span className="lb-date">{new Date(item.Pday).getFullYear()+'-'+(new Date(item.Pday).getMonth()+1)+'-'+new Date(item.Pday).getDate()}</span>
-                                <span className="lb-title">{item.Ptitle}</span>
+                                <span className="lb-title">{"来自："+item.uname}</span>
                                 <span className="lb-content">
                                     {item.Pcontent}
                                 </span>
