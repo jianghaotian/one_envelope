@@ -225,13 +225,25 @@ router.post("/theme/delletter",function(req,res,next){
         if(result.status !=0){
             res.json(result)
         }else{
-               runSql(`delete from tletter where tid=?`,[tid],(result2)=>{
-                   runSql(`delete from tmember where tid=?`,[tid],(result3)=>{
-                       runSql(`delete from theme where tid=?`,[tid],(result1)=>{
-                       res.json(result1)
-                   })
-               })
-           })
+            var length;
+            runSql(`select * from tletter where tid=?`,[tid],(result4)=>{
+                length = result4.data.length;
+                if(length > 0){
+                    runSql(`delete from tletter where tid=?`,[tid],(result2)=>{
+                        runSql(`delete from tmember where tid=?`,[tid],(result3)=>{
+                            runSql(`delete from theme where tid=?`,[tid],(result1)=>{
+                                res.json(result1);
+                        })
+                    })
+                })
+                }else{
+                    runSql(`delete from tmember where tid=?`,[tid],(result3)=>{
+                        runSql(`delete from theme where tid=?`,[tid],(result1)=>{
+                            res.json(result1);
+                        })
+                    })
+                }
+            })
         }
     })
 })

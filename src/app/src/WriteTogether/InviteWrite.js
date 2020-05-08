@@ -19,8 +19,8 @@ export default class InviteWrite extends Component {
     //删除主题
     delectTheme=(e1)=>{       
         let list = this.state.data;
-        console.log(list)                
-        console.log(e1)
+        console.log(list);                
+        console.log(e1,'e1');
             for(let i=0;i<list.length;i++){
                 if(list[i].tid == e1){
                     list.splice(i,1);
@@ -59,14 +59,14 @@ export default class InviteWrite extends Component {
     componentDidMount(){
         //主题内容详情列表        
         this.$api.themeContent({tid:this.props.match.params.id}).then(res => {         
-            //console.log(res.data.data);
+            console.log(res.data.data);
             if (res.data.status == 0) {    
                 //console.log(res.data.data)  
                 this.setState({
                     data:res.data.data,
                     // data: [{}]
                 })
-                //console.log(this.state.data);
+                console.log(this.state.data,'content');
             }
         }) 
         this.$api.themetitle({tid:this.props.match.params.id}).then(res => {          
@@ -74,7 +74,7 @@ export default class InviteWrite extends Component {
                 this.setState({
                     theme:res.data.data
                 })
-                // console.log(this.state.data);
+                console.log(this.state.theme,'title');
             }
         })
         window.addEventListener('scroll' , ()=>{   
@@ -130,8 +130,8 @@ export default class InviteWrite extends Component {
                         <button
                         onClick={(e) =>
                             alert('', '您将删除整个主题内容，请确认', [
-                            { text: '取消', onPress: () => console.log("取消") },
-                            { text: '确定', onPress:()=>this.delectTheme(this.state.data[0].tid) },
+                            { text: '取消', onPress: () => console.log('取消') },
+                            { text: '确定', onPress:()=>this.delectTheme(this.state.theme[0].Tid) },
 
                             ])
                         }
@@ -146,9 +146,6 @@ export default class InviteWrite extends Component {
                                         right:"5%"}}/>
                         </button>  
                     </WingBlank>
-                                
-                    
-
                     <ul className='invite-mid'>
                         <Link to={"/inviteMember/"+this.state.theme[0].Tid}><li className='invite-one'>成员</li></Link>                       
                         
