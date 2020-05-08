@@ -23,7 +23,7 @@ export default class Letter extends Component {
         })
         // console.log(this.props.match.params.id)//打印文章信息号
         this.$api.showmail({pid:this.props.match.params.id}).then(res => {
-            // console.log(res.data.data)//打印数据
+            console.log(res.data.data)//打印数据
             this.setState({
                 arr:res.data.data
             });
@@ -61,10 +61,10 @@ export default class Letter extends Component {
     }
     // 删除
     deleEmail =(e)=>{
-        this.$api.deletemail({pid:this.props.match.params.id}).then(res => {
-            Toast.success('删除成功', 1);
-        }) 
-        // console.log('删除代码已注释')
+        // this.$api.deletemail({pid:this.props.match.params.id}).then(res => {
+        //     Toast.success('删除成功', 1);
+        // }) 
+        console.log('删除代码已注释')
     }
     
     sharemail=()=>{

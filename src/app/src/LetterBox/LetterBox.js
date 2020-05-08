@@ -46,6 +46,36 @@ export default class LetterBox extends Component {
                 this.setState({
                     brr:res.data.data
                 })
+                if(this.state.brr.length == 0){
+                    Toast.fail('换个搜索词试试', 1);
+                    this.handleshow()
+                }
+                this.setState({
+                    displayb:true
+                })
+            });
+        }
+    }
+    onkey = (e) => {
+        console.log(this.state.display)
+        console.log(this.state.displayb)
+        this.setState({
+            display:false,
+            displayb:true
+        })
+        this.setState({
+            text:e
+        })
+        // console.log(this.state.text)
+        if(this.state.text == ''){
+            Toast.fail('输入不为空', 1);
+        }else{
+            this.handlehide();
+            this.$api.searchmail({ptitle:this.state.text}).then(res => {
+                console.log(res.data.data)//返回数据
+                this.setState({
+                    brr:res.data.data
+                })
                 this.setState({
                     displayb:true
                 })
@@ -59,7 +89,7 @@ export default class LetterBox extends Component {
             display:true,
             displayb:false
         })
-        e=''
+        
     }
     // 获得焦点，显示搜索结果
     handlehide=(e)=>{
@@ -88,13 +118,13 @@ export default class LetterBox extends Component {
                 onChange={(e)=>this.inputChange(e)}
                 cancelText='搜索'
                 onCancel={(e)=>this.handleChange(e)}
-                // onSubmit={(e)=>this.handleChange(e)}
+                // onSubmit={(e)=>this.onkey(e)}
                 onFocus={(e)=>this.handlehide(e)}
                 onBlur={(e)=>this.handleshow(e)}
                 />
                 {/* 列表页 */}
 
-                <List className={this.state.display?"active":"active1"}>
+                <List className={this.state.display?"active":"activeno"}>
                     {this.state.arr.map((item,index)=>{
                         return(
                             <List.Item className='lb-text' onClick={() => {}} 
@@ -122,7 +152,7 @@ export default class LetterBox extends Component {
                         )
                     })} 
                 </List>
-                <List  className={this.state.displayb?"active":"active1"}>
+                <List  className={this.state.displayb?"active":"activeno"}>
                     {this.state.brr.map((item,index)=>{
                         return(
                             <List.Item className='lb-text' onClick={() => {}} 
