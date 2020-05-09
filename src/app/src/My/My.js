@@ -20,7 +20,6 @@ export default class My extends Component {
             this.setState({
                 arr:res.data.data
             })
-            // console.log(this.state.arr[0].pidname)
         }) 
         this.$api.sharenum().then(res => {
             // 获取数据成功后的其他操作
@@ -32,7 +31,7 @@ export default class My extends Component {
             // console.log(res);
             let data = res.data.data;
             let sig = data[0].signature;
-            console.log(sig)
+            // console.log(sig)
             // if(sig == null || sig == undefined ||sig == ''){
             if((sig == null)||(sig == '')){
                 sig='快来写个性签名吧'
@@ -41,7 +40,6 @@ export default class My extends Component {
             this.setState({
                 signature : data[0].signature,
             })
-            console.log(this.state.signature)
         })
     }
     // 跳转个签编辑
