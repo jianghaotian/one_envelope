@@ -650,12 +650,13 @@ POST
 
 **接收参数**
 
-| 参数     | 说明     | 类型   |
-| -------- | -------- | ------ |
-| Ltitle   | 信件标题 | string |
-| Lcontent | 信件内容 | string |
-| Tday     | 创建日期 | string |
-| Tid      | 主题id   | int    |
+| 参数     | 说明           | 类型   |
+| -------- | -------------- | ------ |
+| Ltitle   | 信件标题       | string |
+| Lcontent | 信件内容       | string |
+| Tday     | 创建日期       | string |
+| Tid      | 主题id         | int    |
+| imgArr   | 插入图片base64 | string |
 
 **返回参数**
 
