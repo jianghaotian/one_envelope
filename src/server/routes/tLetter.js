@@ -20,7 +20,9 @@ router.get('/theme', function (req, res, next) {
             res.json(result);
         } else {
             let uid = result.data.uid;
-            runSql(`select distinct theme.* from theme where theme.uid=?`,[uid],(result1) => {
+            var addUid = '%'+uid+'%';
+            runSql(`select distinct theme.* from theme where theme.uid=? or inviteUid like ?`,[uid,addUid],(result1) => {
+                console.log(result1);
                 res.json(result1);
             })
         }
@@ -54,8 +56,9 @@ router.get('/theme/showtheme',function(req,res,next){
             res.json(result);
         }else{
             let uid = result.data.uid;
-            runSql(`select theme.tname,theme.timage,theme.tday,tletter.ltitle,tletter.lcontent,tletter.tid,tletter.lday,tletter.lid from theme,tletter where theme.uid=? and theme.tid=? and (theme.tid=tletter.tid)`,
-                    [uid,tid],(result1) => {
+            let addUid = '%'+ uid +'%';
+            runSql(`select tletter.ltitle,tletter.lcontent,tletter.tid,tletter.lday,tletter.lid from tletter where  tletter.tid=? and (tletter.uid=? or inviteUid like ?)`,
+                    [tid,uid,addUid],(result1) => {
                         console.log(result1);
                         res.json(result1);
                     })
@@ -182,11 +185,44 @@ router.post("/theme/delletter",function(req,res,next){
              let uid = result.data.uid;
              runSql(`insert into theme (tname,timage,isPrivate,uid,tday) value(?,?,?,?,?)`,[tname,timage,isPrivate,uid,tday],
              (result1) => {
-                 res.json(result1);
+                 
              })
          }
      })
  })
+ /**
+  * 添加创建者成员
+  * 请求方式：
+  *      POST
+  * 接收参数：
+  *     tid:信件id
+  * 返回参数：
+  *     
+  */
+router.post('/theme/addFirstMember',function(req,res,next){
+    let {tid} = req.body;
+    let token = req.header('token');
+    let own;
+    checkToken(token,(result)=>{
+        if(result.status!=0){
+            res.json(result);
+        }else{
+            let uid =result.data.uid;
+            runSql('select uid from theme where tid=?',[tid],(result1)=>{
+                own = result1.data[0].uid;
+                if(own == uid){
+                    runSql(`select uid from tmember where tid=?`,[tid],(result2)=>{; 
+                        if(result2.data.length==0){
+                            runSql('insert into tmember(tid,uid) value(?,?)',[tid,own],(result3)=>{
+                                console.log(result3);
+                            })
+                        }
+                    })
+                }
+            })
+        }
+    })
+})
   /**
   * 删除成员
   * 请求方式：

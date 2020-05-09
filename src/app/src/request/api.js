@@ -45,6 +45,7 @@ const api = {
     delInsertTmus:p => post('music/delmusic',p),//删除音乐
     changeWtback:p=>post('together/changebg',p),//更换背景
 
+    addFirstMember:p=>post('together/theme/addFirstMember',p),
 
 
 

@@ -77,6 +77,13 @@ export default class InviteWrite extends Component {
                 console.log(this.state.theme,'title');
             }
         })
+        this.$api.addFirstMember({tid:this.props.match.params.id}).then(res => { 
+            if (res.data.status === 0) {                
+                console.log("创始成员添加成功");
+            }else{
+                console.log("创建失败");
+            }  
+        });
         window.addEventListener('scroll' , ()=>{   
           let scrollTop = document.documentElement.scrollTop || document.body.scrollTop;    
           if(scrollTop > 50){    
