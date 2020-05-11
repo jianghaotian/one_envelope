@@ -2,7 +2,7 @@ import React, { Component } from 'react'
 import '../css/togeCreate.css'
 import { List, TextareaItem,Toast } from 'antd-mobile';
 import {HashRouter as Router,Link,Switch,Route} from 'react-router-dom'
-
+const ls = localStorage;
 export default class togeCreate extends Component {
     constructor(){
         super();
@@ -11,7 +11,9 @@ export default class togeCreate extends Component {
             inputTitle:"",
             data:[] ,
             files:'',
-            backImg:''
+            backImg:'',
+            picture:'',
+            insetPic:''//插入图片名称
         }
     }
     
@@ -19,22 +21,24 @@ export default class togeCreate extends Component {
         var title = this.state.inputTitle;
         var content=this.state.inputValue;
         var timestamp = Date.parse(new Date()); 
+        let img = ls.getItem('onepic');
+
         if(title == undefined || title ==""){
             alert("请填写昵称");
         }else{
-            this.$api.addletter({tid:this.props.match.params.id,title:title,content:content,lday:timestamp}).then(res => {                     
+            this.$api.addletter({tid:this.props.match.params.id,title:title,content:content,lday:timestamp,imgArr:img}).then(res => {                     
                 if (res.data.status === 0) {                
                     this.setState({
-                        data:res.data.data                   
-                    })                    
+                        insetPic:res.data.data,
+                        picture : "https://yf.htapi.pub/insertimg/"+res.data.data             
+                    })                
                     Toast.success('创建成功', 1);
-                    // alert("创建成功~");
                     this.totoge();
-                    console.log(this.state.data);
                 }         
             }) 
-            
+            ls.removeItem('onepic');
         }
+
     }
     totoge=()=>{
         this.props.history.push('/inviteWrite/'+this.props.match.params.id);
@@ -75,14 +79,32 @@ export default class togeCreate extends Component {
         })
     }
     selback=()=>{
-       //this.props.history.push("/wtBack?type=create&lid=null");
+    //    this.props.history.push("/wtBack?type=create&lid=null");
     }
+    //插入图片
+    selectimg = (e) => {       
+        console.log(e.target.files[0])          
+        let picture = document.getElementById("picture").files[0];
+        var reader = new FileReader();
+        reader.readAsDataURL(picture);
+        reader.onload=()=>{
+            this.src = reader.result;
+            ls.setItem('onepic',this.src);
 
-    
+        }  
+    }
+    // 删除图片
+    delTimg=(e2)=>{
+        let pic = this.state.insetPic;
+        if(e2 == pic){
+            this.setState({
+                imgArr:''
+            }) 
+        }
+    }
     render() {
         return (
             // <script type='text/javascript' src='jquery-1.9.js'></script>
-            
             <div className='toge-body' style={{backgroundImage:"url("+this.state.backImg+")",backgroundSize:'100% 100%'}}>
                 <div className="ge-body">
                     {/* 顶部 */}
@@ -95,10 +117,7 @@ export default class togeCreate extends Component {
                         <span id="ge-save" onClick={this.addLetter}>
                             保存
                         </span>
-                       
-
                     </div>
-
                     {/* 标题 */}
                     <div className="ge-title">
                         标题：
@@ -107,32 +126,24 @@ export default class togeCreate extends Component {
                     <span className='ge-cont'>内容：</span>
                     {/* 内容 */}
                     <div className="ge-content">                                                    
-                           
-                                <div style={{height:"100%"}}>
-                                    {/* {this.state.data.map((val)=> (                                                   
-                                        <div key={val} className="insertimg">  
-                                            <img src='' className='hide'/>                          
-                                            <img src={"https://yf.htapi.pub/data/"+val.Pimage} alt=""/>                                   
-                                            <img src={"https://yf.htapi.pub/insertimg/1234567894238_11.jpg"} alt="" style={{width:"100%",height:"100%"}}/>                                   
-                                        
-                                        </div>
-                            
-                                    ))} */}
-                                    <TextareaItem     
-                                    rows={13}
-                                    placeholder="请输入内容"
-                                    style={{backgroundColor:'transparent'}}
-                                    value={this.state.inputValue}
-                                    onChange={this.textChange}
-                                     />
-                                    
-
-                                </div>
-
-                           
-                            
-                            
-                        
+                        <div style={{height:"100%"}}>
+                            <TextareaItem     
+                                rows={1}
+                                autoHeight
+                                placeholder="请输入内容"
+                                style={{backgroundColor:'transparent',paddingVertical: 5 }}
+                                value={this.state.inputValue}
+                                onChange={this.textChange}
+                            />
+                            <div className="insertimg" style={{position:'relative'}}>  
+                                <img src={this.state.picture} alt=""style={{width: "100%",height: "90%"}}/> 
+                                {
+                                    this.state.insetPic=='' ? <div></div> : 
+                                    <img src={require('../imgs/Home/musicCancle.png')} style={{position:'absolute',top:0,right:0}} 
+                                    onClick={()=>this.delTimg(this.state.insetPic)}/>
+                                }
+                            </div>
+                        </div>
                     </div>
                 </div>
 
@@ -141,7 +152,7 @@ export default class togeCreate extends Component {
                     <img src={require("../imgs/Home/背景.png")} style={{width:"6%"}} onClick={this.selback} />
                     <img src={require("../imgs/Home/music(3).png")} style={{width:"7%"}} onClick={this.selectMusic} />
                     <label htmlFor='picture' style={{width:"7%"}}>
-                        <input type="file" id='picture' style={{width:"0%"}} />
+                        <input type="file" id='picture' style={{width:"0%"}} onChange={this.selectimg} />
                         <img src={require("../imgs/Home/tupian.png")} style={{width:"100%"}}/>
                     </label>
                 </div>
