@@ -41,6 +41,7 @@ import CustomBack from './Home/CustomBack'
 import Signature from './Home/Signature'
 import Mysig from './My/Signature'
 import WTBack from './WriteTogether/WTBack'
+import PubWrite from './Public/PubWrite'
 
 
 React.Component.prototype.$api = api;
@@ -60,6 +61,7 @@ ReactDOM.render(
             <Route path="/back" component={Back} />
             <Route path='/cback' component={CustomBack} />
             <Route path='/signature' component={Signature} />
+            <Route path="/pubWrite" component={PubWrite} />
 
             {/* lxc */}
             <Route path="/recover" component={Recover} />

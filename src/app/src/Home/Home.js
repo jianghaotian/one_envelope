@@ -343,7 +343,7 @@ export default class Home extends Component {
     }
     //跳转到我的页面
     toMy=()=>{
-        this.props.getIndex(1);
+        this.props.getIndex(5);
     }
     CustomBg=()=>{
         this.props.history.push('/cback?to=致自己');

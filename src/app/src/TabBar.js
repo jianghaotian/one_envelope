@@ -6,19 +6,34 @@ import My from './My/My'
 import WriteTogether from './WriteTogether/WriteTogether'
 import Home from './Home/Home'
 import LetterBox from './LetterBox/LetterBox'
+import Public from './Public/Public';
 
 export default class Tabbar extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
-      selectedTab: this.props.match.params.tab || 'home'
+      selectedTab: this.props.match.params.tab || 'public'
     };
   }
   getIndex=(index)=>{
-    //console.log(index);
-    this.setState({
-      selectedTab: 'my'
-    })
+    console.log(index);
+    if(index == 5){
+      this.setState({
+        selectedTab: 'my'
+      })
+    }else if(index == 1){
+      this.setState({
+        selectedTab: 'home'
+      })
+    }
+  }
+  componentDidMount(){
+    let urlinfo = window.location.hash;
+    if(urlinfo.indexOf("public")>0){
+      this.setState({
+        selectedTab: 'public'
+      })
+    }
   }
   render() {
     //console.log(this.props.match.params.id);
@@ -90,6 +105,27 @@ export default class Tabbar extends React.Component {
           >
             <LetterBox />
           </TabBar.Item>
+
+          <TabBar.Item
+            icon={
+              <i className="iconfont icon-internet_line"></i>
+            }
+            selectedIcon={
+              <i className="iconfont icon-internet_line"></i>
+            }
+            title="公开写"
+            key="public"
+            selected={this.state.selectedTab === 'public'}
+            onPress={() => {
+              this.setState({
+                selectedTab: 'public',
+              });
+            }}
+            data-seed="logId"
+          >
+            <Public getIndex={this.getIndex} history={this.props.history}/>
+          </TabBar.Item>
+
           <TabBar.Item
             icon={
               <i className="iconfont icon-ren"></i>

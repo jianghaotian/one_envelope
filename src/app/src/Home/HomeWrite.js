@@ -84,6 +84,7 @@ export default class HomeWrite extends Component {
         audio.src = 'https://yf.htapi.pub/music/'+url;
     }
     componentDidMount(){
+        ls.clear('createMp3');
         var info = window.location.hash;
         // console.log(info);
         //console.log(info.substr(13,info.length));
@@ -387,6 +388,10 @@ export default class HomeWrite extends Component {
                         console.log(res);
                         audio.src = '';
                         alert('删除成功');
+                        this.setState({
+                            musicShow:{display:'none'},
+                            musicTag:false
+                        })
                     })
                 }else{
                     //console.log('create');
