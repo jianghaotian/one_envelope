@@ -4,13 +4,6 @@ var router = express.Router();
 const runSql = require('../mysql');
 const { getToken, checkToken } = require('../src/token');
 
-const path = require('path');
-
-const { getTimestamp_13 } = require('../src/timer');
-const getRandom = require('../src/user/verification');
-var multiparty = require('multiparty');
-var fs = require('fs');
-
 // let token = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1aWQiOjEsImlhdCI6MTU3NDkzNDk1NCwiZXhwIjoxNTc3NjEzMzU0fQ.PQu7Dzp4MsurerTMR-wYSITeWKxGoo_aH_002CeEzqg';
 /**
  * 获取一起写主题
@@ -27,7 +20,9 @@ router.get('/theme', function (req, res, next) {
             res.json(result);
         } else {
             let uid = result.data.uid;
-            runSql(`select distinct theme.* from theme where theme.uid=?`,[uid],(result1) => {
+            var addUid = '%'+uid+'%';
+            runSql(`select distinct theme.* from theme where theme.uid=? or inviteUid like ?`,[uid,addUid],(result1) => {
+                console.log(result1);
                 res.json(result1);
             })
         }
@@ -61,8 +56,9 @@ router.get('/theme/showtheme',function(req,res,next){
             res.json(result);
         }else{
             let uid = result.data.uid;
-            runSql(`select theme.tname,theme.timage,theme.tday,tletter.ltitle,tletter.lcontent,tletter.tid,tletter.lday,tletter.lid from theme,tletter where theme.uid=? and theme.tid=? and (theme.tid=tletter.tid)`,
-                    [uid,tid],(result1) => {
+            let addUid = '%'+ uid +'%';
+            runSql(`select tletter.ltitle,tletter.lcontent,tletter.tid,tletter.lday,tletter.lid from tletter where  tletter.tid=? and (tletter.uid=? or inviteUid like ?)`,
+                    [tid,uid,addUid],(result1) => {
                         console.log(result1);
                         res.json(result1);
                     })
@@ -124,41 +120,18 @@ router.get("/theme/showtheme/member",function(req,res,next){
  *     day:创建日期
  */
 router.post('/theme/writeletter', function (req, res, next) {
-    let { title, content,lday,tid,imgArr} = req.body;
-    // let imgBrr = JSON.parse(imgArr);
+    // http://localhost:3000/v1/together/theme/writeletter
+    let { title, content,lday,tid} = req.body;
     let token = req.header('token');
     checkToken(token, (result) => {
         if(result.status != 0){
             res.json(result);
         }else{
             let uid = result.data.uid;
-            if(imgArr==undefined){
-                runSql(`insert into tletter(Ltitle, Lcontent, Uid,Lday,Tid,isDelete,insertImg) values (?,?,?,?,?,?,?)`,
-                [title, content,uid,lday,tid,0,null],(result1)=>{
-                    res.json(result1);
-                })
-            }else{
-                var form = new multiparty.Form();
-                form.parse(req, function(err, fields, files){ 
-                    //将前台传来的base64数据去掉前缀
-                    var imgData = imgArr.replace(/^data:image\/\w+;base64,/, '');
-                    var dataBuffer = new Buffer.from(imgData, 'base64');
-                    // 写入文件
-                    var name = getTimestamp_13()+'_'+getRandom(2)+'.png';
-                    var picPath = path.join(__dirname,'../public/insertimg/'+name);
-                    fs.writeFile(picPath, dataBuffer, function(err){
-                        if(err){
-                            res.send(err);
-                        }
-                        else{
-                            runSql(`insert into tletter(Ltitle, Lcontent, Uid,Lday,Tid,isDelete,insertImg) values (?,?,?,?,?,?,?)`,
-                            [title, content,uid,lday,tid,0,name],(result3)=>{
-                                res.json({status: 0, data: name});
-                            })
-                        }
-                    });
-                })
-            }
+            runSql(`insert into tletter(Ltitle, Lcontent, Uid,Lday,Tid,isDelete) values (?,?,?,?,?,?)`,
+             [title, content,uid,lday,tid,0],(result1)=>{
+                res.json(result1);
+            })
         }
     })
 });
@@ -212,11 +185,44 @@ router.post("/theme/delletter",function(req,res,next){
              let uid = result.data.uid;
              runSql(`insert into theme (tname,timage,isPrivate,uid,tday) value(?,?,?,?,?)`,[tname,timage,isPrivate,uid,tday],
              (result1) => {
-                 res.json(result1);
+                 
              })
          }
      })
  })
+ /**
+  * 添加创建者成员
+  * 请求方式：
+  *      POST
+  * 接收参数：
+  *     tid:信件id
+  * 返回参数：
+  *     
+  */
+router.post('/theme/addFirstMember',function(req,res,next){
+    let {tid} = req.body;
+    let token = req.header('token');
+    let own;
+    checkToken(token,(result)=>{
+        if(result.status!=0){
+            res.json(result);
+        }else{
+            let uid =result.data.uid;
+            runSql('select uid from theme where tid=?',[tid],(result1)=>{
+                own = result1.data[0].uid;
+                if(own == uid){
+                    runSql(`select uid from tmember where tid=?`,[tid],(result2)=>{; 
+                        if(result2.data.length==0){
+                            runSql('insert into tmember(tid,uid) value(?,?)',[tid,own],(result3)=>{
+                                console.log(result3);
+                            })
+                        }
+                    })
+                }
+            })
+        }
+    })
+})
   /**
   * 删除成员
   * 请求方式：
@@ -255,13 +261,25 @@ router.post("/theme/delletter",function(req,res,next){
         if(result.status !=0){
             res.json(result)
         }else{
-               runSql(`delete from tletter where tid=?`,[tid],(result2)=>{
-                   runSql(`delete from tmember where tid=?`,[tid],(result3)=>{
-                       runSql(`delete from theme where tid=?`,[tid],(result1)=>{
-                       res.json(result1)
-                   })
-               })
-           })
+            var length;
+            runSql(`select * from tletter where tid=?`,[tid],(result4)=>{
+                length = result4.data.length;
+                if(length > 0){
+                    runSql(`delete from tletter where tid=?`,[tid],(result2)=>{
+                        runSql(`delete from tmember where tid=?`,[tid],(result3)=>{
+                            runSql(`delete from theme where tid=?`,[tid],(result1)=>{
+                                res.json(result1);
+                        })
+                    })
+                })
+                }else{
+                    runSql(`delete from tmember where tid=?`,[tid],(result3)=>{
+                        runSql(`delete from theme where tid=?`,[tid],(result1)=>{
+                            res.json(result1);
+                        })
+                    })
+                }
+            })
         }
     })
 })
