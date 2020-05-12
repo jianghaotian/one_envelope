@@ -85,14 +85,14 @@ router.get('/getOletter', function (req, res, next) {
  *      ppid:背景id
  */
 router.post('/writeOpen', function (req, res, next) {
-    let {Otitle, Ocontent,Oday,ppid} = req.body;
+    let {Otitle, Ocontent,Oday,ppid,weather} = req.body;
     let token = req.header('token');
     checkToken(token, (result) => {
         if(result.status != 0){
             res.json(result);
         }else{
             let uid = result.data.uid;
-            runSql(`insert into open(Otitle, Ocontent,Oday,Uid,ppid,number) values (?,?,?,?,?,?)`,[Otitle,Ocontent,Oday,uid,ppid,0],(result1) =>{
+            runSql(`insert into open(Otitle, Ocontent,Oday,Uid,ppid,number,weather) values (?,?,?,?,?,?,?)`,[Otitle,Ocontent,Oday,uid,ppid,0,weather],(result1) =>{
                 res.json(result1)
             });
         }

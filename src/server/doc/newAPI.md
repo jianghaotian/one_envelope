@@ -667,7 +667,8 @@ GET
             "Oday": null,
             "Uid": 21,
             "ppid": 59,
-            "number": 3
+            "number": 3,
+            "weather":""
         }
     ]
 }
@@ -695,6 +696,7 @@ POST
 | Ocontent | 信件内容 |      |
 | ppid     | 信纸id   |      |
 | Oday     | 创建日期 |      |
+| weather  | 天气情况 |      |
 
 **返回参数**
 
