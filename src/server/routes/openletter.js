@@ -92,7 +92,7 @@ router.post('/writeOpen', function (req, res, next) {
             res.json(result);
         }else{
             let uid = result.data.uid;
-            runSql(`insert into open(Otitle, Ocontent,Oday,Uid,ppid,number) values (?,?,?,?,?,?,?)`,[Otitle,Ocontent,Oday,uid,ppid,0],(result1) =>{
+            runSql(`insert into open(Otitle, Ocontent,Oday,Uid,ppid,number) values (?,?,?,?,?,?)`,[Otitle,Ocontent,Oday,uid,ppid,0],(result1) =>{
                 res.json(result1)
             });
         }
