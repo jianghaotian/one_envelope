@@ -107,3 +107,62 @@ a:active {
     background-color: black;
     position: relative;
 }
+/* --------------------补充更改------------------------ */
+.hw-top{
+    height:35px;
+    width:100%;
+    color:grey;
+    font-size:16px;
+    line-height:35px;
+    /* background-color: rgb(235, 235, 235); */
+}
+.hw-top-span{
+    width:90%;
+    margin:0 auto;
+}
+.hw-title{
+    height:45px;
+    width:90%;
+    margin: 0 auto;
+    border-bottom:3px solid rgb(182, 182, 182);
+    background-size: cover;
+    /* background-color: rgb(247, 194, 185); */
+}
+.hw_title{
+    font-size:20px;
+    line-height:45px;
+    font-weight: bold;
+}
+.hw-inp{
+    font-size:16px;
+    width:70%;
+    height:30px;
+    border:none;
+    color:black;
+    margin-left:10px;
+    background:none;
+}
+.hw-write{
+    width:90%;
+    height:450px;
+    margin: 0 auto;
+    /* background-color: blanchedalmond; */
+}
+.hw-to{
+    width:90%;
+    margin : 0 auto;
+    height:30px;
+    line-height:30px;
+    font-size:15px;
+}
+.hw-bottom{
+    height:40px;
+    width:100%;
+    /* background-color:rgb(226, 226, 226); */
+    position:fixed;
+    bottom:0;
+    display: flex;
+    justify-content: space-around;
+    align-items: center;
+    border-top:1px solid gray;
+}

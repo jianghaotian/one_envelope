@@ -21,7 +21,7 @@ export default class Letter extends Component {
         this.setState({
             pid:this.props.match.params.id
         })
-        console.log(this.props.match.params)//打印文章信息号
+        // console.log(this.props.match.params.id)//打印文章信息号
         this.$api.showmail({pid:this.props.match.params.id}).then(res => {
             console.log(res.data.data)//打印数据
             this.setState({
@@ -129,55 +129,22 @@ export default class Letter extends Component {
                     }}></i>
                 </div>
                 
-
-                {/* 标题 */}
-                <div className="hw-title">
-                    <span className="hw_title">标题:        {this.state.arr[0].Ptitle}</span>
-                    {/* <input type="text" value={this.state.arr[0].Ptitle} onChange={this.changeTitle} className="hw-inp" /> */}
+                {/* content */} 
+                <div className="lt-title" style={{
+                    backgroundColor: 'rgb(247, 245, 245)',
+                    width: '100%',
+                    fontSize: '1.7em',
+                    padding:'0.5em 0.8em'
+                }}><b>{this.state.arr[0].Ptitle}</b></div>
+                <hr style={{
+                    borderWidth:'0.4px',
+                    color:'lightgrey'
+                }}/>
+                <div className='lt-content'>
+                    <img src={"https://yf.htapi.pub/paper/"+this.state.arr[0].ppimage} className="lt-img"/>
+                    <span className="lt-span">{this.state.arr[0].Pcontent}</span>
                 </div>
-
-                <div className="hw-to">
-                    <div style={{padding:"0",margin:"0"}}>
-                        to:
-                        <span>
-                            {this.state.arr[0].toNick}
-                        </span>
-                    </div>
-                </div>
-
-                {/* 内容 */}
-                <div className="hw-write">
-                    <List>
-                        <TextareaItem
-                            id="textBox"
-                            value={this.state.value}
-                            onChange={this.Edit}
-                            style={{backgroundImage:"url("+this.state.back+")",backgroundSize:"100% 100%",color:this.state.fontColor
-                            ,fontFamily:this.state.fontFamily,fontSize:this.state.fontSize+'px',
-                            padding:'10px'}}
-                            rows={18}
-                            count={100}
-                            onClick={()=>{
-                                this.setState({
-                                    colorState:{display:"none"},
-                                    colorTag:false,
-                                    musicTag:false,
-                                    musicShow:{display:"none"}
-                                })
-                            }}
-                        />
-                    </List>
-                </div>
-
-
-
-
-
-
-
-
-
-
+            
                 {/* buttom-choice */}
                 <List style={{
                     position:'fixed',
