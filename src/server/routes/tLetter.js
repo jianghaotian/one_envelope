@@ -4,6 +4,13 @@ var router = express.Router();
 const runSql = require('../mysql');
 const { getToken, checkToken } = require('../src/token');
 
+const path = require('path');
+
+const { getTimestamp_13 } = require('../src/timer');
+const getRandom = require('../src/user/verification');
+var multiparty = require('multiparty');
+var fs = require('fs');
+
 // let token = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1aWQiOjEsImlhdCI6MTU3NDkzNDk1NCwiZXhwIjoxNTc3NjEzMzU0fQ.PQu7Dzp4MsurerTMR-wYSITeWKxGoo_aH_002CeEzqg';
 /**
  * 获取一起写主题
@@ -22,7 +29,6 @@ router.get('/theme', function (req, res, next) {
             let uid = result.data.uid;
             var addUid = '%'+uid+'%';
             runSql(`select distinct theme.* from theme where theme.uid=? or inviteUid like ?`,[uid,addUid],(result1) => {
-                console.log(result1);
                 res.json(result1);
             })
         }
@@ -120,18 +126,41 @@ router.get("/theme/showtheme/member",function(req,res,next){
  *     day:创建日期
  */
 router.post('/theme/writeletter', function (req, res, next) {
-    // http://localhost:3000/v1/together/theme/writeletter
-    let { title, content,lday,tid} = req.body;
+    let { title, content,lday,tid,imgArr} = req.body;
+    // let imgBrr = JSON.parse(imgArr);
     let token = req.header('token');
     checkToken(token, (result) => {
         if(result.status != 0){
             res.json(result);
         }else{
             let uid = result.data.uid;
-            runSql(`insert into tletter(Ltitle, Lcontent, Uid,Lday,Tid,isDelete) values (?,?,?,?,?,?)`,
-             [title, content,uid,lday,tid,0],(result1)=>{
-                res.json(result1);
-            })
+            if(imgArr==undefined){
+                runSql(`insert into tletter(Ltitle, Lcontent, Uid,Lday,Tid,isDelete,insertImg) values (?,?,?,?,?,?,?)`,
+                [title, content,uid,lday,tid,0,null],(result1)=>{
+                    res.json(result1);
+                })
+            }else{
+                var form = new multiparty.Form();
+                form.parse(req, function(err, fields, files){ 
+                    //将前台传来的base64数据去掉前缀
+                    var imgData = imgArr.replace(/^data:image\/\w+;base64,/, '');
+                    var dataBuffer = new Buffer.from(imgData, 'base64');
+                    // 写入文件
+                    var name = getTimestamp_13()+'_'+getRandom(2)+'.png';
+                    var picPath = path.join(__dirname,'../public/insertimg/'+name);
+                    fs.writeFile(picPath, dataBuffer, function(err){
+                        if(err){
+                            res.send(err);
+                        }
+                        else{
+                            runSql(`insert into tletter(Ltitle, Lcontent, Uid,Lday,Tid,isDelete,insertImg) values (?,?,?,?,?,?,?)`,
+                            [title, content,uid,lday,tid,0,name],(result3)=>{
+                                res.json({status: 0, data: name});
+                            })
+                        }
+                    });
+                })
+            }
         }
     })
 });
