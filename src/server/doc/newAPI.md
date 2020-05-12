@@ -596,7 +596,114 @@ POST
 }
 ```
 
+## 3.0展示公开写信件list
 
+**请求url**
+
+```
+URL : https://yf.htapi.pub/v1/public/getOlist
+```
+
+**请求方式**
+
+```
+GET
+```
+
+**返回参数**
+
+```
+{
+    "status": 0,
+    "message": "OK",
+    "data": [
+        {
+            "Uname": "awy",
+            "Uimage": "1588060318833_61.png",
+            "Oid": 2,
+            "Otitle": "YIOY",
+            "Ocontent": "ERWG",
+            "Oday": null,
+            "Uid": 21,
+            "ppid": 59,
+            "number": 3
+        }
+    ]
+}
+```
+
+## 3.1展示公开写信件内容
+
+**请求url**
+
+```
+URL : https://yf.htapi.pub/v1/public/getOletter
+```
+
+**请求方式**
+
+```
+GET
+```
+
+**接收参数**
+
+| 参数 | 说明   | 类型 |
+| ---- | ------ | ---- |
+| oid  | 信件id | int  |
+
+**返回参数**
+
+```
+{
+    "status": 0,
+    "message": "OK",
+    "data": [
+        {
+            "ppimage": "1589187443989_34.jpg",
+            "Oid": 2,
+            "Otitle": "YIOY",
+            "Ocontent": "ERWG",
+            "Oday": null,
+            "Uid": 21,
+            "ppid": 59,
+            "number": 3
+        }
+    ]
+}
+```
+
+## 3.2书写公开写信件内容
+
+**请求url**
+
+```
+URL : https://yf.htapi.pub/v1/public/writeOpen
+```
+
+**请求方式**
+
+```
+POST
+```
+
+**接收参数**
+
+| 参数     | 说明     | 类型 |
+| -------- | -------- | ---- |
+| Otitle   | 信件标题 | char |
+| Ocontent | 信件内容 |      |
+| ppid     | 信纸id   |      |
+| Oday     | 创建日期 |      |
+
+**返回参数**
+
+```
+{
+  status: 0,
+  message: 'OK'
+}
+```
 
 
 

@@ -21,7 +21,7 @@ var paperManager = require('./routes/paperManager');
 var countRouter = require('./routes/adminStatistics');
 var adminLetterManage = require('./routes/adminletterManage');
 var musicRouter = require('./routes/music');
-var helpRouter = require('./routes/help');
+var openRouter = require('./routes/openletter');
 
 var app = express();
 
@@ -56,7 +56,8 @@ app.use('/v1/papermanager',paperManager);
 app.use('/v1/analy',countRouter);
 app.use('/v1/adminletman',adminLetterManage);
 app.use('/v1/music',musicRouter);
-app.use('/v1/help',helpRouter);
+app.use('/v1/public',openRouter);
+
 
 // error handler
 app.use(function(err, req, res, next) {
