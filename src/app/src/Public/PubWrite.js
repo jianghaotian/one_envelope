@@ -3,39 +3,127 @@ import { List, TextareaItem,Modal,Button } from 'antd-mobile';
 
 const alert = Modal.alert;
 
+const weather = [
+    {name:"晴"},
+    {name:"多云"},
+    {name:"小雨"},
+    {name:"中雨"},
+    {name:"大雨"},
+    {name:"暴雨"},
+    {name:"雷阵雨"},
+    {name:"小雪"},
+    {name:"中雪"},
+    {name:"大雪"}
+]
+
 export default class PubWrite extends Component {
     constructor(){
         super();
         this.state = {
-            type:''
+            type:'',
+            title:'',
+            anonymous:0,
+            weatherBlock:'none',
+            weather:"晴",
+            value:'',
+            oid : ''
         }
     }
+    //初始化
     componentDidMount(){
         let urlinfo = window.location.hash;
         let URLArr = urlinfo.split("?");
-        let type = URLArr[1].split("=")[1];
+        // console.log(URLArr);
+        let URLArr2 = URLArr[1].split("&");
+        // console.log(URLArr2)
+        //展示时获取oid
+        let type = URLArr2[0].split("=")[1];
         console.log(type);
         this.setState({
             type : type
         })
+        if(URLArr2.length>1 && type == 'show'){
+            var oid = URLArr2[1].split("=")[1];
+            this.setState({
+                oid : oid
+            })
+        }else if(URLArr2.length>1 && type == 'create'){
+            var ppid = URLArr2[1].split("=")[1];
+            // console.log(ppid);
+            this.setState({
+                ppid : ppid
+            })
+            this.$api.selBack().then(res=>{
+                let imgList = res.data.data;
+                for(let i=0;i<imgList.length;i++){
+                    if(imgList[i].ppid == ppid){
+                        this.setState({
+                            back : "https://yf.htapi.pub/paper/"+imgList[i].ppimage
+                        })
+                    }
+                }
+            })
+        }else{
+            this.$api.selBack().then(res=>{
+                let imgList = res.data.data;
+                // console.log(imgList);
+                for(let i=0;i<imgList.length;i++){
+                    this.setState({
+                        ppid:60,
+                        back : "https://yf.htapi.pub/paper/"+imgList[10].ppimage
+                    })
+                    
+                }
+            })
+        }
         if(type == 'create'){
             var now = new Date().toLocaleDateString();
             this.setState({
                 date : now,
                 border:'2px dashed rgb(182, 182, 182)',
                 bottom:"block",
-                disabled : false
+                disabled : false,
+                pointWeather:''
             })
-        }else{
+        }else{//展示信件
             this.setState({
                 bottom : 'none',
-                disabled : true
+                disabled : true,
+                pointWeather:'none'
+            })
+            this.$api.showPub({oid : oid}).then(res=>{
+                console.log(res.data.data);
+                if(res.data.data.length>0)
+                {
+                    let data = res.data.data[0];
+                    if( data != "[]" ){
+                        this.setState({
+                            title : data.Otitle,
+                            value : data.Ocontent,
+                            date:data.Oday,
+                            weather:data.weather,
+                            ppid:data.ppid
+                        })
+                    }
+                    this.$api.selBack().then(res=>{
+                        let imgList = res.data.data;
+                        for(let i=0;i<imgList.length;i++){
+                            if(imgList[i].ppid == data.ppid){
+                                this.setState({
+                                    back : "https://yf.htapi.pub/paper/"+imgList[i].ppimage
+                                })
+                            }
+                        }
+                    })
+                }
             })
         }
     }
+    //返回
     back=()=>{
         this.props.history.push("/Home");
     }
+    //编辑内容
     Write=(val)=>{
         if(this.state.type == 'create'){
             this.setState({
@@ -43,23 +131,103 @@ export default class PubWrite extends Component {
             })
         }
     }
+    //编辑标题
+    getTitle=(val)=>{
+        // console.log(val.target.value);
+        this.setState({
+            title : val.target.value
+        })
+    }
+    //匿名
+    setbtBg=()=>{
+        if(!this.state.anonymous){
+            this.setState({
+                btBg : 'pink',
+                anonymous:1
+            })
+        }else{
+            this.setState({
+                btBg : '',
+                anonymous:0
+            })
+        }
+    }
+    //天气
+    selectWeather=()=>{
+        this.setState({
+            weatherBlock:"block",
+            disabled:true
+        })
+    }
+    closeWeather=()=>{
+        this.setState({
+            weatherBlock:"none",
+            disabled:false
+        })
+    }
+    getWeather=(item)=>{
+        // console.log(item.name);
+        this.setState({
+            weather:item.name,
+            weatherBlock:"none",
+            disabled:false
+        })
+    }
+    //选择背景
+    selectBack=()=>{
+        if(this.state.type = 'create'){
+            this.props.history.push("/pubBack?type=create");
+        }
+    }
+    //提交
     submit=()=>{
-        alert('发布','确定发布公开信件吗',
-        [{
-            text:'取消',onPress:()=>{}
-        },{
-            text:'是的',onPress:()=>{}
-        }]);
+        let t = this.state.title;
+        let content = this.state.value;
+        console.log(this.state.date);
+        if(t==""){
+            alert("标题不能为空哦")
+        }else if(content==undefined){
+            alert("请输入内容")
+        }
+        else{
+            alert('发布','确定发布公开信件吗',
+            [{
+                text:'取消',onPress:()=>{}
+            },{
+                text:'是的',onPress:()=>{ 
+                    this.$api.WritePub({Otitle:t,Ocontent:content,Oday:this.state.date,ppid:this.state.ppid,weather:this.state.weather,anonymous:this.state.anonymous}).then(res=>{
+                        // console.log(res);
+                        alert('发布成功!');
+                    })
+                    // console.log(t,content,this.state.date); 
+                }
+            }]);
+        }
     }
     render() {
         return (
             <div>
-                <div style={{}} className="pw-back">
-                    <img src={require('../imgs/public/返回.png')} id="pw-backPub" onClick={this.back} />
+                <div style={{backgroundImage:"url("+this.state.back+")"}} className="pw-back">
+                    <img src={require('../imgs/public/返回(1).png')} id="pw-backPub" onClick={this.back} />
                     <div className="pw-title">
-                        <p id="pw-title-p">写给亲爱的大傻逼</p>
+                        <input type='text' id="pw-title-p" value={this.state.title} onChange={this.getTitle} disabled={this.state.disabled} />
                         <p id="pw-date">{this.state.date}</p>
-                        <img src={require('../imgs/public/晴.png')} id="tianqi" />
+                        <img style={{pointerEvents:this.state.pointWeather}} src={require("../imgs/public/"+this.state.weather+".png")} id="tianqi" onClick={this.selectWeather} />
+                        <div className="weather" style={{display:this.state.weatherBlock}}>
+                            {/* <div> */}
+                                <img onClick={this.closeWeather} id="weather-close" src={require("../imgs/public/关闭.png")} />
+                            {/* </div> */}
+                            <ul>
+                            {
+                                weather.map((item,index)=>{
+                                    return <li onClick={()=>{this.getWeather(item)}}>
+                                       <img src={require("../imgs/public/"+item.name+".png")} />
+                                       <p style={{marginTop:"3px"}}>{item.name}</p>
+                                    </li>
+                                })
+                            }
+                            </ul>
+                        </div>
                     </div>
                     <div className="pw-write" style={{border:this.state.border}}>
                         <TextareaItem
@@ -68,12 +236,14 @@ export default class PubWrite extends Component {
                             onChange={this.Write}
                             rows={16}
                             disabled={this.state.disabled}
+                            style={{color:"black"}}
                         />
                     </div>
                     <div className="pw-bottom" style={{display:this.state.bottom}}>
-                        <img src={require("../imgs/public/皮肤(1).png")} style={{height:'24px',marginLeft:"10px"}} />
+                        <img onClick={this.selectBack} src={require("../imgs/public/皮肤(1).png")} style={{height:'24px',marginLeft:"10px"}} />
                         <img src={require("../imgs/public/字体.png")} style={{height:'24px',marginLeft:"10px"}}  />
                         <Button id="pw-btn" onClick={this.submit}>完成</Button>
+                        <Button id="pw-btn" style={{backgroundColor:this.state.btBg,color:"black"}} onClick={this.setbtBg}>匿名</Button>
                     </div>
                 </div>
             </div>

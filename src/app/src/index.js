@@ -42,6 +42,8 @@ import Signature from './Home/Signature'
 import Mysig from './My/Signature'
 import WTBack from './WriteTogether/WTBack'
 import PubWrite from './Public/PubWrite'
+import PubBack from './Public/Back'
+import Vip from './My/Vip'
 
 
 React.Component.prototype.$api = api;
@@ -62,6 +64,7 @@ ReactDOM.render(
             <Route path='/cback' component={CustomBack} />
             <Route path='/signature' component={Signature} />
             <Route path="/pubWrite" component={PubWrite} />
+            <Route path="/pubBack" component={PubBack} />
 
             {/* lxc */}
             <Route path="/recover" component={Recover} />
@@ -81,6 +84,7 @@ ReactDOM.render(
             <Route path='/feedback' component={Feedback} />
             <Route path='/mysig' component={Mysig} />
             <Route path='/sharenum' component={Sharenum} />
+            <Route path="/vip" component={Vip} />
 
             {/* zym */}
             <Route exact path="/invitewrite" component={InviteWrite}/>

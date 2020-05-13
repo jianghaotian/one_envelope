@@ -46,6 +46,9 @@ export default class My extends Component {
     toSignature=()=>{
         this.props.history.push('/mysig');
     }
+    toVip=()=>{
+        this.props.history.push('/vip');
+    }
     render() {
         // console.log(this.state.arr[0].pidname)
         return (
@@ -105,7 +108,7 @@ export default class My extends Component {
                 }}>
                     <Item extra={
                         <i className="iconfont icon-huiyuan" ></i>
-                    } onClick={() => {}}>会员中心</Item>
+                    } onClick={this.toVip}>会员中心</Item>
                     {/* <Item extra={
                         <i className="iconfont icon-weibiaoti-" style={{
                             fontSize:"1.0em"

@@ -7,16 +7,19 @@
     background-color: rgb(80, 79, 79);
     line-height:40px;
     text-align: center;
+    position: relative;
 }
 #pub-backHome{
     color: white;
     font-size:23px;
-    margin-right:130px;
+    position: absolute;
+    left:10px;
 }
 #pub-write{
     color:white;
     font-size:21px;
-    margin-left:130px;
+    position: absolute;
+    right:10px;
 }
 .pub-li{
     height:150px;
@@ -34,7 +37,7 @@
     height:50px;
     /* background-color: salmon; */
     line-height:50px; 
-    border-bottom:0.5px solid rgb(204, 177, 177);
+    border-bottom:0.5px solid rgb(179, 179, 179);
     position: relative;
 }
 #pub-head{
@@ -75,7 +78,7 @@
 .pw-back{
     height: 640px;
     /* background-color: pink; */
-    background-image: url(../imgs/public/b3.jpg);
+    /* background-image: url(../imgs/public/b3.jpg); */
     background-size: 100% 100%;
 }
 
@@ -92,20 +95,49 @@
     text-align: center;
 }
 #pw-title-p{
-    display: inline-block;
     font-size:20px;
-    border-bottom:1px dashed rgb(117, 116, 116);
+    background-color:transparent;
+    border:none;
+    border-bottom:1px dashed rgb(122, 122, 122);
+    text-align: center;
 }
 #pw-date{
     height:20px;
-    position: relative;
-    bottom:15px;
+    margin-top: 3px;
     color:rgb(37, 37, 37);
 }
 #tianqi{
-    position: relative;;
-    bottom:20px;
+    position: relative;
+    bottom:10px;
     height:25px;
+}
+.weather{
+    position: absolute;
+    right: 0;
+    left: 0;
+    width:90%;
+    height:300px;
+    background-color:white;
+    margin-left: auto;
+    margin-right: auto;
+    padding:10px;
+    border-radius:10px;
+}
+.weather li{
+   float: left;
+   width:100px;
+   height:60px;
+   /* background-color: tomato; */
+   margin-bottom:3px;
+   position: relative;
+   z-index:1;
+}
+#weather-close{
+    /* background-color: tomato; */
+    width:20px;
+    position: relative;
+    left:140px;
+    z-index:1;
 }
 .pw-write{
     width: 90%;

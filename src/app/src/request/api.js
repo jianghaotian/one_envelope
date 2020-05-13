@@ -76,6 +76,9 @@ const api = {
     getHomeData : p=>get('image/homeImage',p),
     changeHomeBg : p=>post('image/changeHomeBack',p),//修改首页背景图
     changeSignature : p=>post('mine/changeSignature',p),//修改个性签名
+    WritePub:p=>post('public/writeOpen',p),//书写公开信件
+    showPub:p=>get('public/getOletter',p),//展示公开信件
+    showPubList:p=>get('public/getOlist',p),//公开信件列表
     // getpid:p => get('private/getpd',p)
         
 }

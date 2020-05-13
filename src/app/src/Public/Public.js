@@ -4,9 +4,21 @@ import "../css/public.css";
 export default class Public extends Component {
     constructor(){
         super();
+        this.state = {
+            list : []
+        }
     }
-    componentDidMoun(){
-
+    componentDidMount(){
+        this.$api.showPubList().then(res=>{
+            let Data = res.data.data;
+            let l =  [];
+            for(let i=0;i<Data.length;i++){
+                l.push(Data[i])
+            }
+            this.setState({
+                list : l
+            })
+        })
     }
     backHome=()=>{
         this.props.getIndex(1);
@@ -14,7 +26,26 @@ export default class Public extends Component {
     toWrite=()=>{
         this.props.history.push("/pubWrite?type=create");
     }
+    showLetter=(item)=>{
+        // console.log(item);
+        this.props.history.push("/pubWrite?type=show&Oid="+item)
+    }
+    showHead=(item)=>{
+        if(item.anonymous == 1){
+            return <img src={require("../imgs/public/head2.png")} id="pub-head" />
+        }else{
+            return <img src={"https://yf.htapi.pub/head/"+item.Uimage} id="pub-head" />
+        }
+    }
+    showName=(item)=>{
+        if(item.anonymous == 1){
+            return <span id="pub-username">匿名</span>
+        }else{
+            return <span id="pub-username">{item.Uname}</span>
+        }
+    }
     render() {
+        // console.log(this.state.list)
         return (
             <div>
                 {/* 顶部 */}
@@ -27,17 +58,21 @@ export default class Public extends Component {
                 <div className="pub-list">
                     <ul>
                         {
-                            [1,2,3].map((item,index)=>{
-                                return <li className="pub-li">
+                            this.state.list.map((item,index)=>{
+                                return <li className="pub-li" onClick={()=>{this.showLetter(item.Oid)}}>
                                     <div className="pub-li-top">
-                                        <img src={require("../imgs/public/head.png")} id="pub-head" />
-                                        <span id="pub-username">可爱的包子</span>
-                                        <span id="dianzanshu">0</span>
+                                        {
+                                            this.showHead(item)
+                                        }
+                                        {
+                                            this.showName(item)
+                                        }
+                                        <span id="dianzanshu">{item.number}</span>
                                         <i className="iconfont icon-iconfontzhizuobiaozhun023148" id="dianzan"></i>
         
                                     </div>
                                     <div className="pub-content">
-                                        <p>hahah</p>
+                                        <p>{item.Ocontent}</p>
                                     </div>
                                 </li>
                             })
