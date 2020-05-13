@@ -42,7 +42,9 @@ router.get('/getOletter', function (req, res, next) {
         if (result.status !== 0) {
             res.json(result);
         } else {
-            runSql(`select paper.ppimage,open.* from open,paper where open.ppid=paper.ppid and open.oid=?`, [oid], (result1) => {
+            runSql(`select open.*,paper.ppimage from open,paper where open.oid=? and paper.ppid=open.ppid`,
+            [oid],(result1)=>{
+                console.log(result1)
                 res.json(result1);
             });
         }
@@ -83,19 +85,41 @@ router.get('/getOletter', function (req, res, next) {
  *      Ocontent：信件内容
  *      Oday:创建日期
  *      ppid:背景id
+ *      anonymous:是否匿名
  */
 router.post('/writeOpen', function (req, res, next) {
-    let {Otitle, Ocontent,Oday,ppid,weather} = req.body;
+    let {Otitle, Ocontent,Oday,ppid,weather,anonymous} = req.body;
     let token = req.header('token');
     checkToken(token, (result) => {
         if(result.status != 0){
             res.json(result);
         }else{
             let uid = result.data.uid;
-            runSql(`insert into open(Otitle, Ocontent,Oday,Uid,ppid,number,weather) values (?,?,?,?,?,?,?)`,[Otitle,Ocontent,Oday,uid,ppid,0,weather],(result1) =>{
+            runSql(`insert into open(Otitle, Ocontent,Oday,Uid,ppid,number,weather,anonymous) values (?,?,?,?,?,?,?,?)`,[Otitle,Ocontent,Oday,uid,ppid,0,weather,anonymous],(result1) =>{
                 res.json(result1)
             });
         }
     });
 });
+/**
+ * 修改背景
+ * 请求方式：
+ *      POST
+ * 接收参数：
+ *      oid：信件id
+ *      ppid：更换后的背景id
+ */
+router.post('/modifyObg',function(req,res,next){
+    let token = req.header('token');
+    let {oid,ppid} =  req.body;
+    checkToken(token,(result)=>{
+        if(result.status != 0){
+            res.json(result)
+        }else{
+            runSql('update open set ppid=? where oid=? ',[ppid,oid],(result1)=>{
+                res.json(result1);
+            })
+        }
+    })
+})
 module.exports = router;
