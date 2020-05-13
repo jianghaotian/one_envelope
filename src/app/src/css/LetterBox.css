@@ -65,7 +65,7 @@ a:active {
 /* ----------------Letter页面-------------------------------------------------------- */
 
 .lt{
-    background-color: rgb(250, 250, 250);
+    /* background-color: rgb(250, 250, 250); */
     position: relative;
     height: 37.5em;
     width: 100%;

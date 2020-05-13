@@ -150,13 +150,12 @@ export default class Letter extends Component {
                     <List>
                         <TextareaItem
                             id="textBox"
-                            value={this.state.value}
-                            onChange={this.Edit}
-                            style={{backgroundImage:"url("+this.state.back+")",backgroundSize:"100% 100%",color:this.state.fontColor
+                            value={this.state.arr[0].Pcontent}
+                            style={{backgroundImage:"url("+"https://yf.htapi.pub/paper/"+this.state.arr[0].ppimage+")",backgroundSize:"100% 100%",color:this.state.fontColor
                             ,fontFamily:this.state.fontFamily,fontSize:this.state.fontSize+'px',
                             padding:'10px'}}
-                            rows={18}
-                            count={100}
+                            rows={16}
+                            count={1000}
                             onClick={()=>{
                                 this.setState({
                                     colorState:{display:"none"},
@@ -165,23 +164,15 @@ export default class Letter extends Component {
                                     musicShow:{display:"none"}
                                 })
                             }}
+                            disabled="true"
                         />
                     </List>
                 </div>
 
-
-
-
-
-
-
-
-
-
                 {/* buttom-choice */}
                 <List style={{
                     position:'fixed',
-                    bottom:'1em',
+                    bottom:'1.8em',
                     left:'0',
                     width:'100%',
                     height:'2em'
@@ -216,7 +207,6 @@ export default class Letter extends Component {
                             width:"33.3%",
                             float:'left'
                         }}
-                        // onClick={()=>this.showShareActionSheet()}
                         onClick={()=>this.sharemail()}                        
                         >
                             <i className='iconfont icon-huifu' style={{
