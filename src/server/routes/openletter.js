@@ -10,7 +10,7 @@ var multiparty = require('multiparty');
 var fs = require('fs');
 
 /**
- * 展示公开写信件list
+ * 展示公开写信件list(全部)
  * GET
  * 接收参数:
  */
@@ -20,15 +20,13 @@ router.get('/getOlist', function (req, res, next) {
         if (result.status !== 0) {
             res.json(result);
         } else {
-            runSql(`select user.Uname,user.Uimage,open.* from open,user where user.uid=open.uid`, [], (result1) => {
+            runSql(`select user.Uname,user.Uimage,open.* from open,user where user.uid=open.uid order by open.oid desc`,
+            [],(result1) => {
                 res.json(result1);
             });
         }
     });
 });
-
-
-
 /**
  * 展示公开写信件内容
  * GET
@@ -50,32 +48,26 @@ router.get('/getOletter', function (req, res, next) {
         }
     });
 });
-// /**
-//  * 删除写的信件
-//  * POST
-//  * 接收参数:
-//  *   pid：信件id
-//  */
-// router.post('/getletter/pdelete', function (req, res, next) {
-//     //http://localhost:8000/v1/private/getletter/pdelete
-//     let {pid} = req.body;
-//     let token = req.header('token');
-//     checkToken(token, (result) => {
-//         if (result.status !== 0) {
-//             res.json(result);
-//         } else {
-//             // console.log(result);
-//             let uid = result.data.uid;
-//             runSql(`select isDelete from pletter where uid=? and pid=?`,[uid,pid],(result1) =>{
-//                 if(result1.data[0].isDelete == 0){
-//                     runSql(`update pletter set isDelete=? where uid=? and pid=? `, [1,uid,pid], (result2) => {
-//                             res.json(result2);
-//                     })
-//                 }
-//             });
-//         }
-//     });
-// });
+/**
+ * 删除公开写的信件
+ * POST
+ * 接收参数:
+ *   oid：信件id
+ */
+router.post('/delOletter', function (req, res, next) {
+    let {oid} = req.body;
+    let token = req.header('token');
+    checkToken(token, (result) => {
+        if (result.status !== 0) {
+            res.json(result);
+        } else {
+            let uid = result.data.uid;
+            runSql(`delete from open where uid=? and oid=?`,[uid,oid],(result1)=>{
+                res.json(result1);
+            })
+        }
+    });
+});
 
 /**
  * 书写公开写信件内容
@@ -122,4 +114,23 @@ router.post('/modifyObg',function(req,res,next){
         }
     })
 })
+/**
+ * 个人所写公开信
+ * GET
+ * 接收参数:
+ */
+router.get('/perOlist', function (req, res, next) {
+    let token = req.header('token');
+    checkToken(token, (result) => {
+        if (result.status !== 0) {
+            res.json(result);
+        } else {
+            let uid = result.data.uid;
+            runSql(`select user.Uname,user.Uimage,open.* from open,user where user.uid=open.uid and uid=?`,
+            [uid],(result1) => {
+                res.json(result1);
+            });
+        }
+    });
+});
 module.exports = router;

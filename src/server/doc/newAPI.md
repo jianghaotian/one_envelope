@@ -596,7 +596,7 @@ POST
 }
 ```
 
-## 3.0展示公开写信件list
+## 3.0展示公开写信件list（所有）
 
 **请求url**
 
@@ -736,6 +736,60 @@ POST
   message: 'OK'
 }
 
+```
+
+## 3.4删除公开写信件
+
+**请求url**
+
+```
+URL : https://yf.htapi.pub/v1/public/delOletter
+```
+
+**请求方式**
+
+```
+POST
+```
+
+**接收参数**
+
+| 参数 |  说明  | 类型 |
+| ---- | :----: | :--: |
+| oid  | 信件id |      |
+
+**返回参数**
+
+```
+{
+  status: 0,
+  message: 'OK'
+}
+```
+
+## 3.5个人所写公开信
+
+**请求url**
+
+```
+URL : https://yf.htapi.pub/v1/public/perOlist
+```
+
+**请求方式**
+
+```
+GET
+```
+
+**接收参数**
+
+**返回参数**
+
+```
+{
+  status: 0,
+  message: 'OK'
+}
 ```
 
 
