@@ -15,11 +15,11 @@ export default class Myedit extends Component {
             this.setState({
                 arr:res.data.data
             })
-            console.log(this.state.arr[0].Uimage)
+            // console.log(this.state.arr[0].Uimage)
         })
     }
     render() {
-        console.log(this.state.arr[0].Uimage)
+        // console.log(this.state.arr[0].Uimage)
         return (
             <div>
                 {/* tab */}
