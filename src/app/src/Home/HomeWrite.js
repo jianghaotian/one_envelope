@@ -34,7 +34,7 @@ var family = [
 ];
 
 var fontSize = [];
-for(let i=14;i<40;i++){
+for(let i=14;i<30;i++){
     fontSize.push(i);
 }
 
