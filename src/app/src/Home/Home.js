@@ -64,7 +64,7 @@ export default class Home extends Component {
                     })
                     //后端删除
                     this.$api.delPrivateLetter({pid:pid}).then(res=>{
-                        console.log(res.data);
+                        // console.log(res.data);
                     })
                 } },
             ]);

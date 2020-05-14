@@ -1,5 +1,8 @@
-import React, { Component } from 'react'
-import "../css/HomeWrite.css"
+import React, { Component } from 'react';
+import "../css/HomeWrite.css";
+import { List, TextareaItem,Modal,Button } from 'antd-mobile';
+
+const alert = Modal.alert;
 
 export default class Back extends Component {
     constructor(){
@@ -14,8 +17,15 @@ export default class Back extends Component {
         let arr1 = urlinfo.split("&");
         // console.log(arr1);
         if(arr1.length>1){
-
+            //编辑：获取oid
+            let type = arr1[0].split("=")[1];
+            let oid = arr1[1].split("=")[1];
+            this.setState({
+                type : type,
+                oid :oid
+            })
         }else{
+            //新建情况
             let type = arr1[0].split("=")[1];
             this.setState({
                 type : type
@@ -39,10 +49,14 @@ export default class Back extends Component {
             this.props.history.push('pubWrite/'+urlinfo);
         }
     }
-    selImg=(item)=>{
-        // console.log(item);
+    selImg=(item)=>{     
         if(this.state.type == 'create'){
             this.props.history.push('/pubWrite/?type=create&ppid='+item.ppid);
+        }else if(this.state.type == 'edit'){
+            // console.log(this.state.oid);
+            this.$api.changePubImg({oid:this.state.oid,ppid:item.ppid}).then(res=>{
+                this.props.history.push('/pubWrite/?type=edit&Oid='+this.state.oid+'&ppid='+item.ppid);
+            })
         }
     }
     vipImage=(item)=>{

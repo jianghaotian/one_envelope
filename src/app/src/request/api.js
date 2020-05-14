@@ -79,6 +79,9 @@ const api = {
     WritePub:p=>post('public/writeOpen',p),//书写公开信件
     showPub:p=>get('public/getOletter',p),//展示公开信件
     showPubList:p=>get('public/getOlist',p),//公开信件列表
+    getMyPub:p=>get('public/perOlist',p),//显示个人公开写
+    changePubImg:p=>post('public/modifyObg',p),//修改公开写背景
+    DeletePubLetter:p=>post('public/delOletter',p),//删除公开信
     // getpid:p => get('private/getpd',p)
         
 }

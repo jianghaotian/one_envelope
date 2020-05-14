@@ -29,6 +29,21 @@ export default class PubWrite extends Component {
             oid : ''
         }
     }
+    changeBackImg=(ppid)=>{
+        this.setState({
+            ppid : ppid
+        })
+        this.$api.selBack().then(res=>{
+            let imgList = res.data.data;
+            for(let i=0;i<imgList.length;i++){
+                if(imgList[i].ppid == ppid){
+                    this.setState({
+                        back : "https://yf.htapi.pub/paper/"+imgList[i].ppimage
+                    })
+                }
+            }
+        })
+    }
     //初始化
     componentDidMount(){
         let urlinfo = window.location.hash;
@@ -42,28 +57,21 @@ export default class PubWrite extends Component {
         this.setState({
             type : type
         })
-        if(URLArr2.length>1 && type == 'show'){
+        if(URLArr2.length>1 && (type == 'show' || type == 'edit')){
+            //展示情况下获取oid
             var oid = URLArr2[1].split("=")[1];
             this.setState({
                 oid : oid
             })
-        }else if(URLArr2.length>1 && type == 'create'){
+        }else if(URLArr2.length>1 && URLArr2.length<3 && type == 'create'){
+            //在新建情况下切换背景
             var ppid = URLArr2[1].split("=")[1];
             // console.log(ppid);
-            this.setState({
-                ppid : ppid
-            })
-            this.$api.selBack().then(res=>{
-                let imgList = res.data.data;
-                for(let i=0;i<imgList.length;i++){
-                    if(imgList[i].ppid == ppid){
-                        this.setState({
-                            back : "https://yf.htapi.pub/paper/"+imgList[i].ppimage
-                        })
-                    }
-                }
-            })
+            this.changeBackImg(ppid);
+        }else if(URLArr2.length ==3 && type == 'edit'){
+            console.log(this.state.type);
         }else{
+            //新建信件
             this.$api.selBack().then(res=>{
                 let imgList = res.data.data;
                 // console.log(imgList);
@@ -85,12 +93,22 @@ export default class PubWrite extends Component {
                 disabled : false,
                 pointWeather:''
             })
-        }else{//展示信件
-            this.setState({
-                bottom : 'none',
-                disabled : true,
-                pointWeather:'none'
-            })
+        }else{
+            if(type == 'show'){
+                //展示信件
+                this.setState({
+                    bottom : 'none',
+                    disabled : true,
+                    pointWeather:'none'
+                })
+            }else if(type == 'edit'){
+                //编辑信件
+                this.setState({
+                    border:'2px dashed rgb(182, 182, 182)',
+                    disabled : false,
+                    pointWeather:''
+                })
+            }
             this.$api.showPub({oid : oid}).then(res=>{
                 console.log(res.data.data);
                 if(res.data.data.length>0)
@@ -100,9 +118,14 @@ export default class PubWrite extends Component {
                         this.setState({
                             title : data.Otitle,
                             value : data.Ocontent,
-                            date:data.Oday,
                             weather:data.weather,
+                            date:data.Oday,
                             ppid:data.ppid
+                        })
+                    }
+                    if(type == 'edit'){
+                        this.setState({
+                            date : new Date().toLocaleDateString()
                         })
                     }
                     this.$api.selBack().then(res=>{
@@ -121,11 +144,11 @@ export default class PubWrite extends Component {
     }
     //返回
     back=()=>{
-        this.props.history.push("/Home");
+        this.props.history.push("/Home/public");
     }
     //编辑内容
     Write=(val)=>{
-        if(this.state.type == 'create'){
+        if(this.state.type == 'create' || this.state.type == 'edit'){
             this.setState({
                 value : val            
             })
@@ -175,33 +198,47 @@ export default class PubWrite extends Component {
     }
     //选择背景
     selectBack=()=>{
-        if(this.state.type = 'create'){
+        if(this.state.type == 'create'){
             this.props.history.push("/pubBack?type=create");
+        }else if(this.state.type == 'edit'){
+            this.props.history.push("/pubBack?type=edit&Oid="+this.state.oid);
         }
     }
     //提交
     submit=()=>{
         let t = this.state.title;
         let content = this.state.value;
-        console.log(this.state.date);
+        // console.log(this.state.date);
         if(t==""){
             alert("标题不能为空哦")
         }else if(content==undefined){
             alert("请输入内容")
         }
         else{
-            alert('发布','确定发布公开信件吗',
-            [{
-                text:'取消',onPress:()=>{}
-            },{
-                text:'是的',onPress:()=>{ 
-                    this.$api.WritePub({Otitle:t,Ocontent:content,Oday:this.state.date,ppid:this.state.ppid,weather:this.state.weather,anonymous:this.state.anonymous}).then(res=>{
-                        // console.log(res);
-                        alert('发布成功!');
-                    })
-                    // console.log(t,content,this.state.date); 
-                }
-            }]);
+           if(this.state.type == 'create'){
+                alert('发布','确定发布公开信件吗',
+                [{
+                    text:'取消',onPress:()=>{}
+                },{
+                    text:'是的',onPress:()=>{ 
+                        this.$api.WritePub({Otitle:t,Ocontent:content,Oday:this.state.date,ppid:this.state.ppid,weather:this.state.weather,anonymous:this.state.anonymous}).then(res=>{
+                            // console.log(res);
+                            alert('发布成功!');
+                            this.props.history.push("/Home/public");
+                        })
+                        // console.log(t,content,this.state.date); 
+                    }
+                }]);
+           }else if(this.state.type == 'edit'){
+                alert('修改','确定修改信件吗',
+                [{
+                    text:'取消',onPress:()=>{}
+                },{
+                    text:'是的',onPress:()=>{ 
+                        
+                    }
+                }]);
+           }
         }
     }
     render() {

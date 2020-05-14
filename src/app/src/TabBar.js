@@ -12,7 +12,7 @@ export default class Tabbar extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
-      selectedTab: this.props.match.params.tab || 'public'
+      selectedTab: this.props.match.params.tab || 'home'
     };
   }
   getIndex=(index)=>{
@@ -28,12 +28,7 @@ export default class Tabbar extends React.Component {
     }
   }
   componentDidMount(){
-    let urlinfo = window.location.hash;
-    if(urlinfo.indexOf("public")>0){
-      this.setState({
-        selectedTab: 'public'
-      })
-    }
+    
   }
   render() {
     //console.log(this.props.match.params.id);
