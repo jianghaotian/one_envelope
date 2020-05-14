@@ -126,7 +126,7 @@ router.get('/perOlist', function (req, res, next) {
             res.json(result);
         } else {
             let uid = result.data.uid;
-            runSql(`select user.Uname,user.Uimage,open.* from open,user where user.uid=open.uid and uid=?`,
+            runSql(`select user.Uname,user.Uimage,open.* from open,user where user.uid=open.uid and user.uid=?`,
             [uid],(result1) => {
                 res.json(result1);
             });
