@@ -93,6 +93,7 @@ export default class My extends Component {
                         fontSize:'2em',
                         color:"black"
                     }} /></Link>
+                    
                     {/* 选项 */}
                     <div className="myinfodiv">
                         <ul>
@@ -109,12 +110,12 @@ export default class My extends Component {
                     <Item extra={
                         <i className="iconfont icon-huiyuan" ></i>
                     } onClick={this.toVip}>会员中心</Item>
-                    {/* <Item extra={
+                    <Link to="/myorder"><Item extra={
                         <i className="iconfont icon-weibiaoti-" style={{
                             fontSize:"1.0em"
                         }}></i>
-                    } onClick={() => {}}>我的订单</Item>
-                    <Item extra={
+                    } onClick={() => {}}>我的等级</Item></Link>
+                    {/* <Item extra={
                         <i className="iconfont icon-kaquan" ></i>
                     } onClick={() => {}}>我的卡券</Item> */}
 

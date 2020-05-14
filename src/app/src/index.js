@@ -21,6 +21,7 @@ import Articalnum from './My/Articalnum'
 import Feedback from './My/Feedback'
 import Sharenum from './My/Sharenum'
 
+
 import InviteWrite from './WriteTogether/InviteWrite'
 import WriteTogether from './WriteTogether/WriteTogether'
 import togeCreate from './WriteTogether/togeCreate'
@@ -44,6 +45,7 @@ import WTBack from './WriteTogether/WTBack'
 import PubWrite from './Public/PubWrite'
 import PubBack from './Public/Back'
 import Vip from './My/Vip'
+import Myorder from './My/Myorder'
 
 
 React.Component.prototype.$api = api;
@@ -85,6 +87,7 @@ ReactDOM.render(
             <Route path='/mysig' component={Mysig} />
             <Route path='/sharenum' component={Sharenum} />
             <Route path="/vip" component={Vip} />
+            <Route path="/myorder" component={Myorder} />
 
             {/* zym */}
             <Route exact path="/invitewrite" component={InviteWrite}/>

@@ -152,8 +152,8 @@ export default class Letter extends Component {
                         <TextareaItem
                             id="textBox"
                             value={this.state.arr[0].Pcontent}
-                            style={{    backgroundImage:"url("+"https://yf.htapi.pub/paper/"+this.state.arr[0].ppimage+")",backgroundSize:"100% 100%",color:'"'+this.state.arr[0].color+'"'
-                            ,fontFamily:this.state.fontFamily,fontSize:this.state.fontSize+'px',
+                            style={{    backgroundImage:"url("+"https://yf.htapi.pub/paper/"+this.state.arr[0].ppimage+")",backgroundSize:"100% 100%",color:this.state.arr[0].color
+                            ,fontFamily:this.state.arr[0].fontFamily,fontSize:this.state.arr[0].fontSize+'px',
                             padding:'10px'}}
                             rows={16}
                             count={1000}
