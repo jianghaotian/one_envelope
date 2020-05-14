@@ -3,6 +3,8 @@ import { List, TextareaItem,Modal,Button } from 'antd-mobile';
 
 const alert = Modal.alert;
 
+const ls = localStorage;
+
 const weather = [
     {name:"晴"},
     {name:"多云"},
@@ -49,11 +51,11 @@ export default class PubWrite extends Component {
         let urlinfo = window.location.hash;
         let URLArr = urlinfo.split("?");
         // console.log(URLArr);
-        let URLArr2 = URLArr[1].split("&");
+        var URLArr2 = URLArr[1].split("&");
         // console.log(URLArr2)
         //展示时获取oid
         let type = URLArr2[0].split("=")[1];
-        console.log(type);
+        // console.log(type);
         this.setState({
             type : type
         })
@@ -63,13 +65,21 @@ export default class PubWrite extends Component {
             this.setState({
                 oid : oid
             })
+            if(URLArr2.length == 3 && type == 'edit'){
+                this.setState({
+                    title : ls.getItem('pubTitle'),
+                    value :ls.getItem('pubContent')
+                })
+            }
         }else if(URLArr2.length>1 && URLArr2.length<3 && type == 'create'){
             //在新建情况下切换背景
             var ppid = URLArr2[1].split("=")[1];
             // console.log(ppid);
             this.changeBackImg(ppid);
-        }else if(URLArr2.length ==3 && type == 'edit'){
-            console.log(this.state.type);
+            this.setState({
+                title : ls.getItem("pubTitle"),
+                value : ls.getItem('pubContent')
+            })
         }else{
             //新建信件
             this.$api.selBack().then(res=>{
@@ -115,12 +125,16 @@ export default class PubWrite extends Component {
                 {
                     let data = res.data.data[0];
                     if( data != "[]" ){
+                        if(URLArr2.length<3){
+                            this.setState({
+                                title : data.Otitle,
+                                value : data.Ocontent
+                            })
+                        }
                         this.setState({
-                            title : data.Otitle,
-                            value : data.Ocontent,
                             weather:data.weather,
                             date:data.Oday,
-                            ppid:data.ppid
+                            ppid:data.ppid,
                         })
                     }
                     if(type == 'edit'){
@@ -148,17 +162,19 @@ export default class PubWrite extends Component {
     }
     //编辑内容
     Write=(val)=>{
+        ls.setItem("pubContent",val);
         if(this.state.type == 'create' || this.state.type == 'edit'){
             this.setState({
-                value : val            
+                value : ls.getItem('pubContent')         
             })
         }
     }
     //编辑标题
     getTitle=(val)=>{
-        // console.log(val.target.value);
+        ls.setItem("pubTitle",val.target.value);
+        console.log(ls.getItem('pubTitle'));
         this.setState({
-            title : val.target.value
+            title : ls.getItem('pubTitle')
         })
     }
     //匿名
