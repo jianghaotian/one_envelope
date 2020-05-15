@@ -126,9 +126,108 @@ router.get('/perOlist', function (req, res, next) {
             res.json(result);
         } else {
             let uid = result.data.uid;
-            runSql(`select user.Uname,user.Uimage,open.* from open,user where user.uid=open.uid and user.uid=?`,
+            runSql(`select user.Uname,user.Uimage,open.* from open,user where user.uid=open.uid and user.uid=? order by open.oid desc`,
             [uid],(result1) => {
                 res.json(result1);
+            });
+        }
+    });
+});
+/**
+ * 返回用户的vip属性
+ * GET
+ * 接收参数:
+ */
+router.get('/isVip', function (req, res, next) {
+    let token = req.header('token');
+    checkToken(token, (result) => {
+        if (result.status !== 0) {
+            res.json(result);
+        } else {
+            let uid = result.data.uid;
+            runSql(`select user.Uname,user.Vip from user where uid=?`,
+            [uid],(result1) => {
+                res.json(result1);
+            });
+        }
+    });
+});
+/**
+ * 修改信件内容(公开写)
+ * 请求方式：
+ *      POST
+ * 接受参数：
+ *      oid：信件id
+ *      Otitle:信件标题
+ *      Ocontent：信件内容
+ *      Oday：信件修改后的日期
+ *      weather:天气情况
+ * 返回参数：
+ *      
+ */
+router.post('/amendLetter',function(req,res,next){
+    let {oid,Otitle,Ocontent,Oday,weather} = req.body;
+    let token = req.header('token');
+    checkToken(token,(result) => {
+        if(result.status !=0){
+            res.json(result);
+        }else{
+            let uid =  result.data.uid;
+            runSql(`update open set Otitle=?,Ocontent=?,Oday=?,weather where oid=? and uid=? `,
+            [Otitle,Ocontent,Oday,weather,oid,uid],(result2)=>{
+                res.json(result2);
+            })
+        }
+    })
+})
+/**
+ * 点赞
+ * GET
+ * 接收参数:
+ *      oid:信件id
+ */
+router.get('/addLikes', function (req, res, next) {
+    let {oid} = req.query;
+    let token = req.header('token');
+    checkToken(token, (result) => {
+        if (result.status !== 0) {
+            res.json(result);
+        } else {
+            let uid = result.data.uid;
+            runSql(`select open.number from open where oid=? and uid=?`, [oid,uid], (result1) => {
+                let number = result1.data[0].number;
+                number++;
+                runSql(`update open set number=? where uid=? and oid=?`, [number,uid,oid], (result2) => {
+                    runSql(`select open.number from open where oid=? and uid=?`, [oid,uid], (result3) => {
+                        res.json(result3)
+                    })
+                });
+            });
+        }
+    });
+});
+/**
+ * 取消点赞
+ * GET
+ * 接收参数:
+ *      oid:信件id
+ */
+router.get('/cancelLikes', function (req, res, next) {
+    let {oid} = req.query;
+    let token = req.header('token');
+    checkToken(token, (result) => {
+        if (result.status !== 0) {
+            res.json(result);
+        } else {
+            let uid = result.data.uid;
+            runSql(`select open.number from open where oid=? and uid=?`, [oid,uid], (result1) => {
+                let number = result1.data[0].number;
+                number--;
+                runSql(`update open set number=? where uid=? and oid=?`, [number,uid,oid], (result2) => {
+                    runSql(`select open.number from open where oid=? and uid=?`, [oid,uid], (result3) => {
+                        res.json(result3)
+                    })
+                });
             });
         }
     });
