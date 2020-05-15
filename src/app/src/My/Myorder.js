@@ -45,7 +45,6 @@ export default class Collection extends Component {
                 {/* 当前：秀才 */}
                 <div className="mo-bk" style={{
                     position: "relative"
-                    
                 }}>
                     <img 
                     src={require("../imgs/my/bk.png")} 
@@ -53,9 +52,42 @@ export default class Collection extends Component {
                     <span className="motit"><b>秀才</b></span>
 
                 </div>
-                {/* 累计收听 */}
                 {/* 总成长值,距离下一成长值 */}
-                {/* 等级与奖励 */}
+                <div style={{
+                    width:'100%',
+                    height:'6em'
+                }}>
+                    <div style={{
+                        width:"50%",
+                        float:'left',
+                        textAlign:"center",
+                        // lineHeight:'8em',
+                        // backgroundColor:'red'
+                    }}>
+                        <span style={{
+                            color:'orange',
+                            fontSize:'30px'
+                        }}><b>4</b></span>
+                        <br/>
+                        <span>总成长值</span>
+                    </div>
+                    <div style={{
+                        width:"50%",
+                        float:'left',
+                        textAlign:"center",
+                        // lineHeight:'8em',
+                        // backgroundColor:'red'
+                    }}>
+                        <span style={{
+                            color:'orange',
+                            fontSize:'30px'
+                        }}><b>8</b></span>
+                        <br/>
+                        <span>晋级目标</span>
+                    </div>
+                </div>
+                {/* 等级与奖励TODO: */}
+                
                 {/* 宝宝，读书郎，秀才，举人，状元，探花， */}
                 <List>
                     <Item style={{
@@ -64,31 +96,20 @@ export default class Collection extends Component {
                 </List>
                 <WhiteSpace />
                 <List>
-                    
                     <Item extra={
-                        <i className="iconfont icon-weibiaoti-" style={{
-                            fontSize:"1.0em"
-                        }}></i>
+                        <span> 0成长值</span>
                     } >秀才</Item>
                     <Item extra={
-                        <i className="iconfont icon-weibiaoti-" style={{
-                            fontSize:"1.0em"
-                        }}></i>
+                        <span> 8成长值</span>
                     } >举人</Item>
                     <Item extra={
-                        <i className="iconfont icon-weibiaoti-" style={{
-                            fontSize:"1.0em"
-                        }}></i>
+                        <span> 15成长值</span>
                     } >状元</Item>
                     <Item extra={
-                        <i className="iconfont icon-weibiaoti-" style={{
-                            fontSize:"1.0em"
-                        }}></i>
+                        <span> 30成长值</span>
                     } >探花</Item>
                     <Item extra={
-                        <i className="iconfont icon-weibiaoti-" style={{
-                            fontSize:"1.0em"
-                        }}></i>
+                        <span>100成长值</span>
                     } >翰林</Item>
                 </List>
             </div>
