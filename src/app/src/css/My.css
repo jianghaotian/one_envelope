@@ -20,8 +20,9 @@
 }
 .myinfospan{
     position: absolute;
-    width: 47%;
+    /* width: 47%; */
     left: 33%;
+    /* background-color: pink; */
     bottom: 44%;
     font-size: 2em;
     text-overflow:ellipsis; white-space:nowrap; overflow:hidden;
@@ -182,4 +183,9 @@
     height: 3.5em;
     font-size: 3.3em;
     z-index: 1;
+}
+#myVip{
+    position: relative;
+    bottom:130px;
+    left:180px;
 }

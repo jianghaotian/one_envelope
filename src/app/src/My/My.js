@@ -15,6 +15,12 @@ export default class My extends Component {
         }
     }
     componentDidMount(){
+        this.$api.isVip().then(res=>{
+            // console.log(res.data.data[0].Vip);
+            this.setState({
+                vip : res.data.data[0].Vip
+            })
+        })
         this.$api.mine().then(res => {
             // 获取数据成功后的其他操作
             this.setState({
@@ -49,6 +55,11 @@ export default class My extends Component {
     toVip=()=>{
         this.props.history.push('/vip');
     }
+    showVipicon=()=>{
+        if(this.state.vip){
+            return <img id="myVip" src={require("../imgs/public/vip(1).png")} />
+        }
+    }
     render() {
         // console.log(this.state.arr[0].pidname)
         return (
@@ -76,6 +87,9 @@ export default class My extends Component {
                     {/* title */}
                     <span className="mytitle">我的</span>
                     {/* 用户名 */}
+                    {
+                        this.showVipicon()
+                    }
                     <span className="myinfospan"><b>
                         {this.state.arr[0].Uname}
                     </b></span>

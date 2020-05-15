@@ -236,6 +236,12 @@ export default class Home extends Component {
         }
     }
     componentDidMount(){
+        this.$api.isVip().then(res=>{
+            // console.log(res.data.data[0].Vip);
+            this.setState({
+                vip : res.data.data[0].Vip
+            })
+        })
         //获取背景和个性签名
         this.$api.getHomeData().then(res=>{
             // console.log(res);
@@ -351,6 +357,11 @@ export default class Home extends Component {
     toSignature=()=>{
         this.props.history.push('/signature');
     }
+    showVip=()=>{
+        if(this.state.vip){
+            return <img style={{marginLeft:'10px',width:'28px'}}  src={require("../imgs/public/vip(1).png")} />
+        }
+    }
     render() {
         //console.log(this.state.toUid);
         return (
@@ -452,6 +463,9 @@ export default class Home extends Component {
                         <span className="slider-userName">
                             {this.state.Uname}
                         </span>
+                        {
+                            this.showVip()
+                        }
                         <br />
                         <span className="slider-signature" onClick={this.toSignature}>
                             {this.state.signature}
