@@ -6,7 +6,19 @@ export default class Vip extends Component {
         super();
         this.state={
             display:'none',
-            pay:false
+            pay:false,
+            back:""
+        }
+    }
+    componentDidMount(){
+        var urlinfo = window.location.hash;
+        // console.log(urlinfo);
+        let arr = urlinfo.split("?");
+        // console.log(arr[1]);
+        if(arr[1] != undefined){
+            this.setState({
+                back : arr[1]
+            })
         }
     }
     pay=()=>{
@@ -23,7 +35,14 @@ export default class Vip extends Component {
         }
     }
     back=()=>{
-        this.props.history.push('/home');
+        console.log(this.state.back)
+        if(this.state.back == ''){
+            this.props.history.push('/home/my');
+        }else if(this.state.back.indexOf('Oid')>=0){
+            this.props.history.push('/pubBack?'+this.state.back);
+        }else if(this.state.back.indexOf('pid')>=0){
+            this.props.history.push('/back?'+this.state.back);
+        }
     }
     render() {
         return (

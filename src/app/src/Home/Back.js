@@ -1,5 +1,9 @@
-import React, { Component } from 'react'
-import "../css/HomeWrite.css"
+import React, { Component } from 'react';
+import "../css/HomeWrite.css";
+import { List, TextareaItem,Modal,Button } from 'antd-mobile';
+
+const alert = Modal.alert;
+
 
 export default class Back extends Component {
     constructor(){
@@ -20,6 +24,12 @@ export default class Back extends Component {
                 imgList : imglist
             })
         })
+        this.$api.isVip().then(res=>{
+            console.log(res.data.data[0].Vip);
+            this.setState({
+                vip : res.data.data[0].Vip
+            })
+        })
     }
     back=()=>{
         var back = this.props.history.location.search;
@@ -35,7 +45,18 @@ export default class Back extends Component {
         // console.log(type);
         let pid = arr[0].split("=");
         //console.log(item.ppid,pid[1]);
-        if(type == "edit" && arr.length<3 ){
+        if(this.state.vip == 0 && item.status ==1){
+            alert('会员专属','是否要开通会员',
+                [{
+                    text:'取消',onPress:()=>{}
+                },{
+                    text:'看一看',onPress:()=>{ 
+                        var urlinfo = this.props.history.location.search;
+                        this.props.history.push('/vip'+urlinfo);
+                    }
+                }]);
+        }
+        else if(type == "edit" && arr.length<3 ){
             this.$api.changeBack({pid:pid[1],ppid : item.ppid}).then(res=>{
                 //console.log(res);
             })
@@ -67,6 +88,11 @@ export default class Back extends Component {
             }
         })
     }
+    vipImage=(item)=>{
+        if(item.status == 1){
+            return <span id="vipImage">vip</span>
+        }
+    }
     render() {
         //console.log(this.state.imgList);
         return (
@@ -79,6 +105,9 @@ export default class Back extends Component {
                         this.state.imgList.map((item,index)=>{
                             return <li key={index} onClick={()=>{this.selImg(item)}}>
                                 <div className="back-imgBox">
+                                    {
+                                        this.vipImage(item)
+                                    }
                                     <img src={"https://yf.htapi.pub/paper/"+item.ppimage}  style={{width:"100%",height:"130px"}} />
                                 </div>
                             </li>

@@ -84,6 +84,12 @@ export default class HomeWrite extends Component {
         audio.src = 'https://yf.htapi.pub/music/'+url;
     }
     componentDidMount(){
+        this.$api.isVip().then(res=>{
+            // console.log(res.data.data[0].Vip);
+            this.setState({
+                vip : res.data.data[0].Vip
+            })
+        })
         ls.clear('createMp3');
         var info = window.location.hash;
         // console.log(info);
@@ -454,12 +460,16 @@ export default class HomeWrite extends Component {
     selectImg=()=>{
         let pid = this.state.pid;
         let type = this.state.type;
-        if(type == 'edit'){
-            this.props.history.push('/cback?pid='+pid+'&type='+type);
+        if( this.state.vip == 0){
+            alert('开通会员即可使用自定义背景哦')
         }else{
-            //console.log('create');
-            //console.log(this.state.to);
-            this.props.history.push('/cback?toNick='+this.state.to+'&type='+type);
+            if(type == 'edit'){
+                this.props.history.push('/cback?pid='+pid+'&type='+type);
+            }else{
+                //console.log('create');
+                //console.log(this.state.to);
+                this.props.history.push('/cback?toNick='+this.state.to+'&type='+type);
+            }
         }
     }
     setFamily=(item)=>{

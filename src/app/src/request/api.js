@@ -82,6 +82,10 @@ const api = {
     getMyPub:p=>get('public/perOlist',p),//显示个人公开写
     changePubImg:p=>post('public/modifyObg',p),//修改公开写背景
     DeletePubLetter:p=>post('public/delOletter',p),//删除公开信
+    isVip:p=>get('public/isVip',p),
+    EditPubLetter:p=>post('public/amendLetter',p),//编辑公开信
+    addLikes:p=>get('public/addLikes',p),
+    cancleLickes:p=>get('public/cancelLikes',p),//取消点赞
     // getpid:p => get('private/getpd',p)
         
 }

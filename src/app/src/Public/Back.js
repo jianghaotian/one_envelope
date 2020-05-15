@@ -42,21 +42,43 @@ export default class Back extends Component {
                 imgList : imglist
             })
         })
+        this.$api.isVip().then(res=>{
+            // console.log(res.data.data[0].Vip);
+            this.setState({
+                vip : res.data.data[0].Vip
+            })
+        })
     }
     back=()=>{
         var urlinfo = this.props.history.location.search;
+        console.log(urlinfo);
         if(this.state.type == 'create'){
-            this.props.history.push('pubWrite/'+urlinfo);
+            this.props.history.push('/pubWrite'+urlinfo);
+        }else{
+            this.props.history.push('/pubWrite'+urlinfo);
         }
     }
-    selImg=(item)=>{     
-        if(this.state.type == 'create'){
-            this.props.history.push('/pubWrite/?type=create&ppid='+item.ppid);
-        }else if(this.state.type == 'edit'){
-            // console.log(this.state.oid);
-            this.$api.changePubImg({oid:this.state.oid,ppid:item.ppid}).then(res=>{
-                this.props.history.push('/pubWrite/?type=edit&Oid='+this.state.oid+'&ppid='+item.ppid);
-            })
+    selImg=(item)=>{    
+        if(this.state.vip == 0 && item.status ==1){
+            alert('会员专属','是否要开通会员',
+                [{
+                    text:'取消',onPress:()=>{}
+                },{
+                    text:'看一看',onPress:()=>{ 
+                        var urlinfo = this.props.history.location.search;
+                        this.props.history.push('/vip'+urlinfo);
+                    }
+                }]);
+        }
+        else{
+            if(this.state.type == 'create'){
+                this.props.history.push('/pubWrite/?type=create&ppid='+item.ppid);
+            }else if(this.state.type == 'edit'){
+                // console.log(this.state.oid);
+                this.$api.changePubImg({oid:this.state.oid,ppid:item.ppid}).then(res=>{
+                    this.props.history.push('/pubWrite/?type=edit&Oid='+this.state.oid+'&ppid='+item.ppid);
+                })
+            }
         }
     }
     vipImage=(item)=>{

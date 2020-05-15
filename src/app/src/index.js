@@ -46,6 +46,7 @@ import PubWrite from './Public/PubWrite'
 import PubBack from './Public/Back'
 import Vip from './My/Vip'
 import Myorder from './My/Myorder'
+import UserInfo from './Public/UserInfo'
 
 
 React.Component.prototype.$api = api;
@@ -67,7 +68,7 @@ ReactDOM.render(
             <Route path='/signature' component={Signature} />
             <Route path="/pubWrite" component={PubWrite} />
             <Route path="/pubBack" component={PubBack} />
-
+            <Route path="/UserInfo" component={UserInfo} />
             {/* lxc */}
             <Route path="/recover" component={Recover} />
             <Route path="/setting" component={Setting}/>

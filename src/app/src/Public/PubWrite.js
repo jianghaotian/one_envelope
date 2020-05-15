@@ -134,8 +134,14 @@ export default class PubWrite extends Component {
                         this.setState({
                             weather:data.weather,
                             date:data.Oday,
-                            ppid:data.ppid,
+                            ppid:data.ppid
                         })
+                        if(data.anonymous == 1){
+                            this.setState({
+                                btBg : 'pink',
+                                anonymous:1
+                            })
+                        }
                     }
                     if(type == 'edit'){
                         this.setState({
@@ -222,8 +228,8 @@ export default class PubWrite extends Component {
     }
     //提交
     submit=()=>{
-        let t = this.state.title;
-        let content = this.state.value;
+        var t = this.state.title;
+        var content = this.state.value;
         // console.log(this.state.date);
         if(t==""){
             alert("标题不能为空哦")
@@ -246,12 +252,17 @@ export default class PubWrite extends Component {
                     }
                 }]);
            }else if(this.state.type == 'edit'){
+               console.log(this.state.oid,t,content,this.state.date,this.state.weather);
                 alert('修改','确定修改信件吗',
                 [{
                     text:'取消',onPress:()=>{}
                 },{
                     text:'是的',onPress:()=>{ 
-                        
+                        this.$api.EditPubLetter({oid:this.state.oid,Otitle:t,Ocontent:content,Oday:this.state.date,weather:this.state.weather}).then(res=>{
+                            // alert('修改成功!');
+                            // this.props.history.push("/Home/public");
+                            console.log(res);
+                        })
                     }
                 }]);
            }
