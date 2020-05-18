@@ -305,8 +305,9 @@ router.post('/theme/edit',function(req,res,next){
             res.json(result);
         }else{
             let uid =  result.data.uid;
-            runSql(`update tletter set ltitle=?,lcontent=?,lday=?,ppid=? where lid=? and uid=? `,
-                [title,content,lday,ppid,lid,uid],(result2)=>{
+            let addUid = '%'+ uid +'%';
+            runSql(`update tletter set ltitle=?,lcontent=?,lday=?,ppid=? where lid=? and (uid=? or uid like ?)`,
+                [title,content,lday,ppid,lid,uid,addUid],(result2)=>{
                 res.json(result2);
             })
         }        

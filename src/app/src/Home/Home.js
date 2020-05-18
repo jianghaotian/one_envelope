@@ -93,7 +93,8 @@ export default class Home extends Component {
                 { text: '复制链接', onPress: () => {this.handleCopy()
                     // am-modal-alert-content
                     alert('复制成功','',[
-                        {text:'确定',onPress:()=>{console.log('确定')}},
+                        
+                        {text:'信箱发送',onPress:()=>{this.props.history.push('/lettersend/?pid='+pid)}},
                         {text:'打开链接',onPress:()=>{window.open(shareUrl,'一封','height=640, width=360')}}
                     ])
                     

@@ -77,6 +77,9 @@ const api = {
     changeHomeBg : p=>post('image/changeHomeBack',p),//修改首页背景图
     changeSignature : p=>post('mine/changeSignature',p),//修改个性签名
     // getpid:p => get('private/getpd',p)
+
+    getsendletter:p=>get('mailbox/getsendletter',p),//获取发送信件信息
+    sendletter:p=>post('mailbox/sendletter',p),//发送信件
         
 }
 
