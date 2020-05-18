@@ -259,9 +259,9 @@ export default class PubWrite extends Component {
                 },{
                     text:'是的',onPress:()=>{ 
                         this.$api.EditPubLetter({oid:this.state.oid,Otitle:t,Ocontent:content,Oday:this.state.date,weather:this.state.weather}).then(res=>{
-                            // alert('修改成功!');
-                            // this.props.history.push("/Home/public");
-                            console.log(res);
+                            alert('修改成功!');
+                            this.props.history.push("/Home/public");
+                            // console.log(res);
                         })
                     }
                 }]);
