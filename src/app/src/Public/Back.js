@@ -4,7 +4,6 @@ import { List, TextareaItem,Modal,Button } from 'antd-mobile';
 
 const alert = Modal.alert;
 
-
 export default class Back extends Component {
     constructor(){
         super();
@@ -13,8 +12,27 @@ export default class Back extends Component {
         }
     }
     componentDidMount(){
+        var urlinfo = this.props.history.location.search;
+        // console.log(urlinfo);
+        let arr1 = urlinfo.split("&");
+        // console.log(arr1);
+        if(arr1.length>1){
+            //编辑：获取oid
+            let type = arr1[0].split("=")[1];
+            let oid = arr1[1].split("=")[1];
+            this.setState({
+                type : type,
+                oid :oid
+            })
+        }else{
+            //新建情况
+            let type = arr1[0].split("=")[1];
+            this.setState({
+                type : type
+            })
+        }
         this.$api.selBack().then(res=>{
-            //console.log(res.data.data);
+            // console.log(res.data.data);
             let imglist = [];
             let list = res.data.data;
             for(var i=0;i<list.length;i++){
@@ -25,26 +43,22 @@ export default class Back extends Component {
             })
         })
         this.$api.isVip().then(res=>{
-            console.log(res.data.data[0].Vip);
+            // console.log(res.data.data[0].Vip);
             this.setState({
                 vip : res.data.data[0].Vip
             })
         })
     }
     back=()=>{
-        var back = this.props.history.location.search;
-        this.props.history.push("/homeWrite/"+back);
+        var urlinfo = this.props.history.location.search;
+        console.log(urlinfo);
+        if(this.state.type == 'create'){
+            this.props.history.push('/pubWrite'+urlinfo);
+        }else{
+            this.props.history.push('/pubWrite'+urlinfo);
+        }
     }
-    selImg=(item)=>{
-        localStorage.setItem('customBack',false);
-        let data = this.props.history.location.search;
-        //console.log(data);
-        let arr = data.split("&");
-        //console.log(arr);
-        let type = arr[1].split("=")[1];
-        // console.log(type);
-        let pid = arr[0].split("=");
-        //console.log(item.ppid,pid[1]);
+    selImg=(item)=>{    
         if(this.state.vip == 0 && item.status ==1){
             alert('会员专属','是否要开通会员',
                 [{
@@ -56,37 +70,16 @@ export default class Back extends Component {
                     }
                 }]);
         }
-        else if(type == "edit" && arr.length<3 ){
-            this.$api.changeBack({pid:pid[1],ppid : item.ppid}).then(res=>{
-                //console.log(res);
-            })
-            this.props.history.push("/homeWrite/"+data+"&ppid="+item.ppid);
-        }else if(type == "create" && arr.length<3){
-            this.props.history.push("/homeWrite/"+data+"&ppid="+item.ppid);
-        }else if(type == "create" && arr.length >2){
-            arr.splice(2,1,"ppid="+item.ppid);
-            //console.log(arr.join("&"));
-            this.props.history.push("/homeWrite/"+arr.join("&"));
-        }else if(type == "edit" && arr.length>2){
-            arr.splice(2,1,"ppid="+item.ppid);
-            //console.log(arr.join("&"));
-            this.props.history.push("/homeWrite/"+arr.join("&"));
-        }
-        this.$api.showBgImg({pid:pid[1]}).then(res=>{
-            //console.log(res);
-            let data = res.data.data;
-            if(data.length > 0){
-                let bgImg = data[0].bgimage;
-                let custom = data[0].custom;
-                console.log(bgImg,custom);
-                if(custom == 1){
-                    console.log(bgImg,custom);
-                    this.$api.delCustom({pid:pid[1],bgname : bgImg}).then(res=>{
-                        console.log(res);
-                    })
-                }
+        else{
+            if(this.state.type == 'create'){
+                this.props.history.push('/pubWrite/?type=create&ppid='+item.ppid);
+            }else if(this.state.type == 'edit'){
+                // console.log(this.state.oid);
+                this.$api.changePubImg({oid:this.state.oid,ppid:item.ppid}).then(res=>{
+                    this.props.history.push('/pubWrite/?type=edit&Oid='+this.state.oid+'&ppid='+item.ppid);
+                })
             }
-        })
+        }
     }
     vipImage=(item)=>{
         if(item.status == 1){

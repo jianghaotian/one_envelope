@@ -596,7 +596,338 @@ POST
 }
 ```
 
+## 3.0展示公开写信件list（所有）
 
+**请求url**
+
+```
+URL : https://yf.htapi.pub/v1/public/getOlist
+```
+
+**请求方式**
+
+```
+GET
+```
+
+**返回参数**
+
+```
+{
+    "status": 0,
+    "message": "OK",
+    "data": [
+        {
+            "Uname": "awy",
+            "Uimage": "1588060318833_61.png",
+            "Oid": 2,
+            "Otitle": "YIOY",
+            "Ocontent": "ERWG",
+            "Oday": null,
+            "Uid": 21,
+            "ppid": 59,
+            "number": 3
+        }
+    ]
+}
+```
+
+## 3.1展示公开写信件内容
+
+**请求url**
+
+```
+URL : https://yf.htapi.pub/v1/public/getOletter
+```
+
+**请求方式**
+
+```
+GET
+```
+
+**接收参数**
+
+| 参数 | 说明   | 类型 |
+| ---- | ------ | ---- |
+| oid  | 信件id | int  |
+
+**返回参数**
+
+```
+{
+    "status": 0,
+    "message": "OK",
+    "data": [
+        {
+            "ppimage": "1589187443989_34.jpg",
+            "Oid": 2,
+            "Otitle": "YIOY",
+            "Ocontent": "ERWG",
+            "Oday": null,
+            "Uid": 21,
+            "ppid": 59,
+            "number": 3,
+            "weather":""
+        }
+    ]
+}
+```
+
+## 3.2书写公开写信件内容
+
+**请求url**
+
+```
+URL : https://yf.htapi.pub/v1/public/writeOpen
+```
+
+**请求方式**
+
+```
+POST
+```
+
+**接收参数**
+
+| 参数     | 说明     | 类型 |
+| -------- | -------- | ---- |
+| Otitle   | 信件标题 | char |
+| Ocontent | 信件内容 |      |
+| ppid     | 信纸id   |      |
+| Oday     | 创建日期 |      |
+| weather  | 天气情况 |      |
+
+**返回参数**
+
+```
+{
+  status: 0,
+  message: 'OK'
+}
+```
+
+## 3.3修改公开写信件背景
+
+**请求url**
+
+```
+URL : https://yf.htapi.pub/v1/public/modifyObg
+```
+
+**请求方式**
+
+```
+POST
+```
+
+**接收参数**
+
+| 参数 |  说明  | 类型 |
+| ---- | :----: | :--: |
+| oid  | 信件id |      |
+| ppid | 背景id |      |
+
+**返回参数**
+
+```
+{
+  status: 0,
+  message: 'OK'
+}
+
+```
+
+## 3.4删除公开写信件
+
+**请求url**
+
+```
+URL : https://yf.htapi.pub/v1/public/delOletter
+```
+
+**请求方式**
+
+```
+POST
+```
+
+**接收参数**
+
+| 参数 |  说明  | 类型 |
+| ---- | :----: | :--: |
+| oid  | 信件id |      |
+
+**返回参数**
+
+```
+{
+  status: 0,
+  message: 'OK'
+}
+```
+
+## 3.5个人所写公开信
+
+**请求url**
+
+```
+URL : https://yf.htapi.pub/v1/public/perOlist
+```
+
+**请求方式**
+
+```
+GET
+```
+
+**接收参数**
+
+**返回参数**
+
+```
+{
+  status: 0,
+  message: 'OK'
+}
+```
+
+## 3.6返回用户的vip属性 
+
+**请求url**
+
+```
+URL : https://yf.htapi.pub/v1/public/isVip
+```
+
+**请求方式**
+
+```
+GET
+```
+
+**接收参数**
+
+**返回参数**
+
+```
+{
+    "status": 0,
+    "message": "OK",
+    "data": [
+        {
+            "Uname": "awy",
+            "Vip": 0
+        }
+    ]
+}
+```
+
+## 3.7修改信件内容(公开写) 
+
+**请求url**
+
+```
+URL : https://yf.htapi.pub/v1/public/amendLetter
+```
+
+**请求方式**
+
+```
+POST
+```
+
+**接收参数**
+
+| 参数     |       说明       | 类型 |
+| -------- | :--------------: | :--: |
+| oid      |      信件id      |      |
+| Otitle   |     信件标题     |      |
+| Ocontent |     信件内容     |      |
+| Oday     | 信件修改后的日期 |      |
+| weather  |     天气情况     |      |
+
+**返回参数**
+
+```
+{
+    "status": 0,
+    "message": "OK"
+}
+
+```
+
+## 3.8点赞
+
+**请求url**
+
+```
+URL : https://yf.htapi.pub/v1/public/addLikes
+```
+
+**请求方式**
+
+```
+GET
+```
+
+**接收参数**
+
+| 参数 |  说明  | 类型 |
+| ---- | :----: | :--: |
+| oid  | 信件id |      |
+
+
+
+
+
+**返回参数**
+
+```
+{
+    "status": 0,
+    "message": "OK",
+    "data": [
+        {
+            "number": 1
+        }
+    ]
+}
+```
+
+## 3.9取消点赞
+
+**请求url**
+
+```
+URL : https://yf.htapi.pub/v1/public/cancelLikes
+```
+
+**请求方式**
+
+```
+GET
+```
+
+**接收参数**
+
+| 参数 |  说明  | 类型 |
+| ---- | :----: | :--: |
+| oid  | 信件id |      |
+
+**返回参数**
+
+```
+{
+    "status": 0,
+    "message": "OK",
+    "data": [
+        {
+            "number": 0
+        }
+    ]
+}
+```
 
 
 

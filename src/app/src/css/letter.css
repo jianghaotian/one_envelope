@@ -1,0 +1,159 @@
+*{
+    padding: 0;
+    margin: 0;
+}
+.homeWrite{
+    height:100%;
+    /* background: rgb(253, 230, 199); */
+}
+.hw-top{
+    height:35px;
+    width:100%;
+    color:grey;
+    font-size:16px;
+    line-height:35px;
+    /* background-color: rgb(235, 235, 235); */
+}
+.hw-top-span{
+    width:90%;
+    margin:0 auto;
+}
+.hw-title{
+    height:45px;
+    width:90%;
+    margin: 0 auto;
+    border-bottom:3px solid rgb(182, 182, 182);
+    background-size: cover;
+    /* background-color: rgb(247, 194, 185); */
+}
+.hw_title{
+    font-size:20px;
+    line-height:45px;
+    font-weight: bold;
+}
+.hw-inp{
+    font-size:16px;
+    width:70%;
+    height:30px;
+    border:none;
+    color:black;
+    margin-left:10px;
+    background:none;
+}
+.hw-write{
+    width:90%;
+    height:450px;
+    margin: 0 auto;
+    /* background-color: blanchedalmond; */
+}
+.hw-to{
+    width:90%;
+    margin : 0 auto;
+    height:30px;
+    line-height:30px;
+    font-size:15px;
+}
+.hw-bottom{
+    height:40px;
+    width:100%;
+    /* background-color:rgb(226, 226, 226); */
+    position:fixed;
+    bottom:0;
+    display: flex;
+    justify-content: space-around;
+    align-items: center;
+    border-top:1px solid gray;
+}
+.toElse{
+    float: right;
+    height:30px;
+    line-height:30px;
+    font-size:15px;
+    color:grey;
+    width:60px;
+    background:none;
+    border: none;
+}
+.selectTo{
+    background:white;
+    width:60px;
+    text-align: center;
+    position: absolute;
+    z-index:1;
+    right:5%;
+}
+.selectTo li:active{
+    background-color: rgb(238, 238, 238);
+}
+
+
+/* 信纸选择 */
+.back-top{
+    height:40px;
+    width:100%;
+    font-size:18px;
+    padding-left:10px;
+    line-height:40px;
+    color:black;
+    background-color: burlywood;
+}
+.back-img{
+    height:100%;
+    width:100%;
+    /* display:flex;
+    justify-content:space-around; */
+    background-color: pink;
+}
+.back-imgBox{
+    float: left;
+    height:130px;
+    margin:1% 1%;
+    width:23%;
+    background-color: lightgrey;
+    border:1px solid grey;
+    background-size: cover;
+}
+
+.lt{
+    /* background-color: rgb(250, 250, 250); */
+    position: relative;
+    height: 37.5em;
+    width: 100%;
+
+}
+.lt-title{
+    width: 100%;
+    background-color: #fff;
+    font-size: 1.7em;
+    padding:0.5em 0.8em;
+}
+.lt-content{
+    position: relative;
+    height: 100%;
+    width: 100%;
+}
+.lt-span{
+    position: absolute;
+    left: 0;
+    top:0;
+    padding:0.5em 0.8em;
+    font-size: 1.3em;
+    z-index:1;
+}
+.lt-img{
+    position: absolute;
+    left: 0;
+    top:0;
+    height: 100%;
+    width: 100%;
+}
+.col-tab{
+    height: 3em;
+    line-height: 3em;
+    width: 100%;
+    font-size: 1.3em;
+    text-align: center;
+    color:white;
+    background-color: black;
+    position: relative;
+}

@@ -21,22 +21,18 @@ export default class Letter extends Component {
         this.setState({
             pid:this.props.match.params.id
         })
-        console.log(this.props.match.params)//打印文章信息号
+        // console.log(this.props.match.params.id)//打印文章信息号
         this.$api.showmail({pid:this.props.match.params.id}).then(res => {
             console.log(res.data.data)//打印数据
             this.setState({
                 arr:res.data.data
             });
+            
             this.setState({
                 isLike:res.data.data[0].isCollection
             })
         }) 
-        if(this.state.arr[0].color == null){
-            this.state.arr[0].color = 'black'
-        }
-        console.log(this.state.arr[0].color)
     }
-    // 网页copy
     handleCopy = () => {
         const spanText = document.getElementsByClassName('am-modal-alert-content')[0].innerText;
         const oInput = document.createElement('input');
@@ -48,7 +44,6 @@ export default class Letter extends Component {
         oInput.style.display = 'none';
         document.body.removeChild(oInput);
     };
-    // 收藏
     collec = () => {
         if(this.state.isLike){
             // 后台取消收藏
@@ -71,7 +66,7 @@ export default class Letter extends Component {
         // }) 
         console.log('删除代码已注释')
     }
-    // 分享
+    
     sharemail=()=>{
         // console.log(this.state.pid)//打印文章信息号
         var pid = this.state.pid;
@@ -85,11 +80,13 @@ export default class Letter extends Component {
                 for (var i in param) {
                     s.push(i + '=' + encodeURIComponent(param[i] || ''));
                 }
+                // http://localhost:3000/#/homeWrite/?pid=97&type=edit
                 var targetUrl = "https://yf.htapi.pub/v1/private/share?pid="+pid;
                 return targetUrl;
             }
         }
         var shareUrl = shareModel1.shareQQ(pid,'edit');
+        // console.log(shareUrl);
         alert('分享链接', shareUrl, [
             { text: '取消分享', onPress: () => console.log('cancel') },
             { text: '复制链接', onPress: () => {this.handleCopy()
@@ -110,7 +107,7 @@ export default class Letter extends Component {
                     color:'black',
                     backgroundColor: 'whitesmoke'
                 }}>
-                        {/* {this.state.arr[0].toNick} */}
+                        {this.state.arr[0].toNick}
                     <Link to="/home/letterbox" 
                     style={{
                         float:"left",
@@ -132,48 +129,26 @@ export default class Letter extends Component {
                     }}></i>
                 </div>
                 
-
-                {/* 标题 */}
-                <div className="hw-title">
-                    <span className="hw_title">标题:        {this.state.arr[0].Ptitle}</span>
+                {/* content */} 
+                <div className="lt-title" style={{
+                    backgroundColor: 'rgb(247, 245, 245)',
+                    width: '100%',
+                    fontSize: '1.7em',
+                    padding:'0.5em 0.8em'
+                }}><b>{this.state.arr[0].Ptitle}</b></div>
+                <hr style={{
+                    borderWidth:'0.4px',
+                    color:'lightgrey'
+                }}/>
+                <div className='lt-content'>
+                    <img src={"https://yf.htapi.pub/paper/"+this.state.arr[0].ppimage} className="lt-img"/>
+                    <span className="lt-span">{this.state.arr[0].Pcontent}</span>
                 </div>
-                {/* to */}
-                <div className="hw-to">
-                    <div style={{padding:"0",margin:"0"}}>
-                        to:
-                        <span>
-                            {this.state.arr[0].toNick}
-                        </span>
-                    </div>
-                </div>
-                {/* 内容 */}
-                <div className="hw-write">
-                    <List>
-                        <TextareaItem
-                            id="textBox"
-                            value={this.state.arr[0].Pcontent}
-                            style={{    backgroundImage:"url("+"https://yf.htapi.pub/paper/"+this.state.arr[0].ppimage+")",backgroundSize:"100% 100%",color:this.state.arr[0].color
-                            ,fontFamily:this.state.arr[0].fontFamily,fontSize:this.state.arr[0].fontSize+'px',
-                            padding:'10px'}}
-                            rows={16}
-                            count={1000}
-                            onClick={()=>{
-                                this.setState({
-                                    colorState:{display:"none"},
-                                    colorTag:false,
-                                    musicTag:false,
-                                    musicShow:{display:"none"}
-                                })
-                            }}
-                            readOnly='true'
-                        />
-                    </List>
-                </div>
-
+            
                 {/* buttom-choice */}
                 <List style={{
                     position:'fixed',
-                    bottom:'1.8em',
+                    bottom:'1em',
                     left:'0',
                     width:'100%',
                     height:'2em'
@@ -208,6 +183,7 @@ export default class Letter extends Component {
                             width:"33.3%",
                             float:'left'
                         }}
+                        // onClick={()=>this.showShareActionSheet()}
                         onClick={()=>this.sharemail()}                        
                         >
                             <i className='iconfont icon-huifu' style={{

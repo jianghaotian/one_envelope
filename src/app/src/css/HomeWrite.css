@@ -94,8 +94,8 @@
     font-size:18px;
     padding-left:10px;
     line-height:40px;
-    color:black;
-    background-color: burlywood;
+    color:white;
+    background-color: rgb(82, 82, 82);
 }
 .back-img{
     height:100%;
@@ -112,8 +112,17 @@
     background-color: lightgrey;
     border:1px solid grey;
     background-size: cover;
+    position: relative;
 }
-
+#vipImage{
+    position:absolute;
+    width:30px;
+    height:20px;
+    text-align: center;
+    background-color: red;
+    color:white;
+    right:0;
+}
 /* 音乐 */
 .audio{
     background-color: pink;
