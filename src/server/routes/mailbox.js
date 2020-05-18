@@ -17,8 +17,9 @@ router.get('/', function (req, res, next) {
         if (result.status !== 0) {
             res.json(result);
         } else {
-            let uid = result.data.uid;
-            runSql(`select pletter.*,user.uimage,user.uname from pletter,user where pletter.isSend = ? and pletter.touid=? and user.uid=pletter.uid`, [1,uid], (result1) => {
+            let uid ='%'+ result.data.uid + '%';
+            
+            runSql(`select pletter.*,user.uimage,user.uname from pletter,user where pletter.isSend = ? and pletter.touid like ? and user.uid=pletter.uid`, [1,uid], (result1) => {
                 // console.log(result1);
                 res.json(result1);
             });
@@ -86,7 +87,7 @@ router.post('/deletemail', function (req, res, next) {
             res.json(result);
         } else {
             let uid = result.data.uid;
-            runSql(`delete from pletter where isSend = ? and touid=? and pid=?`,[1,uid,pid], (result1) => {
+            runSql(`update pletter set touid=null,isSend=0 where pid=?`,[pid], (result1) => {
                 // console.log(result1);
                 res.json(result1);
             });
@@ -119,4 +120,54 @@ router.get('/searchmail', function (req, res, next) {
         }
     });
 });
+/**
+ * 获取发送信件内容
+ * 请求方式：
+ *      GET
+ * 获取参数：
+ *      pid：信件id
+ */
+router.get('/getsendletter',function(req,res,next){
+    let {pid} = req.query;
+    let token = req.header('token');
+    checkToken(token,(result)=>{
+        if(result.status!==0){
+            res.json(result);
+        }else{
+            console.log("skos");
+            runSql(`select * from pletter where pid=?`,[pid],(result1)=>{
+                console.log(result1);
+                res.json(result1);
+            })
+        }
+    })
+})
+/**
+ * 信件发送
+ * 请求方式：
+ *      POST
+ * 接收参数：
+ *      pid：信件id
+ *      phone：手机号码
+ */
+router.post('/sendletter',function(req,res,next){
+    let{pid,phone} = req.body;
+    let token = req.header('token')
+    checkToken(token,(result)=>{
+        if(result.status !== 0){
+            res.json(result);
+        }else{
+            runSql(`select uid from user where uphone =?`,[phone],(result1)=>{
+                if(result1.data.length > 0){
+                    let toUid = result1.data[0].uid;
+                    runSql(`update pletter set toUid=?,isSend=1 where pid=?`,[toUid,pid],(result2)=>{
+                        res.json(result2);
+                    })
+                }else{
+                    res.json({status:1});
+                }
+            })
+        }
+    })
+})
 module.exports = router;
