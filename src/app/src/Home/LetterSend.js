@@ -104,10 +104,9 @@ export default class LetterSend extends Component {
                         />
                 </div>
                 <div style={{height:'100%',backgroundColor:'#f2f2f2'}}>
-                    {/* <div > */}
-                        {/* <span>收件人:&nbsp;&nbsp;&nbsp;</span> */}
-                        {/* <Input placeholder='请输入收件人电话号码' style={{width:'60%',height:'40px',borderRadius:'10px',border:'none'}}/> */}
+                    <div style={{height:'60px',lineHeight:'60px',paddingTop:'10px',fontSize:'17px',fontFamily:'微软雅黑'}}>
                         <List className='am-list-item am-input-item am-list-item-middle'>
+                            <div style={{width:'100%',height:'60px',backgroundColor:'#f2f2f2'}}>
                             <InputItem
                                 type="phone"
                                 placeholder="请输入收件人的手机号码"
@@ -115,21 +114,15 @@ export default class LetterSend extends Component {
                                 onErrorClick={this.onErrorClick}
                                 onChange={this.onChange}
                                 value={this.state.value}
-                            >收件人</InputItem>
+                            >收件人:</InputItem>
+                            </div>
                         </List>
-                    {/* </div> */}
-                    <div style={{height:'60px',width:'100%',lineHeight:'60px',paddingLeft:'20px',fontSize:'17px',borderBottom:'1px solid #ddd'}}>
+                    </div>
+                    <div style={{height:'60px',width:'100%',lineHeight:'60px',paddingLeft:'20px',fontSize:'17px',borderTop:'1px solid #ddd',borderBottom:'1px solid #ddd'}}>
                         <span style={{color:'#000'}}>标题:&nbsp;&nbsp;&nbsp;</span>
                         {this.state.data.Ptitle}
                     </div>
-                    {/* <div style={{height:'60px',width:'100%',lineHeight:'60px',paddingLeft:'20px',fontSize:'18px',borderBottom:'1px solid #ddd'}}>
-                        <span>内容:&nbsp;&nbsp;&nbsp;</span>
-                        
-                    </div> */}
                 </div>
-                {/* <p style={{width:'100%',paddingLeft:'20px',paddingRight:'10px',fontSize:'16px',marginTop:'15px'}}>
-                    &nbsp;&nbsp;{this.state.data.Pcontent}
-                </p> */}
             </div>
         )
     }
