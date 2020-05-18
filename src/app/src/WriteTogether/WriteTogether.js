@@ -46,7 +46,7 @@ export default class WriteTogether extends Component {
                     </Link>
                     <span>一起写</span>
                 </NavBar>
-                <div>
+                <div className="together-body">
                     {/* block */}
                     {this.state.data.map((val)=> (                           
                         <Link to={"/invitewrite/"+val.Tid} style={{color:"white"}}>
