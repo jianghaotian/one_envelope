@@ -173,7 +173,7 @@ router.post('/amendLetter',function(req,res,next){
             res.json(result);
         }else{
             let uid =  result.data.uid;
-            runSql(`update open set Otitle=?,Ocontent=?,Oday=?,weather where oid=? and uid=? `,
+            runSql(`update open set Otitle=?,Ocontent=?,Oday=?,weather=? where oid=? and uid=? `,
             [Otitle,Ocontent,Oday,weather,oid,uid],(result2)=>{
                 res.json(result2);
             })
