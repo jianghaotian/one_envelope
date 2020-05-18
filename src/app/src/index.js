@@ -48,6 +48,7 @@ import Vip from './My/Vip'
 import Myorder from './My/Myorder'
 import UserInfo from './Public/UserInfo'
 
+import LetterSend from './Home/LetterSend'
 
 React.Component.prototype.$api = api;
 React.Component.prototype.$store = store;
@@ -110,6 +111,8 @@ ReactDOM.render(
             <Route path="/cropimg" component={Cropimg} />
             <Route path='/wtBack' component={WTBack} />
 
+            <Route path='/lettersend' component={LetterSend}/>
+            <Route path='/lettersend/:id' component={LetterSend}/>
 
         </Switch>
     </Router>,
