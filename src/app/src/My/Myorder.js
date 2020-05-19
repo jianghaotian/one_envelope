@@ -9,22 +9,24 @@ export default class Collection extends Component {
         super();
         this.state={
             grade:'秀才',
-            mark:32,
+            mark:'5',
             nextmark:0
         }
     }
     componentDidMount(){
         this.$api.getgrade().then(res=>{
-            console.log(res);
-            // this.setState({
-            //     mark:res.data.grade
-            // });
+            console.log(res.data.data[0].grade);
+            this.setState({
+                mark:res.data.data[0].grade
+            });
         })
         var m = this.state.mark;
+        console.log(m)
         var nm;
-        if(m < 8 ){
-            nm = 8-m;
+        if( this.state.mark < 8 ){
+            nm = 8-this.state.mark;
             this.setState({
+                grade:"秀才",
                 nextmark:nm
             });
         }
@@ -51,6 +53,7 @@ export default class Collection extends Component {
                 nextmark:nm
             });
         }
+        console.log()
     }
 
     render() {
@@ -81,7 +84,6 @@ export default class Collection extends Component {
                 </div>
                 
                 {/* content */}
-                {/* 当前：秀才 */}
                 <div className="mo-bk" style={{
                     position: "relative"
                 }}>
@@ -112,8 +114,6 @@ export default class Collection extends Component {
                         width:"50%",
                         float:'left',
                         textAlign:"center",
-                        // lineHeight:'8em',
-                        // backgroundColor:'red'
                     }}>
                         <span style={{
                             color:'orange',
