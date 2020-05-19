@@ -36,16 +36,12 @@ export default class My extends Component {
         this.$api.getHomeData().then(res=>{
             // console.log(res);
             let data = res.data.data;
-            let sig = data[0].signature;
-            // console.log(sig)
-            // if(sig == null || sig == undefined ||sig == ''){
-            if((sig == null)||(sig == '')){
-                sig='快来写个性签名吧'
-            }
-            // let bgname = 'https://yf.htapi.pub/homeBack/'+hbg;
             this.setState({
                 signature : data[0].signature,
             })
+        })
+        this.$api.setgrade().then(res=>{
+            console.log(res);
         })
     }
     // 跳转个签编辑

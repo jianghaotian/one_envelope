@@ -14,6 +14,12 @@ export default class Collection extends Component {
         }
     }
     componentDidMount(){
+        this.$api.getgrade().then(res=>{
+            console.log(res);
+            // this.setState({
+            //     mark:res.data.grade
+            // });
+        })
         var m = this.state.mark;
         var nm;
         if(m < 8 ){
