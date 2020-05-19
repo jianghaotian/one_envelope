@@ -929,6 +929,65 @@ GET
 }
 ```
 
+## 4.0改变积分值
+
+**请求url**
+
+```
+URL : https://yf.htapi.pub/v1/mine/setgrade
+```
+
+**请求方式**
+
+```
+POST
+```
+
+**接收参数**
+
+**返回参数**
+
+```
+{
+    "status": 0,
+    "message": "OK",
+}
+```
+
+## 4.1获取积分值
+
+**请求url**
+
+```
+URL : https://yf.htapi.pub/v1/mine/getgrade
+```
+
+**请求方式**
+
+```
+GET
+```
+
+**接收参数**
+
+**返回参数**
+
+```
+{
+    "status": 0,
+    "message": "OK",
+    "data": [
+        {
+            "grade": 50
+        }
+    ]
+}
+```
+
+
+
+
+
 
 
 
