@@ -308,4 +308,49 @@ router.post('/changeSignature',function(req,res,next){
         }
     })
 })
+/**
+ * 改变积分值
+ * 请求方式：
+ *      POST
+ * 接受参数：
+ * 返回参数：
+ *      Grade：积分值
+ */
+router.post('/setgrade',function(req,res,next){
+    let token = req.header('token');
+    checkToken(token,(result)=>{
+        if(result.status !== 0){
+            res.json(result);
+        }else{
+            let uid = result.data.uid;
+            runSql(`select COUNT(pid) as num from pletter where uid=?`,[uid],(result1)=>{
+                console.log(result1.data[0].num);
+                runSql('update user set grade=? where uid=?',[5*result1.data[0].num,uid],(result2)=>{
+                    console.log(result2);
+                })
+            })
+        }
+    })
+})
+/**
+ * 获取积分值
+ * 请求方式：
+ *      GET
+ * 接受参数：
+ * 返回参数：
+ *      grade：积分值
+ */
+router.get('/getgrade',function(req,res,next){
+    let token = req.header('token');
+    checkToken(token,(result)=>{
+        if(result.status !== 0){
+            res.json(result);
+        }else{
+            let uid = result.data.uid;
+            runSql(`select grade from user where uid=?`,[uid],(result1)=>{
+                res.json(result1);
+            })
+        }
+    })
+})
 module.exports = router;
