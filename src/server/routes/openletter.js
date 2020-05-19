@@ -232,4 +232,24 @@ router.get('/cancelLikes', function (req, res, next) {
         }
     });
 });
+/**
+ * 获取指定用户信息
+ * GET
+ * 接收参数:
+ *      uid:用户id
+ */
+router.get('/designuser', function (req, res, next) {
+    let {uid} = req.query;
+    let token = req.header('token');
+    checkToken(token, (result) => {
+        if (result.status !== 0) {
+            res.json(result);
+        } else {
+            runSql(`select user.Uid,user.Uname,user.Uimage,user.Uday,user.Signature,user.homeBack,user.Vip,user.Grade from user where uid=?`,
+            [uid], (result1) => {
+                res.json(result1);
+            });
+        }
+    });
+});
 module.exports = router;

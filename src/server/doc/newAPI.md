@@ -984,6 +984,47 @@ GET
 }
 ```
 
+## 4.2获取指定用户信息
+
+**请求url**
+
+```
+URL : https://yf.htapi.pub/v1/public/designuser
+```
+
+**请求方式**
+
+```
+GET
+```
+
+**接收参数**
+
+| 参数 | 说明   | 类型 |
+| ---- | ------ | ---- |
+| uid  | 用户id |      |
+
+**返回参数**
+
+```
+{
+    "status": 0,
+    "message": "OK",
+    "data": [
+        {
+            "Uid": 21,
+            "Uname": "awy",
+            "Uimage": "1589438539834_00.png",
+            "Uday": "2020-04-10",
+            "Signature": "哈哈哈哈哈哈",
+            "homeBack": "1588743779698_78.png",
+            "Vip": 0,
+            "Grade": null
+        }
+    ]
+}
+```
+
 
 
 
