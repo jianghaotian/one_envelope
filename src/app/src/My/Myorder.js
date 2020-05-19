@@ -8,12 +8,45 @@ export default class Collection extends Component {
     constructor(){
         super();
         this.state={
-            arr:[{'collection':'1'}]
+            grade:'秀才',
+            mark:32,
+            nextmark:0
         }
     }
     componentDidMount(){
-        
+        var m = this.state.mark;
+        var nm;
+        if(m < 8 ){
+            nm = 8-m;
+            this.setState({
+                nextmark:nm
+            });
+        }
+        else if(m < 15){
+            nm = 15-m;
+            this.setState({
+                grade:"举人",
+                nextmark:nm
+            });
+        }else if(m < 30){
+            nm = 30-m;
+            this.setState({
+                grade:"状元",nextmark:nm
+            });
+        }else if(m < 100){
+            nm = 100-m;
+            this.setState({
+                grade:"探花",nextmark:nm
+            });
+        }else{
+            nm = 999;
+            this.setState({
+                grade:"翰林",
+                nextmark:nm
+            });
+        }
     }
+
     render() {
         return (
             <div>
@@ -49,7 +82,7 @@ export default class Collection extends Component {
                     <img 
                     src={require("../imgs/my/bk.png")} 
                     className="myifbg" />
-                    <span className="motit"><b>秀才</b></span>
+                    <span className="motit"><b>{this.state.grade}</b></span>
 
                 </div>
                 {/* 总成长值,距离下一成长值 */}
@@ -60,14 +93,12 @@ export default class Collection extends Component {
                     <div style={{
                         width:"50%",
                         float:'left',
-                        textAlign:"center",
-                        // lineHeight:'8em',
-                        // backgroundColor:'red'
+                        textAlign:"center"
                     }}>
                         <span style={{
                             color:'orange',
                             fontSize:'30px'
-                        }}><b>4</b></span>
+                        }}><b>{this.state.mark}</b></span>
                         <br/>
                         <span>总成长值</span>
                     </div>
@@ -81,7 +112,7 @@ export default class Collection extends Component {
                         <span style={{
                             color:'orange',
                             fontSize:'30px'
-                        }}><b>8</b></span>
+                        }}><b>{this.state.nextmark}</b></span>
                         <br/>
                         <span>晋级目标</span>
                     </div>
