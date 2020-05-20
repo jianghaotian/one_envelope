@@ -118,7 +118,7 @@ router.get("/theme/showtheme/member",function(req,res,next){
     })
 })
 /**
- * 书写主题信件内容
+ * 新建一起写信件
  * POST
  * 接收参数:
  *     title:信件标题
@@ -134,33 +134,39 @@ router.post('/theme/writeletter', function (req, res, next) {
             res.json(result);
         }else{
             let uid = result.data.uid;
-            if(imgArr==undefined){
-                runSql(`insert into tletter(Ltitle, Lcontent, Uid,Lday,Tid,isDelete,insertImg) values (?,?,?,?,?,?,?)`,
-                [title, content,uid,lday,tid,0,null],(result1)=>{
-                    res.json(result1);
-                })
-            }else{
-                var form = new multiparty.Form();
-                form.parse(req, function(err, fields, files){ 
-                    //将前台传来的base64数据去掉前缀
-                    var imgData = imgArr.replace(/^data:image\/\w+;base64,/, '');
-                    var dataBuffer = new Buffer.from(imgData, 'base64');
-                    // 写入文件
-                    var name = getTimestamp_13()+'_'+getRandom(2)+'.png';
-                    var picPath = path.join(__dirname,'../public/insertimg/'+name);
-                    fs.writeFile(picPath, dataBuffer, function(err){
-                        if(err){
-                            res.send(err);
-                        }
-                        else{
-                            runSql(`insert into tletter(Ltitle, Lcontent, Uid,Lday,Tid,isDelete,insertImg) values (?,?,?,?,?,?,?)`,
-                            [title, content,uid,lday,tid,0,name],(result3)=>{
-                                res.json({status: 0, data: name});
-                            })
-                        }
-                    });
-                })
-            }
+            console.log(tid)
+            runSql(`select inviteUid from theme where tid=?`,[tid],(result2)=>{
+                console.log(result2.data[0].inviteUid)
+                let inviteUid=result2.data[0].inviteUid;
+                if(imgArr==undefined){
+                    runSql(`insert into tletter(Ltitle, Lcontent, Uid,Lday,Tid,isDelete,insertImg,inviteUid) values (?,?,?,?,?,?,?,?)`,
+                    [title, content,uid,lday,tid,0,null,inviteUid],(result1)=>{
+                        res.json(result1);
+                    })
+                }else{
+                    var form = new multiparty.Form();
+                    form.parse(req, function(err, fields, files){ 
+                        //将前台传来的base64数据去掉前缀
+                        var imgData = imgArr.replace(/^data:image\/\w+;base64,/, '');
+                        var dataBuffer = new Buffer.from(imgData, 'base64');
+                        // 写入文件
+                        var name = getTimestamp_13()+'_'+getRandom(2)+'.png';
+                        var picPath = path.join(__dirname,'../public/insertimg/'+name);
+                        fs.writeFile(picPath, dataBuffer, function(err){
+                            if(err){
+                                res.send(err);
+                            }
+                            else{
+                                runSql(`insert into tletter(Ltitle, Lcontent, Uid,Lday,Tid,isDelete,insertImg,inviteUid) values (?,?,?,?,?,?,?,?)`,
+                                [title, content,uid,lday,tid,0,name,inviteUid],(result3)=>{
+                                    res.json({status: 0, data: name});
+                                })
+                            }
+                        });
+                    })
+                }
+            })
+            
         }
     })
 });
@@ -247,6 +253,65 @@ router.post('/theme/addFirstMember',function(req,res,next){
                             })
                         }
                     })
+                }
+            })
+        }
+    })
+})
+/**
+ * 邀请成员
+ * 请求方式：
+ *      POST
+ * 接受参数
+ *      tid：主题id
+ *      phone：手机号码
+ * 返回参数：
+ *      
+ */
+router.post('/addmember',function(req,res,next){
+    let {tid,phone} = req.body;
+    let token = req.header('token');
+    checkToken(token,(result)=>{
+        if(result.status !== 0){
+            res.json(result);
+        }else{
+            runSql(`select uid from user where uphone=?`,[phone],(result1)=>{
+                //该用户存在
+                if(result1.data.length > 0){
+                    let addUid = result1.data[0].uid;
+                    runSql(`select * from tmember where tid=? and uid=? `,[tid,addUid],(result2)=>{
+                        //未邀请该成员
+                        console.log(result2);
+                        if(result2.data.length == 0){
+                            console.log("skks")
+                            runSql(`insert into tmember(tid,uid) value(?,?)`,[tid,addUid],(result8)=>{
+                                runSql(`select inviteUid from theme where tid=?`,[tid],(result3)=>{
+                                    //如果已有成员
+                                    if(result3.data[0].inviteUid){
+                                        let inviteUid = result3.data[0].inviteUid + ','+addUid;
+                                        console.log(inviteUid);
+                                        runSql(`update theme set inviteUid=? where tid=?`,[inviteUid,tid],(result4)=>{
+                                            console.log(inviteUid);
+                                            runSql(`update tletter set inviteUid=? where tid=?`,[inviteUid,tid],(result5)=>{
+                                                res.json(result5)
+                                            })
+                                        })
+                                    }else{
+                                        console.log(addUid,'1')
+                                        runSql(`update theme set inviteUid=? where tid=?`,[addUid,tid],(result6)=>{
+                                            runSql(`update tletter set inviteUid=? where tid=?`,[addUid,tid],(result7)=>{
+                                                res.json(result7)
+                                            })
+                                        })
+                                    }
+                                })
+                            })
+                        }else{
+                            res.json({status:2});//已邀请过该成员
+                        }
+                    })
+                }else{
+                    res.json({status:1})//不存在此用户
                 }
             })
         }
