@@ -24,7 +24,8 @@ const api = {
     headimg:p => post('image/head',p),
     changehead:p=>post('image/changehead',p),
     searchmail : p => get('mailbox/searchmail',p),
-
+    setgrade:p=>post('mailbox/setgrade',p),
+    getgrade:p=>get('mailbox/getgrade',p),
     // zym
     theme: p=> get('together/theme',p),
     themetitle:p=>get('together/theme/showtitle',p),

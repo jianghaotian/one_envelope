@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import { List, TextareaItem,Modal,Button } from 'antd-mobile';
-
+import axios from 'axios';
 const alert = Modal.alert;
 
 const ls = localStorage;
@@ -58,6 +58,17 @@ export default class PubWrite extends Component {
         // console.log(type);
         this.setState({
             type : type
+        })
+        var BMap = window.BMap;//取出window中的BMap对象
+        var myCity = new BMap.LocalCity();
+        myCity.get((res)=>{
+            if (res.name) {
+                /*通过当前位置城市信息获取天气*/
+                axios.get('http://wthrcdn.etouch.cn/weather_mini?city='+res.name)
+                .then(res=>{
+                    this.setState({weather:res.data.data.forecast[0].type});
+                });
+            }
         })
         if(URLArr2.length>1 && (type == 'show' || type == 'edit')){
             //展示情况下获取oid

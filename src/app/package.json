@@ -141,5 +141,7 @@
     "presets": [
       "react-app"
     ]
-  }
+  },
+  "proxy": "http://www.weather.com.cn/"
+
 }

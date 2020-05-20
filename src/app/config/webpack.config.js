@@ -674,5 +674,10 @@ module.exports = function(webpackEnv) {
     // Turn off performance processing because we utilize
     // our own hints via the FileSizeReporter
     performance: false,
+    // 外部因素
+    externals:{
+      'BMap':'BMap'
+    },
+
   };
 };
