@@ -323,11 +323,21 @@ router.post('/setgrade',function(req,res,next){
             res.json(result);
         }else{
             let uid = result.data.uid;
+            let uid = 19;
+            let count;
             runSql(`select COUNT(pid) as num from pletter where uid=?`,[uid],(result1)=>{
-                console.log(result1.data[0].num);
-                runSql('update user set grade=? where uid=?',[5*result1.data[0].num,uid],(result2)=>{
-                    console.log(result2);
+                count = result1.data[0].num;
+                runSql(`select COUNT(isCollection) as num from pletter where uid=? and isCollection=?`,[uid,1],(result2)=>{
+                    count += result2.data[0].num;
+                    runSql(`select COUNT(isCollection) as num from pletter where uid=? and isCollection=?`,[uid,1],(result3)=>{
+                        count += result3.data[0].num;
+                        runSql('update user set grade=? where uid=?',[5*count,uid],(result4)=>{
+                            res.json(result4)
+                            console.log(result4);
+                        })
+                    })
                 })
+                
             })
         }
     })
