@@ -323,7 +323,6 @@ router.post('/setgrade',function(req,res,next){
             res.json(result);
         }else{
             let uid = result.data.uid;
-            let uid = 19;
             let count;
             runSql(`select COUNT(pid) as num from pletter where uid=?`,[uid],(result1)=>{
                 count = result1.data[0].num;
