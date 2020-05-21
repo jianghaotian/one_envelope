@@ -445,7 +445,7 @@ router.get('/attentionlist',function(req,res,next){
         }else{
             let uid = result.data.uid;
             runSql(`select user.* from user,attention where user.uid=attention.uid and fanUid=?`,[uid],(result1)=>{
-                console.log(result1)
+                res.json(result1);
             })
         }
     })
@@ -466,7 +466,7 @@ router.get('/fanslist',function(req,res,next){
         }else{
             let uid = result.data.uid;
             runSql(`select user.* from user,attention where user.uid=attention.fanUid and attention.uid=?`,[uid],(result1)=>{
-                console.log(result1)
+                res.json(result1);
             })
         }
     })
