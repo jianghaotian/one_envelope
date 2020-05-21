@@ -325,13 +325,15 @@ router.post('/setgrade',function(req,res,next){
             let uid = result.data.uid;
             let count;
             runSql(`select COUNT(pid) as num from pletter where uid=?`,[uid],(result1)=>{
+                console.log(result1.data[0].num);
                 count = result1.data[0].num;
                 runSql(`select COUNT(isCollection) as num from pletter where uid=? and isCollection=?`,[uid,1],(result2)=>{
+                    console.log(result2.data[0].num);
                     count += result2.data[0].num;
                     runSql(`select COUNT(isCollection) as num from pletter where uid=? and isCollection=?`,[uid,1],(result3)=>{
+                        console.log(result3.data[0].num);
                         count += result3.data[0].num;
                         runSql('update user set grade=? where uid=?',[5*count,uid],(result4)=>{
-                            res.json(result4)
                             console.log(result4);
                         })
                     })
@@ -357,6 +359,50 @@ router.get('/getgrade',function(req,res,next){
         }else{
             let uid = result.data.uid;
             runSql(`select grade from user where uid=?`,[uid],(result1)=>{
+                res.json(result1);
+            })
+        }
+    })
+})
+/**
+ * 关注其他用户
+ * 请求方式：
+ *      POST
+ * 接收参数：
+ *      uid：被关注者uid
+ * 返回参数：
+ */
+router.post('/attention',function(req,res,next){
+    let {uid} = req.body;
+    let token = req.header('token');
+    checkToken(token,(result)=>{
+        if(result.status !== 0){
+            res.json(result);
+        }else{
+            let fanUid = result.data.uid;
+            runSql(`insert into attention(uid,fanUid) value(?,?)`,[uid,fanUid],(result1)=>{
+                console.log(result1);
+                res.json(result1);
+            })
+        }
+    })
+})
+/**
+ * 获取粉丝数
+ * 请求方式：
+ *      GET
+ * 接收参数：
+ * 返回参数：
+ *      num:粉丝数
+ */
+router.get('/fans',function(req,res,next){
+    let token = req.header('token');
+    checkToken(token,(result)=>{
+        if(result.status!==0){
+            res.json(result);
+        }else{
+            let uid = result.data.uid;
+            runSql(`select COUNT(fanUid) as num from attention where uid=?`,[uid],(result1)=>{
                 res.json(result1);
             })
         }

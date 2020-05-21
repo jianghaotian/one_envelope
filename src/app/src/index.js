@@ -49,6 +49,8 @@ import Myorder from './My/Myorder'
 import UserInfo from './Public/UserInfo'
 
 import LetterSend from './Home/LetterSend'
+import Fanslist from './My/Fanslist'
+import Attention from './My/Attention'
 
 React.Component.prototype.$api = api;
 React.Component.prototype.$store = store;
@@ -114,6 +116,8 @@ ReactDOM.render(
             <Route path='/lettersend' component={LetterSend}/>
             <Route path='/lettersend/:id' component={LetterSend}/>
 
+            <Route path='/fanslist' component={Fanslist}/>
+            <Route path='/attentionlist' component={Attention}/>
         </Switch>
     </Router>,
     document.getElementById("root")

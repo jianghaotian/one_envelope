@@ -26,6 +26,10 @@ const api = {
     searchmail : p => get('mailbox/searchmail',p),
     setgrade:p=>post('mailbox/setgrade',p),
     getgrade:p=>get('mailbox/getgrade',p),
+    getfans:p=>get('mine/fans',p),
+    getattention:p=>get('mine/attentions',p),
+    attentionlist:p=>get('mine/attentionlist',p),
+    fanslist:p=>get('mine/fanslist',p),
     // zym
     theme: p=> get('together/theme',p),
     themetitle:p=>get('together/theme/showtitle',p),
