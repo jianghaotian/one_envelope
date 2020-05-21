@@ -362,4 +362,67 @@ router.get('/getgrade',function(req,res,next){
         }
     })
 })
+/**
+ * 获取关注数
+ * 请求方式：
+ *      GET
+ * 接收参数：
+ * 返回参数：
+ *      num:粉丝数
+ */
+router.get('/attentions',function(req,res,next){
+    let token = req.header('token');
+    checkToken(token,(result)=>{
+        if(result.status!==0){
+            res.json(result);
+        }else{
+            let uid = result.data.uid;
+            runSql(`select COUNT(uid) as num from attention where fanUid=?`,[uid],(result1)=>{
+                res.json(result1);
+            })
+        }
+    })
+})
+/**
+ * 查看关注列表
+ * 请求方式：
+ *      GET
+ * 接收参数：
+ * 返回参数：
+ * 
+ */
+router.get('/attentionlist',function(req,res,next){
+    let token = req.header('token');
+    checkToken(token,(result)=>{
+        if(result.status!==0){
+            res.json(result);
+        }else{
+            let uid = result.data.uid;
+            runSql(`select user.* from user,attention where user.uid=attention.uid and fanUid=?`,[uid],(result1)=>{
+                console.log(result1)
+            })
+        }
+    })
+})
+/**
+ * 查看粉丝列表
+ * 请求方式：
+ *      GET
+ * 接收参数：
+ * 返回参数：
+ * 
+ */
+router.get('/fanslist',function(req,res,next){
+    let token = req.header('token');
+    checkToken(token,(result)=>{
+        if(result.status!==0){
+            res.json(result);
+        }else{
+            let uid = result.data.uid;
+            runSql(`select user.* from user,attention where user.uid=attention.fanUid and attention.uid=?`,[uid],(result1)=>{
+                console.log(result1)
+            })
+        }
+    })
+})
 module.exports = router;
