@@ -8,9 +8,13 @@ const ls = localStorage;
 const weather = [
     {name:"晴"},
     {name:"多云"},
+    {name:"阴"},
+    {name:"雾"},
+    {name:"沙尘"},
     {name:"小雨"},
     {name:"中雨"},
     {name:"大雨"},
+    {name:"阵雨"},
     {name:"暴雨"},
     {name:"雷阵雨"},
     {name:"小雪"},
@@ -66,7 +70,12 @@ export default class PubWrite extends Component {
                 /*通过当前位置城市信息获取天气*/
                 axios.get('http://wthrcdn.etouch.cn/weather_mini?city='+res.name)
                 .then(res=>{
-                    this.setState({weather:res.data.data.forecast[0].type});
+                    var day = res.data.data.forecast[0].type;
+                    if(day.indexOf('转')>0){
+                        var index = day.search('转')
+                        day = day.substring(0,index);
+                    }
+                    this.setState({weather:day});
                 });
             }
         })
