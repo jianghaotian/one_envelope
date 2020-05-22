@@ -51,7 +51,7 @@ import UserInfo from './Public/UserInfo'
 import LetterSend from './Home/LetterSend'
 import Fanslist from './My/Fanslist'
 import Attention from './My/Attention'
-
+import Invite from './My/Invite'
 React.Component.prototype.$api = api;
 React.Component.prototype.$store = store;
 
@@ -118,6 +118,8 @@ ReactDOM.render(
 
             <Route path='/fanslist' component={Fanslist}/>
             <Route path='/attentionlist' component={Attention}/>
+
+            <Route path='/invite' component={Invite}/>
         </Switch>
     </Router>,
     document.getElementById("root")
