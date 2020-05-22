@@ -24,8 +24,7 @@ const api = {
     headimg:p => post('image/head',p),
     changehead:p=>post('image/changehead',p),
     searchmail : p => get('mailbox/searchmail',p),
-    setgrade:p=>post('mailbox/setgrade',p),
-    getgrade:p=>get('mailbox/getgrade',p),
+
     // zym
     theme: p=> get('together/theme',p),
     themetitle:p=>get('together/theme/showtitle',p),
@@ -46,6 +45,7 @@ const api = {
     showTmus:p => get('music/presentMusic',p),//展示音乐
     delInsertTmus:p => post('music/delmusic',p),//删除音乐
     changeWtback:p=>post('together/changebg',p),//更换背景
+    addmember:p=>post('together/addmember',p),//邀请成员
 
     addFirstMember:p=>post('together/theme/addFirstMember',p),
 
