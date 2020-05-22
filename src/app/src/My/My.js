@@ -126,6 +126,11 @@ export default class My extends Component {
                 <List style={{
                     marginTop:'1em'
                 }}>
+                    <Link to="/myorder"><Item extra={
+                        <i className="iconfont icon-weibiaoti-" style={{
+                            fontSize:"1.0em"
+                        }}></i>
+                    } onClick={() => {}}>邀请通知</Item></Link>
                     <Item extra={
                         <i className="iconfont icon-huiyuan" ></i>
                     } onClick={this.toVip}>会员中心</Item>
