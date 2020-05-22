@@ -24,7 +24,18 @@ const api = {
     headimg:p => post('image/head',p),
     changehead:p=>post('image/changehead',p),
     searchmail : p => get('mailbox/searchmail',p),
+<<<<<<< HEAD
 
+=======
+    setgrade:p=>post('mailbox/setgrade',p),
+    getgrade:p=>get('mailbox/getgrade',p),
+    attention:p=>post('mine/attention',p),
+    delattention:p=>post('mine/delattention',p),
+    getfans:p=>get('mine/fans',p),
+    getattention:p=>get('mine/attentions',p),
+    attentionlist:p=>get('mine/attentionlist',p),
+    fanslist:p=>get('mine/fanslist',p),
+>>>>>>> 30729ab5f53253db1fd3dd88f39afe88de6d6ce9
     // zym
     theme: p=> get('together/theme',p),
     themetitle:p=>get('together/theme/showtitle',p),

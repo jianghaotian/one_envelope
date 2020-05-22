@@ -50,7 +50,14 @@ import Vip from './My/Vip'
 import Myorder from './My/Myorder'
 import UserInfo from './Public/UserInfo'
 
+<<<<<<< HEAD
 
+=======
+import LetterSend from './Home/LetterSend'
+import Fanslist from './My/Fanslist'
+import Attention from './My/Attention'
+import Invite from './My/Invite'
+>>>>>>> 30729ab5f53253db1fd3dd88f39afe88de6d6ce9
 React.Component.prototype.$api = api;
 React.Component.prototype.$store = store;
 
@@ -116,6 +123,10 @@ ReactDOM.render(
             <Route path='/wtBack' component={WTBack} />
 
 
+            <Route path='/fanslist' component={Fanslist}/>
+            <Route path='/attentionlist' component={Attention}/>
+
+            <Route path='/invite' component={Invite}/>
         </Switch>
     </Router>,
     document.getElementById("root")
