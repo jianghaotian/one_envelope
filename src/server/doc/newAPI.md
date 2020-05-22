@@ -1062,13 +1062,42 @@ POST
 }
 ```
 
+## 4.3查看分享列表 
 
+**请求url**
 
+```
+URL : https://yf.htapi.pub/v1/mine/sendlist
+```
 
+**请求方式**
 
+```
+GET
+```
 
+**接收参数**
 
+**返回参数**
 
+```
+{
+    "status": 0,
+    "message": "OK",
+    "data": [
+        {
+            Pcontent: "DTGJ"
+            Pday: 1590113770000
+            Pid: 207
+            Ptitle: "(⊙o⊙)…恶"
+            toNick: "hhhh"
+            toUid: 24
+            uimage: "1234567890987_11.jpg"
+            uname: "vip"
+        }
+    ]
+}
+```
 
 
 

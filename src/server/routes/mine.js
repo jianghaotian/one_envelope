@@ -531,6 +531,24 @@ router.get('/fanslist',function(req,res,next){
     })
 })
 /**
+ * 查看分享列表
+ * 请求方式：
+ *      GET
+ * 接收参数：
+ * 返回参数：
  * 
  */
+router.get('/sendlist',function(req,res,next){
+    let token = req.header('token');
+    checkToken(token,(result)=>{
+        if(result.status!==0){
+            res.json(result);
+        }else{
+            let uid = result.data.uid;
+            runSql(`select pletter.Pcontent,pletter.Pday,pletter.Pid,pletter.Ptitle,pletter.toNick,pletter.toUid,user.uimage,user.uname from pletter,user where  pletter.isSend = ? and pletter.uid=? and user.uid=pletter.uid`,[1,uid],(result1)=>{
+                res.json(result1);
+            })
+        }
+    })
+})
 module.exports = router;
