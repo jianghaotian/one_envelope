@@ -200,7 +200,7 @@
     bottom: 0;
     right: 0;
     background-color: rgb(240, 240, 240);
-    background-image: url(../imgs/public/u4.jpg);
+    background-image: url(../imgs/public/u6.jpg);
     background-size:100% 100%;
 }
 .u-top{
@@ -238,7 +238,7 @@
 #u-vip{
     position: absolute;
     top: 108px;
-    left:140px;
+    left:160px;
     width:30px;
 }
 #u-sig{

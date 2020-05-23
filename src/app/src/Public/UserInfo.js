@@ -62,7 +62,7 @@ export default class UserInfo extends Component {
                     <img id='u-head' src={'https://yf.htapi.pub/head/'+this.state.head} />
                     <span id="u-name">{this.state.name}</span>
                     <span id='u-sig'>{this.state.sig}</span>
-                    <img id="u-vip" src={require('../imgs/public/vip(1).png')} />
+                    {/* <img id="u-vip" src={require('../imgs/public/vip(1).png')} /> */}
                     <span id='guanzhu' onClick={this.guanzhu}>{this.state.guanzhu}</span>
                 </div>
                 <div className="u-mid">
