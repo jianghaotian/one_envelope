@@ -98,6 +98,7 @@ const api = {
     EditPubLetter:p=>post('public/amendLetter',p),//编辑公开信
     addLikes:p=>get('public/addLikes',p),
     cancleLickes:p=>get('public/cancelLikes',p),//取消点赞
+    getUserinfo : p=>get('public/designuser',p),//获取用户信息
     // getpid:p => get('private/getpd',p)
 
     getsendletter:p=>get('mailbox/getsendletter',p),//获取发送信件信息
