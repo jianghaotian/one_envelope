@@ -1,9 +1,8 @@
 import React, { Component } from 'react'
 import "antd/dist/antd.css"
 import "../css/togeCreate.css"
-import { ImagePicker } from 'antd-mobile';
-import { Input,Button } from 'antd';
-
+import { ImagePicker, Popover,Modal,List } from 'antd-mobile';
+import { Input,Button} from 'antd';
 
 const data = [{}];
 export default class Addressee extends Component {
@@ -39,23 +38,25 @@ export default class Addressee extends Component {
         }else{
             console.log(this.state.name);
             console.log("ndoweiakls")
-            // let name = this.state.name+'.png'
             this.$api.addtheme({tname:name,timage:this.state.name,tday:timestamp}).then(res => {                     
-                if (res.data.status === 0) {                
+                console.log("11")                
+                if (res.data.status === 0) { 
                     this.setState({
                         data:res.data.data                   
                     })                    
-                    // alert("创建成功~");
-                    this.totoge();
+                    // alert("创建成功~");                   
                     console.log(this.state.data);
                 }         
-            }) 
-            
+            })  
+        this.totoge();
+
         }
+
     }
     totoge=()=>{
         this.props.history.push("/home/writeTogether");
     }
+    
     
     
     render() {

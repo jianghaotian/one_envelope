@@ -28,6 +28,8 @@ import togeCreate from './WriteTogether/togeCreate'
 import togeContent from './WriteTogether/togeContent'
 import Addressee from './WriteTogether/Addressee'
 import inviteMember from './WriteTogether/inviteMember'
+import invMeb from './WriteTogether/invMeb'
+
 
 import Touxiang from './My/Touxiang'
 import Cropimg from './My/Cropimg'
@@ -48,8 +50,14 @@ import Vip from './My/Vip'
 import Myorder from './My/Myorder'
 import UserInfo from './Public/UserInfo'
 
-import LetterSend from './Home/LetterSend'
+<<<<<<< HEAD
 
+=======
+import LetterSend from './Home/LetterSend'
+import Fanslist from './My/Fanslist'
+import Attention from './My/Attention'
+import Invite from './My/Invite'
+>>>>>>> 30729ab5f53253db1fd3dd88f39afe88de6d6ce9
 React.Component.prototype.$api = api;
 React.Component.prototype.$store = store;
 
@@ -104,6 +112,9 @@ ReactDOM.render(
             <Route exact path="/inviteMember" component={inviteMember} />
             <Route exact path="/inviteMember/:id" component={inviteMember} />
 
+            <Route exact path="/invMeb" component={invMeb} />
+            <Route exact path="/invMeb/:id" component={invMeb} />
+
             <Route path="/addressee" component={Addressee} />
 
 
@@ -111,9 +122,11 @@ ReactDOM.render(
             <Route path="/cropimg" component={Cropimg} />
             <Route path='/wtBack' component={WTBack} />
 
-            <Route path='/lettersend' component={LetterSend}/>
-            <Route path='/lettersend/:id' component={LetterSend}/>
 
+            <Route path='/fanslist' component={Fanslist}/>
+            <Route path='/attentionlist' component={Attention}/>
+
+            <Route path='/invite' component={Invite}/>
         </Switch>
     </Router>,
     document.getElementById("root")

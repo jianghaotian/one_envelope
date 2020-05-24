@@ -1,9 +1,20 @@
 import React, { Component } from 'react'
 import '../css/inviteMember.css'
 import {HashRouter as Router,Link,Switch,Route} from 'react-router-dom'
-import { SwipeAction, List } from 'antd-mobile';
-import { NavBar} from 'antd-mobile';
+import { SwipeAction, List, Modal, Button, WhiteSpace, WingBlank,NavBar } from 'antd-mobile';
 
+const alert = Modal.alert;
+const showAlert = () => {
+  const alertInstance = alert('邀请好友', '是否要邀请一起写???', [
+    { text: '不了', onPress: () => console.log('cancel'), style: 'default' },
+    { text: '是的', onPress: () => {this.props.history.push('/invMeb/?tid='+this.props.match.params.id)}},
+  ]);
+  setTimeout(() => {
+    // 可以调用close方法以在外部close
+    console.log('auto close');
+    alertInstance.close();
+  }, 5000);
+};
 
 export default class inviteMember extends Component {
     constructor(){
@@ -44,12 +55,20 @@ export default class inviteMember extends Component {
         }) 
     }
     
+    toinvm=()=>{
+        // this.props.history.push('/lettersend/?uid='+uid) 
+    }
     render() {
         return (
             <div className="member">
                 <NavBar className='together-navback'>                                      
                     <span>成员</span>
-                    <img src={require("../imgs//WriteTogether/tianjia.png")} className='together-img'/>
+                    <Link to={'/invMeb/'+this.state.data[0].tid}><img src={require("../imgs//WriteTogether/tianjia.png")} className='together-img'/></Link>
+
+                    {/* <div className='together-img'>
+                    <Button onClick={showAlert} style={{fontSize:"37px",}}>+
+                    </Button>   
+                    </div> */}
                     <Link to={'/inviteWrite/'+this.state.data[0].tid}><img src={require("../imgs/WriteTogether/return1.png")} className='member-return'/></Link>
                 </NavBar>
                 
@@ -80,11 +99,13 @@ export default class inviteMember extends Component {
                                      
                     </SwipeAction>
                  ))}   
-                </List>
-                
-                
+                </List>                
             </div>
             
         )
     }
 }
+
+
+
+  

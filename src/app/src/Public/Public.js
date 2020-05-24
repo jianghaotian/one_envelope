@@ -77,13 +77,17 @@ export default class Public extends Component {
     }
     showHead=(item)=>{
         if(item.anonymous == 1){
-            return <img src={require("../imgs/public/head2.png")} id="pub-head" />
+            return <img src={require("../imgs/public/head2.png")} onClick={this.Userinfo2} id="pub-head" />
         }else{
-            return <img onClick={this.Userinfo} src={"https://yf.htapi.pub/head/"+item.Uimage} id="pub-head" />
+            return <img onClick={()=>{this.Userinfo(item)}} src={"https://yf.htapi.pub/head/"+item.Uimage} id="pub-head" />
         }
     }
-    Userinfo=()=>{
-        this.props.history.push('/Userinfo');
+    Userinfo=(item)=>{
+        console.log(item.Uid);
+        this.props.history.push('/Userinfo?uid='+item.Uid);
+    }
+    Userinfo2=()=>{
+        alert('无法查看匿名作者的信息哦');
     }
     showName=(item)=>{
         if(item.anonymous == 1){

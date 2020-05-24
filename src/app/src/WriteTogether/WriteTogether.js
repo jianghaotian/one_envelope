@@ -29,7 +29,7 @@ export default class WriteTogether extends Component {
         // console.log(this.state.data);
 
         return (
-            <div>
+            <div style={{backgroundColor:"rgb(240, 233, 233)"}}>
                 <NavBar className='together-back'>
                     <Link to="/addressee">
                     {/* <img src={require("../imgs/WriteTogether/tianjia.png")} className='together-imge'/> */}
@@ -46,7 +46,7 @@ export default class WriteTogether extends Component {
                     </Link>
                     <span>一起写</span>
                 </NavBar>
-                <div className="together-body">
+                <div>
                     {/* block */}
                     {this.state.data.map((val)=> (                           
                         <Link to={"/invitewrite/"+val.Tid} style={{color:"white"}}>

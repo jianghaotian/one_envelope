@@ -11,7 +11,9 @@ export default class My extends Component {
         this.state={
             arr:[{"Uname":"你的昵称",'pidname':'0'}],
             brr:[{"sharenum":'0'}],
-            signature:''
+            signature:'',
+            fans:'',
+            attentions:''
         }
     }
     componentDidMount(){
@@ -42,6 +44,12 @@ export default class My extends Component {
         })
         this.$api.setgrade().then(res=>{
             console.log(res);
+        })
+        this.$api.getfans().then(res=>{
+            this.setState({fans:res.data.data[0].num})
+        })
+        this.$api.getattention().then(res=>{
+            this.setState({attentions:res.data.data[0].num})
         })
     }
     // 跳转个签编辑
@@ -107,8 +115,9 @@ export default class My extends Component {
                     {/* 选项 */}
                     <div className="myinfodiv">
                         <ul>
-                            <li><span>{this.state.arr[0].pidnum}</span>写信数</li>
-                            <li><span>{this.state.brr[0].sharenum}</span>分享</li>
+                            <li style={{color:'#000'}}><span>{this.state.brr[0].sharenum}</span>分享</li>
+                            <Link to="/attentionlist"><li style={{color:'#000'}}><span>{this.state.attentions}</span>关注</li></Link>
+                            <Link to="/fanslist"><li style={{color:'#000'}}><span>{this.state.fans}</span>粉丝</li></Link>
                         </ul>
                     </div>
                 </div>
@@ -117,6 +126,11 @@ export default class My extends Component {
                 <List style={{
                     marginTop:'1em'
                 }}>
+                    <Link to="/myorder"><Item extra={
+                        <i className="iconfont icon-weibiaoti-" style={{
+                            fontSize:"1.0em"
+                        }}></i>
+                    } onClick={() => {}}>邀请通知</Item></Link>
                     <Item extra={
                         <i className="iconfont icon-huiyuan" ></i>
                     } onClick={this.toVip}>会员中心</Item>
