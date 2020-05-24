@@ -32,7 +32,9 @@ export default class PubWrite extends Component {
             weatherBlock:'none',
             weather:"晴",
             value:'',
-            oid : ''
+            oid : '',
+            zan:"zan1",
+            like : false
         }
     }
     changeBackImg=(ppid)=>{
@@ -288,6 +290,35 @@ export default class PubWrite extends Component {
            }
         }
     }
+    Like=()=>{
+        if(this.state.type == 'show'){
+            return <div id='good' onClick={this.addLike}>
+            <img src={require("../imgs/public/"+this.state.zan+".png")} id='zan' />
+            </div>
+        }
+    }
+    addLike=()=>{
+        //点赞
+        if(!this.state.like){
+            this.setState({
+                zan :'zan',
+                like : true
+            })
+            // console.log(this.state.oid)
+            this.$api.addLikes({oid : this.state.oid}).then(res=>{
+                console.log(res);
+            })
+        }else{
+            //取消赞
+            this.setState({
+                zan :'zan1',
+                like : false
+            })
+            this.$api.cancleLikes({oid : this.state.oid}).then(res=>{
+                console.log(res);
+            })
+        }
+    }
     render() {
         return (
             <div>
@@ -305,7 +336,7 @@ export default class PubWrite extends Component {
                             {
                                 weather.map((item,index)=>{
                                     return <li onClick={()=>{this.getWeather(item)}}>
-                                       <img src={require("../imgs/public/"+item.name+".png")} />
+                                       <img style={{width:'22px'}} src={require("../imgs/public/"+item.name+".png")} />
                                        <p style={{marginTop:"3px"}}>{item.name}</p>
                                     </li>
                                 })
@@ -313,6 +344,9 @@ export default class PubWrite extends Component {
                             </ul>
                         </div>
                     </div>
+                    {
+                        this.Like()
+                    }
                     <div className="pw-write" style={{border:this.state.border}}>
                         <TextareaItem
                             id="pw-textarea"

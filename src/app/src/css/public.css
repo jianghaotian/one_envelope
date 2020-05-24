@@ -131,7 +131,7 @@
     right: 0;
     left: 0;
     width:90%;
-    height:300px;
+    height:350px;
     background-color:white;
     margin-left: auto;
     margin-right: auto;
@@ -190,7 +190,26 @@
     margin-right:10px;
     background-color: rgba(252, 252, 252, 0.8);
 }
-
+#good{
+    width:45px;
+    height:45px;
+    border-radius: 50%;
+    background-color: white;
+    position: fixed; 
+    z-index:1;
+    bottom:80px;
+    right:15px;
+    border: 2px solid rgb(216, 214, 214);
+}
+#zan{
+    position: absolute;
+    left:0;
+    right:0;
+    bottom:0;
+    top: 0;
+    margin:auto;
+    width:28px;
+}
 
 /* 个人信息 */
 #BG{
