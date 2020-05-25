@@ -56,6 +56,16 @@ export default class Attention extends Component {
             }
         }
     }
+    back=()=>{
+        let url = window.location.hash;
+        console.log(url.split('?')[1]);
+        let id = url.split('?')[1];
+        if( id != undefined){
+            this.props.history.push('/Userinfo?uid='+id);
+        }else{
+            this.props.history.push('/home/my');
+        }
+    }
     render() {
         return (
             <div>
