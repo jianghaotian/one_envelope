@@ -25,7 +25,7 @@ export default class Fanslist extends Component {
         let list =  this.state.data;
         console.log(index);
         for(var i=0;i<list.length;i++){
-            if(list[i].Uid = index.Uid){
+            if(list[i].Uid == index.Uid){
                 console.log(list[i]);
                 if(list[i].attention){
                     alert('取消关注?','',[
