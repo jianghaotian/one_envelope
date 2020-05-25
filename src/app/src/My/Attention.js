@@ -68,7 +68,7 @@ export default class Attention extends Component {
                     textAlign:'center',
                     lineHeight:'50px',
                     }}>
-                        <Link to='/home/my'>
+                        {/* <Link to='/home/my'> */}
                          <i className="icon-fanhui iconfont"
                             style={{                                                                  
                                 fontSize:'1.2em',
@@ -76,8 +76,9 @@ export default class Attention extends Component {
                                 float:'left',
                                 color:"grey",
                             }}
+                            onClick={this.back}
                         />
-                        </Link>
+                        {/* </Link> */}
                         关注列表
                         
                 </div>

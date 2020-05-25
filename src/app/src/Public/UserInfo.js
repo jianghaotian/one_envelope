@@ -19,6 +19,19 @@ export default class UserInfo extends Component {
         let urlinfo = window.location.hash;
         let uid =  urlinfo.split('=')[1];
         console.log(uid);
+        this.$api.attentionlist().then(res=>{
+            console.log(res.data.data);
+            let list = res.data.data;
+            for(let i=0;i<list.length;i++){
+                console.log(list[i].Uid);
+                if(uid == list[i].Uid){
+                    this.setState({
+                        guanzhu : '已关注',
+                        tag : 1
+                    })
+                }
+            }
+        })
         this.$api.getUserinfo({uid : uid}).then(res=>{
             // console.log(res.data.data[0]);
             let data = res.data.data[0];
@@ -44,9 +57,7 @@ export default class UserInfo extends Component {
                 attention : res.data.data[0].num
             })
         })
-        this.$api.fanslist({uid : uid}).then(res=>{
-            console.log(res)
-        })
+        
     }
     back=()=>{
         this.props.history.push('/Home/public');
@@ -65,16 +76,23 @@ export default class UserInfo extends Component {
             })
             // console.log(this.state.uid)
             this.$api.attention({uid :this.state.uid}).then(res=>{
-                console.log(res)
+                // console.log()
+                this.setState({
+                    fans : ++ this.state.fans 
+                })
             })
         }else{
             this.setState({
                 guanzhu : '关注',
                 tag : 0
             })
-            this.$api.delattention({uid :this.state.uid}).then(res=>{
-                console.log('取消关注')
+            this.$api.delattention({deluid :this.state.uid}).then(res=>{
+                console.log(res)
+                this.setState({
+                    fans : -- this.state.fans 
+                })
             })
+            
         }
     }
     render() {
@@ -91,14 +109,14 @@ export default class UserInfo extends Component {
                 <div className="u-mid">
                     <ul>
                         <li className='u-mid-li' onClick={()=>{
-                            // this.props.history.push('/fanslist')
+                            this.props.history.push('/fanslist?'+this.state.uid);
                         }}>
                             粉丝数
                         <span>{this.state.fans}</span>
                         </li>
                         <li className='u-mid-li' style={{width:'120px',borderLeft:"1px solid grey",borderRight:"1px solid grey"}}
                         onClick={()=>{
-                            // this.props.history.push('/attentionlist')
+                            this.props.history.push('/attentionlist?'+this.state.uid)
                         }}>
                             TA的关注
                         <span>{this.state.attention}</span>
