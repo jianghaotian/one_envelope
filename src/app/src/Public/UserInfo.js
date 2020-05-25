@@ -18,11 +18,12 @@ export default class UserInfo extends Component {
     componentDidMount(){
         let urlinfo = window.location.hash;
         let uid =  urlinfo.split('=')[1];
-        // console.log(uid);
+        console.log(uid);
         this.$api.getUserinfo({uid : uid}).then(res=>{
-            console.log(res.data.data[0]);
+            // console.log(res.data.data[0]);
             let data = res.data.data[0];
             this.setState({
+                uid:uid,
                 name : data.Uname,
                 homeBack : 'https://yf.htapi.pub/homeBack/'+data.homeBack,
                 sig : data.Signature,
@@ -30,6 +31,21 @@ export default class UserInfo extends Component {
                 vip : data.Vip,
                 grade : data.Grade
             })
+        })
+        this.$api.getfans({uid : uid}).then(res=>{
+            // console.log(res.data.data[0].num);
+            this.setState({
+                fans : res.data.data[0].num
+            })
+        })
+        this.$api.getattention({uid : uid}).then(res=>{
+            // console.log(res);
+            this.setState({
+                attention : res.data.data[0].num
+            })
+        })
+        this.$api.fanslist({uid : uid}).then(res=>{
+            console.log(res)
         })
     }
     back=()=>{
@@ -47,10 +63,17 @@ export default class UserInfo extends Component {
                 guanzhu : '已关注',
                 tag : 1
             })
+            // console.log(this.state.uid)
+            this.$api.attention({uid :this.state.uid}).then(res=>{
+                console.log(res)
+            })
         }else{
             this.setState({
                 guanzhu : '关注',
                 tag : 0
+            })
+            this.$api.delattention({uid :this.state.uid}).then(res=>{
+                console.log('取消关注')
             })
         }
     }
@@ -67,13 +90,18 @@ export default class UserInfo extends Component {
                 </div>
                 <div className="u-mid">
                     <ul>
-                        <li className='u-mid-li'>
+                        <li className='u-mid-li' onClick={()=>{
+                            // this.props.history.push('/fanslist')
+                        }}>
                             粉丝数
-                            <span>12</span>
+                        <span>{this.state.fans}</span>
                         </li>
-                        <li className='u-mid-li' style={{width:'120px',borderLeft:"1px solid grey",borderRight:"1px solid grey"}}>
+                        <li className='u-mid-li' style={{width:'120px',borderLeft:"1px solid grey",borderRight:"1px solid grey"}}
+                        onClick={()=>{
+                            // this.props.history.push('/attentionlist')
+                        }}>
                             TA的关注
-                            <span>12</span>
+                        <span>{this.state.attention}</span>
                         </li>
                         <li className='u-mid-li'>
                             写信数
