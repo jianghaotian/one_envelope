@@ -441,12 +441,6 @@ router.post('/delattention',function(req,res,next){
     })
 })
 /**
- * 移除粉丝
- * 请求方式：
- *      POST
- *
- */
-/**
  * 获取粉丝数
  * 请求方式：
  *      GET
@@ -455,13 +449,15 @@ router.post('/delattention',function(req,res,next){
  *      num:粉丝数
  */
 router.get('/fans',function(req,res,next){
+    let {uid} = req.query;
     let token = req.header('token');
+    var uu;
     checkToken(token,(result)=>{
         if(result.status!==0){
             res.json(result);
         }else{
-            let uid = result.data.uid;
-            runSql(`select COUNT(fanUid) as num from attention where uid=?`,[uid],(result1)=>{
+            uu = uid ||result.data.uid;
+            runSql(`select COUNT(fanUid) as num from attention where uid=?`,[uu],(result1)=>{
                 res.json(result1);
             })
         }
@@ -476,13 +472,16 @@ router.get('/fans',function(req,res,next){
  *      num:粉丝数
  */
 router.get('/attentions',function(req,res,next){
+    let {uid} = req.query;
     let token = req.header('token');
+    var uu;
     checkToken(token,(result)=>{
         if(result.status!==0){
             res.json(result);
         }else{
-            let uid = result.data.uid;
-            runSql(`select COUNT(uid) as num from attention where fanUid=?`,[uid],(result1)=>{
+            uu = uid || result.data.uid;
+            console.log(uu);
+            runSql(`select COUNT(uid) as num from attention where fanUid=?`,[uu],(result1)=>{
                 res.json(result1);
             })
         }
@@ -503,7 +502,7 @@ router.get('/attentionlist',function(req,res,next){
             res.json(result);
         }else{
             let uid = result.data.uid;
-            runSql(`select user.*,attention.attention from user,attention where user.uid=attention.uid and fanUid=?`,[uid],(result1)=>{
+            runSql(`select distinct user.*,attention.attention from user,attention where user.uid=attention.uid and fanUid=?`,[uid],(result1)=>{
                 res.json(result1);
             })
         }
@@ -524,31 +523,51 @@ router.get('/fanslist',function(req,res,next){
             res.json(result);
         }else{
             let uid = result.data.uid;
-            runSql(`select user.* ,attention.attention from user,attention where user.uid=attention.fanUid and attention.uid=?`,[uid],(result1)=>{
+            runSql(`select distinct user.* ,attention.attention from user,attention where user.uid=attention.fanUid and attention.uid=?`,[uid],(result1)=>{
                 res.json(result1);
             })
         }
     })
 })
 /**
- * 查看分享列表
+ * 获取个人信息
  * 请求方式：
  *      GET
- * 接收参数：
+ * 接受参数：
+ *      uid：用户id
  * 返回参数：
  * 
  */
-router.get('/sendlist',function(req,res,next){
+router.get('/myself',function(req,res,next){
+    let {uid} = req.query;
     let token = req.header('token');
     checkToken(token,(result)=>{
-        if(result.status!==0){
+        if(result.status !== 0){
             res.json(result);
         }else{
-            let uid = result.data.uid;
-            runSql(`select pletter.Pcontent,pletter.Pday,pletter.Pid,pletter.Ptitle,pletter.toNick,pletter.toUid,user.uimage,user.uname from pletter,user where  pletter.isSend = ? and pletter.uid=? and user.uid=pletter.uid`,[1,uid],(result1)=>{
+            runSql(`select * from user where uid=?`,[uid],(result1)=>{
                 res.json(result1);
             })
         }
     })
 })
+/**
+ * 个人所写公开信
+ * GET
+ * 接收参数:
+ */
+router.get('/openlist', function (req, res, next) {
+    let {uid} = req.query
+    let token = req.header('token');
+    checkToken(token, (result) => {
+        if (result.status !== 0) {
+            res.json(result);
+        } else {
+            runSql(`select user.Uname,user.Uimage,open.* from open,user where user.uid=open.uid and user.uid=? order by open.oid desc`,
+            [uid],(result1) => {
+                res.json(result1);
+            });
+        }
+    });
+});
 module.exports = router;
