@@ -52,6 +52,7 @@ import LetterSend from './Home/LetterSend'
 import Fanslist from './My/Fanslist'
 import Attention from './My/Attention'
 import Invite from './My/Invite'
+import Myself from './My/Myself'
 React.Component.prototype.$api = api;
 React.Component.prototype.$store = store;
 
@@ -120,6 +121,7 @@ ReactDOM.render(
             <Route path='/attentionlist' component={Attention}/>
 
             <Route path='/invite' component={Invite}/>
+            <Route path='/myself' component={Myself}/>
         </Switch>
     </Router>,
     document.getElementById("root")
