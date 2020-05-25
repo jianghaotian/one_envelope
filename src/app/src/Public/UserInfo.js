@@ -48,13 +48,13 @@ export default class UserInfo extends Component {
         this.$api.getfans({uid : uid}).then(res=>{
             // console.log(res.data.data[0].num);
             this.setState({
-                fans :-- res.data.data[0].num
+                fans : res.data.data[0].num
             })
         })
         this.$api.getattention({uid : uid}).then(res=>{
             // console.log(res);
             this.setState({
-                attention :-- res.data.data[0].num
+                attention : res.data.data[0].num
             })
         })
         
