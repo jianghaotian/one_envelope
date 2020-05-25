@@ -9,40 +9,43 @@ export default class Collection extends Component {
         super();
         this.state={
             grade:'秀才',
-            mark:'5',
+            mark:'0',
             nextmark:0
         }
     }
     componentDidMount(){
-        this.$api.getgrade().then(res=>{
-            console.log(res.data.data[0].grade);
+        this.$api.getgrade().then(res => {
+            // 获取数据成功后的其他操作
             this.setState({
                 mark:res.data.data[0].grade
-            });
+            })
+            this.effect(this.state.mark)
         })
-        var m = this.state.mark;
-        console.log(m)
+    }
+    effect =(a)=>{
+        var m = a;
+        // console.log(m)
         var nm;
-        if( this.state.mark < 8 ){
-            nm = 8-this.state.mark;
+        if( this.state.mark < 30 ){
+            nm = 30-this.state.mark;
             this.setState({
                 grade:"秀才",
                 nextmark:nm
             });
         }
-        else if(m < 15){
-            nm = 15-m;
+        else if(m < 50){
+            nm = 50-m;
             this.setState({
                 grade:"举人",
                 nextmark:nm
             });
-        }else if(m < 30){
-            nm = 30-m;
+        }else if(m < 100){
+            nm = 100-m;
             this.setState({
                 grade:"状元",nextmark:nm
             });
-        }else if(m < 100){
-            nm = 100-m;
+        }else if(m < 500){
+            nm = 500-m;
             this.setState({
                 grade:"探花",nextmark:nm
             });
@@ -53,7 +56,6 @@ export default class Collection extends Component {
                 nextmark:nm
             });
         }
-        console.log()
     }
 
     render() {
@@ -137,17 +139,37 @@ export default class Collection extends Component {
                         <span> 0成长值</span>
                     } >秀才</Item>
                     <Item extra={
-                        <span> 8成长值</span>
+                        <span> 30成长值</span>
                     } >举人</Item>
                     <Item extra={
-                        <span> 15成长值</span>
+                        <span> 50成长值</span>
                     } >状元</Item>
                     <Item extra={
-                        <span> 30成长值</span>
+                        <span> 100成长值</span>
                     } >探花</Item>
                     <Item extra={
-                        <span>100成长值</span>
+                        <span>500成长值</span>
                     } >翰林</Item>
+                </List>
+                <List>
+                    <Item style={{
+                        paddingLeft:"145px"
+                    }}>加分规则</Item>
+                </List>
+                <WhiteSpace />
+                <List>
+                    <Item extra={
+                        <span>+5</span>
+                    } >私密写</Item>
+                    <Item extra={
+                        <span>+5</span>
+                    } >公开写</Item>
+                    <Item extra={
+                        <span>+5</span>
+                    } >收藏</Item>
+                    <Item extra={
+                        <span>+5</span>
+                    } >分享</Item>
                 </List>
             </div>
         )

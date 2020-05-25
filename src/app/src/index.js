@@ -121,7 +121,8 @@ ReactDOM.render(
             <Route path='/attentionlist' component={Attention}/>
 
             <Route path='/invite' component={Invite}/>
-            <Route path='/myself' component={Myself}/>
+            <Route exact path='/myself' component={Myself}/>
+            <Route exact path='/myself/:id' component={Myself}/>
         </Switch>
     </Router>,
     document.getElementById("root")

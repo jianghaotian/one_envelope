@@ -24,6 +24,13 @@ const api = {
     headimg:p => post('image/head',p),
     changehead:p=>post('image/changehead',p),
     searchmail : p => get('mailbox/searchmail',p),
+<<<<<<< HEAD
+    setgrade:p=>post('mine/setgrade',p),
+    getgrade:p=>get('mine/getgrade',p),
+=======
+<<<<<<< HEAD
+
+=======
     setgrade:p=>post('mailbox/setgrade',p),
     getgrade:p=>get('mailbox/getgrade',p),
     attention:p=>post('mine/attention',p),
@@ -32,6 +39,8 @@ const api = {
     getattention:p=>get('mine/attentions',p),
     attentionlist:p=>get('mine/attentionlist',p),
     fanslist:p=>get('mine/fanslist',p),
+>>>>>>> 30729ab5f53253db1fd3dd88f39afe88de6d6ce9
+>>>>>>> c768bd33d823c9763a67745393f7c98854d0e2c8
     // zym
     theme: p=> get('together/theme',p),
     themetitle:p=>get('together/theme/showtitle',p),
@@ -52,6 +61,7 @@ const api = {
     showTmus:p => get('music/presentMusic',p),//展示音乐
     delInsertTmus:p => post('music/delmusic',p),//删除音乐
     changeWtback:p=>post('together/changebg',p),//更换背景
+    addmember:p=>post('together/addmember',p),//邀请成员
 
     addFirstMember:p=>post('together/theme/addFirstMember',p),
 
@@ -92,7 +102,8 @@ const api = {
     isVip:p=>get('public/isVip',p),
     EditPubLetter:p=>post('public/amendLetter',p),//编辑公开信
     addLikes:p=>get('public/addLikes',p),
-    cancleLickes:p=>get('public/cancelLikes',p),//取消点赞
+    cancleLikes:p=>get('public/cancelLikes',p),//取消点赞
+    getUserinfo : p=>get('public/designuser',p),//获取用户信息
     // getpid:p => get('private/getpd',p)
 
     getsendletter:p=>get('mailbox/getsendletter',p),//获取发送信件信息

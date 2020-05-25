@@ -77,13 +77,17 @@ export default class Public extends Component {
     }
     showHead=(item)=>{
         if(item.anonymous == 1){
-            return <img src={require("../imgs/public/head2.png")} id="pub-head" />
+            return <img src={require("../imgs/public/head2.png")} onClick={this.Userinfo2} id="pub-head" />
         }else{
-            return <img onClick={this.Userinfo} src={"https://yf.htapi.pub/head/"+item.Uimage} id="pub-head" />
+            return <img onClick={()=>{this.Userinfo(item)}} src={"https://yf.htapi.pub/head/"+item.Uimage} id="pub-head" />
         }
     }
-    Userinfo=()=>{
-        this.props.history.push('/Userinfo');
+    Userinfo=(item)=>{
+        console.log(item.Uid);
+        this.props.history.push('/Userinfo?uid='+item.Uid);
+    }
+    Userinfo2=()=>{
+        alert('无法查看匿名作者的信息哦');
     }
     showName=(item)=>{
         if(item.anonymous == 1){
@@ -116,41 +120,6 @@ export default class Public extends Component {
                     }
                 }]);
     }
-    Likes=(item)=>{
-        if(item.Oid == this.state.likeID){
-            return <i onClick={()=>{this.addLikes(item)}} style={{color:'red'}} className="iconfont icon-iconfontzhizuobiaozhun023148" id="dianzan"></i>
-
-        }else{
-            return <i onClick={()=>{this.addLikes(item)}} className="iconfont icon-iconfontzhizuobiaozhun023148" id="dianzan"></i>
-        }
-    }
-    addLikes=(item)=>{
-    //    console.log(item);
-    //    console.log(this.state.likeList)
-       let list = this.state.likeList;
-       for(let i=0;i<list.length;i++){
-           if(item.Oid == list[i].id){
-               list[i].like = !list[i].like;
-            //    console.log(list[i].like);
-               if(list[i].like){
-                this.$api.addLikes({oid:item.Oid}).then(res=>{
-                    this.showPubList()
-                    this.setState({
-                        likeID : item.Oid
-                    })
-               })
-               }else{
-                   this.$api.cancleLickes({oid:item.Oid}).then(res=>{
-                        this.showPubList()
-                        this.setState({
-                            likeID : ''
-                        })
-                   })
-               }
-           }
-       }
-        
-    }
     render() {
         // console.log(this.state.list)
         return (
@@ -177,9 +146,7 @@ export default class Public extends Component {
                                         <span id="dianzanshu">{
                                             item.number
                                         }</span>
-                                        {
-                                            this.Likes(item)
-                                        }
+                                        <i className="iconfont icon-iconfontzhizuobiaozhun023148" id="dianzan"></i>
                                         <img onClick={()=>{this.delPubLetter(item)}} src={require("../imgs/public/删除(1).png")} id="pub-delete" style={{display:this.state.del}} />
                                     </div>
                                     <div className="pub-content" onClick={()=>{this.showLetter(item.Oid)}}>
