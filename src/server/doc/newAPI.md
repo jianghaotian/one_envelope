@@ -1099,6 +1099,248 @@ GET
 }
 ```
 
+## 4.4关注他人
+
+**请求url**
+
+```
+URL : https://yf.htapi.pub/v1/mine/attention
+```
+
+**请求方式**
+
+```
+POST
+```
+
+**接收参数**
+
+| 参数 | 说明        | 类型 |
+| ---- | ----------- | ---- |
+| uid  | 被关注人uid | int  |
+
+**返回参数**
+
+```
+{
+    "status": 0,
+    "message": "OK",
+    "data": [
+        {
+         
+        }
+    ]
+}
+```
+
+## 4.5取消关注
+
+**请求url**
+
+```
+URL : https://yf.htapi.pub/v1/mine/attention
+```
+
+**请求方式**
+
+```
+POST
+```
+
+**接收参数**
+
+| 参数 | 说明        | 类型 |
+| ---- | ----------- | ---- |
+| uid  | 被关注人uid | int  |
+
+**返回参数**
+
+```
+{
+    "status": 0,
+    "message": "OK",
+    "data": [
+        {
+         
+        }
+    ]
+}
+```
+
+## 4.6取消关注
+
+**请求url**
+
+```
+URL : https://yf.htapi.pub/v1/mine/delattention
+```
+
+**请求方式**
+
+```
+POST
+```
+
+**接收参数**
+
+| 参数   | 说明            | 类型 |
+| ------ | --------------- | ---- |
+| deluid | 被取消关注人uid | int  |
+
+**返回参数**
+
+```
+{
+    "status": 0,
+    "message": "OK",
+    "data": [
+        {
+         
+        }
+    ]
+}
+```
+
+## 4.7获取粉丝数
+
+**请求url**
+
+```
+URL : https://yf.htapi.pub/v1/mine/fans
+```
+
+**请求方式**
+
+```
+GET
+```
+
+**接收参数**
+
+| 参数 | 说明                | 类型 |
+| ---- | ------------------- | ---- |
+| uid  | 某人uid（可有可无） | int  |
+
+**返回参数**
+
+```
+{
+    "status": 0,
+    "message": "OK",
+    "data": [
+        {
+         	num：15
+        }
+    ]
+}
+```
+
+## 4.8获取关注数
+
+**请求url**
+
+```
+URL : https://yf.htapi.pub/v1/mine/attentions
+```
+
+**请求方式**
+
+```
+GET
+```
+
+**接收参数**
+
+| 参数 | 说明                | 类型 |
+| ---- | ------------------- | ---- |
+| uid  | 某人uid（可有可无） | int  |
+
+**返回参数**
+
+```
+{
+    "status": 0,
+    "message": "OK",
+    "data": [
+        {
+         num:16
+        }
+    ]
+}
+```
+
+## 4.9查看关注列表
+
+**请求url**
+
+```
+URL : https://yf.htapi.pub/v1/mine/attentionlist
+```
+
+**请求方式**
+
+```
+GET
+```
+
+**接收参数**
+
+**返回参数**
+
+```
+{
+    "status": 0,
+    "message": "OK",
+    "data": [
+        {
+         	Uname:'mxy',
+         	Uid:19,
+         	Signature:'...'
+         	...
+        }
+    ]
+}
+```
+
+## 5.0查看粉丝列表
+
+**请求url**
+
+```
+URL : https://yf.htapi.pub/v1/mine/fanslist
+```
+
+**请求方式**
+
+```
+GET
+```
+
+**接收参数**
+
+**返回参数**
+
+```
+{
+    "status": 0,
+    "message": "OK",
+    "data": [
+        {
+        	Uname:'mxy',
+         	Uid:19,
+         	Signature:'...'
+         	...
+        }
+    ]
+}
+```
+
+
+
+
+
+
+
 
 
 
