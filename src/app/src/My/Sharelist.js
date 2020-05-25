@@ -36,7 +36,7 @@ export default class Sharelist extends Component {
             <div>
                 {/* tab */}
                 <div className="col-tab">
-                    我的收藏
+                    我的分享
                     <Link to="/home/my" 
                     style={{
                         float:"left",
