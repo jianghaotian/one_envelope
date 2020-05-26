@@ -186,6 +186,26 @@ router.post('/amendLetter',function(req,res,next){
  * 接收参数:
  *      oid:信件id
  */
+// router.get('/addLikes', function (req, res, next) {
+//     let {oid} = req.query;
+//     let token = req.header('token');
+//     checkToken(token, (result) => {
+//         if (result.status !== 0) {
+//             res.json(result);
+//         } else {
+//             let uid = result.data.uid;
+//             runSql(`select open.number from open where oid=? and uid=?`, [oid,uid], (result1) => {
+//                 let number = result1.data[0].number;
+//                 number++;
+//                 runSql(`update open set number=? where uid=? and oid=?`, [number,uid,oid], (result2) => {
+//                     runSql(`select open.number from open where oid=? and uid=?`, [oid,uid], (result3) => {
+//                         res.json(result3)
+//                     })
+//                 });
+//             });
+//         }
+//     });
+// });
 router.get('/addLikes', function (req, res, next) {
     let {oid} = req.query;
     let token = req.header('token');
@@ -194,14 +214,25 @@ router.get('/addLikes', function (req, res, next) {
             res.json(result);
         } else {
             let uid = result.data.uid;
-            runSql(`select open.number from open where oid=? and uid=?`, [oid,uid], (result1) => {
-                let number = result1.data[0].number;
-                number++;
-                runSql(`update open set number=? where uid=? and oid=?`, [number,uid,oid], (result2) => {
-                    runSql(`select open.number from open where oid=? and uid=?`, [oid,uid], (result3) => {
-                        res.json(result3)
-                    })
-                });
+            runSql(`select open.number from open where oid=?`, [oid], (result1) => {
+                let num = result1.data[0].number;
+                num++;
+                runSql(`select likepeo from open where oid=?`,[oid],(result2)=>{
+                    var peo = result2.data[0].likepeo;
+                    if(peo==null){
+                        runSql('update open set number=?,likepeo=? where oid=? ',[num,uid,oid],(result3)=>{
+                            runSql(`select open.number from open where oid=?`, [oid], (result4) => {
+                                res.json(result4);
+                            })
+                        })
+                    }else{
+                        runSql('update open set number=?,likepeo=? where oid=? ',[num,peo+','+uid,oid],(result5)=>{
+                            runSql(`select open.number from open where oid=?`, [oid], (result6) => {
+                                res.json(result6);
+                            })
+                        })
+                    }
+                })
             });
         }
     });
