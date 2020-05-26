@@ -147,7 +147,12 @@ export default class My extends Component {
                             color:'black'
                     }}><Item extra={
                         <i className="iconfont icon-collection" ></i>
-                    } onClick={() => {}}>我的收藏</Item></Link>                    
+                    } onClick={() => {}}>我的收藏</Item></Link>   
+                    <Link to='/sharelist' style={{
+                            color:'black'
+                    }}><Item extra={
+                        <i className="iconfont icon-iconfontzhizuobiaozhun023133" ></i>
+                    } onClick={() => {}}>我的分享</Item></Link>           
                 </List>
                 
                 <WhiteSpace size="lg" />
@@ -160,9 +165,6 @@ export default class My extends Component {
                         } onClick={() => {}}>回收站</Item>
                     </Link>
                     
-                    {/* <Item extra={
-                        <i className="iconfont icon-iconfontzhizuobiaozhun023133" ></i>
-                    } onClick={() => {}}>在线咨询</Item> */}
                     <Link to='/setting' style={{color:'black'}}>
                         <Item extra={
                         <i className="iconfont icon-dingbudaohang-zhangh" ></i>

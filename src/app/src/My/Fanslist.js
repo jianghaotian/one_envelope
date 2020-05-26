@@ -61,6 +61,16 @@ export default class Fanslist extends Component {
             }
         }
     }
+    back=()=>{
+        let url = window.location.hash;
+        console.log(url.split('?')[1]);
+        let id = url.split('?')[1];
+        if( id != undefined){
+            this.props.history.push('/Userinfo?uid='+id);
+        }else{
+            this.props.history.push('/home/my');
+        }
+    }
     render() {
         return (
             <div>
@@ -73,7 +83,7 @@ export default class Fanslist extends Component {
                     textAlign:'center',
                     lineHeight:'50px',
                     }}>
-                        <Link to='/home/my'>
+                        {/* <Link to='/home/my'> */}
                          <i className="icon-fanhui iconfont"
                             style={{                                                                  
                                 fontSize:'1.2em',
@@ -81,8 +91,9 @@ export default class Fanslist extends Component {
                                 float:'left',
                                 color:"grey",
                             }}
+                            onClick={this.back}
                         />
-                        </Link>
+                        {/* </Link> */}
                         粉丝列表
                         
                 </div>

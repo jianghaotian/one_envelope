@@ -22,6 +22,7 @@ import Feedback from './My/Feedback'
 import Sharenum from './My/Sharenum'
 
 
+
 import InviteWrite from './WriteTogether/InviteWrite'
 import WriteTogether from './WriteTogether/WriteTogether'
 import togeCreate from './WriteTogether/togeCreate'
@@ -53,6 +54,7 @@ import Fanslist from './My/Fanslist'
 import Attention from './My/Attention'
 import Invite from './My/Invite'
 import Myself from './My/Myself'
+import Sharelist from './My/Sharelist'
 React.Component.prototype.$api = api;
 React.Component.prototype.$store = store;
 
@@ -93,6 +95,7 @@ ReactDOM.render(
             <Route path='/sharenum' component={Sharenum} />
             <Route path="/vip" component={Vip} />
             <Route path="/myorder" component={Myorder} />
+            <Route path="/sharelist" component={Sharelist} />
 
             {/* zym */}
             <Route exact path="/invitewrite" component={InviteWrite}/>
