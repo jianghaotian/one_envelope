@@ -24,26 +24,20 @@ const api = {
     headimg:p => post('image/head',p),
     changehead:p=>post('image/changehead',p),
     searchmail : p => get('mailbox/searchmail',p),
-<<<<<<< HEAD
 
     setgrade:p=>post('mine/setgrade',p),
     getgrade:p=>get('mine/getgrade',p),
 
-=======
     setgrade:p=>post('mine/setgrade',p),
     getgrade:p=>get('mine/getgrade',p),
->>>>>>> a49789032b02e0304c2fde45c11017ea204af283
     attention:p=>post('mine/attention',p),
     delattention:p=>post('mine/delattention',p),
     getfans:p=>get('mine/fans',p),
     getattention:p=>get('mine/attentions',p),
     attentionlist:p=>get('mine/attentionlist',p),
     fanslist:p=>get('mine/fanslist',p),
-<<<<<<< HEAD
     myself:p=>get('mine/myself',p),
     openlist:p=>get('mine/openlist',p),
-=======
->>>>>>> a49789032b02e0304c2fde45c11017ea204af283
     // zym
     theme: p=> get('together/theme',p),
     themetitle:p=>get('together/theme/showtitle',p),
@@ -105,6 +99,7 @@ const api = {
     addLikes:p=>get('public/addLikes',p),
     cancleLikes:p=>get('public/cancelLikes',p),//取消点赞
     getUserinfo : p=>get('public/designuser',p),//获取用户信息
+    getOpenList : p=>get('public/deslist',p),
     // getpid:p => get('private/getpd',p)
 
     getsendletter:p=>get('mailbox/getsendletter',p),//获取发送信件信息

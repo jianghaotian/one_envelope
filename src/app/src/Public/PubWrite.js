@@ -61,7 +61,13 @@ export default class PubWrite extends Component {
         // console.log(URLArr2)
         //展示时获取oid
         let type = URLArr2[0].split("=")[1];
-        // console.log(type);
+        console.log(type);
+        if(type== 'Ushow'){
+            // console.log(URLArr2[2].split("=")[1])
+            this.setState({
+                UshowId : URLArr2[2].split("=")[1]
+            })
+        }
         this.setState({
             type : type
         })
@@ -81,7 +87,7 @@ export default class PubWrite extends Component {
                 });
             }
         })
-        if(URLArr2.length>1 && (type == 'show' || type == 'edit')){
+        if(URLArr2.length>1 && (type == 'show'|| type == 'Ushow' || type == 'edit')){
             //展示情况下获取oid
             var oid = URLArr2[1].split("=")[1];
             this.setState({
@@ -126,7 +132,7 @@ export default class PubWrite extends Component {
                 pointWeather:''
             })
         }else{
-            if(type == 'show'){
+            if(type == 'show' || type == 'Ushow'){
                 //展示信件
                 this.setState({
                     bottom : 'none',
@@ -147,7 +153,7 @@ export default class PubWrite extends Component {
                 {
                     let data = res.data.data[0];
                     if( data != "[]" ){
-                        if(URLArr2.length<3){
+                        if(URLArr2.length<3 || (URLArr2.length==3 && this.state.type =='Ushow')){
                             this.setState({
                                 title : data.Otitle,
                                 value : data.Ocontent
@@ -186,7 +192,11 @@ export default class PubWrite extends Component {
     }
     //返回
     back=()=>{
-        this.props.history.push("/Home/public");
+        if(this.state.type == 'Ushow'){
+            this.props.history.push("/Userinfo?uid="+this.state.UshowId);
+        }else{
+            this.props.history.push("/Home/public");
+        }
     }
     //编辑内容
     Write=(val)=>{
