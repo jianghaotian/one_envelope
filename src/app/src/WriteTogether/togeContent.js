@@ -122,7 +122,7 @@ export default class togeContent extends Component {
                 // console.log(this.state.data)
             }
         }) 
-                // this.totoge();
+                this.totoge();
     }
     totoge=()=>{
         this.props.history.push('/inviteWrite/'+this.state.tid);
