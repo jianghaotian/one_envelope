@@ -29,6 +29,8 @@ import togeCreate from './WriteTogether/togeCreate'
 import togeContent from './WriteTogether/togeContent'
 import Addressee from './WriteTogether/Addressee'
 import inviteMember from './WriteTogether/inviteMember'
+import invMeb from './WriteTogether/invMeb'
+
 
 import Touxiang from './My/Touxiang'
 import Cropimg from './My/Cropimg'
@@ -109,6 +111,8 @@ ReactDOM.render(
 
             <Route exact path="/inviteMember" component={inviteMember} />
             <Route exact path="/inviteMember/:id" component={inviteMember} />
+            <Route exact path="/invMeb" component={invMeb} />
+            <Route exact path="/invMeb/:id" component={invMeb} />
 
             <Route path="/addressee" component={Addressee} />
 

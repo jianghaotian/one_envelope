@@ -7,7 +7,8 @@ export default class invMeb extends Component {
         super();
         this.state={                                                          
                 data:[{}]  ,
-                phone:""       
+                phone:"" ,
+               
         }
     }
     addmember=()=>{
@@ -24,19 +25,23 @@ export default class invMeb extends Component {
                 //     })                    
                 //     // alert("创建成功~");                   
                 //     console.log(this.state.data);
-                // }         
+                // }
+                this.totoge();
             })  
         }
 
+    }
+    totoge=()=>{
+        this.props.history.push('/inviteMember/72');
     }
     render() {
         return (
             <div className="member">
                 <NavBar className='together-navback1'>                                      
                     <span>邀请好友</span>      
-                    {/* <img src={require("../imgs/WriteTogether/return1.png")} className='member-return1' onClick={this.props.history.push('/inviteMember/?tid='+this.props.match.params.id)}/> */}
+                    <img src={require("../imgs/WriteTogether/return1.png")} className='member-return1'/>
 
-                    {/* <Link to={'/inviteWrite/'+this.state.data[0].tid}><img src={require("../imgs/WriteTogether/return1.png")} className='member-return'/></Link> */}
+                   
                 </NavBar>  
                 <ul style={{width:"100%"}}>
                     <li className="lba">
@@ -46,7 +51,7 @@ export default class invMeb extends Component {
                     <li className="lbb">
                         邀请信息：<br/>
                         <textarea className='la'>
-                            这里有一个小故事~等你一起来写哦，点击链接，快来加入我吧！！！
+                            这里有一个小故事~等你一起来写哦，快来加入我吧！！！
 
                         </textarea>
                     </li>                   
