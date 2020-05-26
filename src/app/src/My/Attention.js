@@ -85,6 +85,7 @@ export default class Attention extends Component {
                 <List>
                     {this.state.data.map((item,index)=>{
                         return(
+                            <Link to={'/myself/'+item.Uid}>
                             <List.Item 
                             className='items'
                             onClick={()=>{console.log("无")}} 
@@ -112,6 +113,7 @@ export default class Attention extends Component {
                                 </List.Item.Brief>
                                 
                             </List.Item>
+                            </Link>
                         )
                     })} 
                 </List>
