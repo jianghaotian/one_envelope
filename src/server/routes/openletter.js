@@ -283,4 +283,24 @@ router.get('/designuser', function (req, res, next) {
         }
     });
 });
+/**
+ * 特定用户公开写信件列表
+ * GET
+ * 接收参数:
+ *      uid:用户id
+ */
+router.get('/deslist', function (req, res, next) {
+    let {uid} = req.query;
+    let token = req.header('token');
+    checkToken(token, (result) => {
+        if (result.status !== 0) {
+            res.json(result);
+        } else {
+            runSql(`select user.Uname,user.Uimage,open.* from open,user where user.uid=open.uid and user.uid=? order by open.oid desc`,
+            [uid],(result1) => {
+                res.json(result1);
+            });
+        }
+    });
+});
 module.exports = router;
