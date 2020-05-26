@@ -1,6 +1,8 @@
 import React, { Component } from 'react'
-import { Button,WhiteSpace,InputItem,Toast} from 'antd-mobile'
+import { Button,WhiteSpace,InputItem,Toast,Modal} from 'antd-mobile'
 import {Link} from 'react-router-dom'
+
+const alert = Modal.alert;
 
 export default class Changename extends Component {
     constructor(props){
@@ -11,10 +13,9 @@ export default class Changename extends Component {
         }
     }
     inputChange = (e) =>{
-        this.setState({
-            username:e
-        })
-        // console.log(e)
+            this.setState({
+                username:e
+            })
         // console.log(this.state.username);
     }
     handleChange = () => {
@@ -55,18 +56,21 @@ export default class Changename extends Component {
                 
                 {/* 输入框 */}
                 <InputItem
-                placeholder="好的昵称可以让你的朋友更容易记住你"
+                placeholder="昵称不可超过8个字"
                 data-seed="logId"
                 autoFocus
                 // ref={(inp)=>{this.username=inp}}
                 onChange={(e)=>this.inputChange(e)}
+                maxLength={8}
+                style={{borderBottom:"1px solid grey",paddingBottom:'5px'}}
                 ></InputItem>
 
                 <WhiteSpace size="lg" />
                 <WhiteSpace size="lg" />
                 <Button style={{
                     color:'black',
-                    margin:"0 8vw" 
+                    margin:"0 8vw",
+                    border : '1px solid grey'
                 }}
                 onClick={(e)=>this.handleChange(e)}
                 >保存</Button>

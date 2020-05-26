@@ -61,7 +61,9 @@ export default class My extends Component {
     }
     showVipicon=()=>{
         if(this.state.vip){
-            return <img id="myVip" src={require("../imgs/public/vip(1).png")} />
+            return <div id='myVip'>
+                <span>V</span>
+            </div>
         }
     }
     render() {

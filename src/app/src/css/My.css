@@ -24,7 +24,7 @@
     left: 33%;
     /* background-color: pink; */
     bottom: 44%;
-    font-size: 2em;
+    font-size:20px;
     text-overflow:ellipsis; white-space:nowrap; overflow:hidden;
 }
 .mysig{
@@ -33,7 +33,7 @@
     line-height: 85%;
     width: 47%;
     left: 33%;
-    bottom: 31%;
+    bottom: 28%;
     font-size: 1.2em;
     text-overflow:ellipsis; white-space:nowrap; overflow:hidden;
     padding-left: 5%;
@@ -185,7 +185,18 @@
     z-index: 1;
 }
 #myVip{
+    height:15px;
+    width:15px;
+    border-radius:50%;
+    background-color: red;
+    border:1px solid yellow;
     position: relative;
-    bottom:130px;
-    left:180px;
+    text-align: center;
+    line-height:15px;
+    font-weight: bold;
+    font-size:11px;
+    color: yellow;
+    left:75px;
+    bottom:80px;
+    z-index:2;
 }

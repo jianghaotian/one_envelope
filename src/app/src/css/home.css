@@ -160,14 +160,15 @@ li{
     /* background-color: tomato; */
 }
 .slider-signature{
+    width:150px;
     display: -webkit-box;
     -webkit-box-orient: vertical;
-    -webkit-line-clamp:2;
+    -webkit-line-clamp:1;
     overflow: hidden;
-    position: relative;
-    right:45px;
-    top:8px;
-    background: url('../imgs/Home/signature(3).png') no-repeat;
+    position: absolute;
+    top:75px;
+    left:65px;
+    background: url('../imgs/Home/signature(3).png') no-repeat left;
     padding-left:20px;
     font-size: 13px;
 }
