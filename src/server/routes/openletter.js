@@ -303,4 +303,21 @@ router.get('/deslist', function (req, res, next) {
         }
     });
 });
+/**
+ * 获取用户本人id
+ * GET
+ * 接收参数:
+ *     
+ */
+router.get('/userid', function (req, res, next) {
+    let token = req.header('token');
+    checkToken(token, (result) => {
+        if (result.status !== 0) {
+            res.json(result);
+        } else {
+            let uid = result.data.uid;
+            res.json({status:0,uid:uid});
+        }
+    });
+});
 module.exports = router;
