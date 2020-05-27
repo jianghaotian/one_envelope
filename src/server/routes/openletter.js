@@ -228,14 +228,22 @@ router.get('/cancelLikes', function (req, res, next) {
             res.json(result);
         } else {
             let uid = result.data.uid;
-            runSql(`select open.number from open where oid=? and uid=?`, [oid,uid], (result1) => {
-                let number = result1.data[0].number;
-                number--;
-                runSql(`update open set number=? where uid=? and oid=?`, [number,uid,oid], (result2) => {
-                    runSql(`select open.number from open where oid=? and uid=?`, [oid,uid], (result3) => {
-                        res.json(result3)
+            runSql(`select open.likepeo from open where oid=?`, [oid], (result1) => {
+                let like = result1.data[0].likepeo;
+                var likearr = like.split(",");
+                for(var i=0;i<likearr.length;i++){
+                    if(likearr[i]==uid){
+                        likearr.splice(i,1);
+                    }
+                }
+                var likestr = likearr.join(",");
+                runSql(`select open.number from open where oid=?`,[oid],(result2)=>{
+                    let number = result2.data[0].number;
+                    number--;
+                    runSql(`update open set number=?,likepeo=? where oid=?`, [number,likestr,oid],(result3)=>{
+                        res.json({status:0,number:number});
                     })
-                });
+                })
             });
         }
     });
