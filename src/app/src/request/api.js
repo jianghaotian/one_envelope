@@ -24,10 +24,6 @@ const api = {
     headimg:p => post('image/head',p),
     changehead:p=>post('image/changehead',p),
     searchmail : p => get('mailbox/searchmail',p),
-
-    setgrade:p=>post('mine/setgrade',p),
-    getgrade:p=>get('mine/getgrade',p),
-
     setgrade:p=>post('mine/setgrade',p),
     getgrade:p=>get('mine/getgrade',p),
     attention:p=>post('mine/attention',p),
@@ -38,6 +34,7 @@ const api = {
     fanslist:p=>get('mine/fanslist',p),
     myself:p=>get('mine/myself',p),
     openlist:p=>get('mine/openlist',p),
+    sendlist:p=>get('mine/sendlist',p),
     // zym
     theme: p=> get('together/theme',p),
     themetitle:p=>get('together/theme/showtitle',p),
@@ -60,8 +57,6 @@ const api = {
     changeWtback:p=>post('together/changebg',p),//更换背景
     addmember:p=>post('together/addmember',p),//邀请成员
     addFirstMember:p=>post('together/theme/addFirstMember',p),
-
-
 
     //Login
     login_Vcode: p => post('users/verification', p),//登录验证码

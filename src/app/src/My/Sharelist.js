@@ -7,7 +7,8 @@ export default class Sharelist extends Component {
     constructor(){
         super();
         this.state={
-            arr:[{'collection':'1'}]
+            arr:[{'collection':'1'}],
+            brr:[]
         }
     }
     componentDidMount(){
@@ -16,6 +17,13 @@ export default class Sharelist extends Component {
                 arr:res.data.data
             })
         }) 
+        this.$api.sendlist().then(res => {
+            console.log(res)
+            this.setState({
+                brr:res.data.data
+            })
+        }) 
+        console.log(this.state.brr)
     }
     // 取消收藏
     deleEmail =(pid)=>{
