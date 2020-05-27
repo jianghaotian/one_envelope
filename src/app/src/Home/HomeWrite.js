@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import "../css/HomeWrite.css";
-import { List, TextareaItem,Modal,Button } from 'antd-mobile';
+import { List, TextareaItem,Modal,Button, Toast } from 'antd-mobile';
 
 const alert = Modal.alert;
 
@@ -274,6 +274,7 @@ export default class HomeWrite extends Component {
             alert('WriteLetter', '保存成功', [
                 { text: 'Ok', onPress: () => {
                     console.log('ok');
+                    Toast.success('经验+5', 1);
                     this.props.history.push("/home?to="+this.state.to);
                 } },
             ])

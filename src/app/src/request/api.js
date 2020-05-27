@@ -24,10 +24,15 @@ const api = {
     headimg:p => post('image/head',p),
     changehead:p=>post('image/changehead',p),
     searchmail : p => get('mailbox/searchmail',p),
+<<<<<<< HEAD
 
     setgrade:p=>post('mine/setgrade',p),
     getgrade:p=>get('mine/getgrade',p),
 
+=======
+    setgrade:p=>post('mine/setgrade',p),
+    getgrade:p=>get('mine/getgrade',p),
+>>>>>>> 8f8c8764001d74082dfdb7352cfe9ad6a52ea347
     attention:p=>post('mine/attention',p),
     delattention:p=>post('mine/delattention',p),
     getfans:p=>get('mine/fans',p),
@@ -36,6 +41,10 @@ const api = {
     fanslist:p=>get('mine/fanslist',p),
     myself:p=>get('mine/myself',p),
     openlist:p=>get('mine/openlist',p),
+<<<<<<< HEAD
+=======
+    sendlist:p=>get('mine/sendlist',p),
+>>>>>>> 8f8c8764001d74082dfdb7352cfe9ad6a52ea347
     // zym
     theme: p=> get('together/theme',p),
     themetitle:p=>get('together/theme/showtitle',p),
@@ -59,9 +68,12 @@ const api = {
     addmember:p=>post('together/addmember',p),//邀请成员
     addFirstMember:p=>post('together/theme/addFirstMember',p),
 
+<<<<<<< HEAD
     getmessage:p=>get('together/getmessage',p),
     getown:p=>get('/together/getown',p),
     confirmMessage:p=>post('/together/confirmMessage',p),
+=======
+>>>>>>> 8f8c8764001d74082dfdb7352cfe9ad6a52ea347
     //Login
     login_Vcode: p => post('users/verification', p),//登录验证码
     register_Vcode: p => post('users/verification', p),//注册验证码
@@ -98,6 +110,7 @@ const api = {
     addLikes:p=>get('public/addLikes',p),
     cancleLikes:p=>get('public/cancelLikes',p),//取消点赞
     getUserinfo : p=>get('public/designuser',p),//获取用户信息
+    getOpenList : p=>get('public/deslist',p),
     // getpid:p => get('private/getpd',p)
 
     getsendletter:p=>get('mailbox/getsendletter',p),//获取发送信件信息

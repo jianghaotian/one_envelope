@@ -101,7 +101,7 @@ export default class Fanslist extends Component {
                 <List>
                     {this.state.data.map((item,index)=>{
                         return(
-                            <Link to={'/myself/'+item.Uid}>
+                            <Link to={'/Userinfo?uid='+item.Uid}>
                             <List.Item 
                             className='items'
                             onClick={()=>{console.log("无")}} 

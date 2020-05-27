@@ -78,16 +78,18 @@ router.post('/delOletter', function (req, res, next) {
  *      Oday:创建日期
  *      ppid:背景id
  *      anonymous:是否匿名
+ *      city:城市
  */
 router.post('/writeOpen', function (req, res, next) {
-    let {Otitle, Ocontent,Oday,ppid,weather,anonymous} = req.body;
+    let {Otitle, Ocontent,Oday,ppid,weather,anonymous,city} = req.body;
     let token = req.header('token');
     checkToken(token, (result) => {
         if(result.status != 0){
             res.json(result);
         }else{
             let uid = result.data.uid;
-            runSql(`insert into open(Otitle, Ocontent,Oday,Uid,ppid,number,weather,anonymous) values (?,?,?,?,?,?,?,?)`,[Otitle,Ocontent,Oday,uid,ppid,0,weather,anonymous],(result1) =>{
+            runSql(`insert into open(Otitle, Ocontent,Oday,Uid,ppid,number,weather,anonymous,city) values (?,?,?,?,?,?,?,?,?)`,
+            [Otitle,Ocontent,Oday,uid,ppid,0,weather,anonymous,city],(result1) =>{
                 res.json(result1)
             });
         }
@@ -162,6 +164,7 @@ router.get('/isVip', function (req, res, next) {
  *      Ocontent：信件内容
  *      Oday：信件修改后的日期
  *      weather:天气情况
+ *      city:城市
  * 返回参数：
  *      
  */
@@ -173,19 +176,13 @@ router.post('/amendLetter',function(req,res,next){
             res.json(result);
         }else{
             let uid =  result.data.uid;
-            runSql(`update open set Otitle=?,Ocontent=?,Oday=?,weather=? where oid=? and uid=? `,
-            [Otitle,Ocontent,Oday,weather,oid,uid],(result2)=>{
+            runSql(`update open set Otitle=?,Ocontent=?,Oday=?,weather=?,city=? where oid=? and uid=? `,
+            [Otitle,Ocontent,Oday,weather,city,oid,uid],(result2)=>{
                 res.json(result2);
             })
         }
     })
 })
-/**
- * 点赞
- * GET
- * 接收参数:
- *      oid:信件id
- */
 router.get('/addLikes', function (req, res, next) {
     let {oid} = req.query;
     let token = req.header('token');
@@ -194,14 +191,25 @@ router.get('/addLikes', function (req, res, next) {
             res.json(result);
         } else {
             let uid = result.data.uid;
-            runSql(`select open.number from open where oid=? and uid=?`, [oid,uid], (result1) => {
-                let number = result1.data[0].number;
-                number++;
-                runSql(`update open set number=? where uid=? and oid=?`, [number,uid,oid], (result2) => {
-                    runSql(`select open.number from open where oid=? and uid=?`, [oid,uid], (result3) => {
-                        res.json(result3)
-                    })
-                });
+            runSql(`select open.number from open where oid=?`, [oid], (result1) => {
+                let num = result1.data[0].number;
+                num++;
+                runSql(`select likepeo from open where oid=?`,[oid],(result2)=>{
+                    var peo = result2.data[0].likepeo;
+                    if(peo==null){
+                        runSql('update open set number=?,likepeo=? where oid=? ',[num,uid,oid],(result3)=>{
+                            runSql(`select open.number from open where oid=?`, [oid], (result4) => {
+                                res.json(result4);
+                            })
+                        })
+                    }else{
+                        runSql('update open set number=?,likepeo=? where oid=? ',[num,peo+','+uid,oid],(result5)=>{
+                            runSql(`select open.number from open where oid=?`, [oid], (result6) => {
+                                res.json(result6);
+                            })
+                        })
+                    }
+                })
             });
         }
     });
@@ -249,6 +257,43 @@ router.get('/designuser', function (req, res, next) {
             [uid], (result1) => {
                 res.json(result1);
             });
+        }
+    });
+});
+/**
+ * 特定用户公开写信件列表
+ * GET
+ * 接收参数:
+ *      uid:用户id
+ */
+router.get('/deslist', function (req, res, next) {
+    let {uid} = req.query;
+    let token = req.header('token');
+    checkToken(token, (result) => {
+        if (result.status !== 0) {
+            res.json(result);
+        } else {
+            runSql(`select user.Uname,user.Uimage,open.* from open,user where user.uid=open.uid and user.uid=? order by open.oid desc`,
+            [uid],(result1) => {
+                res.json(result1);
+            });
+        }
+    });
+});
+/**
+ * 获取用户本人id
+ * GET
+ * 接收参数:
+ *     
+ */
+router.get('/userid', function (req, res, next) {
+    let token = req.header('token');
+    checkToken(token, (result) => {
+        if (result.status !== 0) {
+            res.json(result);
+        } else {
+            let uid = result.data.uid;
+            res.json({status:0,uid:uid});
         }
     });
 });
