@@ -111,6 +111,7 @@ const api = {
     cancleLikes:p=>get('public/cancelLikes',p),//取消点赞
     getUserinfo : p=>get('public/designuser',p),//获取用户信息
     getOpenList : p=>get('public/deslist',p),
+    getId: p=>get('public/userid',p),//获取uid
     // getpid:p => get('private/getpd',p)
 
     getsendletter:p=>get('mailbox/getsendletter',p),//获取发送信件信息

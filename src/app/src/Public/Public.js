@@ -32,19 +32,12 @@ export default class Public extends Component {
     }
     componentDidMount(){
         this.showPubList();
-        var like_LIST = [];
-        this.$api.showPubList().then(res=>{
-            // console.log(res.data.data);
-            let likeList = res.data.data;
-            for(let i=0;i<likeList.length;i++){
-                let ele = {'id':likeList[i].Oid,'like':0,'num':likeList[i].number}
-                like_LIST.push(ele);
-            }
+        this.$api.getId().then(res=>{
+            // console.log(res.data.uid)
             this.setState({
-                likeList : like_LIST,
+                myId : res.data.uid
             })
         })
-        
     }
     //显示个人公开写信件
     toMine=()=>{
@@ -120,6 +113,30 @@ export default class Public extends Component {
                     }
                 }]);
     }
+    addLike=(item)=>{
+        let likeList = String(item.likepeo);
+        // console.log(likeList.indexOf(this.state.myId))
+        if(likeList.indexOf(this.state.myId) >= 0){
+            item.like = 1;
+            return <img  onClick={()=>{this.LikeHandle(item.like,item.Oid)}} src={require("../imgs/public/心2.png")} id='dianzan' />;
+        }else{
+            item.like = 0;
+            return <img onClick={()=>{this.LikeHandle(item.like,item.Oid)}} src={require("../imgs/public/心.png")} id='dianzan' />;
+        }
+    }
+    LikeHandle=(like,id)=>{
+        if(like){
+            //取消点赞
+
+        }else{
+            //点赞
+            this.$api.addLikes({oid : id}).then(res=>{
+                // console.log(res);
+                this.showPubList();
+            })
+        }
+        
+    }
     render() {
         // console.log(this.state.list)
         return (
@@ -146,11 +163,18 @@ export default class Public extends Component {
                                         <span id="dianzanshu">{
                                             item.number
                                         }</span>
-                                        <i className="iconfont icon-iconfontzhizuobiaozhun023148" id="dianzan"></i>
+                                        <span id='pub-day'>{item.Oday}</span>
+                                        {
+                                            this.addLike(item)
+                                        }
                                         <img onClick={()=>{this.delPubLetter(item)}} src={require("../imgs/public/删除(1).png")} id="pub-delete" style={{display:this.state.del}} />
                                     </div>
                                     <div className="pub-content" onClick={()=>{this.showLetter(item.Oid)}}>
                                         <p>{item.Ocontent}</p>
+                                    </div>
+                                    <div className="pub-address">
+                                        <img src={require("../imgs/public/定位.png")} id="address" />
+                                        <span id='city'>{item.city}</span>
                                     </div>
                                 </li>
                             })

@@ -72,9 +72,14 @@ export default class PubWrite extends Component {
             type : type
         })
         var BMap = window.BMap;//取出window中的BMap对象
+        //根据城市获取天气
         var myCity = new BMap.LocalCity();
         myCity.get((res)=>{
             if (res.name) {
+                // console.log(res)
+                this.setState({
+                    city : res.name
+                })
                 /*通过当前位置城市信息获取天气*/
                 axios.get('http://wthrcdn.etouch.cn/weather_mini?city='+res.name)
                 .then(res=>{
@@ -210,7 +215,7 @@ export default class PubWrite extends Component {
     //编辑标题
     getTitle=(val)=>{
         ls.setItem("pubTitle",val.target.value);
-        console.log(ls.getItem('pubTitle'));
+        // console.log(ls.getItem('pubTitle'));
         this.setState({
             title : ls.getItem('pubTitle')
         })
@@ -275,7 +280,7 @@ export default class PubWrite extends Component {
                     text:'取消',onPress:()=>{}
                 },{
                     text:'是的',onPress:()=>{ 
-                        this.$api.WritePub({Otitle:t,Ocontent:content,Oday:this.state.date,ppid:this.state.ppid,weather:this.state.weather,anonymous:this.state.anonymous}).then(res=>{
+                        this.$api.WritePub({Otitle:t,Ocontent:content,Oday:this.state.date,ppid:this.state.ppid,weather:this.state.weather,anonymous:this.state.anonymous,city:this.state.city}).then(res=>{
                             // console.log(res);
                             alert('发布成功!');
                             this.props.history.push("/Home/public");
@@ -316,7 +321,7 @@ export default class PubWrite extends Component {
             })
             // console.log(this.state.oid)
             this.$api.addLikes({oid : this.state.oid}).then(res=>{
-                console.log(res);
+                // console.log(res);
             })
         }else{
             //取消赞
