@@ -697,6 +697,7 @@ POST
 | ppid     | 信纸id   |      |
 | Oday     | 创建日期 |      |
 | weather  | 天气情况 |      |
+| city     | 城市     |      |
 
 **返回参数**
 
@@ -846,6 +847,7 @@ POST
 | Ocontent |     信件内容     |      |
 | Oday     | 信件修改后的日期 |      |
 | weather  |     天气情况     |      |
+| city     |       城市       |      |
 
 **返回参数**
 
