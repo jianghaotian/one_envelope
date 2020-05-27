@@ -458,6 +458,7 @@ router.get('/fans',function(req,res,next){
         }else{
             uu = uid ||result.data.uid;
             runSql(`select COUNT(fanUid) as num from attention where uid=?`,[uu],(result1)=>{
+                console.log(result1)
                 res.json(result1);
             })
         }
@@ -482,6 +483,7 @@ router.get('/attentions',function(req,res,next){
             uu = uid || result.data.uid;
             console.log(uu);
             runSql(`select COUNT(uid) as num from attention where fanUid=?`,[uu],(result1)=>{
+                console.log(result1)
                 res.json(result1);
             })
         }
@@ -496,13 +498,14 @@ router.get('/attentions',function(req,res,next){
  * 
  */
 router.get('/attentionlist',function(req,res,next){
+    let {uid} = req.query;
     let token = req.header('token');
     checkToken(token,(result)=>{
         if(result.status!==0){
             res.json(result);
         }else{
-            let uid = result.data.uid;
-            runSql(`select distinct user.*,attention.attention from user,attention where user.uid=attention.uid and fanUid=?`,[uid],(result1)=>{
+            let uu =uid || result.data.uid;
+            runSql(`select distinct user.*,attention.attention from user,attention where user.uid=attention.uid and fanUid=?`,[uu],(result1)=>{
                 res.json(result1);
             })
         }
@@ -517,13 +520,14 @@ router.get('/attentionlist',function(req,res,next){
  * 
  */
 router.get('/fanslist',function(req,res,next){
+    let {uid} = req.query;
     let token = req.header('token');
     checkToken(token,(result)=>{
         if(result.status!==0){
             res.json(result);
         }else{
-            let uid = result.data.uid;
-            runSql(`select distinct user.* ,attention.attention from user,attention where user.uid=attention.fanUid and attention.uid=?`,[uid],(result1)=>{
+            let uu =uid || result.data.uid;
+            runSql(`select distinct user.* ,attention.attention from user,attention where user.uid=attention.fanUid and attention.uid=?`,[uu],(result1)=>{
                 res.json(result1);
             })
         }
