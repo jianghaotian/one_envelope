@@ -59,8 +59,9 @@ const api = {
     addmember:p=>post('together/addmember',p),//邀请成员
     addFirstMember:p=>post('together/theme/addFirstMember',p),
 
-
-
+    getmessage:p=>get('together/getmessage',p),
+    getown:p=>get('/together/getown',p),
+    confirmMessage:p=>post('/together/confirmMessage',p),
     //Login
     login_Vcode: p => post('users/verification', p),//登录验证码
     register_Vcode: p => post('users/verification', p),//注册验证码

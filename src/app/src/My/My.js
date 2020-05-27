@@ -126,7 +126,7 @@ export default class My extends Component {
                 <List style={{
                     marginTop:'1em'
                 }}>
-                    <Link to="/myorder"><Item extra={
+                    <Link to="/invite"><Item extra={
                         <i className="iconfont icon-weibiaoti-" style={{
                             fontSize:"1.0em"
                         }}></i>

@@ -111,7 +111,7 @@ router.get("/theme/showtheme/member",function(req,res,next){
         if(result.status != 0){
             res.json(result);
             }else{
-                runSql(`select distinct user.uname,tmember.tid,user.uid from tmember,user where tmember.tid=? and (tmember.uid = user.uid)`,[tid],(result1) =>{
+                runSql(`select distinct user.uname,tmember.tid,user.uid from tmember,user where tmember.tid=? and (tmember.uid = user.uid) and tag=?`,[tid,1],(result1) =>{
                     res.json(result1);
                 } )
         }
@@ -220,7 +220,7 @@ router.post("/theme/delletter",function(req,res,next){
              let uid = result.data.uid;
              runSql(`insert into theme (tname,timage,isPrivate,uid,tday) value(?,?,?,?,?)`,[tname,timage,isPrivate,uid,tday],
              (result1) => {
-                 
+                 res.json(result1);
              })
          }
      })
@@ -269,7 +269,7 @@ router.post('/theme/addFirstMember',function(req,res,next){
  *      
  */
 router.post('/addmember',function(req,res,next){
-    let {tid,phone} = req.body;
+    let {tid,phone,inviteMessage} = req.body;
     let token = req.header('token');
     checkToken(token,(result)=>{
         if(result.status !== 0){
@@ -283,28 +283,10 @@ router.post('/addmember',function(req,res,next){
                         //未邀请该成员
                         console.log(result2);
                         if(result2.data.length == 0){
-                            console.log("skks")
-                            runSql(`insert into tmember(tid,uid) value(?,?)`,[tid,addUid],(result8)=>{
-                                runSql(`select inviteUid from theme where tid=?`,[tid],(result3)=>{
-                                    //如果已有成员
-                                    if(result3.data[0].inviteUid){
-                                        let inviteUid = result3.data[0].inviteUid + ','+addUid;
-                                        console.log(inviteUid);
-                                        runSql(`update theme set inviteUid=? where tid=?`,[inviteUid,tid],(result4)=>{
-                                            console.log(inviteUid);
-                                            runSql(`update tletter set inviteUid=? where tid=?`,[inviteUid,tid],(result5)=>{
-                                                res.json(result5)
-                                            })
-                                        })
-                                    }else{
-                                        console.log(addUid,'1')
-                                        runSql(`update theme set inviteUid=? where tid=?`,[addUid,tid],(result6)=>{
-                                            runSql(`update tletter set inviteUid=? where tid=?`,[addUid,tid],(result7)=>{
-                                                res.json(result7)
-                                            })
-                                        })
-                                    }
-                                })
+                            //邀请该成员
+                            runSql(`insert into tmember(tid,uid,inviteMessage,tag) value(?,?,?,?)`,[tid,addUid,inviteMessage,0],(result8)=>{
+                            
+                            console.log("成功")
                             })
                         }else{
                             res.json({status:2});//已邀请过该成员
@@ -313,6 +295,101 @@ router.post('/addmember',function(req,res,next){
                 }else{
                     res.json({status:1})//不存在此用户
                 }
+            })
+        }
+    })
+})
+/**
+ * 成员确认加入
+ * 请求方式：
+ *      POST
+ * 接受参数：
+ *      tid：信件id
+ *      tag:是否确认(1是确认)
+ */
+router.post('/confirmMessage',function(req,res,next){
+    let {tid,tag} = req.body;
+    let token = req.header('token');
+    checkToken(token,(result)=>{
+        if(result.status!==0){
+            res.json(result)
+        }else{
+            let addUid = result.data.uid;
+            runSql(`update tmember set tag=? where tid=? and uid=?`,[tag,tid,addUid],(result1)=>{
+                    runSql(`select inviteUid from theme where tid=?`,[tid],(result3)=>{
+                        //如果已有成员
+                        if(result3.data[0].inviteUid){
+                            let inviteUid = result3.data[0].inviteUid + ','+addUid;
+                            console.log(inviteUid);
+                            runSql(`update theme set inviteUid=? where tid=?`,[inviteUid,tid],(result4)=>{
+                                console.log(inviteUid);
+                                runSql(`update tletter set inviteUid=? where tid=?`,[inviteUid,tid],(result5)=>{
+                                    res.json(result5)
+                                })
+                            })
+                        }else{
+                            console.log(addUid,'1')
+                            runSql(`update theme set inviteUid=? where tid=?`,[addUid,tid],(result6)=>{
+                                runSql(`update tletter set inviteUid=? where tid=?`,[addUid,tid],(result7)=>{
+                                    res.json(result7)
+                                })
+                            })
+                        }
+                    })
+                console.log("成功")
+            })
+        }
+    })
+})
+/**
+ * 获取主题创建者
+ * 请求方式：
+ *      GET
+ * 接受参数：
+ *      tid：主题id
+ * 返回参数：
+ *      uname：创建者名字
+ */
+router.get('/getown',function(req,res,next){
+    let {tid} = req.query;
+    let token = req.header('token');
+    checkToken(token,(result)=>{
+        if(result.status !== 0){
+            res.json(result);
+        }else{
+            runSql(`select user.uname from user,theme where theme.tid=? and(theme.uid=user.uid)`,[tid],(result2)=>{
+                console.log(result2);
+                res.json(result2);
+            })
+        }
+    })
+})
+/**
+ * 获取邀请通知
+ * 请求方式：
+ *      GET
+ * 接收参数：
+ * 返回参数：
+ */
+router.get('/getmessage',function(req,res,next){
+    let token = req.header('token');
+    checkToken(token,(result)=>{
+        if(result.status!==0){
+            res.json(result)
+        }else{
+            let uid = result.data.uid;
+            runSql(`select tid from tmember where uid=? and tag=?`,[uid,0],(result1)=>{
+                if(result1.data.length ==0){
+                    res.json(result1)
+                }else{
+                    let tid = result1.data[0].tid;
+                    runSql(`select tmember.inviteMessage,tmember.tid,user.* from tmember,user where tid=? and own=? and(tmember.uid=user.uid)`,
+                    [tid,1],(result2)=>{
+                    res.json(result2);
+                    })
+                }
+                
+                
             })
         }
     })
