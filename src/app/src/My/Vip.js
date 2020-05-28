@@ -49,7 +49,7 @@ export default class Vip extends Component {
         return (
             <div>
                 {/* tab */}
-                {/* <div className="col-tab">
+                <div className="col-tab">
                     我的收藏
                     <Link to="/home/my" 
                     style={{
@@ -70,7 +70,7 @@ export default class Vip extends Component {
                         height:"2%",
                         fontSize:"1.2em"     
                     }}></i>
-                </div> */}
+                </div>
                 {/* <div className="v-top">
                     <img onClick={this.back} id="v-back" src={require("../imgs/public/返回(2).png")} />
                     <span>会员中心</span>
