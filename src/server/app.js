@@ -22,6 +22,7 @@ var countRouter = require('./routes/adminStatistics');
 var adminLetterManage = require('./routes/adminletterManage');
 var musicRouter = require('./routes/music');
 var openRouter = require('./routes/openletter');
+var signRouter = require('./routes/signIn');
 
 var app = express();
 
@@ -57,6 +58,7 @@ app.use('/v1/analy',countRouter);
 app.use('/v1/adminletman',adminLetterManage);
 app.use('/v1/music',musicRouter);
 app.use('/v1/public',openRouter);
+app.use('/v1/signIn',signRouter);
 
 
 // error handler
