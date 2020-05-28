@@ -20,6 +20,7 @@ import Changepsw from './My/Changepsw'
 import Articalnum from './My/Articalnum'
 import Feedback from './My/Feedback'
 import Sharenum from './My/Sharenum'
+import Awesome from './My/Awesome'
 
 
 
@@ -100,6 +101,7 @@ ReactDOM.render(
             <Route path="/vip" component={Vip} />
             <Route path="/myorder" component={Myorder} />
             <Route path="/sharelist" component={Sharelist} />
+            <Route path="/awesome" component={Awesome}/>
 
             {/* zym */}
             <Route exact path="/invitewrite" component={InviteWrite}/>
