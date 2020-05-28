@@ -448,6 +448,10 @@ export default class Home extends Component {
 
                 {/* 向右滑动 */}
                 <div className="slider" style={this.state.silder}>
+                        <img id="sign" src={require("../imgs/public/签到.png")} onClick={()=>{
+                            this.props.history.push("/SignIn")
+                        }}/>
+                        <span style={{position:'absolute',left:'35px',top:'5px',fontWeight:"bold"}}>打卡</span>
                     {/* 返回键 */}
                     <div className="slider-top">
                         {/* <img src={require("../imgs/Home/cancel.png")} onClick={this.cancel} style={{float:"right",padding:"5px"}} /> */}
