@@ -1,7 +1,7 @@
 import React, { Component } from 'react'
 import '../css/inviteMember.css'
 import {HashRouter as Router,Link,Switch,Route} from 'react-router-dom'
-import { SwipeAction, List, Modal, Button, WhiteSpace, WingBlank,NavBar } from 'antd-mobile';
+import { SwipeAction, List, Modal, Button, WhiteSpace, WingBlank,NavBar, Toast } from 'antd-mobile';
 
 const alert = Modal.alert;
 const showAlert = () => {
@@ -35,10 +35,15 @@ export default class inviteMember extends Component {
                 }
         } 
         this.$api.mbdelect({tid:e1,uid:e2}).then(res => {   
-            if (res.data.status === 0) {                                
+            console.log(res.data.status)
+            if (res.data.status === 0) {   
+                Toast.success('删除成功', 1);                             
                 this.setState({
                     data:list
                 })    
+            }else{
+                Toast.fail('创建者不可删除', 1);
+                console.log("创建者不可删除")
             }
         }) 
 

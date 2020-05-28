@@ -248,7 +248,7 @@ router.post('/theme/addFirstMember',function(req,res,next){
                 if(own == uid){
                     runSql(`select uid from tmember where tid=?`,[tid],(result2)=>{; 
                         if(result2.data.length==0){
-                            runSql('insert into tmember(tid,uid) value(?,?)',[tid,own],(result3)=>{
+                            runSql('insert into tmember(tid,uid,tag,own) value(?,?,?,?)',[tid,own,1,1],(result3)=>{
                                 console.log(result3);
                             })
                         }
@@ -285,7 +285,6 @@ router.post('/addmember',function(req,res,next){
                         if(result2.data.length == 0){
                             //邀请该成员
                             runSql(`insert into tmember(tid,uid,inviteMessage,tag) value(?,?,?,?)`,[tid,addUid,inviteMessage,0],(result8)=>{
-                            
                             console.log("成功")
                             })
                         }else{
@@ -385,7 +384,7 @@ router.get('/getmessage',function(req,res,next){
                     let tid = result1.data[0].tid;
                     runSql(`select tmember.inviteMessage,tmember.tid,user.* from tmember,user where tid=? and own=? and(tmember.uid=user.uid)`,
                     [tid,1],(result2)=>{
-                    res.json(result2);
+                        res.json(result2);
                     })
                 }
                 
@@ -411,9 +410,48 @@ router.get('/getmessage',function(req,res,next){
         if(result.status != 0){
             res.json(result.json);
         }else{
-           runSql(`delete from tmember where uid=? and tid=?`,[uid,tid],(result1)=>{
-               res.json(result1);
-           })
+            console.log(uid)
+            runSql(`select own from tmember where tid=? and uid=?`,[tid,uid],(result3)=>{
+                let tag = result3.data[0].own
+                console.log(result3.data[0].own,'tag');
+                if(!tag){
+                    runSql(`delete from tmember where uid=? and tid=?`,[uid,tid],(result1)=>{
+                        runSql(`select inviteUid from theme where tid=?`,[tid],(result2)=>{
+                            console.log(result2)
+                            let data = result2.data[0].inviteUid;
+                            console.log(data,'data');
+                            if(data.length>1){
+                                var arr = data.split(",")
+                                for(var i=0;i<arr.length;i++){
+                                    if(arr[i]==uid){
+                                        arr.splice(i,1);
+                                    }
+                                }
+                                var struid = arr.join(",")
+                                runSql('update theme set inviteUid=? where tid=?',[struid,tid],(result3)=>{
+                                    runSql('update tletter set inviteUid=? where tid=?',[struid,tid],(result4)=>{
+                                        console.log(result4);
+                                        console.log("删除成功1")
+                                        res.json({status:0});
+                                    })
+                                })
+                            }else{
+                                runSql('update theme set inviteUid=? where tid=?',[null,tid],(result3)=>{
+                                    runSql('update tletter set inviteUid=? where tid=?',[null,tid],(result4)=>{
+                                        console.log("删除成功2")
+                                        console.log(result4);
+                                        res.json({status:0});
+                                    })
+                                })
+                            }
+                        })
+                    })
+                }else{
+                    res.json({status:1})
+                    console.log("创建者不可删除")
+                }
+            })
+           
         }
     })
 })
