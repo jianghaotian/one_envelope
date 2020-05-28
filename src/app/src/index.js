@@ -57,6 +57,7 @@ import Attention from './My/Attention'
 import Invite from './My/Invite'
 import Myself from './My/Myself'
 import Sharelist from './My/Sharelist'
+import SignIn from './Home/SignIn'
 React.Component.prototype.$api = api;
 React.Component.prototype.$store = store;
 
@@ -77,6 +78,7 @@ ReactDOM.render(
             <Route path="/pubWrite" component={PubWrite} />
             <Route path="/pubBack" component={PubBack} />
             <Route path="/UserInfo" component={UserInfo} />
+            <Route path='/SignIn' component={SignIn} />
             {/* lxc */}
             <Route path="/recover" component={Recover} />
             <Route path="/setting" component={Setting}/>
