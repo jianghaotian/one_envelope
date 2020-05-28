@@ -88,8 +88,8 @@ router.post('/writeOpen', function (req, res, next) {
             res.json(result);
         }else{
             let uid = result.data.uid;
-            runSql(`insert into open(Otitle, Ocontent,Oday,Uid,ppid,weather,anonymous,city) values (?,?,?,?,?,?,?,?)`,
-            [Otitle,Ocontent,Oday,uid,ppid,weather,anonymous,city],(result1) =>{
+            runSql(`insert into open(Otitle, Ocontent,Oday,Uid,ppid,number,weather,anonymous,city) values (?,?,?,?,?,?,?,?,?)`,
+            [Otitle,Ocontent,Oday,uid,ppid,0,weather,anonymous,city],(result1) =>{
                 res.json(result1)
             });
         }
@@ -229,7 +229,15 @@ router.get('/addLikes', function (req, res, next) {
         } else {
             let uid = result.data.uid;
             runSql(`insert into awesome(Oid,Uid) value(?,?)`,[oid,uid],(result1)=>{
-                res.json(result1);
+                runSql(`select open.number from open where oid=?`, [oid], (result2) => {
+                    let number = result2.data[0].number;
+                    number++;
+                    runSql('update open set number=? where oid=? ',[number,oid],(result3)=>{
+                        runSql(`select open.number from open where oid=?`, [oid], (result4) => {
+                                res.json(result4);
+                        })
+                    })
+                })
             })
         }
     });
@@ -283,7 +291,15 @@ router.get('/cancelLikes', function (req, res, next) {
         } else {
             let uid = result.data.uid;
             runSql(`delete from awesome where uid=? and oid=?`,[uid,oid],(result1)=>{
-                res.json(result)
+                runSql(`select open.number from open where oid=?`,[oid],(result2)=>{
+                    let number = result2.data[0].number;
+                    number--;
+                    runSql(`update open set number=? where oid=?`, [number,oid],(result3)=>{
+                        runSql(`select open.number from open where oid=?`, [oid], (result4) => {
+                            res.json(result4);
+                        })
+                    })
+                })
             })
         }
     });
