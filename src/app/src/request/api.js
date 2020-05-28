@@ -36,6 +36,8 @@ const api = {
     openlist:p=>get('mine/openlist',p),
 
     sendlist:p=>get('mine/sendlist',p),
+    awenotice:p=>get('public/awenotice',p),//点赞通知
+
     // zym
     theme: p=> get('together/theme',p),
     themetitle:p=>get('together/theme/showtitle',p),

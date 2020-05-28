@@ -345,4 +345,28 @@ router.get('/userid', function (req, res, next) {
         }
     });
 });
+/**
+ * 点赞通知
+ * GET
+ * 接收参数:
+ *     
+ */
+router.get('/awenotice', function (req, res, next) {
+    let token = req.header('token');
+    checkToken(token, (result) => {
+        if (result.status !== 0) {
+            res.json(result);
+        } else {
+            let uid = result.data.uid;
+            runSql(`select user.uimage,user.uname,open.Otitle,open.Ocontent from user,open,awesome where user.uid=awesome.uid and open.oid=awesome.oid and open.uid=?`,
+            [uid],(result1)=>{
+                let results = result1.data;
+                runSql('select user.uname from user where uid=?',[uid],(result2)=>{
+                    let myname = result2.data;
+                    res.json({status:0,results,myname})
+                })
+            })
+        }
+    });
+}); 
 module.exports = router;

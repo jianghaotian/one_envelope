@@ -1422,6 +1422,39 @@ GET
 }
 ```
 
+## 5.4点赞列表
+
+**请求url**
+
+```
+URL : https://yf.htapi.pub/v1/public/awenotice
+```
+
+**请求方式**
+
+```
+GET
+```
+
+**接收参数**
+
+**返回参数**
+
+```
+{
+	status: 0, 
+	results: [{
+        Ocontent: "SRHDTFSHJHGJSNLKNNSGJWHEHBJKMFBJZNJDJAHUFIHIVJNIVNNGIF"
+        Otitle: "467"
+        uimage: "1576635988202_50.png"
+        uname: "lxc"
+	}],
+	myname: [{
+        uname: "zyq"
+	}]
+}
+```
+
 
 
 
