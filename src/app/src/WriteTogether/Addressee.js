@@ -1,7 +1,7 @@
 import React, { Component } from 'react'
 import "antd/dist/antd.css"
 import "../css/togeCreate.css"
-import { ImagePicker, Popover,Modal,List } from 'antd-mobile';
+import { ImagePicker, Popover,Modal,List ,Toast} from 'antd-mobile';
 import { Input,Button} from 'antd';
 
 const data = [{}];
@@ -44,20 +44,17 @@ export default class Addressee extends Component {
                     this.setState({
                         data:res.data.data                   
                     })                    
-                    // alert("创建成功~");                   
+                    // alert("创建成功~");  
+                    Toast.success('经验+5', 1);                
                     console.log(this.state.data);
                 }         
             })  
         this.totoge();
-
         }
-
     }
     totoge=()=>{
         this.props.history.push("/home/writeTogether");
     }
-    
-    
     
     render() {
         //console.log(this.state.src);

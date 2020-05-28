@@ -1,4 +1,5 @@
 import React, { Component } from 'react';
+import {Link,Switch} from 'react-router-dom'
 import "../css/Vip.css";
 
 export default class Vip extends Component {
@@ -47,10 +48,33 @@ export default class Vip extends Component {
     render() {
         return (
             <div>
-                <div className="v-top">
+                {/* tab */}
+                {/* <div className="col-tab">
+                    我的收藏
+                    <Link to="/home/my" 
+                    style={{
+                        float:"left",
+                        height:"3em",
+                        width:"3em",
+                        position:"absolute",
+                        left:"0",
+                        top:"0",
+                        zIndex:"1"                       
+                    }}
+                    ></Link>
+                    <i                           
+                    className="iconfont icon-fanhui" 
+                    style={{
+                        position:"absolute",
+                        left:"5%",
+                        height:"2%",
+                        fontSize:"1.2em"     
+                    }}></i>
+                </div> */}
+                {/* <div className="v-top">
                     <img onClick={this.back} id="v-back" src={require("../imgs/public/返回(2).png")} />
                     <span>会员中心</span>
-                </div>
+                </div> */}
                 <div className="v-mid">
                     <div className="v-li" onClick={this.pay}>
                         <img src={require("../imgs/public/笑脸.png")} />
