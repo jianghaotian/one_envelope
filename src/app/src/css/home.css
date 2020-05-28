@@ -140,8 +140,8 @@ li{
 .slider-user{
     height:90px;
     width:100%;
-    background-color:white;
-    padding-top:15px;
+    /* background-color:pink; */
+    padding-top:20px;
 }
 .slider-profile{
     height:50px;
@@ -231,4 +231,11 @@ li{
     color:rgb(100, 98, 98);
     padding:0 10px;
     color: white;
+}
+
+#sign{
+    width:25px;
+    position: absolute;
+    top:2px;
+    left:5px;
 }
