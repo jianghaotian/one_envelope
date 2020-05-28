@@ -183,6 +183,43 @@ router.post('/amendLetter',function(req,res,next){
         }
     })
 })
+// router.get('/addLikes', function (req, res, next) {
+//     let {oid} = req.query;
+//     let token = req.header('token');
+//     checkToken(token, (result) => {
+//         if (result.status !== 0) {
+//             res.json(result);
+//         } else {
+//             let uid = result.data.uid;
+//             runSql(`select open.number from open where oid=?`, [oid], (result1) => {
+//                 let num = result1.data[0].number;
+//                 num++;
+//                 runSql(`select likepeo from open where oid=?`,[oid],(result2)=>{
+//                     var peo = result2.data[0].likepeo;
+//                     if(peo==null){
+//                         runSql('update open set number=?,likepeo=? where oid=? ',[num,uid,oid],(result3)=>{
+//                             runSql(`select open.number from open where oid=?`, [oid], (result4) => {
+//                                 res.json(result4);
+//                             })
+//                         })
+//                     }else{
+//                         runSql('update open set number=?,likepeo=? where oid=? ',[num,peo+','+uid,oid],(result5)=>{
+//                             runSql(`select open.number from open where oid=?`, [oid], (result6) => {
+//                                 res.json(result6);
+//                             })
+//                         })
+//                     }
+//                 })
+//             });
+//         }
+//     });
+// });
+/**
+ * 点赞
+ * GET
+ * 接收参数:
+ *      oid:信件id
+ */
 router.get('/addLikes', function (req, res, next) {
     let {oid} = req.query;
     let token = req.header('token');
@@ -191,29 +228,46 @@ router.get('/addLikes', function (req, res, next) {
             res.json(result);
         } else {
             let uid = result.data.uid;
-            runSql(`select open.number from open where oid=?`, [oid], (result1) => {
-                let num = result1.data[0].number;
-                num++;
-                runSql(`select likepeo from open where oid=?`,[oid],(result2)=>{
-                    var peo = result2.data[0].likepeo;
-                    if(peo==null){
-                        runSql('update open set number=?,likepeo=? where oid=? ',[num,uid,oid],(result3)=>{
-                            runSql(`select open.number from open where oid=?`, [oid], (result4) => {
-                                res.json(result4);
-                            })
-                        })
-                    }else{
-                        runSql('update open set number=?,likepeo=? where oid=? ',[num,peo+','+uid,oid],(result5)=>{
-                            runSql(`select open.number from open where oid=?`, [oid], (result6) => {
-                                res.json(result6);
-                            })
-                        })
-                    }
-                })
-            });
+            runSql(`insert into awesome(Oid,Uid) value(?,?)`,[oid,uid],(result1)=>{
+                res.json(result1);
+            })
         }
     });
 });
+// /**
+//  * 取消点赞
+//  * GET
+//  * 接收参数:
+//  *      oid:信件id
+//  */
+// router.get('/cancelLikes', function (req, res, next) {
+//     let {oid} = req.query;
+//     let token = req.header('token');
+//     checkToken(token, (result) => {
+//         if (result.status !== 0) {
+//             res.json(result);
+//         } else {
+//             let uid = result.data.uid;
+//             runSql(`select open.likepeo from open where oid=?`, [oid], (result1) => {
+//                 let like = result1.data[0].likepeo;
+//                 var likearr = like.split(",");
+//                 for(var i=0;i<likearr.length;i++){
+//                     if(likearr[i]==uid){
+//                         likearr.splice(i,1);
+//                     }
+//                 }
+//                 var likestr = likearr.join(",");
+//                 runSql(`select open.number from open where oid=?`,[oid],(result2)=>{
+//                     let number = result2.data[0].number;
+//                     number--;
+//                     runSql(`update open set number=?,likepeo=? where oid=?`, [number,likestr,oid],(result3)=>{
+//                         res.json({status:0,number:number});
+//                     })
+//                 })
+//             });
+//         }
+//     });
+// });
 /**
  * 取消点赞
  * GET
@@ -228,23 +282,9 @@ router.get('/cancelLikes', function (req, res, next) {
             res.json(result);
         } else {
             let uid = result.data.uid;
-            runSql(`select open.likepeo from open where oid=?`, [oid], (result1) => {
-                let like = result1.data[0].likepeo;
-                var likearr = like.split(",");
-                for(var i=0;i<likearr.length;i++){
-                    if(likearr[i]==uid){
-                        likearr.splice(i,1);
-                    }
-                }
-                var likestr = likearr.join(",");
-                runSql(`select open.number from open where oid=?`,[oid],(result2)=>{
-                    let number = result2.data[0].number;
-                    number--;
-                    runSql(`update open set number=?,likepeo=? where oid=?`, [number,likestr,oid],(result3)=>{
-                        res.json({status:0,number:number});
-                    })
-                })
-            });
+            runSql(`delete from awesome where uid=? and oid=?`,[uid,oid],(result1)=>{
+                res.json(result)
+            })
         }
     });
 });

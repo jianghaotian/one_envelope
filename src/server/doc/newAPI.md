@@ -879,21 +879,12 @@ GET
 | ---- | :----: | :--: |
 | oid  | 信件id |      |
 
-
-
-
-
 **返回参数**
 
 ```
 {
     "status": 0,
-    "message": "OK",
-    "data": [
-        {
-            "number": 1
-        }
-    ]
+    "message": "OK"
 }
 ```
 
@@ -922,12 +913,7 @@ GET
 ```
 {
     "status": 0,
-    "message": "OK",
-    "data": [
-        {
-            "number": 0
-        }
-    ]
+    "message": "OK"
 }
 ```
 
@@ -1402,9 +1388,39 @@ GET
 }
 ```
 
+## 5.3获取点赞数
 
+**请求url**
 
+```
+URL : https://yf.htapi.pub/v1/public/Likenum
+```
 
+**请求方式**
+
+```
+GET
+```
+
+**接收参数**
+
+| 参数 | 说明   | 类型 |
+| ---- | ------ | ---- |
+| oid  | 信件id |      |
+
+**返回参数**
+
+```
+{
+    "status": 0,
+    "message": "OK",
+    "data": [
+        {
+           likepeo: 2
+        }
+    ]
+}
+```
 
 
 
