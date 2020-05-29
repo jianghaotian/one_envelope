@@ -385,4 +385,25 @@ router.get('/awenotice', function (req, res, next) {
         }
     });
 }); 
+/**
+ * 获取点赞人id
+ * GET
+ * 接收参数:
+ *      oid：信件id
+ *     
+ */
+router.get('/aweuid', function (req, res, next) {
+    let {oid} = req.query;
+    let token = req.header('token');
+    checkToken(token, (result) => {
+        if (result.status !== 0) {
+            res.json(result);
+        } else {
+            runSql(`select uid from awesome where oid=?`,
+            [oid],(result1)=>{
+                res.json(result1);
+            })
+        }
+    });
+});
 module.exports = router;
