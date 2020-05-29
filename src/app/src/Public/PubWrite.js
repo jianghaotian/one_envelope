@@ -138,15 +138,30 @@ export default class PubWrite extends Component {
             })
         }else{
             if(type == 'show' || type == 'Ushow'){
+                var myId;
                 //展示信件
                 this.setState({
                     bottom : 'none',
                     disabled : true,
                     pointWeather:'none'
-                })       
-                // this.$api.getLikeNum({oid:this.state.oid}).then(res=>{
-                //     console.log(res)
-                // })
+                })  
+                this.$api.getId().then(res=>{
+                    // console.log(res.data.uid)
+                    myId = res.data.uid;
+                })     
+                this.$api.getSignId({oid:oid}).then(res=>{
+                    let likeList = res.data.data;
+                    console.log(likeList);
+                    for(let i =0;i<likeList.length;i++){
+                        // console.log(likeList[i].uid)
+                        if(likeList[i].uid == myId){
+                            this.setState({
+                                zan :'zan',
+                                like : true
+                            })
+                        }
+                    }
+                })
             }else if(type == 'edit'){
                 //编辑信件
                 this.setState({
@@ -156,7 +171,7 @@ export default class PubWrite extends Component {
                 })
             }
             this.$api.showPub({oid : oid}).then(res=>{
-                console.log(res.data.data);
+                // console.log(res.data.data);
                 if(res.data.data.length>0)
                 {
                     let data = res.data.data[0];
@@ -324,7 +339,7 @@ export default class PubWrite extends Component {
             })
             // console.log(this.state.oid)
             this.$api.addLikes({oid : this.state.oid}).then(res=>{
-                console.log(res);
+                // console.log(res);
             })
         }else{
             //取消赞
@@ -333,7 +348,7 @@ export default class PubWrite extends Component {
                 like : false
             })
             this.$api.cancleLikes({oid : this.state.oid}).then(res=>{
-                console.log(res);
+                // console.log(res);
             })
         }
     }

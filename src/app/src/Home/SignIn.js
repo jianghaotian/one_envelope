@@ -20,10 +20,12 @@ const sentence = ['世上最好的保鲜就是不断进步，让自己成为一�
 '春有百花秋有月，夏有凉风冬有雪。若无闲事挂心头，便是人间好时节。',
 ];
 
-const dayList = [];
+var dayList = [];
 for(let i=0;i<37;i++){
-  dayList.push(i)
+  let ele = {day:i,sign:0}
+  dayList.push(ele)
 }
+// console.log(dayList);
 
 const now = new Date();
 
@@ -34,7 +36,8 @@ export default class SignIn extends Component {
             id: 0,
             deg : 0,
             sign : '签',
-            show: 'none'
+            show: 'none',
+            disabled:false
         }
     }
     componentDidMount(){
@@ -45,7 +48,8 @@ export default class SignIn extends Component {
             month : DateArr[1],
             year : DateArr[3],
             y : now.getFullYear(),
-            m : now.getMonth()+1
+            m : now.getMonth()+1,
+            SignList : []
         })
         var id;
         if(DateArr[2] >= 10){
@@ -58,8 +62,21 @@ export default class SignIn extends Component {
             id : id
         })
         //获取签到情况
-        this.$api.getSign().then(res=>{
-          console.log(res)
+        this.$api.getSign({month:now.getMonth()+1}).then(res=>{
+          // console.log(res.data.data);
+          let list = res.data.data;
+          for(let i=0;i<list.length;i++){
+            console.log(list[i].sday);
+            let tag = list[i].sday;
+            if(tag == this.state.day){
+              this.setState({
+                sign : '√',
+                disabled : true
+              })
+            }
+            // console.log(dayList[tag]);
+            dayList[tag] = { day : Number(tag),sign : 1};
+          }
         })
     }
     refresh=()=>{
@@ -84,7 +101,8 @@ export default class SignIn extends Component {
     }
     qiandao=()=>{
         this.setState({
-            sign : '√'
+            sign : '√',
+            disabled : true
         })
         this.$api.sign({sday:this.state.day,month:this.state.m}).then(res=>{
           console.log(res);
@@ -127,8 +145,6 @@ export default class SignIn extends Component {
                   <ul id="c-date">
                     {
                       dayList.map((item,index)=>{
-                        // console.log(new Date(this.state.y,this.state.m,1).getDay())
-                        // console.log(new Date(this.state.y,this.state.m,-1).getDate())
                         let zhouji = new Date(this.state.y,this.state.m,1).getDay();
                         let days = new Date(this.state.y,this.state.m,-1).getDate();
                         if(index < zhouji){
@@ -136,16 +152,32 @@ export default class SignIn extends Component {
                         }else if(index > days){
                           return
                         }else if(index+1-zhouji == this.state.day){
-                          return <li className="dayLi" style={{
-                            fontWeight:"bold",color:"rgb(67, 197, 169)",
-                            border:'1.5px solid rgb(67, 197, 169)'
-                          }}>
-                            {item+1-zhouji}
-                          </li>
+                          if(item.sign == 1){
+                            return <li className="dayLi" style={{
+                              fontWeight:"bold",color:"#6fdfca",
+                              border:'1.5px solid #6fdfca'
+                            }}>
+                              {item.day+1-zhouji}
+                            </li>
+                          }else{
+                            return <li className="dayLi" style={{
+                              fontWeight:"bold",color:"rgb(67, 197, 169)"
+                            }}>
+                              {item.day+1-zhouji}
+                            </li>
+                          }
                         }else{
-                          return <li className="dayLi">
-                            {item+1-zhouji}
-                          </li>
+                          if(item.sign == 1){
+                            return <li className="dayLi" style={{
+                              border:'1.5px solid #6fdfca'
+                            }}>
+                              {item.day+1-zhouji}
+                            </li>
+                          }else{
+                            return <li className="dayLi">
+                              {item.day+1-zhouji}
+                            </li>
+                          }
                         }
                       })
                     }
@@ -175,9 +207,9 @@ export default class SignIn extends Component {
                     style={{transform:"rotate("+this.state.deg+"deg)"}}
                     onClick={this.refresh} />
                 </div>
-                <div id='signBtn' onClick={this.qiandao}>
+                <button id='signBtn' onClick={this.qiandao} disabled={this.state.disabled}>
                     {this.state.sign}
-                </div>
+                </button>
             </div>
         )
     }

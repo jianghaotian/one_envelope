@@ -107,6 +107,9 @@ const api = {
     getLikeNum:p=>get('public/Likenum',p),//获取点赞数
     sign :p=>post('signIn/sign',p),//签到
     getSign : p=>get('signIn/getsign',p),//获取签到情况
+    sign :p=>post('signIn/sign',p),//签到
+    getSign : p=>get('signIn/getsign',p),//获取签到情况
+    getSignId: p=>get('public/aweuid',p),//获取点赞ID
     // getpid:p => get('private/getpd',p)
 
     getsendletter:p=>get('mailbox/getsendletter',p),//获取发送信件信息
