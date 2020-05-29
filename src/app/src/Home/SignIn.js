@@ -57,6 +57,10 @@ export default class SignIn extends Component {
         this.setState({
             id : id
         })
+        //获取签到情况
+        this.$api.getSign().then(res=>{
+          console.log(res)
+        })
     }
     refresh=()=>{
         var timer;
@@ -81,6 +85,9 @@ export default class SignIn extends Component {
     qiandao=()=>{
         this.setState({
             sign : '√'
+        })
+        this.$api.sign({sday:this.state.day,month:this.state.m}).then(res=>{
+          console.log(res);
         })
     }
     showCalendar=()=>{

@@ -143,7 +143,10 @@ export default class PubWrite extends Component {
                     bottom : 'none',
                     disabled : true,
                     pointWeather:'none'
-                })
+                })       
+                // this.$api.getLikeNum({oid:this.state.oid}).then(res=>{
+                //     console.log(res)
+                // })
             }else if(type == 'edit'){
                 //编辑信件
                 this.setState({
@@ -306,7 +309,7 @@ export default class PubWrite extends Component {
         }
     }
     Like=()=>{
-        if(this.state.type == 'show'){
+        if(this.state.type == 'show' || this.state.type == 'Ushow'){
             return <div id='good' onClick={this.addLike}>
             <img src={require("../imgs/public/"+this.state.zan+".png")} id='zan' />
             </div>
@@ -321,7 +324,7 @@ export default class PubWrite extends Component {
             })
             // console.log(this.state.oid)
             this.$api.addLikes({oid : this.state.oid}).then(res=>{
-                // console.log(res);
+                console.log(res);
             })
         }else{
             //取消赞

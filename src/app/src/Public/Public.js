@@ -76,7 +76,7 @@ export default class Public extends Component {
         }
     }
     Userinfo=(item)=>{
-        console.log(item.Uid);
+        // console.log(item.Uid);
         this.props.history.push('/Userinfo?uid='+item.Uid);
     }
     Userinfo2=()=>{
@@ -113,33 +113,6 @@ export default class Public extends Component {
                     }
                 }]);
     }
-    addLike=(item)=>{
-        let likeList = String(item.likepeo);
-        // console.log(likeList.indexOf(this.state.myId))
-        if(likeList.indexOf(this.state.myId) >= 0){
-            item.like = 1;
-            return <img  onClick={()=>{this.LikeHandle(item.like,item.Oid)}} src={require("../imgs/public/心2.png")} id='dianzan' />;
-        }else{
-            item.like = 0;
-            return <img onClick={()=>{this.LikeHandle(item.like,item.Oid)}} src={require("../imgs/public/心.png")} id='dianzan' />;
-        }
-    }
-    LikeHandle=(like,id)=>{
-        if(like){
-            //取消点赞
-            this.$api.cancleLikes({oid : id}).then(res=>{
-                // console.log(res);
-                this.showPubList();
-            })
-        }else{
-            //点赞
-            this.$api.addLikes({oid : id}).then(res=>{
-                // console.log(res);
-                this.showPubList();
-            })
-        }
-        
-    }
     render() {
         // console.log(this.state.list)
         return (
@@ -163,13 +136,10 @@ export default class Public extends Component {
                                         {
                                             this.showName(item)
                                         }
-                                        <span id="dianzanshu">{
-                                            12
-                                        }</span>
+                                        <span id="dianzanshu">{item.number}</span>
                                         <span id='pub-day'>{item.Oday}</span>
-                                        {
-                                            this.addLike(item)
-                                        }
+                                        
+                                        <img src={require("../imgs/public/喜欢.png")} id='dianzan' />
                                         <img onClick={()=>{this.delPubLetter(item)}} src={require("../imgs/public/删除(1).png")} id="pub-delete" style={{display:this.state.del}} />
                                     </div>
                                     <div className="pub-content" onClick={()=>{this.showLetter(item.Oid)}}>

@@ -11,10 +11,20 @@ export default class Attention extends Component {
         }
     }
     componentDidMount(){
-        this.$api.attentionlist().then(res=>{
-            let list =  res.data.data;
-            this.setState({data:list})
-        })
+        let url = window.location.hash;
+        let uid = url.split('?')[1];
+        // console.log(uid);
+        if(uid){
+            this.$api.attentionlist({uid : uid}).then(res=>{
+                let list =  res.data.data;
+                this.setState({data:list})
+            })
+        }else{
+            this.$api.attentionlist().then(res=>{
+                let list =  res.data.data;
+                this.setState({data:list})
+            })
+        }
     }
     onAttention=(index,item,e)=>{
         e.stopPropagation();

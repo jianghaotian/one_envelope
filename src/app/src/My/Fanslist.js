@@ -11,14 +11,28 @@ export default class Fanslist extends Component {
         }
     }
     componentDidMount(){
-        this.$api.fanslist().then(res=>{
-            let list =  res.data.data;
-            // for(var i=0;i<list.length;i++){
-            //     list[i]['attention']=0
-            // }
-            this.setState({data:list})
-            console.log(list)
-        })
+        let url = window.location.hash;
+        let uid = url.split('?')[1];
+        // console.log(uid);
+        if(uid){
+            this.$api.fanslist({uid : uid}).then(res=>{
+                let list =  res.data.data;
+                // for(var i=0;i<list.length;i++){
+                //     list[i]['attention']=0
+                // }
+                this.setState({data:list})
+                console.log(list)
+            })
+        }else{
+            this.$api.fanslist().then(res=>{
+                let list =  res.data.data;
+                // for(var i=0;i<list.length;i++){
+                //     list[i]['attention']=0
+                // }
+                this.setState({data:list})
+                console.log(list)
+            })
+        }
     }
     onAttention=(index,item,e)=>{
         e.stopPropagation();
