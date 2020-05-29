@@ -50,7 +50,7 @@ router.get('/getsign',function(req,res,next){
         }else{
             let uid = result.data.uid;
             runSql(`select sday from signin where uid=? and month=?`,[uid,month],(result1)=>{
-                // console.log(result1);
+                console.log(result1);
                 res.json(result1);
             })
         }
