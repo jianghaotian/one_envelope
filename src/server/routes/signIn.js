@@ -25,7 +25,7 @@ router.post('/sign',function(req,res,next){
             res.json(result);
         }else{
             let uid = result.data.uid;
-            runSql(`inster into signin(uid,sday,month) value(?,?,?)`,[uid,sday,month],(result1)=>{
+            runSql(`insert into signin(uid,sday,month) value(?,?,?)`,[uid,sday,month],(result1)=>{
                 // console.log(result1);
                 res.json(result1);
             })
