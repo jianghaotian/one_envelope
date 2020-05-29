@@ -127,7 +127,10 @@ export default class Public extends Component {
     LikeHandle=(like,id)=>{
         if(like){
             //取消点赞
-
+            this.$api.cancleLikes({oid : id}).then(res=>{
+                // console.log(res);
+                this.showPubList();
+            })
         }else{
             //点赞
             this.$api.addLikes({oid : id}).then(res=>{
@@ -161,7 +164,7 @@ export default class Public extends Component {
                                             this.showName(item)
                                         }
                                         <span id="dianzanshu">{
-                                            item.number
+                                            12
                                         }</span>
                                         <span id='pub-day'>{item.Oday}</span>
                                         {

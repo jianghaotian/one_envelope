@@ -66,6 +66,9 @@ export default class My extends Component {
             </div>
         }
     }
+    toAwesome=()=>{
+        this.props.history.push('/awesome');
+    }
     render() {
         // console.log(this.state.arr[0].pidname)
         return (
@@ -154,7 +157,10 @@ export default class My extends Component {
                             color:'black'
                     }}><Item extra={
                         <i className="iconfont icon-iconfontzhizuobiaozhun023133" ></i>
-                    } onClick={() => {}}>我的分享</Item></Link>           
+                    } onClick={() => {}}>我的分享</Item></Link>    
+                    <Item extra={
+                        <i className="iconfont icon-collection" ></i>
+                    } onClick={this.toAwesome}>我的赞</Item>       
                 </List>
                 
                 <WhiteSpace size="lg" />

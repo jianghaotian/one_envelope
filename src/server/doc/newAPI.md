@@ -1422,11 +1422,16 @@ GET
 }
 ```
 
+<<<<<<< HEAD
 ## 5.4签到
+=======
+## 5.4点赞列表
+>>>>>>> ef967c6e264d1e21b1c1cc668ff4dd4f247ba128
 
 **请求url**
 
 ```
+<<<<<<< HEAD
 URL : https://yf.htapi.pub/v1/signIn/sign
 ```
 
@@ -1462,6 +1467,9 @@ POST
 
 ```
 URL : https://yf.htapi.pub/v1/signIn/getsign
+=======
+URL : https://yf.htapi.pub/v1/public/awenotice
+>>>>>>> ef967c6e264d1e21b1c1cc668ff4dd4f247ba128
 ```
 
 **请求方式**
@@ -1472,14 +1480,18 @@ GET
 
 **接收参数**
 
+<<<<<<< HEAD
 | 参数  | 说明 | 类型 |
 | ----- | ---- | ---- |
 | month | 月   | int  |
 
+=======
+>>>>>>> ef967c6e264d1e21b1c1cc668ff4dd4f247ba128
 **返回参数**
 
 ```
 {
+<<<<<<< HEAD
     "status": 0,
     "message": "OK",
     "data": [
@@ -1488,6 +1500,18 @@ GET
            sady：'25'
         }
     ]
+=======
+	status: 0, 
+	results: [{
+        Ocontent: "SRHDTFSHJHGJSNLKNNSGJWHEHBJKMFBJZNJDJAHUFIHIVJNIVNNGIF"
+        Otitle: "467"
+        uimage: "1576635988202_50.png"
+        uname: "lxc"
+	}],
+	myname: [{
+        uname: "zyq"
+	}]
+>>>>>>> ef967c6e264d1e21b1c1cc668ff4dd4f247ba128
 }
 ```
 

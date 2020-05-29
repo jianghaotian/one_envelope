@@ -26,12 +26,21 @@ Link{
     color:#000;
     height:55px;
     padding-top: 3%;
-    position:relative;
+    /* position:relative; */
     text-align: center;
     border-bottom: 0.5px solid rgb(104, 104, 102);
+    width: 100%;
+    position:fixed;
+    z-index:1;
 }
 
 /* block */
+.together-body{
+    height: 100%;
+    position: relative;
+    top: 58px;
+    width: 100%;
+}
 .together-block{
     display: inline-block;
     position:relative;

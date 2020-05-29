@@ -36,6 +36,8 @@ const api = {
     openlist:p=>get('mine/openlist',p),
 
     sendlist:p=>get('mine/sendlist',p),
+    awenotice:p=>get('public/awenotice',p),//点赞通知
+
     // zym
     theme: p=> get('together/theme',p),
     themetitle:p=>get('together/theme/showtitle',p),
@@ -102,6 +104,7 @@ const api = {
     getUserinfo : p=>get('public/designuser',p),//获取用户信息
     getOpenList : p=>get('public/deslist',p),
     getId: p=>get('public/userid',p),//获取uid
+    getLikeNum:p=>get('public/Likenum',p),//获取点赞数
     // getpid:p => get('private/getpd',p)
 
     getsendletter:p=>get('mailbox/getsendletter',p),//获取发送信件信息

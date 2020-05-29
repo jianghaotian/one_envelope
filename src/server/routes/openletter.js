@@ -229,7 +229,15 @@ router.get('/addLikes', function (req, res, next) {
         } else {
             let uid = result.data.uid;
             runSql(`insert into awesome(Oid,Uid) value(?,?)`,[oid,uid],(result1)=>{
-                res.json(result1);
+                runSql(`select open.number from open where oid=?`, [oid], (result2) => {
+                    let number = result2.data[0].number;
+                    number++;
+                    runSql('update open set number=? where oid=? ',[number,oid],(result3)=>{
+                        runSql(`select open.number from open where oid=?`, [oid], (result4) => {
+                                res.json(result4);
+                        })
+                    })
+                })
             })
         }
     });
@@ -283,7 +291,15 @@ router.get('/cancelLikes', function (req, res, next) {
         } else {
             let uid = result.data.uid;
             runSql(`delete from awesome where uid=? and oid=?`,[uid,oid],(result1)=>{
-                res.json(result)
+                runSql(`select open.number from open where oid=?`,[oid],(result2)=>{
+                    let number = result2.data[0].number;
+                    number--;
+                    runSql(`update open set number=? where oid=?`, [number,oid],(result3)=>{
+                        runSql(`select open.number from open where oid=?`, [oid], (result4) => {
+                            res.json(result4);
+                        })
+                    })
+                })
             })
         }
     });
@@ -345,4 +361,28 @@ router.get('/userid', function (req, res, next) {
         }
     });
 });
+/**
+ * 点赞通知
+ * GET
+ * 接收参数:
+ *     
+ */
+router.get('/awenotice', function (req, res, next) {
+    let token = req.header('token');
+    checkToken(token, (result) => {
+        if (result.status !== 0) {
+            res.json(result);
+        } else {
+            let uid = result.data.uid;
+            runSql(`select user.uimage,user.uname,open.Otitle,open.Ocontent from user,open,awesome where user.uid=awesome.uid and open.oid=awesome.oid and open.uid=?`,
+            [uid],(result1)=>{
+                let results = result1.data;
+                runSql('select user.uname from user where uid=?',[uid],(result2)=>{
+                    let myname = result2.data;
+                    res.json({status:0,results,myname})
+                })
+            })
+        }
+    });
+}); 
 module.exports = router;

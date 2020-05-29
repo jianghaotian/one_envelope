@@ -20,6 +20,7 @@ import Changepsw from './My/Changepsw'
 import Articalnum from './My/Articalnum'
 import Feedback from './My/Feedback'
 import Sharenum from './My/Sharenum'
+import Awesome from './My/Awesome'
 
 
 
@@ -57,6 +58,7 @@ import Attention from './My/Attention'
 import Invite from './My/Invite'
 import Myself from './My/Myself'
 import Sharelist from './My/Sharelist'
+import SignIn from './Home/SignIn'
 React.Component.prototype.$api = api;
 React.Component.prototype.$store = store;
 
@@ -77,6 +79,7 @@ ReactDOM.render(
             <Route path="/pubWrite" component={PubWrite} />
             <Route path="/pubBack" component={PubBack} />
             <Route path="/UserInfo" component={UserInfo} />
+            <Route path='/SignIn' component={SignIn} />
             {/* lxc */}
             <Route path="/recover" component={Recover} />
             <Route path="/setting" component={Setting}/>
@@ -98,6 +101,7 @@ ReactDOM.render(
             <Route path="/vip" component={Vip} />
             <Route path="/myorder" component={Myorder} />
             <Route path="/sharelist" component={Sharelist} />
+            <Route path="/awesome" component={Awesome}/>
 
             {/* zym */}
             <Route exact path="/invitewrite" component={InviteWrite}/>
