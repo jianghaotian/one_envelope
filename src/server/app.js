@@ -23,7 +23,7 @@ var adminLetterManage = require('./routes/adminletterManage');
 var musicRouter = require('./routes/music');
 var openRouter = require('./routes/openletter');
 var signRouter = require('./routes/signIn');
-
+var helpRouter = require('./routes/help');
 var app = express();
 
 // view engine setup
@@ -59,7 +59,7 @@ app.use('/v1/adminletman',adminLetterManage);
 app.use('/v1/music',musicRouter);
 app.use('/v1/public',openRouter);
 app.use('/v1/signIn',signRouter);
-
+app.use('/v1/help',helpRouter);
 
 // error handler
 app.use(function(err, req, res, next) {
