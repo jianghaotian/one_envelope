@@ -146,7 +146,7 @@ export default class SignIn extends Component {
                     {
                       dayList.map((item,index)=>{
                         let zhouji = new Date(this.state.y,this.state.m,1).getDay();
-                        let days = new Date(this.state.y,this.state.m,-1).getDate();
+                        let days = new Date(this.state.y,this.state.m,0).getDate();
                         if(index < zhouji){
                           return <li className="dayLi"></li>
                         }else if(index > days){
