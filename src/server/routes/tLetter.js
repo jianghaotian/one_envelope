@@ -363,7 +363,7 @@ router.get('/getmessage',function(req,res,next){
             res.json(result)
         }else{
             let uid = result.data.uid;
-            runSql(`select tmember.*,user.* from tmember,user where tmember.uid=? and tag=? and (tmember.uid = user.uid)`,[uid,0],(result1)=>{
+            runSql(`select tmember.*,user.* from tmember,user,theme where tmember.uid=? and tag=? and (tmember.tid =theme.tid ) and (theme.uid=user.uid)`,[uid,0],(result1)=>{
                 console.log(result1);
                 res.json(result1);
             })
