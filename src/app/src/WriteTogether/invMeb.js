@@ -18,7 +18,9 @@ export default class invMeb extends Component {
         if(phone == undefined || phone ==""){
             alert("请输入电话号码");
         }else{
-            this.$api.addmember({tid:this.props.match.params.id,phone:phone,inviteMessage:this.state.inputValue}).then(res => {                     
+            var inp = this.state.inputValue?this.state.inputValue:'这里有一个小故事~等你一起来写哦，快来加入我吧！！！'
+            console.log(inp)
+            this.$api.addmember({tid:this.props.match.params.id,phone:phone,inviteMessage:inp}).then(res => {                     
                 // if (res.data.status === 0) { 
                 //     this.setState({
                 //         data:res.data.data                   

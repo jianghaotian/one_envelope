@@ -59,6 +59,7 @@ import Invite from './My/Invite'
 import Myself from './My/Myself'
 import Sharelist from './My/Sharelist'
 import SignIn from './Home/SignIn'
+import Inviteconfirm from './My/Inviteconfirm'
 React.Component.prototype.$api = api;
 React.Component.prototype.$store = store;
 
@@ -132,6 +133,7 @@ ReactDOM.render(
             <Route path='/attentionlist' component={Attention}/>
 
             <Route path='/invite' component={Invite}/>
+            <Route path='/inviteconfirm/' component={Inviteconfirm}/>
             <Route exact path='/myself' component={Myself}/>
             <Route exact path='/myself/:id' component={Myself}/>
         </Switch>
