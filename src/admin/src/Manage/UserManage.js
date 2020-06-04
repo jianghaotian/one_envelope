@@ -29,11 +29,13 @@ export default class UserManage extends Component {
                 // console.log(list[i].Uimage);
                 list[i].Uimage = <img src={"https://yf.htapi.pub/head/" + list[i].Uimage} style={{width:'48px',height:'48px',textAlign:'center',lineHeight:'48px',borderRadius:'50%'}} />
                 // http://localhost:8000/head/1234567891234_56.jpg
+                list[i].Vip==1?list[i].Vip='是':list[i].Vip='否';
             }
             this.setState({
                 data:list
             })
         })
+
 
     }
     getColumnSearchProps = dataIndex => ({
@@ -170,6 +172,16 @@ export default class UserManage extends Component {
                 dataIndex: 'Uphone',
                 key: 'Uphone',
                 ...this.getColumnSearchProps('Uphone'),
+            },
+            {
+                title: 'VIP',
+                dataIndex: 'Vip',
+                key: 'Vip',
+            },
+            {
+                title: '积分',
+                dataIndex: 'Grade',
+                key: 'Grade',
             },
             {
                 title: '注册时间',
