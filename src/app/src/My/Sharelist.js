@@ -68,25 +68,9 @@ export default class Sharelist extends Component {
                 
                 {/* content */}
                 <List>
-                    {this.state.arr.map((item,index)=>{
+                    {this.state.brr.map((item,index)=>{
                     return(
                         <SwipeAction>
-                            <List.Item className='my-text' onClick={() => {}} 
-                            key={index}>
-                                <img src={item.img} style={{
-                                    borderRadius:'50%',
-                                    height:'50%',
-                                    width:'15%',
-                                    margin:'1em'
-                                }} /> 
-                                <span className="my-title">{item.toNick}</span>
-                                <span className="my-date">{new Date(item.Pday).toLocaleString()}</span>
-                                <span className="my-user">{item.Ptitle}</span>
-                                <span className="my-content">
-                                    {item.Pcontent}
-                                </span>
-                                {/* </Link> */}
-                            </List.Item>
                             <List.Item className='my-text' onClick={() => {}} 
                             key={index}>
                                 <img src={item.img} style={{
