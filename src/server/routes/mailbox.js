@@ -17,9 +17,9 @@ router.get('/', function (req, res, next) {
         if (result.status !== 0) {
             res.json(result);
         } else {
-            let uid ='%'+ result.data.uid + '%';
+            let uid =result.data.uid;
             
-            runSql(`select pletter.*,user.uimage,user.uname from pletter,user where pletter.isSend = ? and pletter.touid like ? and user.uid=pletter.uid`, [1,uid], (result1) => {
+            runSql(`select pletter.*,user.uimage,user.uname from pletter,user where pletter.isSend = ? and pletter.touid=? and user.uid=pletter.uid`, [1,uid], (result1) => {
                 // console.log(result1);
                 res.json(result1);
             });
