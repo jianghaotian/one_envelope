@@ -31,26 +31,8 @@ export default class LetterBox extends Component {
             text:e
         })
     }
-    
-    // 失去焦点，显示原列表
-    handleshow =(e)=> {
-        console.log('失去焦点，显示原列表')
-        this.setState({
-            display:true,
-            displayb:false
-        })
-        
-    }
-    // 获得焦点，显示搜索结果
-    handlehide=(e)=>{
-        console.log('获得焦点，显示b列表')
-        this.setState({
-            display:false,
-            displayb:true
-        })
-
-    }
-    sousuo = (e) => {
+    // 调取后台
+    handleChange = (e) => {
         this.setState({
             text:e
         })
@@ -60,10 +42,11 @@ export default class LetterBox extends Component {
         }else{
             this.handlehide();
             this.$api.searchmail({ptitle:this.state.text}).then(res => {
-                console.log(res.data.data)//返回数据
+                // console.log(res.data.data)//返回数据
                 this.setState({
                     brr:res.data.data
                 })
+                // console.log(this.state.brr)
                 if(this.state.brr.length == 0){
                     Toast.fail('换个搜索词试试', 1);
                     this.handleshow()
@@ -73,6 +56,28 @@ export default class LetterBox extends Component {
                 })
             });
         }
+    }
+
+    // 失去焦点，显示原列表
+    handleshow =(e)=> {
+        // console.log('失去焦点，显示原列表')
+        this.setState({
+            display:true,
+            displayb:false
+        })
+        
+    }
+    // 获得焦点，显示搜索结果
+    handlehide=(e)=>{
+        // console.log('获得焦点，显示b列表')
+        this.setState({
+            display:false,
+            displayb:true
+        })
+        this.setState({
+            brr:[]
+        })
+
     }
     //获取焦点
     render() {
@@ -91,7 +96,7 @@ export default class LetterBox extends Component {
                 style={{backgroundColor:'whitesmoke'}}
                 onChange={(e)=>this.inputChange(e)}
                 cancelText='搜索'
-                onCancel={(e)=>this.sousuo(e)}
+                onCancel={(e)=>this.handleChange(e)}
                 // onSubmit={(e)=>this.onkey(e)}
                 onFocus={(e)=>this.handlehide(e)}
                 onBlur={(e)=>this.handleshow(e)}
@@ -142,10 +147,10 @@ export default class LetterBox extends Component {
                                     height:'64px',
                                     width:'64px'
                                 }} />
-                                <span className="lb-user">{item.uname}</span>
+                                <span className="lb-user">{item.Ptitle}</span>
                                 
                                 <span className="lb-date">{new Date(item.Pday).getFullYear()+'-'+(new Date(item.Pday).getMonth()+1)+'-'+new Date(item.Pday).getDate()}</span>
-                                <span className="lb-title">{item.Ptitle}</span>
+                                <span className="lb-title">{"来自："+item.uname}</span>
                                 <span className="lb-content">
                                     {item.Pcontent}
                                 </span>
@@ -157,5 +162,4 @@ export default class LetterBox extends Component {
             </div>
         )
     }
-    
 }
