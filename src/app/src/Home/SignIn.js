@@ -21,7 +21,7 @@ const sentence = ['世上最好的保鲜就是不断进步，让自己成为一�
 ];
 
 var dayList = [];
-for(let i=0;i<37;i++){
+for(let i=0;i<38;i++){
   let ele = {day:i,sign:0}
   dayList.push(ele)
 }
@@ -48,16 +48,20 @@ export default class SignIn extends Component {
             month : DateArr[1],
             year : DateArr[3],
             y : now.getFullYear(),
-            m : now.getMonth()+1,
+            m : now.getMonth(),
             SignList : []
         })
         var id;
+        console.log(DateArr[2].slice(1,2))
         if(DateArr[2] >= 10){
             id = DateArr[2]%10;
         }else{
-            id = DateArr[2];
+            id = DateArr[2].slice(1,2);
+            this.setState({
+              day : DateArr[2].slice(1,2)
+            })
         }
-        // console.log(id);
+        console.log(id);
         this.setState({
             id : id
         })
@@ -104,7 +108,7 @@ export default class SignIn extends Component {
             sign : '√',
             disabled : true
         })
-        this.$api.sign({sday:this.state.day,month:this.state.m}).then(res=>{
+        this.$api.sign({sday:this.state.day,month:this.state.m+1}).then(res=>{
           console.log(res);
         })
     }
@@ -130,7 +134,7 @@ export default class SignIn extends Component {
                 <div className="calendar">
                   <p>
                     <span id='c-year'>{this.state.y}&nbsp;年&nbsp;</span>
-                    <span>{this.state.m}&nbsp;月&nbsp;</span>
+                    <span>{this.state.m+1}&nbsp;月&nbsp;</span>
                   </p>
                   <ul id="c-title">
                     <li>日</li>
@@ -146,9 +150,11 @@ export default class SignIn extends Component {
                     {
                       dayList.map((item,index)=>{
                         let zhouji = new Date(this.state.y,this.state.m,1).getDay();
-                        let days = new Date(this.state.y,this.state.m,0).getDate();
+                        // console.log(zhouji)
+                        let days = new Date(this.state.y,this.state.m,-1).getDate();
+                        // console.log(days)
                         if(index < zhouji){
-                          return <li className="dayLi"></li>
+                        return <li className="dayLi"></li>
                         }else if(index > days){
                           return
                         }else if(index+1-zhouji == this.state.day){
