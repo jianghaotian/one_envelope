@@ -31,8 +31,26 @@ export default class LetterBox extends Component {
             text:e
         })
     }
-    // 调取后台
-    handleChange = (e) => {
+    
+    // 失去焦点，显示原列表
+    handleshow =(e)=> {
+        console.log('失去焦点，显示原列表')
+        this.setState({
+            display:true,
+            displayb:false
+        })
+        
+    }
+    // 获得焦点，显示搜索结果
+    handlehide=(e)=>{
+        console.log('获得焦点，显示b列表')
+        this.setState({
+            display:false,
+            displayb:true
+        })
+
+    }
+    sousuo = (e) => {
         this.setState({
             text:e
         })
@@ -56,50 +74,6 @@ export default class LetterBox extends Component {
             });
         }
     }
-    onkey = (e) => {
-        console.log(this.state.display)
-        console.log(this.state.displayb)
-        this.setState({
-            display:false,
-            displayb:true
-        })
-        this.setState({
-            text:e
-        })
-        // console.log(this.state.text)
-        if(this.state.text == ''){
-            Toast.fail('输入不为空', 1);
-        }else{
-            this.handlehide();
-            this.$api.searchmail({ptitle:this.state.text}).then(res => {
-                console.log(res.data.data)//返回数据
-                this.setState({
-                    brr:res.data.data
-                })
-                this.setState({
-                    displayb:true
-                })
-            });
-        }
-    }
-    // 失去焦点，显示原列表
-    handleshow =(e)=> {
-        console.log('失去焦点，显示原列表')
-        this.setState({
-            display:true,
-            displayb:false
-        })
-        
-    }
-    // 获得焦点，显示搜索结果
-    handlehide=(e)=>{
-        console.log('获得焦点，显示b列表')
-        this.setState({
-            display:false,
-            displayb:true
-        })
-
-    }
     //获取焦点
     render() {
         return (
@@ -117,7 +91,7 @@ export default class LetterBox extends Component {
                 style={{backgroundColor:'whitesmoke'}}
                 onChange={(e)=>this.inputChange(e)}
                 cancelText='搜索'
-                onCancel={(e)=>this.handleChange(e)}
+                onCancel={(e)=>this.sousuo(e)}
                 // onSubmit={(e)=>this.onkey(e)}
                 onFocus={(e)=>this.handlehide(e)}
                 onBlur={(e)=>this.handleshow(e)}
@@ -183,4 +157,5 @@ export default class LetterBox extends Component {
             </div>
         )
     }
+    
 }
