@@ -24,6 +24,7 @@ var musicRouter = require('./routes/music');
 var openRouter = require('./routes/openletter');
 var signRouter = require('./routes/signIn');
 var helpRouter = require('./routes/help');
+var openManager = require('./routes/openManager')
 var app = express();
 
 // view engine setup
@@ -60,7 +61,7 @@ app.use('/v1/music',musicRouter);
 app.use('/v1/public',openRouter);
 app.use('/v1/signIn',signRouter);
 app.use('/v1/help',helpRouter);
-
+app.use('/v1/openManager',openManager);
 // error handler
 app.use(function(err, req, res, next) {
     // set locals, only providing error in development

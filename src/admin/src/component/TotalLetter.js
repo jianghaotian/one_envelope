@@ -13,6 +13,7 @@ import {Addform} from '../Manage/Add';
 import {clearTokenAll} from '../redux/actions';
 import Help from '../Manage/Help';
 import {Backform} from '../Manage/BackMessage';
+import OpenManager from '../Manage/OpenManager';
 
 const { SubMenu } = Menu;
 const { Header, Content, Sider } = Layout;
@@ -84,8 +85,9 @@ export default class TotalLetter extends Component {
                       <Menu.Item key="6"><Link to='/backhome/busermanage'>用户管理</Link></Menu.Item>
                       <Menu.Item key="7"><Link to='/backhome/bprivatemanage'>私密信管理</Link></Menu.Item>
                       <Menu.Item key="8"><Link to='/backhome/btogethermanage'>一起写管理</Link></Menu.Item>
-                      <Menu.Item key="9"><Link to='/backhome/bpapermanage'>信纸管理</Link></Menu.Item>
-                      <Menu.Item key="10"><Link to='/backhome/help'>帮助与反馈</Link></Menu.Item>
+                      <Menu.Item key="9"><Link to='/backhome/bopenmanage'>公开写管理</Link></Menu.Item>
+                      <Menu.Item key="10"><Link to='/backhome/bpapermanage'>信纸管理</Link></Menu.Item>
+                      <Menu.Item key="11"><Link to='/backhome/help'>帮助与反馈</Link></Menu.Item>
                     </SubMenu>
                   </Menu>
                 </Sider>
@@ -105,6 +107,7 @@ export default class TotalLetter extends Component {
                         <Route path='/backhome/bprivatemanage' component={PrivateWrite}/>
                         <Route path='/backhome/btogethermanage' component={TogetherWrite}/>
                         <Route path='/backhome/bpapermanage' component={PaperManage}/>
+                        <Route path='/backhome/bopenmanage' component={OpenManager}/>
                         <Route path='/backhome/add' component={Addform}/>
                         <Route path='/backhome/help' component={Help}/>
                         <Route path='/backhome/backmessage' component={Backform}/>
