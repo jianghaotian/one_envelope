@@ -349,16 +349,23 @@ router.post('/confirmMessage',function(req,res,next){
  * 返回参数：
  *      uname：创建者名字
  */
-router.get('/getown',function(req,res,next){
-    let {tid} = req.query;
+/**
+ * 获取邀请通知
+ * 请求方式：
+ *      GET
+ * 接收参数：
+ * 返回参数：
+ */
+router.get('/getmessage',function(req,res,next){
     let token = req.header('token');
     checkToken(token,(result)=>{
-        if(result.status !== 0){
-            res.json(result);
+        if(result.status!==0){
+            res.json(result)
         }else{
-            runSql(`select user.uname from user,theme where theme.tid=? and(theme.uid=user.uid)`,[tid],(result2)=>{
-                console.log(result2);
-                res.json(result2);
+            let uid = result.data.uid;
+            runSql(`select tmember.*,user.* from tmember,user where tmember.uid=? and tag=? and (tmember.uid = user.uid)`,[uid,0],(result1)=>{
+                console.log(result1);
+                res.json(result1);
             })
         }
     })

@@ -42,13 +42,7 @@ export default class Invite extends Component {
                 <SearchBar placeholder="搜索" maxLength={8} />
                 {this.state.data.map((item,index)=>{
                     return(
-                        <Link to={
-                            {
-                                pathname:'/inviteconfirm/'+item.tid,
-                                state:{uname:item.Uname}
-                              }
-                            
-                            }  style={{color:'#000'}}>
+                        <Link to={'/inviteconfirm/'+item.Tid}  style={{color:'#000'}}>
                         <div style={{width:'100%',height:'100px',backgroundColor:'#efeff4',marginTop:'15px',position:'relative',borderRadius:'10px',border:'1px solid #ddd'}}>
                             <img 
                                 src={"https://yf.htapi.pub/head/"+item.Uimage} 

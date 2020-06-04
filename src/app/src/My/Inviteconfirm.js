@@ -23,7 +23,9 @@ export default class Inviteconfirm extends Component {
         this.$api.getmessage().then(res=>{
             this.setState({inviteMessage:res.data.data[0].inviteMessage})
         })
+        console.log(this.props.match.params.id)
         this.$api.getown({tid:this.props.match.params.id}).then(res=>{
+            console.log(res.data)
             this.setState({uname:res.data.data[0].uname})
         })
     }
@@ -32,7 +34,7 @@ export default class Inviteconfirm extends Component {
         this.$api.confirmMessage({tid:this.props.match.params.id,tag:1}).then(res=>{
             console.log(res)
             alert('加入成功！', '', [])
-            this.history.push('/invite')
+            this.props.history.push('/invite')
         })
     }
     render() {

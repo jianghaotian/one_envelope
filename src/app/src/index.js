@@ -133,7 +133,9 @@ ReactDOM.render(
             <Route path='/attentionlist' component={Attention}/>
 
             <Route path='/invite' component={Invite}/>
-            <Route path='/inviteconfirm/' component={Inviteconfirm}/>
+            <Route exact path='/inviteconfirm/' component={Inviteconfirm}/>
+            <Route exact path='/inviteconfirm/:id' component={Inviteconfirm}/>
+
             <Route exact path='/myself' component={Myself}/>
             <Route exact path='/myself/:id' component={Myself}/>
         </Switch>
