@@ -392,7 +392,7 @@ export default class PubWrite extends Component {
                     </div>
                     <div className="pw-bottom" style={{display:this.state.bottom}}>
                         <img onClick={this.selectBack} src={require("../imgs/public/皮肤(1).png")} style={{height:'24px',marginLeft:"10px"}} />
-                        <img src={require("../imgs/public/字体.png")} style={{height:'24px',marginLeft:"10px"}}  />
+                        {/* <img src={require("../imgs/public/字体.png")} style={{height:'24px',marginLeft:"10px"}}  /> */}
                         <Button id="pw-btn" onClick={this.submit}>完成</Button>
                         <Button id="pw-btn" style={{backgroundColor:this.state.btBg,color:"black"}} onClick={this.setbtBg}>匿名</Button>
                     </div>
