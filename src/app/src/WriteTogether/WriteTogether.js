@@ -29,7 +29,7 @@ export default class WriteTogether extends Component {
         // console.log(this.state.data);
 
         return (
-            <div style={{backgroundColor:"rgb(240, 233, 233)"}}>
+            <div>
                 <NavBar className='together-back'>
                     <Link to="/addressee">
                     {/* <img src={require("../imgs/WriteTogether/tianjia.png")} className='together-imge'/> */}
