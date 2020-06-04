@@ -33,6 +33,8 @@ export default class InviteWrite extends Component {
                 }) 
                 alert("删除成功");
                 this.totoge();   
+            }else{
+                alert("非创建者没有权限");
             }
         }) 
 

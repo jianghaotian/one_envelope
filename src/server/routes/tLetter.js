@@ -478,23 +478,33 @@ router.get('/getmessage',function(req,res,next){
             res.json(result)
         }else{
             var length;
-            runSql(`select * from tletter where tid=?`,[tid],(result4)=>{
+            let uid = result.data.uid
+            runSql(`select * from theme where tid=? and uid=?`,[tid,uid],(result4)=>{
+                console.log(result4,'resu4');
                 length = result4.data.length;
-                if(length > 0){
-                    runSql(`delete from tletter where tid=?`,[tid],(result2)=>{
-                        runSql(`delete from tmember where tid=?`,[tid],(result3)=>{
-                            runSql(`delete from theme where tid=?`,[tid],(result1)=>{
-                                res.json(result1);
+                if(length>0){
+                    runSql(`select * from tletter where tid=?`,[tid],(result5)=>{
+                        let len = result5.data.length
+                        if(len > 0){
+                            runSql(`delete from tletter where tid=?`,[tid],(result2)=>{
+                                runSql(`delete from tmember where tid=?`,[tid],(result3)=>{
+                                    runSql(`delete from theme where tid=?`,[tid],(result1)=>{
+                                        res.json({status:0});
+                                })
+                            })
                         })
+                        }else{
+                            runSql(`delete from tmember where tid=?`,[tid],(result3)=>{
+                                runSql(`delete from theme where tid=?`,[tid],(result1)=>{
+                                    res.json({status:0});
+                                })
+                            })
+                        }
                     })
-                })
                 }else{
-                    runSql(`delete from tmember where tid=?`,[tid],(result3)=>{
-                        runSql(`delete from theme where tid=?`,[tid],(result1)=>{
-                            res.json(result1);
-                        })
-                    })
+                    res.json({status:1})
                 }
+                
             })
         }
     })

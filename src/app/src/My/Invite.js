@@ -43,7 +43,7 @@ export default class Invite extends Component {
                 {this.state.data.map((item,index)=>{
                     return(
                         <Link to={'/inviteconfirm/'+item.Tid}  style={{color:'#000'}}>
-                        <div style={{width:'100%',height:'100px',backgroundColor:'#efeff4',marginTop:'15px',position:'relative',borderRadius:'10px',border:'1px solid #ddd'}}>
+                        <div style={{width:'100%',height:'100px',position:'relative',borderBottom:'1px solid #ddd'}}>
                             <img 
                                 src={"https://yf.htapi.pub/head/"+item.Uimage} 
                                 style={{

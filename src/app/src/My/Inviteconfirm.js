@@ -33,7 +33,7 @@ export default class Inviteconfirm extends Component {
         console.log("ok")
         this.$api.confirmMessage({tid:this.props.match.params.id,tag:1}).then(res=>{
             console.log(res)
-            alert('加入成功！', '', [])
+            Toast.success('加入成功！', 1);   
             this.props.history.push('/invite')
         })
     }

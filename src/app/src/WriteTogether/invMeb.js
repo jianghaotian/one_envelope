@@ -1,6 +1,6 @@
 import React, { Component } from 'react'
 import '../css/inviteMember.css'
-import {NavBar,Button,TextareaItem} from 'antd-mobile';
+import {NavBar,Button,TextareaItem, Toast} from 'antd-mobile';
 
 export default class invMeb extends Component {
     constructor(){
@@ -28,12 +28,14 @@ export default class invMeb extends Component {
                 //     // alert("创建成功~");                   
                 //     console.log(this.state.data);
                 // }
-                this.totoge();
+                Toast.success('邀请成功！',1)
+                this.props.history.push('/inviteMember/'+this.props.match.params.id);
             })  
         }
 
     }
     totoge=()=>{
+        console.log("ksop")
         this.props.history.push('/inviteMember/'+this.props.match.params.id);
     }
     textChange=(e)=>{
