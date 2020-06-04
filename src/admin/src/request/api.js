@@ -62,7 +62,13 @@ const api = {
     //保存反馈信息
     saveBack:p=> post('/help/saveBack',p),
     //获取feedback
-    searchFeedback:p => get('/help/searchFeedback',p)
+    searchFeedback:p => get('/help/searchFeedback',p),
+    //获取公开信件信息
+    getopen:p=>get('/openManager/getopen',p),
+    //删除公开写信件
+    delopen:p=>post('/openManager/delopen',p),
+    //获取公开写信件数
+    opennum:p=>get('/openManager/opennum',p),
 }
 
 
