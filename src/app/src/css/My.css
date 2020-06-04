@@ -1,3 +1,18 @@
+.mygd{
+    height: 16em;
+    width: 100%;
+    /* background-color: pink; */
+    background-size: cover;
+    position: fixed;
+    top: 0;
+    z-index: 1;
+}
+.myfun{
+    height: 500px;
+    position: relative;
+    top: 16em;
+    width: 100%;
+}
 #my-info{
     height: 16em;
     position: relative;

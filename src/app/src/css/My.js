@@ -67,8 +67,9 @@ export default class My extends Component {
         }
     }
     render() {
+        // console.log(this.state.arr[0].pidname)
         return (
-        <div className="mydiv">
+            <div className="mydiv">
                 {/* 个人信息 */}
             <div className='mygd'>
                 <div id='my-info'>
@@ -176,7 +177,7 @@ export default class My extends Component {
                     </Link>
                 </List>
             </div>
-        </div>
+            </div>
         )
     }
 }

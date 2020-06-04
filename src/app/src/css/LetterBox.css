@@ -21,7 +21,7 @@ a:active {
 .active{
     display: block;
 }
-.active1{
+.activeno{
   display: none;
 }
 .lb-text{
