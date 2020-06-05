@@ -147,6 +147,7 @@ export default class UserInfo extends Component {
                     <ul>
                     {
                         this.state.openList.map((item,index)=>{
+                            console.log(item)
                             if(item.anonymous != 1){
                                 return <li className='open-li' onClick={()=>{this.toShow(item)}}>
                                             <div className="o-l-top">
@@ -155,7 +156,7 @@ export default class UserInfo extends Component {
                                                 <span id='u-title'>{item.Otitle}</span>
                                                 <img src={require("../imgs/public/爱心.png")} id='u-like'/>
                                                 <span id='likeNum'>
-                                                    12
+                                                    {item.number}
                                                 </span>
                                                 <div className='u-content'>
                                                     {item.Ocontent}
