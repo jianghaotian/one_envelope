@@ -67,7 +67,7 @@ export default class UserInfo extends Component {
         
     }
     back=()=>{
-        this.props.history.push('/Home/public');
+        this.props.history.push('/home/my');
     }
     isVip=()=>{
         console.log(this.state.vip)

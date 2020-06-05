@@ -42,7 +42,7 @@ export default class Inviteconfirm extends Component {
             <div>
                 <div className="col-tab">
                     {this.state.uname}
-                    <Link to="/home/invite" 
+                    <Link to="/invite" 
                     style={{
                         float:"left",
                         height:"3em",
@@ -52,7 +52,7 @@ export default class Inviteconfirm extends Component {
                         top:"0",
                         zIndex:"1"                       
                     }}
-                    ></Link>
+                    >
                     <i                           
                     className="iconfont icon-fanhui" 
                     style={{
@@ -61,7 +61,7 @@ export default class Inviteconfirm extends Component {
                         left:"5%",
                         top:"2%",
                         fontSize:"1.2em"     
-                    }}></i>
+                    }}></i></Link>
                 </div>
                     <div className='la'>
                         {this.state.inviteMessage}

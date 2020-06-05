@@ -75,7 +75,13 @@ export default class Invite extends Component {
                                         
                                     }}
                                 >{item.Uname}</span>}
-                                {item.inviteMessage.length>15?
+                                <span style={{
+                                    marginRight:'20px',
+                                    marginTop:'15px',
+                                    fontSize:'16px',
+                                    float:'right'
+                                }}>{new Date(item.Iday).getFullYear()+'-'+(new Date(item.Iday).getMonth()+1)+'-'+new Date(item.Iday).getDate()}</span>
+                                {item.inviteMessage.length>13?
                                     <span 
                                         style={{
                                             fontSize:'17px',
@@ -84,13 +90,19 @@ export default class Invite extends Component {
                                             bottom:'22%'
                                         }}
                                     >
-                                        {item.inviteMessage.substring(0,15)+'...'}
+                                        {item.inviteMessage.substring(0,13)+'...'}
                                     </span>:
-                                    <span>
+                                    <span
+                                    style={{
+                                        fontSize:'17px',
+                                        marginLeft:'15px',
+                                        position:'absolute',
+                                        bottom:'22%'
+                                    }}
+                                    >
                                         {item.inviteMessage}
                                     </span>
                                 }
-                                
                         </div>
                         </Link>
                     )

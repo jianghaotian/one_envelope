@@ -19,9 +19,12 @@ export default class My extends Component {
     componentDidMount(){
         this.$api.isVip().then(res=>{
             // console.log(res.data.data[0].Vip);
-            this.setState({
-                vip : res.data.data[0].Vip
-            })
+            if(res.data.data[0]){
+                this.setState({
+                    vip : res.data.data[0].Vip
+                })
+            }
+            
         })
         this.$api.mine().then(res => {
             // 获取数据成功后的其他操作
