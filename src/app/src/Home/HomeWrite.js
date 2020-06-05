@@ -96,7 +96,7 @@ export default class HomeWrite extends Component {
         //console.log(info.substr(13,info.length));
         var dataArr = info.substr(13,info.length);
         var arr  = dataArr.split("&");
-        //console.log(arr);
+        console.log(arr);
         //设置背景
         if(arr.length == 3){
             let ppid = arr[2].split("=")[1];
@@ -184,9 +184,9 @@ export default class HomeWrite extends Component {
                     }) 
                 }else if(arr.length>2){
                     this.setState({
-                        title : ls.getItem('LetterTitle'),
-                        value : ls.getItem('LetterContent'),
-                        fontColor : ls.getItem('color')
+                        title : ls.getItem('LetterTitle') || this.state.title,
+                        value : ls.getItem('LetterContent') || this.state.value,
+                        fontColor : ls.getItem('color') || this.state.fontColor
                     })
                 }
             })
