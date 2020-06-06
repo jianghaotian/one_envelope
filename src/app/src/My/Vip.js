@@ -50,7 +50,7 @@ export default class Vip extends Component {
             <div>
                 {/* tab */}
                 <div className="col-tab">
-                    我的收藏
+                    会员中心
                     <Link to="/home/my" 
                     style={{
                         float:"left",
