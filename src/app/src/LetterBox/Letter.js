@@ -66,10 +66,10 @@ export default class Letter extends Component {
     }
     // 删除
     deleEmail =(e)=>{
-        // this.$api.deletemail({pid:this.props.match.params.id}).then(res => {
-        //     Toast.success('删除成功', 1);
-        // }) 
-        console.log('删除代码已注释')
+        this.$api.deletemail({pid:this.props.match.params.id}).then(res => {
+            Toast.success('删除成功', 1);
+        }) 
+        // console.log('删除代码已注释')
     }
     // 分享
     sharemail=()=>{
