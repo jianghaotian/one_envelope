@@ -80,8 +80,10 @@ export default class My extends Component {
                     src={require("../imgs/LetBox/my-bg.png")} 
                     className="myifbg" />
                     {/* 头像 */}
+                    <Link to={'/Userinfo/uid='+this.state.arr[0].Uid}>
                     <img 
                     src={"https://yf.htapi.pub/head/"+this.state.arr[0].Uimage} className="portrait" />
+                    </Link>
                     {/* 通知信息-图标 */}
                     <Link to='/mymessage'><i className="icon-xinxiang iconfont"
                     style={{
