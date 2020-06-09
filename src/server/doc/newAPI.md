@@ -1029,10 +1029,11 @@ POST
 
 **接收参数**
 
-| 参数  | 说明     | 类型   |
-| ----- | -------- | ------ |
-| tid   | 主题id   | int    |
-| phone | 手机号码 | string |
+| 参数          | 说明     | 类型   |
+| ------------- | -------- | ------ |
+| tid           | 主题id   | int    |
+| phone         | 手机号码 | string |
+| inviteMessage | 邀请信息 | string |
 
 **返回参数**
 
@@ -1564,11 +1565,231 @@ GET
 }
 ```
 
+## 5.8邀请成员确认加入
 
+**请求url**
 
+```
+URL : https://yf.htapi.pub/v1/together/confirmMessage
+```
 
+**请求方式**
 
+```
+POST
+```
 
+**接收参数**
 
+| 参数 | 说明           | 类型    |
+| ---- | -------------- | ------- |
+| tid  | 主题id         | int     |
+| tag  | 是否加入标识符 | Boolean |
 
+**返回参数**
+
+```
+{
+	status: 0, 
+	date:[]
+}
+```
+
+## 5.9获取公开写信息（管理界面）
+
+**请求url**
+
+```
+URL : https://yf.htapi.pub/v1/papermanager/getopen
+```
+
+**请求方式**
+
+```
+GET
+```
+
+**接收参数**
+
+**返回参数**
+
+```
+{
+	status: 0, 
+	"message": "OK",
+    "data": [
+        {
+            "Oid": 1,
+            "Otitle":'无数'
+            ....
+        },
+       
+    ]
+}
+```
+
+## 6.0删除公开写信件（管理界面）
+
+**请求url**
+
+```
+URL : https://yf.htapi.pub/v1/papermanager/delopen
+```
+
+**请求方式**
+
+```
+POST
+```
+
+**接收参数**
+
+| 参数 | 说明   | 类型 |
+| ---- | ------ | ---- |
+| Oid  | 信件id | int  |
+
+**返回参数**
+
+```
+{
+	status: 0, 
+	"message": "OK",
+    "data": [
+        {
+        },
+       
+    ]
+}
+```
+
+## 6.1获取公开写信件数（管理界面）
+
+**请求url**
+
+```
+URL : https://yf.htapi.pub/v1/papermanager/delopen
+```
+
+**请求方式**
+
+```
+GET
+```
+
+**接收参数**
+
+**返回参数**
+
+```
+{
+	status: 0, 
+	"message": "OK",
+    "data": [
+        {
+        “num”：15
+        },
+       
+    ]
+}
+```
+
+## 6.2获取帮助用户信息（管理界面）
+
+**请求url**
+
+```
+URL : https://yf.htapi.pub/v1/help/helpUser
+```
+
+**请求方式**
+
+```
+GET
+```
+
+**接收参数**
+
+**返回参数**
+
+```
+{
+	status: 0, 
+	"message": "OK",
+    "data": [
+        {
+       		“uid”：19，
+       		“uname”：mxy
+       		“feedback”：“15689”
+        },
+       
+    ]
+}
+```
+
+## 6.3查找feedback（管理界面）
+
+**请求url**
+
+```
+URL : https://yf.htapi.pub/v1/help/searchFeedback
+```
+
+**请求方式**
+
+```
+GET
+```
+
+**接收参数**
+
+| 参数 | 说明   | 类型 |
+| ---- | ------ | ---- |
+| uid  | 用户id | int  |
+
+**返回参数**
+
+```
+{
+	status: 0, 
+	"message": "OK",
+    "data": [
+        {
+        “feedback”：15
+        },
+       
+    ]
+}
+```
+
+## 6.4保存反馈信息（管理界面）
+
+**请求url**
+
+```
+URL : https://yf.htapi.pub/v1/help/saveBack
+```
+
+**请求方式**
+
+```
+POST
+```
+
+**接收参数**
+
+| 参数        | 说明     | 类型   |
+| ----------- | -------- | ------ |
+| uid         | 用户id   | int    |
+| backMessage | 反馈信息 | string |
+
+**返回参数**
+
+```
+{
+	status: 0, 
+	"message": "OK",
+    "data": [
+    ]
+}
+```
 
