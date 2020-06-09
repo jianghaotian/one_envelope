@@ -10,7 +10,16 @@ export default class Invite extends Component {
     }
     componentDidMount(){
         this.$api.getmessage().then(res=>{
-            console.log(res.data.data);
+            this.setState({data:res.data.data})
+        })
+    }
+    onSubmit = (value)=>{
+        this.$api.searchUname({uname:value}).then(res=>{
+            this.setState({data:res.data.data})
+        })
+    }
+    onCancel = ()=>{
+        this.$api.getmessage().then(res=>{
             this.setState({data:res.data.data})
         })
     }
@@ -39,7 +48,7 @@ export default class Invite extends Component {
                         fontSize:"1.2em"     
                     }}></i>
                 </div>
-                <SearchBar placeholder="搜索" maxLength={8} />
+                <SearchBar placeholder="请输入要查找人昵称" maxLength={8} onSubmit={this.onSubmit} onCancel={this.onCancel}/>
                 {this.state.data.map((item,index)=>{
                     return(
                         <Link to={'/inviteconfirm/'+item.Tid}  style={{color:'#000'}}>

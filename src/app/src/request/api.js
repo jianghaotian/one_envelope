@@ -115,6 +115,7 @@ const api = {
     getsendletter:p=>get('mailbox/getsendletter',p),//获取发送信件信息
     sendletter:p=>post('mailbox/sendletter',p),//发送信件
         
+    searchUname:p=>get('/together/searchUname',p),
 }
 
 
