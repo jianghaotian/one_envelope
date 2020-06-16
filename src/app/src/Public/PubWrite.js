@@ -121,7 +121,7 @@ export default class PubWrite extends Component {
                 for(let i=0;i<imgList.length;i++){
                     this.setState({
                         ppid:60,
-                        back : "https://yf.htapi.pub/paper/"+imgList[10].ppimage
+                        back : "https://yf.htapi.pub/paper/"+imgList[9].ppimage
                     })
                     
                 }

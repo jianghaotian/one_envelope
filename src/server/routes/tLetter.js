@@ -346,27 +346,31 @@ router.get('/getmessage',function(req,res,next){
     })
 })
 /**
- * 查找邀请信息
+ * 获取邀请通知
  * 请求方式：
  *      GET
  * 接收参数：
- *      uname：用户名
  * 返回参数：
- * 
  */
-router.get("/searchUname",function(req,res,next){
-    let {uname} = req.query;
+router.get('/getmessage',function(req,res,next){
     let token = req.header('token');
     checkToken(token,(result)=>{
         if(result.status!==0){
             res.json(result)
         }else{
             let uid = result.data.uid;
-            let name = '%'+uname+'%';
-            console.log(name);
-            runSql(`select tmember.*,user.* from tmember,user,theme where uname like ? and tmember.uid=? and tag=? and (tmember.tid =theme.tid ) and (theme.uid=user.uid)`,[name,uid,0],(result1)=>{
-                console.log(result1);
-                res.json(result1);
+            runSql(`select tid from tmember where uid=? and tag=?`,[uid,0],(result1)=>{
+                if(result1.data.length ==0){
+                    res.json(result1)
+                }else{
+                    let tid = result1.data[0].tid;
+                    runSql(`select tmember.inviteMessage,tmember.tid,user.* from tmember,user where tid=? and own=? and(tmember.uid=user.uid)`,
+                    [tid,1],(result2)=>{
+                        res.json(result2);
+                    })
+                }
+                
+                
             })
         }
     })
@@ -546,6 +550,32 @@ router.post('/changebg',function(req,res,next){
             res.json(result)
         }else{
             runSql('update tletter set ppid=? where lid=? ',[ppid,lid],(result1)=>{
+                res.json(result1);
+            })
+        }
+    })
+})
+/**
+ * 查找邀请信息
+ * 请求方式：
+ *      GET
+ * 接收参数：
+ *      uname：用户名
+ * 返回参数：
+ * 
+ */
+router.get("/searchUname",function(req,res,next){
+    let {uname} = req.query;
+    let token = req.header('token');
+    checkToken(token,(result)=>{
+        if(result.status!==0){
+            res.json(result)
+        }else{
+            let uid = result.data.uid;
+            let name = '%'+uname+'%';
+            console.log(name);
+            runSql(`select tmember.*,user.* from tmember,user,theme where uname like ? and tmember.uid=? and tag=? and (tmember.tid =theme.tid ) and (theme.uid=user.uid)`,[name,uid,0],(result1)=>{
+                console.log(result1);
                 res.json(result1);
             })
         }

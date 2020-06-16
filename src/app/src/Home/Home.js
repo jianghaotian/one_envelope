@@ -238,7 +238,6 @@ export default class Home extends Component {
     }
     componentDidMount(){
         this.$api.isVip().then(res=>{
-            // console.log(res.data.data[0].Vip);
             this.setState({
                 vip : res.data.data[0].Vip
             })

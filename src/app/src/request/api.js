@@ -37,6 +37,7 @@ const api = {
 
     sendlist:p=>get('mine/sendlist',p),
     awenotice:p=>get('public/awenotice',p),//点赞通知
+    feedback:p=>post('mine/feedback',p),
 
     // zym
     theme: p=> get('together/theme',p),
@@ -114,8 +115,7 @@ const api = {
 
     getsendletter:p=>get('mailbox/getsendletter',p),//获取发送信件信息
     sendletter:p=>post('mailbox/sendletter',p),//发送信件
-        
-    searchUname:p=>get('/together/searchUname',p),
+    searchUname:p=>get('/together/searchUname',p),   
 }
 
 

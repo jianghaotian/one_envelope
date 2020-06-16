@@ -244,7 +244,7 @@ router.post('/addlist',function(req,res,next){
                 if(arr.length == 1){
                     // console.log("sdjgk");
                      runSql(`insert into pletter(Ptitle, Pcontent, Uid,toUid,toNick,isSend,Pday,isCollection,isDelete,ppid) values (?,?,?,?,?,?,?,?,?,?) `,
-                    ["快来给他写信吧","他的信箱还没有东西哦",uid,null,toNick,1,pday,0,0,null],(result2)=>{
+                    ["快来给他写信吧","他的信箱还没有东西哦",uid,null,toNick,1,pday,0,0,40],(result2)=>{
                         // console.log(result2);
                         res.json(result2);
                     })
