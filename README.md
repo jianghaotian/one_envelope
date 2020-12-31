@@ -1,6 +1,6 @@
 # 《一封》 —— HTML5与移动互联网开发
 
-Github：https://github.com/lemonoink/one_envelope
+Github：https://github.com/jianghaotian/one_envelope
 
 ## 项目简介
 
@@ -9,7 +9,7 @@ Github：https://github.com/lemonoink/one_envelope
 ## 项目成员
 
 * 姜皓天
-  * Github：https://github.com/lemonoink
+  * Github：https://github.com/jianghaotian
 * 李雪纯
   * Github：https://github.com/LIXUECHUN
 * 赵一鸣
